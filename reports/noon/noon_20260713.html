@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股午间复盘 · 2026-07-13 周一</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --accent1:#667eea; --accent2:#764ba2; --txt:#e2e8f0; --txt2:#94a3b8; --border:#2d2d44;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.5;padding:24px 16px 60px}
+  .wrap{max-width:1180px;margin:0 auto}
+  .glass{background:linear-gradient(135deg,rgba(102,126,234,.08),rgba(118,75,162,.06));border:1px solid var(--border);border-radius:16px}
+  header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:22px 26px;margin-bottom:20px}
+  header h1{font-size:24px;font-weight:700;letter-spacing:.5px}
+  header .sub{color:var(--txt2);font-size:13px;margin-top:4px}
+  .badge{font-size:20px;font-weight:800;padding:10px 22px;border-radius:12px;letter-spacing:1px}
+  .badge.def{background:linear-gradient(135deg,#ffa502,#ff6b35);color:#1a1205;box-shadow:0 6px 20px rgba(255,165,2,.3)}
+  .grid{display:grid;gap:18px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:880px){.g3,.g4,.g2{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.g3,.g4,.g2{grid-template-columns:1fr}}
+  section{margin:20px 0}
+  .sec-title{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;margin:6px 4px 14px}
+  .sec-title::before{content:"";width:5px;height:18px;border-radius:3px;background:linear-gradient(var(--accent1),var(--accent2))}
+  .card{padding:18px 20px}
+  .idx-head{display:flex;justify-content:space-between;align-items:baseline}
+  .idx-name{font-size:15px;font-weight:600}
+  .idx-code{font-size:11px;color:var(--txt2)}
+  .idx-price{font-size:26px;font-weight:800;margin:6px 0 2px}
+  .idx-chg{font-size:14px;font-weight:700}
+  .down{color:var(--sell)} .up{color:var(--buy)} .flat{color:var(--hold)}
+  .spark{height:54px;margin-top:8px}
+  .stat-row{display:flex;justify-content:space-around;text-align:center;padding:14px 0}
+  .stat-row .v{font-size:30px;font-weight:800}
+  .stat-row .l{font-size:12px;color:var(--txt2);margin-top:2px}
+  .donut{height:220px}
+  .chart{height:340px}
+  .chart-sm{height:260px}
+  .tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:6px;margin:2px 4px 2px 0}
+  .tag-pos{background:rgba(0,212,170,.14);color:var(--buy);border:1px solid rgba(0,212,170,.3)}
+  .tag-neg{background:rgba(255,71,87,.14);color:var(--sell);border:1px solid rgba(255,71,87,.3)}
+  .tag-info{background:rgba(102,126,234,.14);color:#a5b4fc;border:1px solid rgba(102,126,234,.3)}
+  .alert{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:12px;margin:10px 0}
+  .alert.risk{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.35)}
+  .alert.pos{background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.35)}
+  .alert .ico{font-size:20px;line-height:1}
+  .alert .tt{font-weight:700;margin-bottom:3px}
+  .alert .bd{font-size:13px;color:var(--txt2)}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:680px){.kpis{grid-template-columns:1fr 1fr}}
+  .kpi{padding:14px;text-align:center}
+  .kpi .v{font-size:24px;font-weight:800}
+  .kpi .l{font-size:11px;color:var(--txt2);margin-top:3px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--txt2);font-weight:600;font-size:12px}
+  .plan-card{padding:18px 20px}
+  .plan-card h3{font-size:15px;margin-bottom:10px;color:#a5b4fc}
+  .li{display:flex;gap:10px;padding:7px 0;font-size:13px;border-bottom:1px dashed rgba(45,45,68,.7)}
+  .li .dot{margin-top:6px;width:7px;height:7px;border-radius:50%;flex:0 0 auto}
+  .d-red{background:var(--sell)} .d-green{background:var(--buy)} .d-amber{background:var(--hold)}
+  .foot{font-size:11px;color:var(--txt2);text-align:center;margin-top:26px;line-height:1.8}
+  .meta-pill{display:inline-block;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;margin:4px 6px 0 0}
+  .score-circle{display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .summary-line{font-size:15px;font-weight:600;padding:14px 18px;border-left:4px solid var(--hold);background:rgba(255,165,2,.07);border-radius:0 10px 10px 0;margin:6px 0 14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="glass">
+    <div>
+      <h1>📉 A股午间复盘 · 决策仪表盘</h1>
+      <div class="sub">交易日：2026-07-13（周一）｜ 数据时点：午间收盘 11:30 ｜ 分析策略：情绪周期 + 资金流向 + 仓位管理</div>
+    </div>
+    <div class="badge def">防御 / 观望偏空</div>
+  </header>
+
+  <!-- CORE SUMMARY -->
+  <section>
+    <div class="summary-line">
+      三大指数集体低开低走，<b>全市场超4500只个股下跌、跌停45家＞涨停26家</b>，典型的<b>“高位科技杀估值 + 低位防御避险”</b>结构性调仓行情。赚钱效应进入冰点，建议<b>降仓至防御、保留现金等待企稳信号</b>。
+    </div>
+    <div class="grid g2">
+      <div class="glass card">
+        <div class="sec-title" style="margin:0 0 8px">综合情绪评分</div>
+        <div id="emotionGauge" style="height:230px"></div>
+      </div>
+      <div class="glass card">
+        <div class="sec-title" style="margin:0 0 8px">市场快照</div>
+        <div class="kpis">
+          <div class="kpi glass"><div class="v down">-1.54%</div><div class="l">上证指数</div></div>
+          <div class="kpi glass"><div class="v down">-2.61%</div><div class="l">深证成指</div></div>
+          <div class="kpi glass"><div class="v down">-2.38%</div><div class="l">创业板指</div></div>
+          <div class="kpi glass"><div class="v down">-3.46%</div><div class="l">中证1000</div></div>
+          <div class="kpi glass"><div class="v down">1.85万亿</div><div class="l">半日成交(缩量3158亿)</div></div>
+          <div class="kpi glass"><div class="v down">892 / 4573</div><div class="l">涨 / 跌家数</div></div>
+          <div class="kpi glass"><div class="v down">26 / 45</div><div class="l">涨停 / 跌停</div></div>
+          <div class="kpi glass"><div class="v down">恐惧</div><div class="l">情绪象限</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INDEX CARDS -->
+  <section>
+    <div class="sec-title">① 主要指数表现</div>
+    <div class="grid g3" id="idxCards"></div>
+  </section>
+
+  <!-- BREADTH -->
+  <section>
+    <div class="sec-title">② 涨跌家数 / 涨停跌停</div>
+    <div class="grid g2">
+      <div class="glass card">
+        <div class="donut" id="breadthDonut"></div>
+      </div>
+      <div class="glass card">
+        <div class="stat-row">
+          <div><div class="v up">892</div><div class="l">上涨</div></div>
+          <div><div class="v down">4573</div><div class="l">下跌</div></div>
+          <div><div class="v flat">~35</div><div class="l">平盘</div></div>
+        </div>
+        <div class="stat-row" style="border-top:1px solid var(--border)">
+          <div><div class="v buy">26</div><div class="l">涨停</div></div>
+          <div><div class="v sell">45</div><div class="l">跌停</div></div>
+          <div><div class="v down">1 : 5.1</div><div class="l">涨跌比</div></div>
+        </div>
+        <div style="padding:10px 4px 0;font-size:12px;color:var(--txt2)">⚠️ 跌停数量显著高于涨停，<b style="color:var(--sell)">空头占优</b>；中小盘（中证1000 -3.46%、北证50 -3.90%）杀跌更剧烈，亏钱效应向小票扩散。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTORS -->
+  <section>
+    <div class="sec-title">③ 领涨 / 领跌板块 TOP5（主力资金口径）</div>
+    <div class="grid g2">
+      <div class="glass card">
+        <div style="font-weight:700;color:var(--buy);margin-bottom:6px">🟢 逆势流入（防御 / 政策 / 事件）</div>
+        <div class="chart-sm" id="upSectors"></div>
+      </div>
+      <div class="glass card">
+        <div style="font-weight:700;color:var(--sell);margin-bottom:6px">🔴 资金抛售重灾区（高位成长）</div>
+        <div class="chart-sm" id="downSectors"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPITAL FLOW -->
+  <section>
+    <div class="sec-title">④ 资金流向全景</div>
+    <div class="grid g2">
+      <div class="glass card">
+        <div class="chart" id="capitalChart"></div>
+      </div>
+      <div class="glass card">
+        <div style="font-weight:700;margin-bottom:8px">资金结构解读</div>
+        <div class="li"><span class="dot d-red"></span><div><b>北向资金</b>：上一交易日（7/10）净卖出 <b>68.74亿</b>（沪-37.85亿 / 深-30.9亿），近三日累计减仓超120亿；盘中不披露实时数据，外资风险偏好回落。</div></div>
+        <div class="li"><span class="dot d-red"></span><div><b>主力资金</b>：早盘大幅净流出，<b>半导体单板块净流出206.67亿</b>居首，通信(-66.6亿)、消费电子(-50.2亿)、军工(-41.8亿)同步出逃。</div></div>
+        <div class="li"><span class="dot d-amber"></span><div><b>融资 / 龙虎榜</b>：上周融资小幅净流出，但龙虎榜净流入超200亿，交易型资金活跃度未显著回落。</div></div>
+        <div class="li"><span class="dot d-green"></span><div><b>ETF</b>：连续净赎回16周后首现净申购；今日半日ETF成交<b>3805亿</b>（放量855亿），机构借道ETF逢低布局。</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MONEY-MAKING EFFECT -->
+  <section>
+    <div class="sec-title">⑤ 市场赚钱效应总结</div>
+    <div class="grid g2">
+      <div class="glass card">
+        <div class="kpis" style="grid-template-columns:repeat(2,1fr)">
+          <div class="kpi glass"><div class="v down">16.3%</div><div class="l">上涨家数占比</div></div>
+          <div class="kpi glass"><div class="v down">0.58</div><div class="l">涨停/跌停比</div></div>
+          <div class="kpi glass"><div class="v down">≈180+</div><div class="l">上涨ETF(只)</div></div>
+          <div class="kpi glass"><div class="v hold">冰点</div><div class="l">赚钱效应等级</div></div>
+        </div>
+      </div>
+      <div class="glass card">
+        <div style="font-size:13px;color:var(--txt2);line-height:1.9">
+          <span class="tag tag-neg">亏钱面</span> 仅医药、银行、燃气等少数防御/政策方向有赚钱机会；<b>存储、PCB、CPO、MLCC、军工、商业航天</b>等高位主线集体重挫，多股跌停。<br><br>
+          <span class="tag tag-pos">赚钱面</span> 中药（陇神戎发20cm、天目药业涨停）、银行（苏州银行+6%）、电子特气（九丰能源2连板）逆势活跃。<br><br>
+          <b>结论：</b> 赚钱效应处于<b>退潮→冰点</b>区间，恐慌性抛售尚未完全释放，不宜追涨杀跌，等待情绪拐点。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTELLIGENCE -->
+  <section>
+    <div class="sec-title">⑥ 情报面 · 风险与催化</div>
+    <div class="alert risk">
+      <div class="ico">🚨</div>
+      <div>
+        <div class="tt">风险警报：四重利空共振</div>
+        <div class="bd">① 中东地缘升级（伊朗宣布霍尔木兹海峡暂时关闭，布油涨超3%）推升避险；② <b>长鑫科技295亿IPO</b>（7/16申购，年内最大）抽血半导体；③ <b>SK海力士ADR大跌</b>传导，韩股获利了结跌8-10%；④ 7/15深市主板中报预告强制披露截止，业绩验证期资金避险。叠加机构半年度结账砸盘与量化止损踩踏。</div>
+      </div>
+    </div>
+    <div class="alert pos">
+      <div class="ico">✅</div>
+      <div>
+        <div class="tt">积极催化：低位方向有承接</div>
+        <div class="bd">① 国务院批复《中医药振兴发展“十五五”规划》→ 中药/创新药获政策加持；② 多家银行2025年度分红落地 → 高股息防御配置价值凸显；③ 国家能源局《节能降碳行动计划(2026-2028)》→ 燃气/电子特气事件驱动；④ 国内货币宽松基调未变，属板块级调整而非全面熊市。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BATTLE PLAN / POSITION -->
+  <section>
+    <div class="sec-title">⑦ 仓位管理推荐（作战计划）</div>
+    <div class="grid g2">
+      <div class="glass plan-card">
+        <h3>🎯 总仓位与结构</h3>
+        <div class="li"><span class="dot d-amber"></span><div><b>总仓位 40%-50%</b>（中性偏防御），现金储备 ≥30% 等待企稳。</div></div>
+        <div class="li"><span class="dot d-red"></span><div><b>减仓 / 回避</b>：高位科技（存储、半导体、PCB、CPO、光纤、军工、商业航天）—— 获利了结，不抄“下跌中继”。</div></div>
+        <div class="li"><span class="dot d-green"></span><div><b>轻仓配置（防御）</b>：中药（政策）、银行（高股息分红）、公用事业/必选消费、燃气（事件）。</div></div>
+        <div class="li"><span class="dot d-amber"></span><div><b>短线仓位</b> ＜20%，快进快出；中线底仓 40%，留弹性。</div></div>
+      </div>
+      <div class="glass plan-card">
+        <h3>📋 加仓触发条件（风控清单）</h3>
+        <div class="li"><span class="dot d-green"></span><div>跌停数收敛至 <b>＜15家</b> 且涨停 ＞30家，恐慌释放完毕。</div></div>
+        <div class="li"><span class="dot d-green"></span><div>两市成交重回 <b>2万亿+</b> 且指数收复 <b>5日线</b>。</div></div>
+        <div class="li"><span class="dot d-green"></span><div>新主线（低位科技/消费）放量确认，摆脱“无主线混沌轮动”。</div></div>
+        <div class="li"><span class="dot d-green"></span><div>中报预告“业绩雷”出清（<b>7/15</b> 后）。</div></div>
+        <div class="li"><span class="dot d-red"></span><div><b>纪律</b>：高位破位股止损 -8% 严格执行；单票 ≤15%；严禁杠杆；不摊平亏损仓。</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIGNAL ATTRIBUTION -->
+  <section>
+    <div class="sec-title">⑧ 市场信号归因</div>
+    <div class="glass card" style="font-size:13px;line-height:1.95">
+      <span class="tag tag-neg">技术指标 35%</span> 三大指数集体跌破短期均线，中证1000/北证50领跌，量能萎缩，弱势结构明确。<br>
+      <span class="tag tag-neg">新闻情绪 30%</span> 中东黑天鹅 + 长鑫IPO抽血 + 海力力士大跌 + 中报雷担忧，四重利空共振压制风险偏好。<br>
+      <span class="tag tag-pos">基本面 15%</span> 货币宽松基调未变，非全面熊市；银行分红、中药政策提供局部支撑。<br>
+      <span class="tag tag-neg">市场环境 20%</span> 北向连续减仓超120亿、主力大幅净流出、赚钱效应冰点，系统性避险。<br>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+        <b style="color:var(--sell)">最强看空信号：</b>半导体单板块主力净流出206亿 + 全市场超4500股下跌，高位主线踩踏式出逃。<br>
+        <b style="color:var(--buy)">最强看多信号：</b>ETF连续净赎回16周后首现净申购 + 银行/中药逆势获主力净流入，低位防御有资金承接。
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="foot">
+    <div style="margin-bottom:8px">
+      <span class="meta-pill">分析时间：2026-07-13 12:29 (GMT+8)</span>
+      <span class="meta-pill">使用策略：情绪周期 / 资金流向 / 仓位管理</span>
+      <span class="meta-pill">数据来源：公开财经媒体午评（澎湃/央广/东财/同花顺/每经/财联社）</span>
+    </div>
+    <div>大盘环境摘要：<b style="color:var(--sell)">震荡偏空 / 结构性调仓</b>。指数牛而个股熊，高低切换进行时，耐心等待情绪与量能双修复。</div>
+    <div style="margin-top:10px;color:#64748b">⚠️ 免责声明：本复盘仅供学习与研究的决策参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论基于截至午间收盘的公开数据，盘中可能变化，请以实盘为准。</div>
+  </div>
+
+</div>
+
+<script>
+// ===== DATA =====
+const indices = [
+  {name:'上证指数', code:'sh000001', price:3934.74, chg:-1.54, prev:3996.16, open:3966.02, high:3983.05, low:3928.54},
+  {name:'深证成指', code:'sz399001', price:14654.49, chg:-2.61, prev:15046.67, open:14908.98, high:14997.07, low:14629.76},
+  {name:'创业板指', code:'sz399006', price:3751.33, chg:-2.38, prev:3842.73, open:3809.86, high:3855.75, low:3743.62},
+  {name:'科创50', code:'1B0688', price:null, chg:-1.84, prev:null, open:null, high:null, low:null},
+  {name:'北证50', code:'899050', price:null, chg:-3.90, prev:null, open:null, high:null, low:null},
+  {name:'中证1000', code:'000852', price:null, chg:-3.46, prev:null, open:null, high:null, low:null}
+];
+
+const upSectors = [
+  {name:'创新药', val:9.67},
+  {name:'跨境支付CIPS', val:9.64},
+  {name:'血氧仪', val:6.65},
+  {name:'华为海思', val:5.91},
+  {name:'银行', val:4.64}
+];
+const downSectors = [
+  {name:'半导体', val:-206.67},
+  {name:'通信设备', val:-66.60},
+  {name:'消费电子', val:-50.22},
+  {name:'军工装备', val:-41.79}
+];
+
+// ===== INDEX CARDS =====
+const idxWrap = document.getElementById('idxCards');
+indices.forEach(d=>{
+  const cls = d.chg<0?'down':(d.chg>0?'up':'flat');
+  const sign = d.chg>0?'+':'';
+  const priceStr = d.price? d.price.toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2}) : '—';
+  const el = document.createElement('div');
+  el.className='glass card';
+  el.innerHTML = `
+    <div class="idx-head"><span class="idx-name">${d.name}</span><span class="idx-code">${d.code}</span></div>
+    <div class="idx-price ${cls}">${priceStr}</div>
+    <div class="idx-chg ${cls}">${sign}${d.chg.toFixed(2)}%</div>
+    <div class="spark" id="sp_${d.code}"></div>`;
+  idxWrap.appendChild(el);
+  if(d.prev && d.open){
+    const c = echarts.init(document.getElementById('sp_'+d.code));
+    c.setOption({
+      grid:{left:2,right:2,top:6,bottom:2},
+      xAxis:{type:'category',show:false,data:['昨收','今开','最高','最低','午收']},
+      yAxis:{type:'value',show:false,scale:true},
+      series:[{type:'line',data:[d.prev,d.open,d.high,d.low,d.price],
+        smooth:false,symbol:'circle',symbolSize:4,
+        lineStyle:{color:d.chg<0?'#ff4757':'#00d4aa',width:2},
+        areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:d.chg<0?'rgba(255,71,87,.35)':'rgba(0,212,170,.35)'},{offset:1,color:'rgba(0,0,0,0)'}])},
+        itemStyle:{color:d.chg<0?'#ff4757':'#00d4aa'}}]
+    });
+  } else {
+    document.getElementById('sp_'+d.code).innerHTML = '<div style="text-align:center;color:#64748b;font-size:12px;padding-top:18px">盘中仅披露涨跌幅</div>';
+  }
+});
+
+// ===== EMOTION GAUGE =====
+const eg = echarts.init(document.getElementById('emotionGauge'));
+eg.setOption({
+  series:[{
+    type:'gauge', min:0, max:100, radius:'92%', center:['50%','58%'],
+    axisLine:{lineStyle:{width:16,color:[[0.3,'#ff4757'],[0.55,'#ffa502'],[1,'#00d4aa']]}},
+    pointer:{itemStyle:{color:'#ffa502'}},
+    axisTick:{distance:-16,length:5,lineStyle:{color:'#fff',width:1}},
+    splitLine:{distance:-16,length:16,lineStyle:{color:'#fff',width:2}},
+    axisLabel:{distance:-44,color:'#94a3b8',fontSize:10},
+    detail:{valueAnimation:true,formatter:'{value}',fontSize:38,fontWeight:'bolder',offsetCenter:[0,'38%'],color:'#ffa502'},
+    title:{offsetCenter:[0,'72%'],color:'#94a3b8',fontSize:13},
+    data:[{value:28,name:'情绪：恐惧 / 冰点'}]
+  }]
+});
+
+// ===== BREADTH DONUT =====
+const bd = echarts.init(document.getElementById('breadthDonut'));
+bd.setOption({
+  tooltip:{trigger:'item',formatter:'{b}: {c} ({d}%)'},
+  legend:{bottom:0,textStyle:{color:'#94a3b8',fontSize:11}},
+  series:[{
+    type:'pie',radius:['45%','72%'],center:['50%','44%'],
+    label:{color:'#e2e8f0',formatter:'{b}\n{c}'},
+    data:[
+      {value:892,name:'上涨',itemStyle:{color:'#00d4aa'}},
+      {value:4573,name:'下跌',itemStyle:{color:'#ff4757'}},
+      {value:35,name:'平盘',itemStyle:{color:'#64748b'}}
+    ]
+  }]
+});
+
+// ===== UP SECTORS =====
+const us = echarts.init(document.getElementById('upSectors'));
+us.setOption({
+  grid:{left:90,right:40,top:10,bottom:10},
+  tooltip:{trigger:'axis',formatter:'{b}<br/>主力净流入: {c} 亿'},
+  xAxis:{type:'value',axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+  yAxis:{type:'category',data:upSectors.map(s=>s.name).reverse(),axisLabel:{color:'#e2e8f0'}},
+  series:[{type:'bar',data:upSectors.map(s=>s.val).reverse(),
+    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#00d4aa'},{offset:1,color:'#00b894'}]),borderRadius:[0,6,6,0]},
+    label:{show:true,position:'right',color:'#00d4aa',formatter:'+{c}亿'}}]
+});
+
+// ===== DOWN SECTORS =====
+const ds = echarts.init(document.getElementById('downSectors'));
+ds.setOption({
+  grid:{left:90,right:55,top:10,bottom:10},
+  tooltip:{trigger:'axis',formatter:'{b}<br/>主力净流出: {c} 亿'},
+  xAxis:{type:'value',axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+  yAxis:{type:'category',data:downSectors.map(s=>s.name).reverse(),axisLabel:{color:'#e2e8f0'}},
+  series:[{type:'bar',data:downSectors.map(s=>Math.abs(s.val)).reverse(),
+    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#ff4757'},{offset:1,color:'#c0392b'}]),borderRadius:[0,6,6,0]},
+    label:{show:true,position:'right',color:'#ff4757',formatter:'-{c}亿'}}]
+});
+
+// ===== CAPITAL FLOW (mixed) =====
+const cf = echarts.init(document.getElementById('capitalChart'));
+const capData = [
+  {name:'半导体',val:-206.67},
+  {name:'通信设备',val:-66.60},
+  {name:'消费电子',val:-50.22},
+  {name:'军工装备',val:-41.79},
+  {name:'北向(上日)',val:-68.74},
+  {name:'创新药',val:9.67},
+  {name:'CIPS',val:9.64},
+  {name:'银行',val:4.64}
+];
+cf.setOption({
+  title:{text:'主力 / 北向资金流向（亿元）',left:'center',textStyle:{color:'#94a3b8',fontSize:13}},
+  tooltip:{trigger:'axis',formatter:p=>p[0].name+': '+(p[0].value>0?'+':'')+p[0].value+'亿'},
+  grid:{left:70,right:30,top:46,bottom:60},
+  xAxis:{type:'category',data:capData.map(d=>d.name),axisLabel:{color:'#94a3b8',interval:0,rotate:35,fontSize:11}},
+  yAxis:{type:'value',axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+  series:[{type:'bar',data:capData.map(d=>({value:d.val,itemStyle:{color:d.val<0?'#ff4757':'#00d4aa',borderRadius:d.val<0?[0,0,4,4]:[4,4,0,0]}})),
+    label:{show:true,position:'top',color:'#e2e8f0',fontSize:10,formatter:p=>(p.value>0?'+':'')+p.value}}]
+});
+
+// responsive
+window.addEventListener('resize',()=>{
+  eg.resize();bd.resize();us.resize();ds.resize();cf.resize();
+  indices.forEach(d=>{if(d.prev)echarts.getInstanceByDom(document.getElementById('sp_'+d.code))?.resize();});
+});
+</script>
+</body>
+</html>

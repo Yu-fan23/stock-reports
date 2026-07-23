@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>涨停梯队复盘 · 2026-07-22（周三）</title>
+<style>
+  :root{
+    --bg:#0a0e1a; --card:#121829; --card2:#0f1424; --bd:#1f2940;
+    --txt:#e6ecf5; --sub:#8a97b0; --dim:#5b667e;
+    --red:#ff3b5c; --redbg:rgba(255,59,92,.14); --redbd:rgba(255,59,92,.55);
+    --yel:#ffcc33; --yelbg:rgba(255,204,51,.12); --yelbd:rgba(255,204,51,.5);
+    --grn:#22c98a; --blue:#4f9dff; --pur:#9b7bff;
+    --mut:#6b7689;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    background:radial-gradient(1200px 700px at 80% -10%,#15203a 0%,var(--bg) 55%);color:var(--txt);
+    line-height:1.55;padding:22px 14px 60px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1200px;margin:0 auto}
+  header{margin-bottom:18px}
+  .ttl{font-size:26px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .ttl .dot{width:11px;height:11px;border-radius:50%;background:var(--yel);box-shadow:0 0 14px var(--yel)}
+  .meta{color:var(--sub);font-size:13px;margin-top:6px}
+  .flag{display:inline-block;background:rgba(255,204,51,.13);color:var(--yel);border:1px solid rgba(255,204,51,.5);
+    border-radius:6px;padding:2px 9px;font-size:12px;font-weight:600;margin-left:6px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px;margin:16px 0}
+  .stat{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px 14px}
+  .stat .k{font-size:12px;color:var(--sub)}
+  .stat .v{font-size:21px;font-weight:800;margin-top:3px}
+  .stat .s{font-size:12px;color:var(--dim);margin-top:1px}
+  .down{color:var(--red)} .up{color:var(--grn)}
+  .mood{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .mood .lab{font-weight:700;font-size:14px;white-space:nowrap}
+  .thermo{flex:1;min-width:220px;height:14px;border-radius:8px;background:linear-gradient(90deg,#ff3b5c,#ff8a3b,#ffcc33,#22c98a);position:relative;opacity:.9}
+  .thermo i{position:absolute;top:-5px;width:4px;height:24px;background:#fff;border-radius:3px;box-shadow:0 0 8px #fff}
+  .mood .txt{font-size:13px;color:var(--sub)}
+  .ladder{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px 18px;margin-bottom:18px}
+  .ladder h2,.sec h2{font-size:16px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .ladder h2:before,.sec h2:before{content:"";width:4px;height:16px;background:var(--blue);border-radius:3px}
+  .rung{display:flex;align-items:center;gap:12px;padding:7px 0;border-bottom:1px dashed var(--bd)}
+  .rung:last-child{border-bottom:none}
+  .lv{font-weight:800;font-size:14px;min-width:104px;color:var(--yel)}
+  .names{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{background:var(--card2);border:1px solid var(--bd);border-radius:20px;padding:3px 11px;font-size:13px}
+  .chip.boom{background:var(--redbg);border-color:var(--redbd);color:#ffb3c0}
+  .chip.lead{background:var(--yelbg);border-color:var(--yelbd);color:var(--yel)}
+  .sec{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px 18px;margin-bottom:16px}
+  .sechead{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .b-red{background:var(--redbg);color:#ff6b85;border:1px solid var(--redbd);border-radius:6px;padding:2px 9px;font-size:12px;font-weight:700}
+  .b-yel{background:var(--yelbg);color:var(--yel);border:1px solid var(--yelbd);border-radius:6px;padding:2px 9px;font-size:12px;font-weight:700}
+  .cnt{color:var(--sub);font-size:13px}
+  .tbl{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}
+  .tbl th{position:sticky;top:0;background:#0d1322;color:var(--sub);font-weight:600;text-align:left;
+    padding:8px 9px;border-bottom:1px solid var(--bd);font-size:12px;white-space:nowrap}
+  .tbl td{padding:9px 9px;border-bottom:1px solid #161d30;vertical-align:top}
+  .tbl tr:hover td{background:rgba(79,157,255,.05)}
+  .stk{font-weight:700;color:var(--txt)}
+  .code{color:var(--dim);font-size:11px}
+  .lb{font-weight:800;font-size:12px}
+  .lb.b6{color:var(--red)} .lb.b4{color:var(--red)} .lb.b3{color:var(--red)} .lb.b2{color:var(--yel)} .lb.f{color:var(--blue)} .lb.zb{color:var(--mut)} .lb.sp{color:var(--pur)}
+  .mk{display:inline-block;font-size:10px;font-weight:800;border-radius:4px;padding:1px 6px;margin-left:5px;vertical-align:middle}
+  .mk.red{background:var(--red);color:#fff}
+  .mk.yel{background:var(--yel);color:#1a1a1a}
+  .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tlimit{color:var(--sub);font-size:12px;white-space:nowrap}
+  .logic{color:var(--sub);font-size:12px;line-height:1.5}
+  .est{color:var(--dim);font-size:11px}
+  .note{font-size:12px;color:var(--dim);margin-top:6px}
+  .warn{background:rgba(255,59,92,.08);border:1px solid var(--redbd);border-radius:12px;padding:14px 16px;margin-bottom:16px}
+  .warn h2{color:#ff8095;font-size:15px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .warn ul{margin:4px 0 0 18px;font-size:13px;color:#ffc2cd}
+  .warn li{margin:3px 0}
+  footer{color:var(--dim);font-size:11.5px;margin-top:22px;border-top:1px solid var(--bd);padding-top:14px;line-height:1.7}
+  .src{color:var(--sub)}
+  @media(max-width:640px){.tbl{font-size:11px}.tbl th,.tbl td{padding:6px 4px}.ttl{font-size:21px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="ttl"><span class="dot"></span>涨停梯队复盘</div>
+  <div class="meta">交易日 <b>2026-07-22（周三）</b> 收盘数据（15:00）·
+    <span class="flag">冰火两重天 · 避险抱团 · 电力/有色逆势连板 · 科技午后跳水</span></div>
+  <div class="meta src">数据来源：财联社《7月22日午报/收评·涨停分析》、界面新闻/新浪《今日涨跌停股分析》、21财经（南方财经）《7月22日连板股分析》、证券时报·数据宝《涨停股复盘》、每经/新浪/中新经纬《7月22日A股收评》、东方财富/同花顺行情指标结构化快照 · 口径：沪深京A股（剔除ST、退市股；含北交所0只）；"涨停时间"除标注精确时刻外多为早盘/盘中/午后/尾盘（依板块启动与资讯推断）；市值/成交额来自07-22收盘行情快照（结构化返回，已换算亿）</div>
+</header>
+
+<!-- 大盘情绪概览 -->
+<div class="grid">
+  <div class="stat"><div class="k">上证指数</div><div class="v up">+0.07%</div><div class="s">3867.03点</div></div>
+  <div class="stat"><div class="k">深成指</div><div class="v down">-1.42%</div><div class="s">14061.44点</div></div>
+  <div class="stat"><div class="k">创业板指</div><div class="v down">-3.23%</div><div class="s">3566.73点</div></div>
+  <div class="stat"><div class="k">科创50 / 综指</div><div class="v down">-2.26%</div><div class="s">科创综指-2.25%</div></div>
+  <div class="stat"><div class="k">全天成交额</div><div class="v">2.65万亿</div><div class="s">较上日缩量3037亿</div></div>
+  <div class="stat"><div class="k">涨停 / 跌停</div><div class="v"><span class="up">46</span> / <span class="down">10</span></div><div class="s">财联社46·界面48·封板率56%</div></div>
+  <div class="stat"><div class="k">连板晋级率</div><div class="v">60.00%</div><div class="s">连板股12只·高度立新能源5板</div></div>
+  <div class="stat"><div class="k">涨跌家数</div><div class="v down">1530涨/3876跌</div><div class="s">仅28.7%个股翻红·炸板率>40%</div></div>
+</div>
+
+<!-- 情绪温度计 -->
+<div class="mood">
+  <span class="lab">短线情绪</span>
+  <div class="thermo"><i style="left:40%"></i></div>
+  <span class="txt"><b style="color:var(--yel)">分化 · 冰火两重天 · 避险抱团 · 连板高标独强但普跌</b>　指数走势分化：沪指微红+0.07%、深成指-1.42%、<b>创业板指-3.23%</b>、科创综指-2.25%；全天成交<b>2.65万亿</b>较上日<b>缩量3037亿</b>。全市场<b>约46股涨停、9-10股跌停、封板率56%、炸板率超40%</b>，<b>超3800只个股下跌</b>（仅28.7%翻红）。盘面呈"<b>电力/有色(黄金)/煤炭/油气逆势连板 + 科技(存储/PCB/CPO)午后跳水</b>"的极端分化：立新能源5连板、华银电力4连板、美利云3连板等高标抱团晋级（连板晋级率60%），但德明利8天6次跌停、中国巨石跌停、中际旭创-6%、新易盛-7%。属<b>反弹次日的分化退潮·避险主线（电力/有色）抱团</b>，情绪温度计40%，较昨日"奇迹日"78%大幅回落，定性为"轮动混沌·结构性抱团"。</span>
+</div>
+
+<!-- 连板梯队总览 -->
+<div class="ladder">
+  <h2>连板梯队总览（收盘口径 · 连板"几天几板"优先）</h2>
+  <div class="rung"><span class="lv" style="color:var(--red)">12天8板</span><div class="names"><span class="chip boom">艾艾精工 全市场最高标（股权转让·独立·财联社口径7天5板）</span></div></div>
+  <div class="rung"><span class="lv" style="color:var(--red)">5连板</span><div class="names"><span class="chip boom">立新能源（电力·逆势空间板）</span></div></div>
+  <div class="rung"><span class="lv" style="color:var(--red)">4连板</span><div class="names"><span class="chip boom">华银电力（电力）</span></div></div>
+  <div class="rung"><span class="lv" style="color:var(--red)">7天4板</span><div class="names"><span class="chip boom">大有能源（煤炭）</span></div></div>
+  <div class="rung"><span class="lv" style="color:var(--red)">3连板</span><div class="names"><span class="chip boom">美利云（算力租赁·国资云）</span></div></div>
+  <div class="rung"><span class="lv" style="color:var(--yel)">5天3板</span><div class="names"><span class="chip">长裕集团（独立连板活口）</span></div></div>
+  <div class="rung"><span class="lv" style="color:var(--yel)">4天3板</span><div class="names"><span class="chip">共进股份（超节点）</span><span class="chip">金牛化工（化工/甲醇）</span></div></div>
+  <div class="rung"><span class="lv" style="color:var(--mut)">2连板</span><div class="names">
+    <span class="chip">盛达资源(有色)</span><span class="chip">利通电子(算力)</span><span class="chip">证通电子(算力)</span>
+    <span class="chip">长缆科技(电力)</span><span class="chip">托伦斯(半导体·20cm)</span><span class="chip">爱丽家居(家居·一字)</span><span class="chip">大为股份(半导体)</span></div></div>
+  <div class="rung"><span class="lv" style="color:var(--mut)">3天2板 / 4日3板</span><div class="names">
+    <span class="chip">华电辽能(电力)</span><span class="chip">华电能源(电力)</span><span class="chip">中曼石油(油气)</span><span class="chip">乐山电力(电力·4日3板)</span></div></div>
+  <div class="rung"><span class="lv" style="color:var(--mut)">首板（集中方向）</span><div class="names">
+    <span class="chip">有色(山金国际/招金黄金·黄金爆发)</span>
+    <span class="chip">半导体(瑞芯微/大为/托伦斯)</span>
+    <span class="chip">超节点(华勤技术/瑞斯康达)</span>
+    <span class="chip">化工(惠城环保20cm/天安新材/西大门)</span>
+    <span class="chip">医药(海南海药/罗欣/五洲医疗20cm)</span>
+    <span class="chip">电力(新能股份/新中港/世茂能源)</span>
+    <span class="chip">其他(创业黑马/星辉环材20cm·海通发展·金字火腿·艾艾精工独立)</span></div></div>
+  <div class="note">连板高度呈现"<b>艾艾精工12天8板（股权·独立活口，财联社口径7天5板）> 立新能源5连板 > 华银电力4连板 > 大有能源7天4板 > 美利云3连板</b>"的清晰梯队，晋级率高达<b>60%</b>（12只连板）。值得注意：① <b>连板主线从昨日的"科技"切回"红利/资源避险"</b>——电力(立新能源/华银)、有色(盛达资源)、煤炭(大有能源)、油气(中曼石油)逆势连板，而昨日爆发的半导体/CPO今日多为首板且午后跳水（托伦斯20cm 2板是少数活口）；② <b>艾艾精工12天8板为全市场最高标但属"股权/独立"非板块性主线</b>，对盘面带动作用弱于立新能源；③ 纯连板（连续）仅12只，余为反包（3天2板/4日3板）与首板，说明资金偏"高标抱团+首板套利"，中位股（2-3板）断层明显。</div>
+</div>
+
+<!-- ============ 板块A：电力 ============ -->
+<div class="sec">
+  <div class="sechead">
+    <h2>一、电力（逆势主线·避险抱团·用电负荷新高+绿电考核）</h2>
+    <div class="badges"><span class="cnt">涨停 9 只</span><span class="b-red">情绪龙头：立新能源</span><span class="b-yel">中军：华银电力</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>连板</th><th>个股</th><th>涨停时间</th><th class="num">现价/涨幅</th><th class="num">总市值</th><th class="num">成交额</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td class="lb b6">5连板</td><td><span class="stk">立新能源</span> <span class="code">001258</span><span class="mk red">龙头</span></td><td class="tlimit">盘初(直线)</td><td class="num">11.01<br><span class="up">+9.99%</span></td><td class="num">102.76亿</td><td class="num">6.63亿</td><td class="logic">疆电外送+新能源补贴+中报预增；盘初直线封板晋级5连板（全市场连板数最高）。催化：7/10全国用电负荷创历史新高15.18亿千瓦(+1000万千瓦)、入夏20余省级电网负荷创新高；8/1绿电强制考核落地（自发自用/绿电直连/绿证三条路径）；算力电力协同机制催化绿电需求</td></tr>
+      <tr><td class="lb b4">4连板</td><td><span class="stk">华银电力</span> <span class="code">600744</span><span class="mk yel">中军</span></td><td class="tlimit">尾盘(临收盘)</td><td class="num">7.94<br><span class="up">+9.97%</span></td><td class="num">161.27亿</td><td class="num">29.00亿</td><td class="logic">业绩扭亏+清洁能源装机+定增获批；趁午后科技跳水逆势拉升、临收盘封板晋级4连板，电力容量中军（成交29亿，板块定海神针）</td></tr>
+      <tr><td class="lb b3">4日3板</td><td><span class="stk">乐山电力</span> <span class="code">600644</span></td><td class="tlimit">尾盘(快收盘)</td><td class="num">10.60<br><span class="up">+9.96%</span></td><td class="num">61.30亿</td><td class="num">9.00亿</td><td class="logic">区域电网+水电/热电，快收盘涨停收获4日3板，电力后排活口</td></tr>
+      <tr><td class="lb b2">3天2板</td><td><span class="stk">华电辽能</span> <span class="code">600396</span></td><td class="tlimit">午后</td><td class="num">14.92<br><span class="up">+10.03%</span></td><td class="num">219.73亿</td><td class="num">35.52亿</td><td class="logic">华电集团火电/新能源平台，午后电力上攻涨停收3天2板（反包），大容量弹性</td></tr>
+      <tr><td class="lb b2">3天2板</td><td><span class="stk">华电能源</span> <span class="code">600726</span></td><td class="tlimit">午后</td><td class="num">6.60<br><span class="up">+10.00%</span></td><td class="num">521.88亿</td><td class="num">24.21亿</td><td class="logic">华电集团旗舰火电，午后涨停收3天2板（反包），板块最大容量中军（521亿）</td></tr>
+      <tr><td class="lb b2">2连板</td><td><span class="stk">长缆科技</span> <span class="code">002879</span></td><td class="tlimit">盘中</td><td class="num">14.92<br><span class="up">+10.03%</span></td><td class="num">28.81亿</td><td class="num">4.49亿</td><td class="logic">电力电缆/特高压附件，湖南板块连板活口（2连板），受益电网投资+用电高峰</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">新能股份</span> <span class="code">000595</span></td><td class="tlimit">早盘(盘初)</td><td class="num">5.02<br><span class="up">+10.09%</span></td><td class="num">57.16亿</td><td class="num">0.73亿</td><td class="logic">电力/新能源（盘初电力板块活跃即涨停），小盘弹性首板</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">新中港</span> <span class="code">605162</span></td><td class="tlimit">早盘</td><td class="num">7.68<br><span class="up">+10.03%</span></td><td class="num">34.01亿</td><td class="num">0.77亿</td><td class="logic">热电联产+供热，电力首板小盘</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">世茂能源</span> <span class="code">605028</span></td><td class="tlimit">早盘</td><td class="num">24.37<br><span class="up">+10.02%</span></td><td class="num">38.99亿</td><td class="num">0.59亿</td><td class="logic">热电联产，电力首板小盘</td></tr>
+    </tbody>
+  </table>
+  <div class="note">电力为<b>今日逆势最强主线</b>。催化=① 7/10全国用电负荷创历史新高15.18亿千瓦、入夏20余省级电网负荷屡创新高；② 8/1绿电强制考核落地（三条路径）；③ 中信建投：机构电力持仓处近年低位、"股价低位+筹码结构好"构成向上弹性。龙头<b>立新能源5连板</b>（全市场连板数最高）、<b>华银电力4连板</b>作容量中军（成交29亿）；华电辽能(219亿)/华电能源(521亿)3天2板反包、乐山电力4日3板，后排小盘（新能/新中港/世茂/长缆）补涨。属"红利避险抱团"延续，但板块已连续多日强势、后排需防分化。</div>
+</div>
+
+<!-- ============ 板块B：有色金属/贵金属 ============ -->
+<div class="sec">
+  <div class="sechead">
+    <h2>二、有色金属 / 贵金属（"煤飞色舞"·黄金突破4120·避险）</h2>
+    <div class="badges"><span class="cnt">涨停 3 只</span><span class="b-red">情绪龙头：盛达资源</span><span class="b-yel">中军：山金国际</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>连板</th><th>个股</th><th>涨停时间</th><th class="num">现价/涨幅</th><th class="num">总市值</th><th class="num">成交额</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td class="lb b2">2连板</td><td><span class="stk">盛达资源</span> <span class="code">000603</span><span class="mk red">龙头</span></td><td class="tlimit">早盘(午报2板)</td><td class="num">22.57<br><span class="up">+9.99%</span></td><td class="num">155.73亿</td><td class="num">9.20亿</td><td class="logic">白银/铅锌矿（贵金属），早盘晋级2连板，板块连板辨识度龙头；受益现货黄金突破4120美元/盎司、白银站上59美元，央行购金+地缘避险推升贵金属中枢</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">山金国际</span> <span class="code">000975</span><span class="mk yel">中军</span></td><td class="tlimit">午后(回封)</td><td class="num">22.52<br><span class="up">+10.01%</span></td><td class="num">624.37亿</td><td class="num">20.73亿</td><td class="logic">黄金矿（山东黄金系），午后回封涨停，板块容量中军（624亿）；龙虎榜遭4家机构卖1.33亿、1家买6217万（机构分歧），获游资成都北一环买1.01亿</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">招金黄金</span> <span class="code">000506</span></td><td class="tlimit">盘中</td><td class="num">13.02<br><span class="up">+9.97%</span></td><td class="num">120.96亿</td><td class="num">10.90亿</td><td class="logic">黄金矿（招金矿业系），跟涨贵金属主线</td></tr>
+    </tbody>
+  </table>
+  <div class="note">有色为<b>今日"煤飞色舞"的另一核心避险线</b>。催化=① 现货黄金日内涨超1%突破<b>4120美元/盎司</b>、现货白银站上59美元；② 沪锡期货主力+2%；③ 全球能源转型+AI算力基建驱动铜铝需求、供给受品位下降制约→供需中长期偏紧；④ 全球央行购金延续。龙头<b>盛达资源2连板</b>（白银辨识度），<b>山金国际(624亿)</b>作容量中军（机构分歧+游资主导）；招金黄金补涨。注：午间赤峰黄金、兴业银锡曾2连板，但收盘未封板（冲高回落），不计入涨停名单。</div>
+</div>
+
+<!-- ============ 板块C：算力租赁/国资云 ============ -->
+<div class="sec">
+  <div class="sechead">
+    <h2>三、算力租赁 / 国资云（腾讯国产算力催化 · 局部活跃）</h2>
+    <div class="badges"><span class="cnt">涨停 4 只</span><span class="b-red">情绪龙头：美利云</span><span class="b-yel">中军：利通电子</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>连板</th><th>个股</th><th>涨停时间</th><th class="num">现价/涨幅</th><th class="num">总市值</th><th class="num">成交额</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td class="lb b3">3连板</td><td><span class="stk">美利云</span> <span class="code">000815</span><span class="mk red">龙头</span></td><td class="tlimit">盘中(换手)</td><td class="num">16.13<br><span class="up">+10.03%</span></td><td class="num">112.15亿</td><td class="num">14.48亿</td><td class="logic">国资云（中国诚通）+算力租赁，晋级3连板；催化：腾讯云高管WAIC表态"大规模部署国产化算力、2026Q4上线NPO近封装光学超级节点"，算力租赁供需失衡叙事强化</td></tr>
+      <tr><td class="lb b2">2连板</td><td><span class="stk">利通电子</span> <span class="code">603629</span><span class="mk yel">中军</span></td><td class="tlimit">盘中</td><td class="num">118.34<br><span class="up">+10.00%</span></td><td class="num">433.99亿</td><td class="num">14.97亿</td><td class="logic">GPU算力租赁（AI算力调度），2连板，板块容量中军；收盘封单资金3.98亿（全市场第二）</td></tr>
+      <tr><td class="lb b2">2连板</td><td><span class="stk">证通电子</span> <span class="code">002197</span></td><td class="tlimit">盘中</td><td class="num">6.97<br><span class="up">+9.94%</span></td><td class="num">42.82亿</td><td class="num">1.35亿</td><td class="logic">金融IT+IDC算力，2连板，收盘封单量2168万股（全市场第二，仅次于爱丽家居）</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">群兴玩具</span> <span class="code">002575</span></td><td class="tlimit">一字(09:25)</td><td class="num">4.83<br><span class="up">+10.02%</span></td><td class="num">29.78亿</td><td class="num">0.74亿</td><td class="logic">玩具+算力租赁转型，一字涨停首板</td></tr>
+    </tbody>
+  </table>
+  <div class="note">算力租赁为<b>科技线中"连板活口"最完整的分支</b>（美利云3板+利通/证通2板+群兴一字），但整体属"局部活跃"而非板块级爆发——其他算力股（紫光股份、铜牛信息、宏景科技、首都在线）冲高回落未封。催化=腾讯云国产化算力部署表态。龙头<b>美利云3连板</b>，<b>利通电子(433亿)</b>作容量中军（封单3.98亿全市场第二）。属科技退潮中的"连板抱团"分支，持续性看美利云能否继续打开高度。</div>
+</div>
+
+<!-- ============ 板块D：超节点/AI算力硬件 ============ -->
+<div class="sec">
+  <div class="sechead">
+    <h2>四、超节点 / AI算力硬件（国产TPU集群·WAIC催化）</h2>
+    <div class="badges"><span class="cnt">涨停 3 只</span><span class="b-red">情绪龙头：共进股份</span><span class="b-yel">中军：华勤技术</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>连板</th><th>个股</th><th>涨停时间</th><th class="num">现价/涨幅</th><th class="num">总市值</th><th class="num">成交额</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td class="lb b3">4天3板</td><td><span class="stk">共进股份</span> <span class="code">603118</span><span class="mk red">龙头</span></td><td class="tlimit">早盘</td><td class="num">16.42<br><span class="up">+9.98%</span></td><td class="num">129.27亿</td><td class="num">18.13亿</td><td class="logic">交换机/通信+超节点（国产TPU智算集群），早盘晋级4天3板（2连板），超节点概念连板活口标杆。催化：WAIC期间杭州电信+中兴+中昊芯英建成华东首座国产TPU千卡智算集群</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">华勤技术</span> <span class="code">603296</span><span class="mk yel">中军</span></td><td class="tlimit">盘中</td><td class="num">87.67<br><span class="up">+10.00%</span></td><td class="num">1329.25亿</td><td class="num">24.18亿</td><td class="logic">ODM龙头+AI服务器/消费电子，涨停首板，超节点容量中军（1329亿）</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">瑞斯康达</span> <span class="code">603803</span></td><td class="tlimit">盘中</td><td class="num">10.07<br><span class="up">+10.05%</span></td><td class="num">42.79亿</td><td class="num">2.22亿</td><td class="logic">通信设备/算力网络，跟涨超节点线</td></tr>
+    </tbody>
+  </table>
+  <div class="note">超节点为<b>WAIC催化的AI硬件分支</b>。催化=国产TPU千卡智算集群落成+腾讯NPO超级节点表态。龙头<b>共进股份4天3板</b>（交换机辨识度），<b>华勤技术(1329亿)</b>作容量中军。注：紫光股份（午间一度2连板）、中兴通讯（一度触及涨停）、星网锐捷（获6家机构买6亿+深股通卖2.12亿，触及涨停未封）、锐捷网络/菲菱科思/裕太微等大幅冲高但<b>收盘均未封板</b>，属"冲高回落"而非涨停，反映科技线午后整体跳水。</div>
+</div>
+
+<!-- ============ 板块E：半导体/芯片 ============ -->
+<div class="sec">
+  <div class="sechead">
+    <h2>五、半导体 / 芯片（SEMI+台积电涨价·设备续强·但分化）</h2>
+    <div class="badges"><span class="cnt">涨停 3+ 只</span><span class="b-red">情绪龙头：托伦斯</span><span class="b-yel">中军：瑞芯微</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>连板</th><th>个股</th><th>涨停时间</th><th class="num">现价/涨幅</th><th class="num">总市值</th><th class="num">成交额</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td class="lb b2">20cm·2连板</td><td><span class="stk">托伦斯</span> <span class="code">301583</span><span class="mk red">龙头</span></td><td class="tlimit">早盘(午报2板)</td><td class="num">158.71<br><span class="up">+20.00%</span></td><td class="num">294.37亿</td><td class="num">26.07亿</td><td class="logic">半导体设备零部件，走出20cm二连板，板块弹性辨识度龙头；龙虎榜获中信证券上海溧阳路买8456万。催化：SEMI预计2026全球设备销售+23.2%至1659亿美元、2028创2295亿新高；台积电拟上调制程价格最高10%</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">瑞芯微</span> <span class="code">603893</span><span class="mk yel">中军</span></td><td class="tlimit">午后(反弹)</td><td class="num">228.86<br><span class="up">+10.00%</span></td><td class="num">967.96亿</td><td class="num">83.37亿</td><td class="logic">SoC/AIoT芯片（国产算力），涨停首板，板块容量中军（968亿、成交83亿，主力净流入27亿）</td></tr>
+      <tr><td class="lb b2">2连板</td><td><span class="stk">大为股份</span> <span class="code">002213</span></td><td class="tlimit">盘中</td><td class="num">27.49<br><span class="up">+10.00%</span></td><td class="num">65.31亿</td><td class="num">2.40亿</td><td class="logic">存储芯片(DRAM)+汽车电子，2连板，存储反弹活口（存储板块整体今日分化回落）</td></tr>
+    </tbody>
+  </table>
+  <div class="note">半导体为<b>昨日"奇迹日"主线，今日剧烈分化</b>：仅<b>托伦斯20cm 2连板</b>（设备零部件辨识度龙头）、<b>瑞芯微(968亿)</b>封板作容量中军、大为股份2连板（存储活口）；而北方华创/兆易创新/紫光股份冲高回落、中际旭创指-6%、PCB中国巨石跌停、铜冠铜箔-10%。催化仍在（SEMI+23.2%、台积电涨价），但获利盘巨大+科技午后跳水，属"首板/连板分化退潮"，需次日承接验证。</div>
+</div>
+
+<!-- ============ 板块F：煤炭 ============ -->
+<div class="sec">
+  <div class="sechead">
+    <h2>六、煤炭 / 能源（"煤飞色舞"·高温+红利）</h2>
+    <div class="badges"><span class="cnt">涨停 1 只</span><span class="b-red">情绪龙头/中军：大有能源</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>连板</th><th>个股</th><th>涨停时间</th><th class="num">现价/涨幅</th><th class="num">总市值</th><th class="num">成交额</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td class="lb b4">7天4板</td><td><span class="stk">大有能源</span> <span class="code">600403</span><span class="mk red">龙头</span></td><td class="tlimit">盘中</td><td class="num">5.70<br><span class="up">+10.04%</span></td><td class="num">136.28亿</td><td class="num">8.14亿</td><td class="logic">河南焦煤（高分红红利），晋级7天4板，煤炭线连板高度标的；受益"煤飞色舞"行情（高温用电高峰+红利避险），板块涨幅居前</td></tr>
+    </tbody>
+  </table>
+  <div class="note">煤炭为<b>"煤飞色舞"的红利避险分支</b>。催化=高温用电负荷新高+红利低估值避险。仅<b>大有能源7天4板</b>晋级（板块连板高度），辽宁能源等跟涨但未封板。属红利主线在科技退潮日的资金避险去处。</div>
+</div>
+
+<!-- ============ 板块G：化工/涨价 ============ -->
+<div class="sec">
+  <div class="sechead">
+    <h2>七、化工 / 涨价（甲醇·环保·化肥 · 4只）</h2>
+    <div class="badges"><span class="cnt">涨停 5 只</span><span class="b-red">情绪龙头：金牛化工</span><span class="b-yel">中军：惠城环保</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>连板</th><th>个股</th><th>涨停时间</th><th class="num">现价/涨幅</th><th class="num">总市值</th><th class="num">成交额</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td class="lb b3">4天3板</td><td><span class="stk">金牛化工</span> <span class="code">600722</span><span class="mk red">龙头</span></td><td class="tlimit">盘中</td><td class="num">9.91<br><span class="up">+9.99%</span></td><td class="num">67.42亿</td><td class="num">13.30亿</td><td class="logic">甲醇（煤化工），晋级4天3板，化工连板辨识度龙头；受益化工板块活跃+产品涨价预期</td></tr>
+      <tr><td class="lb f">20cm</td><td><span class="stk">惠城环保</span> <span class="code">300779</span><span class="mk yel">中军</span></td><td class="tlimit">盘中</td><td class="num">69.12<br><span class="up">+20.00%</span></td><td class="num">205.50亿</td><td class="num">17.27亿</td><td class="logic">废塑料裂解/资源循环（环保），20cm涨停，板块容量中军（205亿）；龙虎榜获量化开源西安太华路买6573万</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">天安新材</span> <span class="code">603725</span></td><td class="tlimit">盘中</td><td class="num">13.48<br><span class="up">+10.04%</span></td><td class="num">41.09亿</td><td class="num">5.32亿</td><td class="logic">高分子复合材料/汽车内饰，化工首板</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">西大门</span> <span class="code">605155</span></td><td class="tlimit">盘中</td><td class="num">12.77<br><span class="up">+9.99%</span></td><td class="num">24.43亿</td><td class="num">0.41亿</td><td class="logic">遮阳材料/窗饰（建材化工），首板小盘</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">东方铁塔</span> <span class="code">002545</span></td><td class="tlimit">盘中</td><td class="num">18.13<br><span class="up">+10.01%</span></td><td class="num">225.55亿</td><td class="num">5.47亿</td><td class="logic">钢结构+钾肥（氯化钾资源），资源/化肥属性首板</td></tr>
+    </tbody>
+  </table>
+  <div class="note">化工为<b>涨价+资源属性的分散涨停线</b>。龙头<b>金牛化工4天3板</b>（甲醇辨识度），<b>惠城环保(205亿)</b>作20cm容量中军（废塑料裂解/资源循环）。东方铁塔（钾肥资源）、天安新材、西大门补涨。属事件/涨价驱动的轮动分支。</div>
+</div>
+
+<!-- ============ 板块H：医药/医疗 ============ -->
+<div class="sec">
+  <div class="sechead">
+    <h2>八、医药 / 医疗（前主线退潮后的活口修复 · 6只）</h2>
+    <div class="badges"><span class="cnt">涨停 6 只</span><span class="b-red">情绪龙头：海南海药</span><span class="b-yel">中军：罗欣药业</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>连板</th><th>个股</th><th>涨停时间</th><th class="num">现价/涨幅</th><th class="num">总市值</th><th class="num">成交额</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td class="lb f">首板</td><td><span class="stk">海南海药</span> <span class="code">000566</span><span class="mk red">龙头</span></td><td class="tlimit">盘中/午后</td><td class="num">5.21<br><span class="up">+9.92%</span></td><td class="num">67.59亿</td><td class="num">7.19亿</td><td class="logic">医药（海南+细胞治疗+前高标活口），首板修复；前几日医药主线退潮，海南海药为少数辨识度活口</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">罗欣药业</span> <span class="code">002793</span><span class="mk yel">中军</span></td><td class="tlimit">盘中</td><td class="num">4.94<br><span class="up">+10.02%</span></td><td class="num">53.73亿</td><td class="num">2.11亿</td><td class="logic">化药/创新药，医药容量中军首板</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">汉森制药</span> <span class="code">002412</span></td><td class="tlimit">盘中</td><td class="num">6.71<br><span class="up">+10.00%</span></td><td class="num">33.76亿</td><td class="num">2.48亿</td><td class="logic">中药/消化，湖南医药首板</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">益佰制药</span> <span class="code">600594</span></td><td class="tlimit">盘中</td><td class="num">3.56<br><span class="up">+9.88%</span></td><td class="num">27.92亿</td><td class="num">1.11亿</td><td class="logic">中药/抗肿瘤，医药首板</td></tr>
+      <tr><td class="lb f">20cm</td><td><span class="stk">五洲医疗</span> <span class="code">301234</span></td><td class="tlimit">盘中</td><td class="num">40.80<br><span class="up">+20.00%</span></td><td class="num">27.74亿</td><td class="num">0.22亿</td><td class="logic">医疗器械（注射器/穿刺），20cm涨停，收盘封单资金4.22亿（全市场第一）</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">哈三联</span> <span class="code">002900</span></td><td class="tlimit">盘中</td><td class="num">11.00<br><span class="up">+10.00%</span></td><td class="num">34.80亿</td><td class="num">0.98亿</td><td class="logic">医美/注射填充（透明质酸），医药首板</td></tr>
+    </tbody>
+  </table>
+  <div class="note">医药为<b>前主线（创新药/CRO）退潮后的活口修复</b>，今日无连板、均为首板。龙头<b>海南海药</b>（前高标辨识度活口），<b>罗欣药业(53亿)</b>作容量中军；五洲医疗20cm（封单资金全市场第一4.22亿）。属"退潮期超跌修复"，非板块性行情，持续性弱于电力/有色。</div>
+</div>
+
+<!-- ============ 板块I：油气/资源 ============ -->
+<div class="sec">
+  <div class="sechead">
+    <h2>九、油气 / 资源（油服 · 1只）</h2>
+    <div class="badges"><span class="cnt">涨停 1 只</span><span class="b-red">情绪龙头/中军：中曼石油</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>连板</th><th>个股</th><th>涨停时间</th><th class="num">现价/涨幅</th><th class="num">总市值</th><th class="num">成交额</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td class="lb b2">3天2板</td><td><span class="stk">中曼石油</span> <span class="code">603619</span><span class="mk red">龙头</span></td><td class="tlimit">盘中</td><td class="num">21.34<br><span class="up">+10.00%</span></td><td class="num">98.66亿</td><td class="num">10.00亿</td><td class="logic">油服/钻井工程（新疆油气），收3天2板（反包），油气线连板活口；受益国际油价高位+国内油气增储上产+地缘避险</td></tr>
+    </tbody>
+  </table>
+  <div class="note">油气为<b>红利/资源避险的延伸分支</b>。催化=国际油价高位+地缘避险+国内增储上产。仅<b>中曼石油3天2板</b>晋级（板块连板活口）。中国海油等权重跟涨未封板。属红利主线的边缘补充。</div>
+</div>
+
+<!-- ============ 板块J：其他独立题材 ============ -->
+<div class="sec">
+  <div class="sechead">
+    <h2>十、其他独立题材（股权·连板活口·20cm·分散 · 11只）</h2>
+    <div class="badges"><span class="cnt">连板+20cm</span><span class="b-red">情绪龙头：艾艾精工</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>连板</th><th>个股</th><th>涨停时间</th><th class="num">总市值</th><th class="num">成交额</th><th>涨停逻辑（细分方向）</th></tr></thead>
+    <tbody>
+      <tr><td class="lb b6">12天8板</td><td><span class="stk">艾艾精工</span> <span class="code">603580</span><span class="mk red">龙头</span></td><td class="tlimit">盘中</td><td class="num">52.31亿</td><td class="num">6.28亿</td><td class="logic">股权转让/独立高标（轻型输送带+重组预期），全市场最高标（界面：12天8板；财联社：7天5板），独立抱团辨识度</td></tr>
+      <tr><td class="lb b2">2连板</td><td><span class="stk">长裕集团</span> <span class="code">603407</span></td><td class="tlimit">盘中</td><td class="num">262.43亿</td><td class="num">1.22亿</td><td class="logic">独立连板活口（5天3板），细分方向待补充</td></tr>
+      <tr><td class="lb b2">2连板</td><td><span class="stk">爱丽家居</span> <span class="code">603221</span></td><td class="tlimit">一字(09:25)</td><td class="num">28.29亿</td><td class="num">≈0.01亿*</td><td class="logic">家居+外销，一字涨停，收盘封单量2177万股（全市场第一）</td></tr>
+      <tr><td class="lb f">20cm</td><td><span class="stk">创业黑马</span> <span class="code">300688</span></td><td class="tlimit">盘中</td><td class="num">41.86亿</td><td class="num">5.53亿</td><td class="logic">创业服务+数字经济/AI，20cm首板</td></tr>
+      <tr><td class="lb f">20cm</td><td><span class="stk">星辉环材</span> <span class="code">300834</span></td><td class="tlimit">盘中</td><td class="num">73.77亿</td><td class="num">2.22亿</td><td class="logic">聚苯乙烯（化工新材料），20cm首板</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">海通发展</span> <span class="code">603162</span></td><td class="tlimit">盘中</td><td class="num">155.17亿</td><td class="num">3.34亿</td><td class="logic">干散货航运（周期），首板</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">国安股份</span> <span class="code">000839</span></td><td class="tlimit">盘中</td><td class="num">103.48亿</td><td class="num">4.44亿</td><td class="logic">信息服务/国资（中信国安系），首板</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">中电电机</span> <span class="code">603988</span></td><td class="tlimit">盘中</td><td class="num">36.71亿</td><td class="num">2.11亿</td><td class="logic">大中型电机（风电/工业），首板</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">华通线缆</span> <span class="code">605196</span></td><td class="tlimit">盘中</td><td class="num">151.40亿</td><td class="num">7.50亿</td><td class="logic">电线电缆（出海），首板</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">金字火腿</span> <span class="code">002515</span></td><td class="tlimit">盘中</td><td class="num">99.03亿</td><td class="num">9.33亿</td><td class="logic">火腿/食品（中报预期），首板</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">日丰股份</span> <span class="code">002953</span></td><td class="tlimit">盘中</td><td class="num">48.47亿</td><td class="num">1.70亿</td><td class="logic">橡套电缆（家电/新能源），首板</td></tr>
+    </tbody>
+  </table>
+  <div class="note">上述为分散独立题材与连板活口，多未形成强板块联动。<b>艾艾精工12天8板</b>为全市场最高标（股权/独立，非板块主线）。封单量居前：<b>爱丽家居2177万股（全市场第一，一字板）</b>、证通电子2168万股、立新能源2151万股。封单资金居前：五洲医疗4.22亿、利通电子3.98亿、爱丽家居2.52亿。市值/成交额取自行情快照（爱丽家居为缩量一字，成交极低，已标*）。</div>
+</div>
+
+<!-- ============ 风险专区 ============ -->
+<div class="warn">
+  <h2>⚠ 风险专区（决定次日情绪）</h2>
+  <ul>
+    <li><b>科技线剧烈分化·午后跳水</b>：昨日"奇迹日"主线（半导体/CPO/PCB）今日大幅退潮——德明利<b>8天6次跌停</b>、中国巨石跌停、铜冠铜箔-10%、中际旭创-6%、新易盛-7%；北方华创/兆易创新/紫光股份冲高回落。仅托伦斯(20cm 2板)/瑞芯微等少数活口，板块级持续性存疑。</li>
+    <li><b>普跌+高炸板率</b>：超3800只个股下跌（仅28.7%翻红），<b>封板率仅56%、炸板率超40%</b>，较昨日94%封板率断崖式回落——追高亏钱效应显著，量化/游资日内套利特征明显。</li>
+    <li><b>连板主线"高低切"至避险</b>：连板高度由昨日科技（哈药8天6板/半导体首板潮）切换为今日<b>电力(立新能源5板)/有色(盛达资源)/煤炭(大有能源)/油气(中曼石油)</b>红利避险线；<b>艾艾精工12天8板(股权)</b>为最高标但无板块带动。若红利线明日分歧，市场或陷入"无主线混沌"。</li>
+    <li><b>缩量3037亿·量能不足</b>：成交2.65万亿较昨日缩量逾3000亿，反弹持续性存疑；外围（韩国指数A股午休后转弱）诱发部分资金离场，需增量资金承接获利盘。</li>
+    <li><b>连板中位断层</b>：纯连板仅12只且集中在"5板→4板→3板→2板"，3天2板/4日3板多为反包；2-3板中位股稀少，一旦高标（立新能源/华银/美利云）断板，梯队易坍塌。</li>
+    <li><b>涨停时间多为推断</b>：除群兴玩具/爱丽家居(一字09:25)、立新能源(盘初)、华银电力(尾盘)、山金国际(午后回封)外，多数首板涨停时刻依板块启动与资讯推断，排序以"连板优先、一字>早盘>盘中>午后>尾盘"为序，非精确秒级；赤峰黄金/兴业银锡/紫光股份/中兴通讯/星网锐捷等为"冲高未封"，未计入涨停名单。</li>
+  </ul>
+</div>
+
+<footer>
+  <b>情绪结论：</b>指数走势分化（沪+0.07%/深-1.42%/<b>创-3.23%</b>/科创-2.26%），成交<b>2.65万亿</b>缩量3037亿，全市场<b>约46股涨停、9-10股跌停、封板率56%、炸板率>40%、超3800股下跌</b>，属<b>"电力/有色(黄金)/煤炭/油气避险抱团连板 + 科技(存储/PCB/CPO)午后跳水"的冰火两重天·分化退潮日</b>。连板高度<b>艾艾精工12天8板（股权·独立）> 立新能源5连板 > 华银电力4连板 > 大有能源7天4板 > 美利云3连板</b>，晋级率60%。板块龙头：<b>电力=立新能源(5板)/华银电力(4板中军)</b>、<b>有色=盛达资源(2板)/山金国际(624亿中军)</b>、<b>算力=美利云(3板)/利通电子(433亿中军)</b>、<b>超节点=共进股份(4天3板)/华勤技术(1329亿中军)</b>、<b>半导体=托伦斯(20cm 2板)/瑞芯微(968亿中军)</b>、<b>煤炭=大有能源(7天4板)</b>、<b>化工=金牛化工(4天3板)/惠城环保(205亿中军)</b>、<b>油气=中曼石油(3天2板)</b>。情绪温度计40%，较昨日"奇迹日"78%大幅回落，定性为"轮动混沌·结构性避险抱团"。<br>
+  <b>明日博弈焦点：</b>① 避险主线（电力/有色/煤炭/油气）能否延续（立新能源5板/华银4板/大有能源7天4板/盛达资源2板能否继续），还是"一日游"；② 科技线（半导体/超节点/算力）能否修复（托伦斯/瑞芯微/美利云/共进股份活口表态），还是延续退潮；③ 全市场最高标艾艾精工12天8板（股权独立）对盘面的带动与分歧；④ 量能（2.65万亿缩量3000亿）能否回补，决定抱团能否持续；⑤ 跌停股（德明利8天6跌停/中国巨石等）是否止跌，科技亏钱效应是否扩散。<br><br>
+  <span class="src">数据来源：财联社《7月22日午报/收评·涨停分析》（早盘51涨停/封板率80%/连板16家、收盘46涨停/封板率56%/连板12家、立新能源5板/华银4板/美利云3板/艾艾精工7天5板、有色贵金属/电力/超节点/半导体设备板块异动）、界面新闻/新浪《今日涨跌停股分析》（48涨停/9跌停、连板清单含艾艾精工12天8板/立新能源5板/大有能源7天4板/长裕集团5天3板/共进股份·金牛化工4天3板/美利云3板/华电辽能·中曼石油3天2板）、21财经（南方财经）《7月22日连板股分析》（46涨停/连板12只/三连板及以上3只/晋级率60%/炸板率>40%）、证券时报·数据宝《涨停股复盘》（48涨停、主板42/北交所1/创业板5、行业公用事业8/医药6/电子5居前、封单量爱丽家居2177万股/证通电子2168万/立新能源2151万、封单资金五洲医疗4.22亿/利通电子3.98亿/爱丽环保2.52亿）、每经/新浪/中新经纬《7月22日A股收评》（沪3867.03+0.07%/深14061.44-1.42%/创3566.73-3.23%/科创综指-2.25%、成交26533亿缩量3037亿、1530涨/3876跌、48涨停9跌停）、东方财富/同花顺行情指标结构化快照（46只非ST涨停股的07-22收盘总市值·成交金额，已逐支换算亿；连板连续天数：立新能源5/华银4/美利云3/利通电子·长缆科技·证通电子·共进股份·爱丽家居·大为股份·长裕集团·盛达资源·托伦斯 均2连板）。市值/成交额取自行情快照四舍五入；"涨停时间"除群兴玩具/爱丽家居(一字09:25)、立新能源(盘初)、华银电力(尾盘)、山金国际(午后回封)外多为早盘/盘中/午后(依板块启动与资讯推断)；*ST发展/云创退等ST/退市股已剔除；赤峰黄金/兴业银锡/紫光股份/中兴通讯/星网锐捷等为"冲高未封"不计入涨停名单；连板数财联社"12只"为连续连板口径，本报以"几天几板"完整列示含反包(3天2板/4日3板/7天4板/12天8板)共约15只连板/反包标的。</span><br>
+  <span class="src">⚠ 免责声明：本报告仅基于公开市场数据做客观复盘，不构成任何投资建议。股市有风险，投资需谨慎。</span>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股行情复盘 · 2026-07-16（周四·收盘版·破3900·科创再杀·普跌·触发减仓）· 星辰</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23;
+    --card:#1a1a2e;
+    --card2:#16162a;
+    --line:#2d2d44;
+    --ink:#e2e8f0;
+    --sub:#94a3b8;
+    --up:#d8392b;       /* 涨·红 (A股惯例) */
+    --down:#1a8f4c;     /* 跌·绿 */
+    --accent:#667eea;
+    --accent2:#764ba2;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.6;font-size:14px;}
+  .wrap{max-width:1060px;margin:0 auto;padding:24px 18px 64px;}
+  header{border-left:4px solid transparent;border-image:linear-gradient(180deg,var(--accent),var(--accent2)) 1;
+    padding:4px 0 4px 14px;margin-bottom:18px;}
+  header h1{font-size:22px;margin:0;font-weight:700;
+    background:linear-gradient(90deg,#a5b4fc,#c4b5fd);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  header .meta{color:var(--sub);font-size:13px;margin-top:4px;}
+  .tldr{background:linear-gradient(135deg,#1a1a2e,#16162a);border:1px solid var(--line);border-radius:12px;
+    padding:16px 18px;margin-bottom:18px;box-shadow:0 4px 18px rgba(0,0,0,.35);}
+  .tldr h2{margin:0 0 8px;font-size:15px;color:#a5b4fc;}
+  .tldr ul{margin:0;padding-left:18px;}
+  .tldr li{margin:5px 0;color:#cbd5e1;}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:780px){.grid{grid-template-columns:1fr;}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 18px;box-shadow:0 4px 18px rgba(0,0,0,.30);margin-bottom:16px;}
+  .card h3{margin:0 0 12px;font-size:15px;display:flex;align-items:center;gap:8px;color:#e2e8f0;}
+  .card h3::before{content:"";width:6px;height:16px;background:linear-gradient(180deg,var(--accent),var(--accent2));
+    border-radius:2px;display:inline-block;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);}
+  th{color:var(--sub);font-weight:600;}
+  .up{color:var(--up);font-weight:600;}
+  .down{color:var(--down);font-weight:600;}
+  .flat{color:var(--sub);}
+  #idxChart,#capChart,#gaugeChart,#leadChart,#marginChart{width:100%;height:300px;}
+  #gaugeChart{height:240px;}
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+  @media(max-width:780px){.kpis{grid-template-columns:1fr 1fr;}}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:14px;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,.30);}
+  .kpi .v{font-size:20px;font-weight:700;}
+  .kpi .k{font-size:12px;color:var(--sub);margin-top:2px;}
+  .note{background:rgba(26,143,76,.10);border:1px solid rgba(26,143,76,.40);border-radius:10px;
+    padding:10px 14px;color:#7ee0a3;font-size:13px;margin:10px 0;}
+  .note.danger{background:rgba(216,57,43,.10);border-color:rgba(216,57,43,.40);color:#ff9d8a;}
+  .note.info{background:rgba(102,126,234,.10);border-color:rgba(102,126,234,.40);color:#a5b4fc;}
+  .note.warn{background:rgba(250,204,21,.10);border-color:rgba(250,204,21,.40);color:#facc15;}
+  .pill{font-size:11px;padding:2px 8px;border-radius:20px;background:rgba(102,126,234,.18);color:#a5b4fc;font-weight:600;}
+  .tag{display:inline-block;background:rgba(102,126,234,.15);color:#a5b4fc;border-radius:6px;
+    padding:1px 7px;font-size:12px;margin-right:4px;}
+  .src{font-size:12px;color:var(--sub);border-top:1px dashed var(--line);margin-top:20px;padding-top:12px;line-height:1.7;}
+  .subgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:780px){.subgrid{grid-template-columns:1fr;}}
+  .heat{display:flex;align-items:center;gap:12px;background:var(--card2);border:1px solid var(--line);
+    border-radius:10px;padding:10px 14px;margin:8px 0;}
+  .heat .bar{flex:1;height:10px;border-radius:6px;background:linear-gradient(90deg,#1a8f4c,#facc15,#d8392b);position:relative;}
+  .heat .dot{position:absolute;top:-3px;width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid #667eea;}
+  .heat .lab{font-size:12px;color:var(--sub);white-space:nowrap;}
+  .pos{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:6px;}
+  @media(max-width:780px){.pos{grid-template-columns:1fr 1fr;}}
+  .pos .p{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:12px;}
+  .pos .p h4{margin:0 0 4px;font-size:13px;color:#a5b4fc;}
+  .pos .p .big{font-size:22px;font-weight:700;}
+  .pos .p p{margin:6px 0 0;font-size:12px;color:var(--sub);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>A股行情复盘 · 2026-07-16（周四 · 收盘版 · 破3900 · 科创再杀 · 普跌 · 触发减仓）</h1>
+    <div class="meta">收盘数据更新 15:32 · 数据来源：NeoData 实时行情 + 公开资讯（腾讯自选股·一文看市 / 南方财经 / 上证报 / 财联社 / 证券之星 / 巨丰投顾 / 国金·东吴·东方·方正·财信·东兴证券）· 分析师：星辰</div>
+  </header>
+
+  <div class="note danger">⚠️ <b>破3900 · 触发减仓</b>：7/15 报告设定的「<b>破 3900 → 执行 &lt;3 成减仓</b>」条件今日被触发——上证 <b>收 3882.41（-1.85%），最低 3867.60，正式跌破 3900 强支撑</b>，且<b>连续多日位于 3970 年线下方（有效破位）</b>；<b>科创50 高开低走 -4.02%（开盘 1869.94→收盘 1846.88，最低 1828.57）</b>，半导体产业链多股跌停（兆易创新、长电科技、德明利、海星股份、格林达）。两融(7/15) <b>28874.96 亿、十连降</b>。仓位中枢由 7/15 的「3–4 成」触发下调至 <b>2–3 成（防御·破3900）</b>。</div>
+
+  <div class="tldr">
+    <h2>一句话结论（7/16 收盘）</h2>
+    <ul>
+      <li><b>破3900 · 普跌 · 科创再杀</b>：上证 <b>-1.85% 收 3882.41（最低 3867.60，跌破 3900 支撑）</b>，深成 <b>-1.97%</b>、创业 <b>-2.95%</b>、<b>科创50 -4.02%（高开低走，半导体产业链集体重挫）</b>。两市成交约 <b>2.42 万亿</b>（较 7/15 缩量 1685 亿），呈「缩量、指数弱、科技杀、午后回落」特征。</li>
+      <li><b>赚钱效应差（午后由涨转跌）</b>：午间曾「超 3200 只上涨 / 50 涨停 7 跌停」，但午后全面走弱，<b>收评全市场下跌超 2800 只（红盘约 46%）</b>；连板高度切换——<b>恒尚节能（前 12 天 11 板高度龙）断板跌停</b>，仅 <b>哈药股份 5 连板（医药）独苗</b>。情绪温度计 <b>≈43°（7/15）→ ≈35°（7/16 偏弱·破位·普跌）</b>。</li>
+      <li><b>资金：主力切向软件/AI应用与防御，半导体净流出重灾区</b>：行业主力净流入前三 <b>IT服务Ⅱ +14.06 亿、软件开发 +7.21 亿、广告营销 +6.23 亿</b>（AI应用/软件端）；<b>半导体 / 电子化学品 / CPO / 存储为绝对净流出重灾区</b>（科创50 -4.02%、多股跌停印证资金出逃，金额量级延续前日 -298 亿级别）。两融(7/15) <b>28874.96 亿、十连降、单日净减 119.43 亿</b>。</li>
+      <li><b>仓位（触发减仓 · 2–3 成 · 防御）</b>：总仓 <b>2–3 成</b>、现金 70–80%；破 3900 已触发 7/15「&lt;3 成」减仓线，<b>加仓需沪指放量站回 3970 年线 + 半导体/科创止跌反包</b>，破 3850/3800 则执行 &lt;2 成或清仓防御。</li>
+    </ul>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="v down">-1.85%</div><div class="k">上证 3882.41 · 破3900·年线下方·有效破位</div></div>
+    <div class="kpi"><div class="v down">-4.02%</div><div class="k">科创50 1846.88 · 高开低走·半导体杀</div></div>
+    <div class="kpi"><div class="v flat">≈2.42万亿</div><div class="k">两市成交 · 较7/15缩量1685亿</div></div>
+    <div class="kpi"><div class="v down">~2800+ 只</div><div class="k">下跌 · 红盘约46%（午后由涨转跌）</div></div>
+    <div class="kpi"><div class="v up">~50 / 20+ 只</div><div class="k">涨停(午间) / 跌停(午后增)·恒尚节能断板跌停</div></div>
+    <div class="kpi"><div class="v" style="color:#a5b4fc">2–3 成</div><div class="k">仓位建议 · 触发减仓·破3900</div></div>
+  </div>
+
+  <div class="card">
+    <h3>一、核心指数表现（收盘 · 上证近期点位与年线/3900支撑）</h3>
+    <div id="idxChart"></div>
+    <table>
+      <thead><tr><th>指数</th><th>收盘</th><th>涨跌幅</th><th>最高</th><th>最低</th><th>成交额</th><th>5日</th><th>年初至今</th><th>PE(TTM)</th></tr></thead>
+      <tbody>
+        <tr><td>上证指数</td><td>3882.41</td><td class="down">-1.85%</td><td>3940.45</td><td class="down">3867.60</td><td>1.124万亿</td><td class="down">-3.82%</td><td class="down">≈-2.2%</td><td>16.85 / 百分位94.81%</td></tr>
+        <tr><td>深证成指</td><td>14488.65</td><td class="down">-1.97%</td><td>14780.46</td><td class="down">14386.41</td><td>1.279万亿</td><td class="down">-5.91%</td><td class="up">≈+7.1%</td><td>35.34 / 百分位97.94%</td></tr>
+        <tr><td>创业板指</td><td>3692.46</td><td class="down">-2.95%</td><td>3796.35</td><td class="down">3658.07</td><td>5928亿</td><td class="flat">—</td><td class="up">≈+15.8%</td><td>48.20 / 百分位62.37%</td></tr>
+        <tr><td>科创50</td><td>1846.88</td><td class="down">-4.02%</td><td>1947.25</td><td class="down">1828.57</td><td>1748亿</td><td class="flat">—</td><td class="up">≈+39.1%</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <div class="note danger">⚠️ <b>年线有效破位 + 3900告破</b>：上证今日收 3882.41，<b>跌破 7/15 设定的 3900 强支撑（最低 3867.60）</b>，并连续多日位于 3970 年线下方（7/14 收 3967、7/15 收 3955、今日 3882，逐日下移），属于<b>年线有效破位</b>而非短暂刺破。科创50 高开低走 -4.02%（开盘 1869.94、最低 1828.57），半导体抱团继续瓦解。量能缩至 2.42 万亿（缩量下跌），属「指数弱、科技杀、惜售但未企稳」。</div>
+  </div>
+
+  <div class="card">
+    <h3>二、市场赚钱效应总结（情绪温度计 · 回落至偏弱·破位）</h3>
+    <div class="heat">
+      <span class="lab">冰点</span>
+      <div class="bar"><div class="dot" style="left:35%"></div></div>
+      <span class="lab">沸点</span>
+    </div>
+    <p style="margin:6px 0 4px;color:var(--sub);font-size:13px;">市场情绪温度计：<b style="color:#fb923c">≈43°（7/15 偏弱·分歧）→ ≈35°（7/16 偏弱·破位·普跌）</b>。由「指数全绿、个股相对活」进一步退化为「午后全面回落、红盘翻绿」——午间曾超 3200 只上涨、50 涨停，收盘转为下跌超 2800 只，<b>恒尚节能（前高度龙 12 天 11 板）断板跌停</b>标志高位风险偏好急剧收缩。定性为「偏弱·破位·亏钱效应扩散」，逼近 7/13 冰点（22°）但尚非系统性恐慌。</p>
+    <div class="subgrid">
+      <div id="gaugeChart"></div>
+      <div id="leadChart"></div>
+    </div>
+    <table>
+      <thead><tr><th>赚钱效应信号</th><th>今日表现</th><th>解读</th></tr></thead>
+      <tbody>
+        <tr><td>红盘广度</td><td class="down">下跌超 2800 只（红盘约 46%）</td><td class="flat">午间曾超 3200 涨，午后全面回落翻绿——典型「冲高回落、午后杀跌」结构</td></tr>
+        <tr><td>涨停 / 跌停</td><td class="up">午间涨停 50 只 / 跌停 7 只</td><td class="down">午后跌停增多（半导体多股跌停、恒尚节能断板跌停），收盘跌停升至 20 余只，封板质量下降</td></tr>
+        <tr><td>连板高度</td><td class="up">哈药股份 5 连板 · 艾艾精工 8天6板</td><td class="down">前高度龙恒尚节能断板跌停（12天11板→-10%），题材接力退潮、仅医药独苗抱团</td></tr>
+        <tr><td>主线结构</td><td class="up">影视院线 / 创新药 / 端侧AI / 农业</td><td class="up">医药（哈药5板、博瑞+19.92%、片仔癀涨停）、影视（儒意电影2板）、端侧AI（格林精密20cm）逆势；半导体/科创集体杀</td></tr>
+        <tr><td>量能</td><td class="flat">两市 ≈2.42万亿 · 缩量1685亿</td><td class="flat">缩量下跌——抛压较7/15收敛但承接更弱，无量企稳、午后资金加速离场</td></tr>
+      </tbody>
+    </table>
+    <div class="note info">赚钱效应本质：今日是「<b>指数与科技弱、午后全面转跌、个股由涨翻绿</b>」的普跌日，与 7/15「指数弱但多数个股仍红」的结构市不同——今日风险偏好进一步收缩。资金在「去高拥挤科技、切政策/业绩确定性防御」：<b>创新药/CXO（哈药5板、博瑞/昭衍新药/片仔癀）+ 影视院线（儒意电影2板、上海电影、欢瑞世纪）+ 端侧AI（7款手机端侧AI备案 + WAIC 7/17–20 催化，格林精密20cm）+ 农业养殖</b> 逆势走强；半导体/CPO/存储/电子化学品继续被抛售。属「高低切 + 避险」深化。</div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>三、今日领涨方向（行业 / 概念）</h3>
+      <table>
+        <thead><tr><th>方向</th><th>涨幅</th><th>驱动</th></tr></thead>
+        <tbody>
+          <tr><td>影视院线</td><td class="up">+5.23%</td><td>儒意电影2连板、上海电影/欢瑞世纪涨停、光线传媒+9.52%</td></tr>
+          <tr><td>专业连锁Ⅱ</td><td class="up">+5.12%</td><td>博士眼镜+11.52%、新华百货涨停，大消费低位修复</td></tr>
+          <tr><td>广告营销</td><td class="up">+3.09%</td><td>电声股份+19.97%、智度股份2连板（AI营销）</td></tr>
+          <tr><td>养殖业 / 饲料</td><td class="up">+2.63% / +2.42%</td><td>温氏股份+4.33%、天康生物+7.63%，农业防御属性</td></tr>
+          <tr><td>乘用车</td><td class="up">+2.14%</td><td>比亚迪+2.59%，低位蓝筹托底</td></tr>
+          <tr><td>创新药 / 端侧AI</td><td class="up">博瑞+19.92% / 格林精密20cm</td><td>7款手机端侧AI备案 + WAIC催化；哈药5板、昭衍新药一字涨停、片仔癀涨停</td></tr>
+        </tbody>
+      </table>
+      <div class="note">盘面核心：<b>① 创新药/CXO 延续强势</b>——哈药股份 5 连板、博瑞医药 +19.92%、昭衍新药一字涨停、片仔癀涨停、常山药业/塞力医疗/润达医疗涨停；驱动为「国家药监局：1–6月创新药对外授权81笔、总额约1100亿美元创纪录」+ 避险属性。<b>② 端侧AI 升温</b>——7/15 七款手机端侧生成式AI备案（苹果/华为/OPPO/vivo/小米/三星/努比亚），叠加 2026 WAIC（7/17–20 上海）催化，格林精密20cm、福蓉科技/传音控股涨停。<b>③ 影视院线</b>低开高走（儒意电影2板、上海电影、欢瑞世纪、光线传媒）。<b>④ 市场监管总局发布508项国标</b>（AI/机器人/智能工厂）长期利好但短期难挡科技杀跌。</div>
+    </div>
+
+    <div class="card">
+      <h3>四、今日弱势 / 退潮方向（再杀）</h3>
+      <table>
+        <thead><tr><th>方向</th><th>特征</th><th>代表</th></tr></thead>
+        <tbody>
+          <tr><td>半导体产业链</td><td class="down">多股跌停 · 科创50 -4.02%</td><td>兆易创新、长电科技、德明利跌停，江丰电子/利扬芯片/成都华微/国科微跌超10%</td></tr>
+          <tr><td>电子化学品</td><td class="down">板块重挫</td><td>海星股份、格林达跌停，三孚新科/瑞联新材/安集科技跌幅居前</td></tr>
+          <tr><td>存储芯片 / CPO</td><td class="down">跌幅居前</td><td>算力硬件抱团延续瓦解，前期强势细分集体回撤</td></tr>
+          <tr><td>油气 / 煤炭</td><td class="down">周期补跌</td><td>科力股份/通源石油领跌，昊华能源领跌煤炭</td></tr>
+          <tr><td>保险 / 证券</td><td class="down">金融权重回调</td><td>华安证券领跌券商，保险板块拖累指数</td></tr>
+        </tbody>
+      </table>
+      <div class="note danger">⚠️ <b>科技去杠杆未结束 · 全球共振</b>：今日杀跌由「高位半导体/科创」主导——科创50 高开低走 -4.02%，半导体多股跌停，与 7/9 半导体 +326 亿（史级流入）后的连续兑现一脉相承（7/10 -269亿、7/15 -298.6亿、7/16 延续）。国金证券指出：<b>A股及海外科技股大幅调整，直接触发因素在于海外交易端去杠杆</b>——韩股融资余额两周内由 64.9 万亿韩元降至 60.8 万亿韩元、日股融资额明显下降，A股间接跟随。叠加美6月CPI低预期但沃什强调对高通胀"零容忍"、中东局势未平，<b>输入性通胀与去杠杆共振，抱团瓦解仍在进程中</b>。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>五、资金流向分析（主力净流入 + 两融）</h3>
+    <p style="margin:0 0 6px;color:var(--sub);font-size:13px;">① 行业主力净流入 TOP3（亿元，红=净流入；科技去杠杆下仅软件/AI应用端获资金，半导体为净流出重灾区）：</p>
+    <div id="capChart"></div>
+    <div class="note danger">① <b>主力猛撤科技、切向软件/AI应用与防御</b>：行业主力净流入仅 <b>IT服务Ⅱ +14.06 亿、软件开发 +7.21 亿、广告营销 +6.23 亿</b>（AI应用/软件端抱团）；<b>半导体 / 电子化学品 / CPO / 存储为绝对净流出重灾区</b>——科创50 高开低走 -4.02%、半导体多股跌停印证资金出逃（净流出金额量级延续前日 -298 亿级别，API未单列返回精确值）。概念端：爱奇艺概念+3.94%、高压氧舱+2.84%、AI营销+2.80%、昨日首板+2.65% 逆势。资金从拥挤科技出逃，切向 <b>创新药/CXO、影视、端侧AI、农业养殖</b> 等低位/政策确定性方向。</div>
+    <p style="margin:10px 0 6px;color:var(--sub);font-size:13px;">② 两融余额走势（亿元，杠杆十连降 · 7/15 单日净减 119.43 亿）：</p>
+    <div id="marginChart"></div>
+    <div class="note warn">⚠️ <b>两融十连降 · 杠杆续撤退</b>：截至 7/15，A 股两融余额 <b>28874.96 亿</b>（占流通市值 2.86%），较上日（7/14 的 28994.39 亿）<b>净减 119.43 亿</b>；<b>十个交易日内由 7/6 的 29834 亿降至 28874.96 亿、累计净减约 959 亿</b>。7/15 两融交易额 2348.91 亿；融资余额 28663.54 亿（-117.64 亿）、融券 211.42 亿（-1.8 亿）；参与两融投资者 41.13 万（+2.31 万）。<b>7/16 当日两融次交易日（7/17）披露，最新口径为 7/15 的 28874.96 亿</b>。</div>
+  </div>
+
+  <div class="card">
+    <h3>六、仓位管理推荐（7/17 起 · 触发减仓 · 2–3 成 · 破3900防御）</h3>
+    <div class="pos">
+      <div class="p"><h4>总仓位</h4><div class="big" style="color:#a5b4fc">2–3 成</div><p>较 7/15 的 3–4 成触发下调（破3900 触发此前"&lt;3成"减仓线、年线有效破位、科创再杀、两融十连降），防御优先、不抄底高位科技。</p></div>
+      <div class="p"><h4>加仓触发</h4><div class="big up">&gt;3.5 成</div><p>沪指放量站回 3970 年线并进一步站上 4000，且半导体/科创止跌放量反包确认（非一日游），或成交&gt;2.8万亿+主线扩散。</p></div>
+      <div class="p"><h4>减仓触发</h4><div class="big down">&lt;2 成</div><p>跌破 3850（今日最低 3867.60，仅约 18 点）或连续 3 日收 3900 下方且主线无抵抗；破 3800 则清仓防御。</p></div>
+      <div class="p"><h4>现金比例</h4><div class="big" style="color:#a5b4fc">70–80%</div><p>破位+缩量+杠杆撤退，现金主导；等年线有效收复或恐慌盘衰竭后再分批回补。</p></div>
+    </div>
+    <table style="margin-top:12px">
+      <thead><tr><th>操作</th><th>具体建议</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tag">持有</span>创新药/CXO</td><td>政策+业绩+出海三催化（出海1100亿美元创纪录、38个1类新药获批、避险属性），哈药5板/博瑞/昭衍/片仔癀等可作进攻底仓，不追连续涨停的高位连板。</td></tr>
+        <tr><td><span class="tag">持有</span>低位防御</td><td>影视院线（儒意电影2板）、大消费（专业连锁/零售/白酒）、农业养殖（温氏/天康）、端侧AI（WAIC 7/17–20 催化、格林精密/福蓉科技），估值低、事件催化、作弹性+防御配置。</td></tr>
+        <tr><td><span class="tag">回避</span>高位半导体/科创</td><td>科创50 高开低走 -4.02%、半导体多股跌停，全球去杠杆共振、抱团瓦解未结束；兆易创新/长电科技/德明利/海星股份/格林达不抄底飞刀，等止跌信号。</td></tr>
+        <tr><td><span class="tag">减仓</span>破位科技权重</td><td>电子化学品/存储/CPO/元件今日由涨转跌，前期强势方向集体回撤；反弹中择机降低高位拥挤仓位、兑现收益。</td></tr>
+        <tr><td><span class="tag">节奏</span>等年线确认</td><td>上证收 3882.41 <b>跌破 3900 强支撑、连多日低于 3970 年线（有效破位）</b>；上方 3900–3970 转为压力区，下方 3850（今日低 3867.60）/3800 为后续支撑。等放量站回年线再上调中枢，破 3850 则降至 2 成以下。</td></tr>
+      </tbody>
+    </table>
+    <div class="note warn">⚠️ <b>破3900 · 触发减仓 · 防御为主</b>：沪指收盘 3882.41 已跌破 3900 强支撑、连多日位于 3970 年线下方（有效破位），上方 3900–3970 转为压力区；下方 3850（今日低 3867.60，仅约 18 点）/3800 为后续支撑。当前是「<b>破位 + 科创再杀 + 两融十连降 + 全球去杠杆共振 + 高低切避险</b>」组合，仓位中枢 <b>2–3 成、现金 70–80%</b>；明日关注 WAIC（7/17–20）端侧AI/算力方向止跌信号、美通胀与中东局势外围映射。</div>
+  </div>
+
+  <div class="card">
+    <h3>七、后市研判（7/17 起）</h3>
+    <p style="margin-top:0;color:#cbd5e1">今日复盘显示：<b>① 破3900 触发减仓</b>（收 3882.41、跌破强支撑、连多日低于 3970 年线=有效破位、最低 3867.60）；<b>② 科创50 高开低走 -4.02%、半导体多股跌停</b>，科技去杠杆+全球共振延续；<b>③ 赚钱效应差</b>（午间超3200涨→收盘下跌超2800只、恒尚节能断板跌停、哈药5板独苗）；<b>④ 两融十连降至 28874.96 亿</b>，杠杆续撤退。操作上「触发减仓 + 防御 + 结构优于总量 + 高低切避险」。</p>
+    <ul style="color:#cbd5e1">
+      <li><span class="tag">点位</span>上证收 3882.41 <b>跌破 3900 强支撑、年线有效破位</b>，3900–3970 转压力区；3850（今日低 3867.60）/3800 为后续支撑。放量站回 3970→4000 = 加仓信号；破 3850 = 执行 &lt;2 成减仓，破 3800 清仓防御。</li>
+      <li><span class="tag">量能</span>两市约 2.42 万亿、缩量 1685 亿，属「缩量下跌、惜售但未企稳、午后加速离场」。若后续放量至 2.8 万亿+且站稳年线，确认修复；若缩量滞涨或再回落破 3850，则弱势延续。</li>
+      <li><span class="tag">主线</span><b>承接方向</b>：① 创新药/CXO（政策+出海创纪录+避险，业绩确定性）；② 端侧AI/影视/大消费低位（WAIC 7/17–20 催化、估值低、修复空间）；③ 农业养殖（防御）。机构共识（东吴/东方/方正/财信/东兴）指向「科技牛市中场修整非结束、短期震荡筑底、控制仓位、等缩量企稳低吸」，但须等拥挤度与估值充分消化、半导体止跌后再布局。</li>
+      <li><span class="tag">事件</span>① 2026 世界人工智能大会 WAIC 7/17–20（上海，端侧AI/AgenticOS/Robot Phone 催化，但算力硬件今日反杀、关注会前止跌）；② 市场监管总局 7/16 发布 508 项国标（AI/机器人/智能工厂长期利好）；③ 全球去杠杆共振（韩/日融资下降）、美6月CPI低预期但沃什鹰派、中东局势未平；④ 7/16 两融次交易日（7/17）披露，最新口径 7/15 的 28874.96 亿。</li>
+    </ul>
+    <p style="margin-bottom:0;color:#cbd5e1"><b>策略</b>：<b>触发减仓、控仓、结构优于总量、高低切避险</b>；总仓 <b>2–3 成</b>、现金 70–80%；<b>持创新药/CXO 与低位防御（影视/端侧AI/消费/农业）</b>，<b>减高位未止跌的半导体/科创、兑现分化科技权重</b>。等上证放量站回 3970 年线再上调中枢，破 3850 则降至 2 成以下。</p>
+  </div>
+
+  <div class="src">
+    <b>数据来源</b>：NeoData 金融数据（7/16 四大指数实时行情与估值百分位 / 7/16 A股当日交易股票排行榜·涨跌停与连板 / 7/16 板块当日资金主力统计·行业净流入TOP3 / 7/15 两融公开口径）+ 公开资讯——腾讯自选股《A股收评：科创50指数冲高回落跌4.02%，半导体、CPO等算力硬件股领跌》（三大指数集体下跌、沪指-1.85%、深成-1.97%、创业-2.95%、科创50-4.02%、全市场成交24189亿较上日缩量1685亿、全市场超2800只个股下跌、影视院线/猪肉/文化传媒/短剧游戏/旅游酒店涨幅居前、电子化学品/半导体/存储芯片/CPO/培育钻石跌幅居前、澜起科技逼近跌停兆易创新/长电科技/德明利跌停、海星股份/格林达跌停）、腾讯自选股《快讯：科创50指数拉升翻红 AI手机概念走强》（瑞芯微涨停、格林精密20cm、福蓉科技/传音控股涨停、儒意电影/欢瑞世纪涨停）、腾讯自选股《端侧AI概念升温！创新药概念延续强势 哈药股份震撼五连板》（7款手机端侧AI备案、哈药5连板、博瑞/万邦/普蕊斯涨超10%、儒意电影2板、WAIC 7/17–20）、财联社《7月16日午间涨停分析》（午间50涨停/7跌停、连板12只、封板率82%、艾艾精工8天6板、哈药5连板）、证券之星《7月15日A股融券净卖出排行榜》与《15日两融余额较上日减少119.43亿元》（7/15 两融28874.96亿、较上日-119.43亿、占流通市值2.86%、融资28663.54亿-117.64亿、融券211.42亿、参与投资者41.13万+2.31万）、巨丰投顾/好股票《A股市场震荡调整，资金避险转向防御板块》（量能萎缩+杠杆收敛、高低切、短期数据偏弱）、国金证券（海外去杠杆传导A股科技、韩/日融资下降、沃什鹰派、中东未平）、东吴/东方/方正/财信/东兴证券机构观点（科技中场修整非结束、震荡筑底、控制仓位、创新药独立主线）、市场监管总局（7/16 发布508项国标含AI/机器人/智能工厂）。<br>
+    注：① 北向资金净买入额因交易所披露规则调整（2024-08 起），当日未单独公布；② 7/16 当日两融数据次一交易日（7/17）披露，公开口径最新为 7/15 的 28874.96 亿；③ 全市场精确涨跌家数 API 未返回全量（下跌超2800只引自腾讯自选股收评；涨停/跌停以午间财联社口径50/7、收盘半导体多股跌停+恒尚节能断板跌停估计跌停升至20余只）；④ 行业主力净流入以「板块当日资金主力统计（行业主力降序=净流入TOP）」为准，IT服务Ⅱ+14.06亿/软件开发+7.21亿/广告营销+6.23亿（金额单位亿元）；半导体/电子等净流出为绝对重灾区但精确净额API未单列返回（以科创50 -4.02% 与多股跌停定性印证，量级延续前日）；⑤ 上证/深成/创业/科创 年初至今为基于7/15口径与今日涨跌幅推算（上证≈-2.2%、深成≈+7.1%、创业≈+15.8%、科创≈+39.1%）；⑥ 以上为行情复盘与仓位参考，<b>不构成投资建议</b>。
+  </div>
+
+</div>
+<script>
+  var axisColor = '#94a3b8', splitColor = '#2d2d44';
+  var UP='#d8392b', DOWN='#1a8f4c';
+
+  // 1. 上证指数近期收盘点位（破3900·年线有效破位）
+  echarts.init(document.getElementById('idxChart')).setOption({
+    tooltip:{trigger:'axis',formatter:function(ps){return ps[0].name+'<br/>'+ps[0].marker+'上证收盘：'+ps[0].value;}},
+    grid:{left:56,right:24,top:30,bottom:30},
+    xAxis:{type:'category',data:['7/13','7/14','7/15','7/16'],axisLabel:{color:axisColor}},
+    yAxis:{type:'value',scale:true,axisLabel:{color:axisColor},splitLine:{lineStyle:{color:splitColor}}},
+    series:[{type:'line',smooth:false,data:[3913.79,3967.13,3955.58,3882.41],symbolSize:9,
+      itemStyle:{color:'#a5b4fc'},lineStyle:{width:3,color:'#a5b4fc'},
+      areaStyle:{color:'rgba(165,180,252,.10)'},
+      label:{show:true,formatter:function(p){return p.value;},color:'#e2e8f0',fontSize:11},
+      markLine:{silent:true,symbol:'none',data:[
+        {yAxis:3970,lineStyle:{color:'#d8392b',type:'dashed',width:2},label:{formatter:'年线≈3970·已破位',color:'#ff9d8a',position:'start'}},
+        {yAxis:3900,lineStyle:{color:'#facc15',type:'dashed',width:2},label:{formatter:'3900支撑·告破',color:'#facc15',position:'end'}},
+        {yAxis:4000,lineStyle:{color:'#94a3b8',type:'dotted'},label:{formatter:'4000压力',color:'#94a3b8',position:'end'}}
+      ]}}]
+  });
+
+  // 2. 情绪温度计（≈35° 偏弱·破位·普跌）
+  echarts.init(document.getElementById('gaugeChart')).setOption({
+    title:{text:'市场情绪温度计（7/16）',left:'center',top:2,textStyle:{color:'#e2e8f0',fontSize:13}},
+    series:[{type:'gauge',min:0,max:100,radius:'78%',center:['50%','62%'],
+      axisLine:{lineStyle:{width:14,color:[[0.3,'#1a8f4c'],[0.5,'#facc15'],[0.7,'#fb923c'],[1,'#d8392b']]}},
+      pointer:{itemStyle:{color:'#a5b4fc'}},
+      axisTick:{distance:-14,length:4,lineStyle:{color:'#fff'}},
+      splitLine:{distance:-14,length:14,lineStyle:{color:'#fff'}},
+      axisLabel:{distance:16,color:axisColor,fontSize:10},
+      detail:{valueAnimation:true,formatter:'{value}°',color:'#e2e8f0',fontSize:22,offsetCenter:[0,'58%']},
+      data:[{value:35,name:'偏弱·破位·普跌·下跌超2800只'}]}]
+  });
+
+  // 3. 领涨行业涨幅（横向柱状）
+  var leadData = [
+    {name:'影视院线',value:5.23},{name:'专业连锁Ⅱ',value:5.12},
+    {name:'广告营销',value:3.09},{name:'养殖业',value:2.63},
+    {name:'饲料',value:2.42},{name:'乘用车',value:2.14}
+  ];
+  echarts.init(document.getElementById('leadChart')).setOption({
+    title:{text:'今日领涨行业（涨幅%）',left:'center',top:2,textStyle:{color:'#e2e8f0',fontSize:13}},
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+'：+' +p[0].value+'%';}},
+    grid:{left:88,right:40,top:34,bottom:24},
+    xAxis:{type:'value',axisLabel:{color:axisColor,formatter:'{value}%'},splitLine:{lineStyle:{color:splitColor}}},
+    yAxis:{type:'category',data:leadData.map(function(s){return s.name;}),axisLabel:{color:axisColor}},
+    series:[{type:'bar',barWidth:'58%',
+      data:leadData.map(function(s){return {value:s.value,itemStyle:{color:UP}};}),
+      label:{show:true,position:'right',formatter:function(p){return '+'+p.value+'%';},color:'#e2e8f0'}}]
+  });
+
+  // 4. 行业主力净流入 TOP3（红=净流入，仅软件/AI应用端获资金）
+  var capData = [
+    {name:'IT服务Ⅱ',value:14.06},{name:'软件开发',value:7.21},{name:'广告营销',value:6.23}
+  ];
+  echarts.init(document.getElementById('capChart')).setOption({
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+'：净流入 +' +p[0].value+' 亿';}},
+    grid:{left:88,right:46,top:14,bottom:24},
+    xAxis:{type:'value',axisLabel:{color:axisColor,formatter:'{value}亿'},splitLine:{lineStyle:{color:splitColor}}},
+    yAxis:{type:'category',data:capData.map(function(s){return s.name;}),axisLabel:{color:axisColor}},
+    series:[{type:'bar',barWidth:'58%',
+      data:capData.map(function(s){return {value:s.value,itemStyle:{color:UP}};}),
+      label:{show:true,position:'right',formatter:function(p){return '+'+p.value;},color:'#e2e8f0'}}]
+  });
+
+  // 5. 两融余额走势（十连降）
+  echarts.init(document.getElementById('marginChart')).setOption({
+    title:{text:'两融余额（亿元）· 杠杆十连降·7/15单日净减119.43亿',left:'center',top:2,textStyle:{color:'#e2e8f0',fontSize:13}},
+    tooltip:{trigger:'axis',formatter:function(p){return p[0].name+'：'+p[0].value+' 亿';}},
+    grid:{left:64,right:24,top:34,bottom:30},
+    xAxis:{type:'category',data:['7/6','7/7','7/8','7/9','7/10','7/13','7/14','7/15'],axisLabel:{color:axisColor}},
+    yAxis:{type:'value',min:28800,max:29900,axisLabel:{color:axisColor,formatter:'{value}'},splitLine:{lineStyle:{color:splitColor}}},
+    series:[{type:'line',smooth:true,data:[29834,29790,29596.57,29561.96,29447.74,29101.95,28994.39,28874.96],symbolSize:8,
+      itemStyle:{color:'#fb923c'},lineStyle:{width:3,color:'#fb923c'},
+      areaStyle:{color:'rgba(251,146,60,.12)'},
+      label:{show:true,formatter:function(p){return p.value;},color:'#e2e8f0',fontSize:11}}]
+  });
+
+  window.addEventListener('resize',function(){document.querySelectorAll('[_echarts_instance_]').forEach(function(el){var c=echarts.getInstanceByDom(el);if(c)c.resize();});});
+</script>
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股午间复盘 · 2026-07-20 周一</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --accent1:#667eea; --accent2:#764ba2; --txt:#e2e8f0; --txt2:#94a3b8; --border:#2d2d44;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.55;padding:24px 16px 60px}
+  .wrap{max-width:1180px;margin:0 auto}
+  .glass{background:linear-gradient(135deg,rgba(102,126,234,.08),rgba(118,75,162,.06));border:1px solid var(--border);border-radius:16px}
+  header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:22px 26px;margin-bottom:20px}
+  header h1{font-size:24px;font-weight:700;letter-spacing:.5px}
+  header .sub{color:var(--txt2);font-size:13px;margin-top:4px}
+  .badge{font-size:19px;font-weight:800;padding:10px 22px;border-radius:12px;letter-spacing:1px}
+  .badge.danger{background:linear-gradient(135deg,#ff4757,#c0392b);color:#fff;box-shadow:0 6px 20px rgba(255,71,87,.4)}
+  .badge.warn{background:linear-gradient(135deg,#ffa502,#e67e22);color:#1a1a2e;box-shadow:0 6px 20px rgba(255,165,2,.35)}
+  .grid{display:grid;gap:18px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:880px){.g3,.g2{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.g3,.g2{grid-template-columns:1fr}}
+  section{margin:20px 0}
+  .sec-title{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;margin:6px 4px 14px}
+  .sec-title::before{content:"";width:5px;height:18px;border-radius:3px;background:linear-gradient(var(--accent1),var(--accent2))}
+  .card{padding:18px 20px}
+  .idx-head{display:flex;justify-content:space-between;align-items:baseline}
+  .idx-name{font-size:15px;font-weight:600}
+  .idx-code{font-size:11px;color:var(--txt2)}
+  .idx-price{font-size:26px;font-weight:800;margin:6px 0 2px}
+  .idx-chg{font-size:14px;font-weight:700}
+  .down{color:var(--sell)} .up{color:var(--buy)} .flat{color:var(--hold)}
+  .spark{height:54px;margin-top:8px}
+  .stat-row{display:flex;justify-content:space-around;text-align:center;padding:14px 0}
+  .stat-row .v{font-size:30px;font-weight:800}
+  .stat-row .l{font-size:12px;color:var(--txt2);margin-top:2px}
+  .chart{height:340px}
+  .chart-sm{height:260px}
+  .alert{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:12px;margin:10px 0}
+  .alert.risk{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.35)}
+  .alert.pos{background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.35)}
+  .alert .ico{font-size:20px;line-height:1}
+  .alert .tt{font-weight:700;margin-bottom:3px}
+  .alert .bd{font-size:13px;color:var(--txt2)}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:680px){.kpis{grid-template-columns:1fr 1fr}}
+  .kpi{padding:14px;text-align:center}
+  .kpi .v{font-size:24px;font-weight:800}
+  .kpi .l{font-size:11px;color:var(--txt2);margin-top:3px}
+  .plan-card{padding:18px 20px}
+  .plan-card h3{font-size:15px;margin-bottom:10px;color:#a5b4fc}
+  .li{display:flex;gap:10px;padding:7px 0;font-size:13px;border-bottom:1px dashed rgba(45,45,68,.7)}
+  .li .dot{margin-top:6px;width:7px;height:7px;border-radius:50%;flex:0 0 auto}
+  .d-red{background:var(--sell)} .d-green{background:var(--buy)} .d-amber{background:var(--hold)}
+  .foot{font-size:11px;color:var(--txt2);text-align:center;margin-top:26px;line-height:1.8}
+  .meta-pill{display:inline-block;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;margin:4px 6px 0 0}
+  .summary-line{font-size:15px;font-weight:600;padding:14px 18px;border-left:4px solid var(--hold);background:rgba(255,165,2,.07);border-radius:0 10px 10px 0;margin:6px 0 14px}
+  .compare{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .chip{font-size:11px;padding:4px 10px;border-radius:8px;background:rgba(45,45,68,.5);border:1px solid var(--border);color:var(--txt2)}
+  .chip.now{border-color:var(--hold);color:var(--hold)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="glass">
+    <div>
+      <h1>📊 A股午间复盘 · 决策仪表盘</h1>
+      <div class="sub">2026-07-20 周一 · 午间收盘（11:30）· 数据来源：同花顺 / 财联社 / 澎湃 / 证券时报 / 腾讯财经 / 东方财富</div>
+    </div>
+    <div class="badge warn">弱反弹 · 结构分化 · 科技补跌未止</div>
+  </header>
+
+  <!-- 核心摘要 -->
+  <section>
+    <div class="summary-line">
+      经历 7/17 放量大跌冰点后，今日早盘三大指数集体高开、盘中宽幅震荡，<b>沪指 +1.18%（3808.39）/ 深成指 +0.21%（13735.81）/ 创业板指 +1.13%（3467.32）/ 科创50 -0.19%（1712.12，盘中一度涨超 3% 后高开低走翻绿）/ 北证50 +0.45%</b>；半日成交 <b>约 1.67 万亿</b>，较 7/17 午间 <b>放量约 681 亿</b>。全市场 <b>2917 只上涨、2490 只下跌</b>，<b>涨停 53 ＞ 跌停 42</b>，赚钱效应修复至约 <b>54%</b>（7/17 冰点 ≈19%）。<b>核心特征：指数红盘、结构剧烈分化——低位周期与防御（油气开采、煤炭、电力、白酒、银行保险、贵金属）领涨，高位科技硬件「补跌」仍未收尾：半导体冲高回落、元件/PCB/电子化学品/存储芯片延续跌停潮（德明利、金安国纪、铜冠铜箔等多股跌停）。</b> 这是一次缩量（温和放量）的情绪修复而非趋势反转，仓位应「轻仓企稳、结构调仓、回避高位科技飞刀」。
+    </div>
+    <div class="compare">
+      <span class="chip">7/13 冰点</span>
+      <span class="chip">7/14 弱修复（46%）</span>
+      <span class="chip">7/15 回暖分化（67.5%）</span>
+      <span class="chip">7/16 缩量回调（60.8%）</span>
+      <span class="chip">7/17 放量重挫（≈19%）</span>
+      <span class="chip now">▶ 7/20 弱反弹（≈54%）</span>
+    </div>
+  </section>
+
+  <!-- 主要指数 -->
+  <section>
+    <div class="sec-title">📈 主要指数 · 午间收盘</div>
+    <div class="grid g3" id="idxCards"></div>
+  </section>
+
+  <!-- 市场概况 -->
+  <section>
+    <div class="sec-title">🌡️ 市场概况 · 涨跌家数 / 涨停跌停 / 成交</div>
+    <div class="grid g2">
+      <div class="card glass">
+        <div class="chart-sm" id="donut"></div>
+      </div>
+      <div class="card glass">
+        <div class="stat-row">
+          <div><div class="v up">53</div><div class="l">涨停</div></div>
+          <div><div class="v down">42</div><div class="l">跌停</div></div>
+          <div><div class="v up">≈54%</div><div class="l">赚钱效应</div></div>
+          <div><div class="v flat">1.67万亿</div><div class="l">半日成交</div></div>
+        </div>
+        <div class="li"><span class="dot d-amber"></span><span>半日成交 <b>约 16704 亿</b>（沪深两市），较 7/17 午间（≈16023 亿）<b>温和放量约 681 亿</b>；三市（含北交所）合计约 1.68 万亿 —— 修复日温和放量，非恐慌抛压。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>涨停 53 ＞ 跌停 42</b>，多空比 1.26；但跌停仍达 42 家（科技硬件跌停潮延续），涨幅 9%+ 仅 87、跌幅 9%+ 高达 111（大智慧 VIP），<b>分化未收敛</b>。</span></div>
+        <div class="li"><span class="dot d-green"></span><span>上涨 2917 / 下跌 2490 / 平 121，<b>涨多跌少</b>，广度较 7/17（1064 涨 / 4369 跌）显著修复；赚钱效应约 54%（7/17 为 19%），单日回血但远未到过热。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 板块表现 -->
+  <section>
+    <div class="sec-title">🔥 板块表现 · 领涨 TOP6 / 领跌 TOP6</div>
+    <div class="grid g2">
+      <div class="card glass">
+        <h3 class="plan-card" style="padding:0 0 6px;color:var(--buy)">▲ 领涨行业 / 概念（%）</h3>
+        <div class="chart-sm" id="leadUp"></div>
+      </div>
+      <div class="card glass">
+        <h3 class="plan-card" style="padding:0 0 6px;color:var(--sell)">▼ 领跌行业 / 概念（%）</h3>
+        <div class="chart-sm" id="leadDown"></div>
+      </div>
+    </div>
+    <div class="card glass" style="margin-top:18px">
+      <div class="li"><span class="dot d-green"></span><span><b>油气开采及服务（今日最强主线）</b>：中曼石油、博迈科涨停，科力股份 +15%、通源石油 +10% 等跟涨；催化=布伦特原油站上 91 美元/桶、日内涨 3.77%（中东地缘 / 霍尔木兹风险溢价重燃），中国石油 7 月以来 13 个交易日 11 日上涨（累计 +18.55%）。</span></div>
+      <div class="li"><span class="dot d-green"></span><span><b>煤炭 + 电力（迎峰度夏 + 红利）</b>：郑州煤电、大有能源、华电能源、昊华能源、辽宁能源涨停（煤炭）；华银电力 2 连板、立新能源 3 连板（电力）；催化=江苏电网最高用电负荷达 1.5759 亿千瓦再创历史纪录，用电高峰强化绿电 / 火电基本面 + 高股息防御属性。</span></div>
+      <div class="li"><span class="dot d-green"></span><span><b>白酒 + 大消费（估值修复）</b>：古井贡酒涨停，贵州茅台 +5%、金徽酒 / 泸州老窖 / 迎驾贡酒 / 山西汾酒跟涨；保险、银行、汽车整车、化工同步走强，顺周期 + 消费企稳预期升温。</span></div>
+      <div class="li"><span class="dot d-red"></span><span><b>高位科技硬件「补跌」延续</b>：电子化学品（中船特气 -15%、宏昌电子 / 格林达跌停）、元件 / PCB（金安国纪 / 铜冠铜箔 / 风华高科 / 贤丰控股 / 宝鼎科技等跌停，逸豪新材 -15%）、存储芯片（德明利 / 柏诚股份 / 至纯科技等跌停）、MLCC / 玻璃基板 / CPO 跌幅居前；半导体指数盘初一度涨超 3% 后冲高回落收 -1.08%（科创50 高开低走翻绿 -0.19%）—— 资金借反抽出货特征明显。</span></div>
+    </div>
+  </section>
+
+  <!-- 资金流向 -->
+  <section>
+    <div class="sec-title">💰 资金流向 · 主力 / 北向 / ETF</div>
+    <div class="grid g2">
+      <div class="card glass">
+        <h3 class="plan-card" style="padding:0 0 6px;color:#a5b4fc">板块主力净流向（亿元 · 量级估算）</h3>
+        <div class="chart-sm" id="flow"></div>
+        <div style="font-size:11px;color:var(--txt2);margin-top:6px">★ 紫光股份 +26.18 亿（102 亿流入 / 76 亿流出）、贵州茅台 +6.77 亿、中微公司 +3.82 亿、通富微电 +3.20 亿、瑞芯微 +2.77 亿为个股实值净买；板块净流向为基于盘面方向 + 本周资金趋势的量级估算</div>
+      </div>
+      <div class="card glass">
+        <h3 class="plan-card" style="padding:0 0 6px;color:#a5b4fc">个股 / ETF / 北向要点</h3>
+        <div class="kpis" style="margin-bottom:12px">
+          <div class="kpi"><div class="v up">+26.2</div><div class="l">紫光股份净买(亿·居首)</div></div>
+          <div class="kpi"><div class="v up">+6.77</div><div class="l">贵州茅台净买(亿)</div></div>
+          <div class="kpi"><div class="v down">-45</div><div class="l">电子(半导/元件/PCB/存)净流(亿)</div></div>
+          <div class="kpi"><div class="v up">+16704</div><div class="l">两市半日成交(亿)</div></div>
+        </div>
+        <div class="li"><span class="dot d-red"></span><span><b>净流出居前</b>：电子（半导体 + 元件 + PCB + 存储芯片）综合净流出约 45 亿量级，CPO / 通信设备、电子化学品延续净流出 —— 高位科技「反抽即出货」，本周累计（7/14-7/17）电子已净流出逾 744 亿、半导体产业 -714 亿。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>净流入居前</b>：白酒（茅台 +6.77 亿）、煤炭、电力、油气、医药生物（本周主力累计 +212 亿）、银行（本周 +119 亿）、公用事业（+85 亿）—— 低位周期 + 红利 + 消费防御主线。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>个股亮点</b>：紫光股份 +26.18 亿居全市场首位（算力 + 通信龙头资金回流）；中微公司 / 通富微电 / 瑞芯微等半导体设备 / 封测获逆势净买，显示部分长线资金逢低布局硬科技龙头。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>北向</b>：午盘分项未单独披露；外资来华投资前 5 月净增约 1600 亿美元（外汇局），中期资金面不悲观，短线以结构调仓为主。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 情绪温度计 -->
+  <section>
+    <div class="sec-title">🧭 市场情绪仪表盘</div>
+    <div class="grid g2">
+      <div class="card glass"><div class="chart" id="mood"></div></div>
+      <div class="card glass">
+        <h3 class="plan-card" style="padding:0 0 6px">情绪诊断</h3>
+        <div class="li"><span class="dot d-amber"></span><span><b>温度 58/100（弱修复 · 分化）</b>：较 7/17 冰点（22）大幅回升，但仍低于 7/15 回暖高点（63），属「指数红了、结构没稳」的修复日。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>广度修复、深度分化</b>：涨多跌少（2917 vs 2490），但跌停仍有 42 家、跌幅 9%+ 达 111，科技硬件跌停潮未收敛，赚钱效应集中在低位防御 + 消费，而非全局。</span></div>
+        <div class="li"><span class="dot d-red"></span><span><b>科技线未企稳</b>：科创50 高开低走翻绿、半导体冲高回落、元件 / 存储持续跌停，说明高位筹码松动仍在出清，反弹根基不牢。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>机构共识</b>：华福证券「当前 A 股已具备良好中长期配置价值，此前回调较多的科创 / 创业 / 中证1000 值得增配，科技龙头值得关注」；中信证券「新一轮行情正在酝酿，关注三个收敛（AI 上游 vs 云厂超额收敛、非 AI 工业折价修复、科技 vs 非科技估值收敛）」。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 仓位管理 -->
+  <section>
+    <div class="sec-title">🎯 仓位管理推荐</div>
+    <div class="grid g2">
+      <div class="plan-card glass">
+        <h3>📦 仓位配置（轻仓企稳 · 结构调仓）</h3>
+        <div class="kpis">
+          <div class="kpi"><div class="v" style="color:var(--hold)">45-55%</div><div class="l">总仓位区间</div></div>
+          <div class="kpi"><div class="v up">35-45%</div><div class="l">现金 / 逆回购</div></div>
+          <div class="kpi"><div class="v down">回避</div><div class="l">高位科技/半导体</div></div>
+          <div class="kpi"><div class="v" style="color:var(--buy)">防御+消费</div><div class="l">电力/煤炭/油气/白酒</div></div>
+        </div>
+      </div>
+      <div class="plan-card glass">
+        <h3>✅ 操作纪律 / 加减仓触发</h3>
+        <div class="li"><span class="dot d-green"></span><span><b>持 / 轻仓配置</b>：电力（水电 / 绿电 / 超超临界 / 抽水蓄能）、煤炭、油气（事件驱动短线）、白酒 / 大消费（估值修复）、银行保险（红利高股息）作为组合「压舱石」。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>观望 / 逢低布局</b>：医药生物（本周主力持续净流入 +212 亿，创新药出海 BD 逻辑未破）；少数半导体设备 / 封测龙头（中微 / 通富 / 瑞芯微逆势净买）可小仓试探，但整体科技线「不接飞刀」。</span></div>
+        <div class="li"><span class="dot d-red"></span><span><b>减 / 回避</b>：高位半导体 / PCB / 元件 / 存储芯片 / CPO / 光模块 / 科创50 —— 补跌未止、盘中反抽多为出货，坚决回避。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>加仓条件（趋势确认）</b>：沪指站稳 3850 + 半日成交维持 1.7 万亿以上 + 跌停收敛至 &lt;30 + 科创50 止跌翻红（收复 1776 高点位 / 5 日线）。</span></div>
+        <div class="li"><span class="dot d-red"></span><span><b>失效 / 立即减仓</b>：沪指有效跌破 <b>3780</b>（今日最低 3780.02，逼近破位线）+ 或跌停扩散至 &gt;50 + 或科创50 破 1675（今日最低 1675.41）。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 风险与催化 -->
+  <section>
+    <div class="sec-title">⚠️ 风险警报 / 积极催化</div>
+    <div class="alert risk">
+      <div class="ico">🔴</div>
+      <div><div class="tt">风险警报</div>
+      <div class="bd">① 高位科技「补跌」未收尾：半导体冲高回落、科创50 高开低走翻绿、元件 / PCB / 电子化学品 / 存储芯片延续跌停潮（德明利等多股跌停），反抽多为资金出货；② 跌停仍有 42 家、跌幅 9%+ 达 111，广度虽修复但<b>深度分化</b>、科技线风险未出清；③ 外围扰动——隔夜美股存储板块延续调整、韩国加息后韩股弱势，向 A 股科技链传导；④ 中报业绩验证期，部分高位标的中报增速不及预期，止盈踩踏风险仍在；⑤ 反弹量能仅温和放量（约 681 亿），属修复而非反转，持续性待验。</div></div>
+    </div>
+    <div class="alert pos">
+      <div class="ico">🟢</div>
+      <div><div class="tt">积极催化</div>
+      <div class="bd">① <b>原油大涨</b>：布伦特站上 91 美元/桶、日内 +3.77%（中东地缘 / 霍尔木兹风险溢价），油气开采服务全线走强；② <b>迎峰度夏用电创新高</b>：江苏电网最高负荷 1.5759 亿千瓦再破纪录，电力 / 绿电 / 火电获基本面 + 高股息双支撑；③ <b>消费企稳</b>：白酒强势（古井贡酒涨停、茅台 +5%），顺周期 + 大消费估值修复预期升温；④ 机构共识转向积极——华福证券「A 股已具备良好中长期配置价值」、中信证券「新一轮行情正在酝酿，三个收敛打开中期空间」；⑤ 外资前 5 月净增约 1600 亿美元，中期资金面不悲观，港股恒指 / 恒科同步走强。</div></div>
+    </div>
+  </section>
+
+  <!-- 信号归因 -->
+  <section>
+    <div class="sec-title">📊 信号归因 · 今日大盘定性由何而来</div>
+    <div class="card glass">
+      <div class="li"><span class="dot d-green"></span><span><b>指数层面（30%）</b>：沪 +1.18% / 深 +0.21% / 创 +1.13% 集体红盘修复，但科创50 -0.19%（盘中 +3%→翻绿）显结构弱点，属「大票稳、小票科技弱」。</span></div>
+      <div class="li"><span class="dot d-amber"></span><span><b>广度层面（30%）</b>：上涨 2917 ＞ 下跌 2490，赚钱效应 ≈54%（7/17 冰点 19% 大幅回血），但跌停仍有 42 家、跌幅 9%+ 达 111，分化未收敛 —— 「弱反弹·分化」判定的核心支撑。</span></div>
+      <div class="li"><span class="dot d-amber"></span><span><b>资金层面（30%）</b>：半日温和放量 681 亿至 1.67 万亿，资金切向白酒 / 煤炭 / 电力 / 油气 / 医药（防御 + 消费），电子（半导体 / 元件 / PCB / 存储）综合净流出约 45 亿、反抽出货特征明显。</span></div>
+      <div class="li"><span class="dot d-green"></span><span><b>催化层面（10%）</b>：原油大涨 + 用电创新高 + 消费白酒修复 + 机构转多（正面）vs 科技补跌未止 + 外围存储弱势（负面），短期多空交织、结构性机会为主。</span></div>
+      <div class="li" style="border-bottom:none"><span class="dot d-green"></span><span><b>最强看多信号</b>：沪指 +1.18% 收复部分失地 + 油气 / 煤炭 / 电力 / 白酒低位主线全面激活 + 机构共识转向「中长期配置价值」。　<b>最强看空信号</b>：科创50 翻绿 -0.19% + 半导体冲高回落 + 元件 / 存储跌停潮（德明利等多股跌停）+ 跌停仍达 42 家。</span></div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span class="meta-pill">分析时间 2026-07-20 11:55 GMT+8</span>
+    <span class="meta-pill">策略：大盘午间复盘（多头趋势框架 · 风险优先）</span>
+    <span class="meta-pill">数据：同花顺 / 财联社 / 澎湃 / 证券时报 / 腾讯财经 / 东方财富</span><br>
+    本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论基于公开午评数据，迷你走势图为基于午盘 OHLC 的示意路径，非逐笔成交还原；板块净流向中紫光股份 +26.18 亿、贵州茅台 +6.77 亿、中微公司 +3.82 亿、通富微电 +3.20 亿、瑞芯微 +2.77 亿为个股实值净买，其余为量级估算。涨停 / 跌停家数不同数据源略有差异（结构化数据 54/46，主流媒体 53/42），本报告取主流媒体口径。
+  </div>
+
+</div>
+
+<script>
+// ===== 数据 =====
+const indices = [
+  {name:'上证指数', code:'000001', price:3808.39, chg:1.18, spark:[3791.66,3820,3831.66,3780.02,3808.39]},
+  {name:'深证成指', code:'399001', price:13735.81, chg:0.21, spark:[13700,13780,13650,13710,13735.81]},
+  {name:'创业板指', code:'399006', price:3467.32, chg:1.13, spark:[3504.12,3550.59,3414.87,3450,3467.32]},
+  {name:'科创50',   code:'000688', price:1712.12, chg:-0.19, spark:[1764.59,1776.07,1675.41,1700,1712.12]},
+  {name:'北证50',   code:'899050', price:1081.23, chg:0.45, spark:[1076,1083,1074,1080,1081.23]},
+];
+
+// 指数卡片
+const ic = document.getElementById('idxCards');
+indices.forEach(d=>{
+  const cls = d.chg>0?'up':(d.chg<0?'down':'flat');
+  const sign = d.chg>0?'+':'';
+  ic.insertAdjacentHTML('beforeend', `
+    <div class="card glass">
+      <div class="idx-head"><span class="idx-name">${d.name}</span><span class="idx-code">${d.code}</span></div>
+      <div class="idx-price ${cls}">${d.price.toLocaleString()}</div>
+      <div class="idx-chg ${cls}">${sign}${d.chg.toFixed(2)}%</div>
+      <div class="spark" id="sp_${d.code}"></div>
+    </div>`);
+});
+indices.forEach(d=>{
+  const el=document.getElementById('sp_'+d.code);
+  const c=echarts.init(el);
+  c.setOption({
+    grid:{left:0,right:0,top:6,bottom:0},
+    xAxis:{type:'category',show:false,data:d.spark.map((_,i)=>i)},
+    yAxis:{type:'value',show:false,scale:true},
+    series:[{type:'line',data:d.spark,smooth:true,symbol:'none',
+      lineStyle:{width:2,color:d.chg<0?'#ff4757':'#00d4aa'},
+      areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[
+        {offset:0,color:d.chg<0?'rgba(255,71,87,.35)':'rgba(0,212,170,.35)'},
+        {offset:1,color:'rgba(0,0,0,0)'}])}}]
+  });
+  window.addEventListener('resize',()=>c.resize());
+});
+
+// 涨跌家数 donut
+const donut=echarts.init(document.getElementById('donut'));
+donut.setOption({
+  title:{text:'涨跌家数',left:'center',top:6,textStyle:{color:'#e2e8f0',fontSize:14}},
+  tooltip:{trigger:'item',formatter:'{b}: {c} ({d}%)'},
+  legend:{bottom:4,textStyle:{color:'#94a3b8',fontSize:11},itemWidth:10,itemHeight:10},
+  series:[{type:'pie',radius:['45%','70%'],center:['50%','52%'],
+    label:{show:false},
+    data:[
+      {name:'上涨',value:2917,itemStyle:{color:'#00d4aa'}},
+      {name:'下跌',value:2490,itemStyle:{color:'#ff4757'}},
+      {name:'平盘',value:121,itemStyle:{color:'#ffa502'}}
+    ]}]
+});
+window.addEventListener('resize',()=>donut.resize());
+
+// 领涨
+const up=echarts.init(document.getElementById('leadUp'));
+up.setOption({
+  grid:{left:92,right:42,top:10,bottom:10},
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:'{b}<br/>{c}%'},
+  xAxis:{type:'value',axisLabel:{color:'#94a3b8',formatter:'{value}%'}},
+  yAxis:{type:'category',data:['贵金属/黄金','保险/银行','电力/绿电','白酒','煤炭开采','油气开采'],axisLabel:{color:'#e2e8f0'}},
+  series:[{type:'bar',data:[1.8,1.5,2.3,2.8,3.0,4.5],
+    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[
+      {offset:0,color:'#00d4aa'},{offset:1,color:'#00b894'}])},
+    label:{show:true,position:'right',color:'#00d4aa',formatter:'{c}%'}}]
+});
+window.addEventListener('resize',()=>up.resize());
+
+// 领跌
+const dn=echarts.init(document.getElementById('leadDown'));
+dn.setOption({
+  grid:{left:88,right:46,top:10,bottom:10},
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:'{b}<br/>{c}%'},
+  xAxis:{type:'value',axisLabel:{color:'#94a3b8',formatter:'{value}%'}},
+  yAxis:{type:'category',data:['玻璃基板','CPO','MLCC','存储芯片','元件/PCB','电子化学品'],axisLabel:{color:'#e2e8f0'}},
+  series:[{type:'bar',data:[-2.8,-3.0,-3.2,-3.5,-3.8,-4.5],
+    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[
+      {offset:0,color:'#ff4757'},{offset:1,color:'#ff6b81'}])},
+    label:{show:true,position:'left',color:'#ff4757',formatter:'{c}%'}}]
+});
+window.addEventListener('resize',()=>dn.resize());
+
+// 资金流向（板块主力净流向，亿元 · 量级估算）
+const flow=echarts.init(document.getElementById('flow'));
+flow.setOption({
+  grid:{left:148,right:46,top:10,bottom:10},
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:'{b}<br/>{c} 亿'},
+  xAxis:{type:'value',axisLabel:{color:'#94a3b8',formatter:'{value}'}},
+  yAxis:{type:'category',data:['电子(半导/元件/PCB/存)','CPO/通信设备','电子化学品','银行','电力','煤炭','医药生物','白酒'],axisLabel:{color:'#e2e8f0'}},
+  series:[{type:'bar',data:[-45,-12,-8,5,8,8,6,12],
+    itemStyle:{color:p=>p.value<0?'#ff4757':'#00d4aa'},
+    label:{show:true,position:'right',color:'#e2e8f0',formatter:'{c}'}}]
+});
+window.addEventListener('resize',()=>flow.resize());
+
+// 情绪温度计
+const mood=echarts.init(document.getElementById('mood'));
+mood.setOption({
+  series:[{
+    type:'gauge',startAngle:200,endAngle:-20,min:0,max:100,
+    center:['50%','58%'],radius:'82%',
+    progress:{show:true,width:18,itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[
+      {offset:0,color:'#ff4757'},{offset:0.5,color:'#ffa502'},{offset:1,color:'#00d4aa'}])}},
+    axisLine:{lineStyle:{width:18,color:[[0.4,'#ff4757'],[0.6,'#ffa502'],[1,'#00d4aa']]}},
+    pointer:{itemStyle:{color:'#e2e8f0'}},
+    axisTick:{distance:-22,length:5,lineStyle:{color:'#94a3b8'}},
+    splitLine:{distance:-26,length:12,lineStyle:{color:'#94a3b8'}},
+    axisLabel:{distance:-2,color:'#94a3b8',fontSize:10},
+    anchor:{show:true,size:14,itemStyle:{color:'#e2e8f0'}},
+    detail:{valueAnimation:true,formatter:'{value} 分',color:'#e2e8f0',fontSize:30,offsetCenter:[0,'42%']},
+    title:{offsetCenter:[0,'70%'],color:'#94a3b8',fontSize:13},
+    data:[{value:58,name:'市场情绪：弱修复 · 分化'}]
+  }]
+});
+window.addEventListener('resize',()=>mood.resize());
+</script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股行情复盘 · 2026-07-07（周二）· 星辰</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23;
+    --card:#1a1a2e;
+    --card2:#16162a;
+    --line:#2d2d44;
+    --ink:#e2e8f0;
+    --sub:#94a3b8;
+    --up:#d8392b;       /* 涨·红 (A股惯例) */
+    --down:#1a8f4c;     /* 跌·绿 */
+    --in:#d8392b;       /* 主力净流入·红 */
+    --out:#1a8f4c;      /* 主力净流出·绿 */
+    --accent:#667eea;
+    --accent2:#764ba2;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.6;font-size:14px;}
+  .wrap{max-width:1040px;margin:0 auto;padding:24px 18px 64px;}
+  header{border-left:4px solid transparent;border-image:linear-gradient(180deg,var(--accent),var(--accent2)) 1;
+    padding:4px 0 4px 14px;margin-bottom:18px;}
+  header h1{font-size:22px;margin:0;font-weight:700;
+    background:linear-gradient(90deg,#a5b4fc,#c4b5fd);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  header .meta{color:var(--sub);font-size:13px;margin-top:4px;}
+  .tldr{background:linear-gradient(135deg,#1a1a2e,#16162a);border:1px solid var(--line);border-radius:12px;
+    padding:16px 18px;margin-bottom:18px;box-shadow:0 4px 18px rgba(0,0,0,.35);}
+  .tldr h2{margin:0 0 8px;font-size:15px;color:#a5b4fc;}
+  .tldr ul{margin:0;padding-left:18px;}
+  .tldr li{margin:5px 0;color:#cbd5e1;}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:780px){.grid{grid-template-columns:1fr;}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 18px;box-shadow:0 4px 18px rgba(0,0,0,.30);margin-bottom:16px;}
+  .card h3{margin:0 0 12px;font-size:15px;display:flex;align-items:center;gap:8px;color:#e2e8f0;}
+  .card h3::before{content:"";width:6px;height:16px;background:linear-gradient(180deg,var(--accent),var(--accent2));
+    border-radius:2px;display:inline-block;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);}
+  th{color:var(--sub);font-weight:600;}
+  .up{color:var(--up);font-weight:600;}
+  .down{color:var(--down);font-weight:600;}
+  .flat{color:var(--sub);}
+  #idxChart,#breadthChart,#capChart,#gaugeChart{width:100%;height:300px;}
+  #gaugeChart{height:240px;}
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+  @media(max-width:780px){.kpis{grid-template-columns:1fr 1fr;}}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:14px;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,.30);}
+  .kpi .v{font-size:20px;font-weight:700;}
+  .kpi .k{font-size:12px;color:var(--sub);margin-top:2px;}
+  .note{background:rgba(255,169,2,.08);border:1px solid rgba(255,169,2,.35);border-radius:10px;
+    padding:10px 14px;color:#ffd58a;font-size:13px;margin:10px 0;}
+  .pill{font-size:11px;padding:2px 8px;border-radius:20px;background:rgba(102,126,234,.18);color:#a5b4fc;font-weight:600;}
+  .tag{display:inline-block;background:rgba(102,126,234,.15);color:#a5b4fc;border-radius:6px;
+    padding:1px 7px;font-size:12px;margin-right:4px;}
+  .src{font-size:12px;color:var(--sub);border-top:1px dashed var(--line);margin-top:20px;padding-top:12px;line-height:1.7;}
+  .subgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:780px){.subgrid{grid-template-columns:1fr;}}
+  .heat{display:flex;align-items:center;gap:12px;background:var(--card2);border:1px solid var(--line);
+    border-radius:10px;padding:10px 14px;margin:8px 0;}
+  .heat .bar{flex:1;height:10px;border-radius:6px;background:linear-gradient(90deg,#1a8f4c,#facc15,#d8392b);position:relative;}
+  .heat .dot{position:absolute;top:-3px;width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid #667eea;}
+  .heat .lab{font-size:12px;color:var(--sub);white-space:nowrap;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>A股行情复盘 · 2026-07-07（周二）</h1>
+    <div class="meta">收盘版 · 指数快照 16:14 / 数据截至 15:00 · 分析师：星辰 · 来源：NeoData 实时行情 + 公开资讯</div>
+  </header>
+
+  <div class="tldr">
+    <h2>一句话结论</h2>
+    <ul>
+      <li><b>缩量普跌，沪指失守 4000 点</b>：三大指数集体收跌，上证 <b class="down">-1.26%</b> 报 3990.24，盘中最低 3971.71 逼近年线；全市场仅 <b>693 只上涨、近 4796 只下跌</b>（约 12.6% 个股飘红），微盘股指数 <b class="down">-4%</b>。</li>
+      <li><b>赚钱效应冰点</b>：涨停约 <b>34 只</b>、跌停 <b>50 只</b>——为近期<b>首次跌停多于涨停</b>，超 3000 只个股跌幅落在 2%–5%，连板高度压缩至万通发展 2 板，典型"指数红、个股绿"极致分化。</li>
+      <li><b>资金大幅净流出 511 亿</b>：电子（-148 亿）、医药、机械居前；仅 8 个行业净流入，游戏、传媒、银行获抱团。<b>尾盘沪深300 逆势净流入 5.86 亿</b>，护盘痕迹明显。</li>
+      <li><b>唯一亮色是科创 50（+0.28%）</b>与半导体链条（大硅片 +4.84%、CPO/光模块午后反转拉指数）；贵金属、创新药、算力租赁、存储芯片领跌。</li>
+    </ul>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="v down">-1.26%</div><div class="k">上证指数 3990.24</div></div>
+    <div class="kpi"><div class="v down">-1.24%</div><div class="k">深证成指 15225.11</div></div>
+    <div class="kpi"><div class="v up">+0.28%</div><div class="k">科创50 2001.59（唯一红）</div></div>
+    <div class="kpi"><div class="v">2.58万亿</div><div class="k">两市成交额（缩量5100亿）</div></div>
+    <div class="kpi"><div class="v down">693 / 4796</div><div class="k">上涨 / 下跌家数</div></div>
+    <div class="kpi"><div class="v down">34 / 50</div><div class="k">涨停 / 跌停（跌停>涨停）</div></div>
+  </div>
+
+  <div class="card">
+    <h3>一、核心指数表现</h3>
+    <div id="idxChart"></div>
+    <table>
+      <thead><tr><th>指数</th><th>收盘</th><th>涨跌幅</th><th>5日</th><th>年初至今</th><th>备注</th></tr></thead>
+      <tbody>
+        <tr><td>上证指数</td><td>3990.24</td><td class="down">-1.26%</td><td>-2.54%</td><td>+0.54%</td><td>失守4000，逼近年线</td></tr>
+        <tr><td>深证成指</td><td>15225.11</td><td class="down">-1.24%</td><td>-6.05%</td><td>+12.57%</td><td>跌破15260支撑</td></tr>
+        <tr><td>沪深300</td><td>4792.26</td><td class="down">-1.03%</td><td>-3.76%</td><td>+3.51%</td><td>—</td></tr>
+        <tr><td>创业板指</td><td>3911.91</td><td class="down">-0.94%</td><td class="down">-9.92%</td><td>+22.13%</td><td>首次收于60日线下方</td></tr>
+        <tr><td>科创50</td><td>2001.59</td><td class="up">+0.28%</td><td>-9.34%</td><td>+48.91%</td><td>唯一收红主要指数</td></tr>
+        <tr><td>北证50</td><td>1236.08</td><td class="down">-0.79%</td><td>—</td><td>—</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>二、市场赚钱效应总结</h3>
+    <div class="heat">
+      <span class="lab">冰点</span>
+      <div class="bar"><div class="dot" style="left:16%"></div></div>
+      <span class="lab">沸点</span>
+    </div>
+    <p style="margin:6px 0 4px;color:var(--sub);font-size:13px;">市场情绪温度计：<b style="color:var(--down)">≈18°（恐慌/冰点区）</b> —— 上涨占比仅 12.6%，跌停家数反超涨停，风险偏好显著回落。</p>
+    <div class="subgrid">
+      <div id="breadthChart"></div>
+      <div id="gaugeChart"></div>
+    </div>
+    <table>
+      <thead><tr><th>赚钱效应指标</th><th>数值</th><th>解读</th></tr></thead>
+      <tbody>
+        <tr><td>涨跌家数</td><td>693 涨 / 4796 跌</td><td class="down">涨少跌多，涨跌比≈1:7</td></tr>
+        <tr><td>涨停 / 跌停</td><td>34 / 50</td><td class="down">罕见"跌停>涨停"，情绪冰点</td></tr>
+        <tr><td>个股跌幅分布</td><td>超3000只跌 2%–5%</td><td class="down">普遍性回撤，非个别杀跌</td></tr>
+        <tr><td>微盘股指数</td><td class="down">-4%</td><td class="down">小票流动性踩踏最重</td></tr>
+        <tr><td>连板高度</td><td>万通发展 2 板</td><td class="flat">高度压缩，接力意愿弱</td></tr>
+        <tr><td>创业板指</td><td class="down">破 60 日线</td><td class="down">成长方向技术破位</td></tr>
+      </tbody>
+    </table>
+    <div class="note">盘面上呈现典型的"<b>一九分化 / 二八格局</b>"：指数靠银行+科技核心龙头抱团维持，黄线（小票）午后创日内新低。赚钱效应集中在半导体硅片、游戏、银行少数方向，绝大多数行业与个股处于"亏钱"状态。短期情绪修复需等待量能回暖与主线清晰。</div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>三、领涨板块</h3>
+      <table>
+        <thead><tr><th>行业</th><th>涨跌幅</th><th>领涨个股</th></tr></thead>
+        <tbody>
+          <tr><td>游戏Ⅱ</td><td class="up">+1.96%</td><td>星辉娱乐 +14.13%</td></tr>
+          <tr><td>国有大型银行Ⅱ</td><td class="up">+1.72%</td><td>建设银行 +2.59%（护盘）</td></tr>
+          <tr><td>影视院线</td><td class="up">+1.10%</td><td>儒意电影 +5.99%</td></tr>
+          <tr><td>工程机械</td><td class="up">+0.91%</td><td>艾迪精密 +5.54%</td></tr>
+          <tr><td>通信设备</td><td class="up">+0.24%</td><td>光迅科技 +6.05%</td></tr>
+        </tbody>
+      </table>
+      <div style="height:8px"></div>
+      <table>
+        <thead><tr><th>概念</th><th>涨跌幅</th></tr></thead>
+        <tbody>
+          <tr><td>大硅片</td><td class="up">+4.84%</td></tr>
+          <tr><td>靶材</td><td class="up">+1.71%</td></tr>
+          <tr><td>国家大基金持股</td><td class="up">+0.65%</td></tr>
+          <tr><td>中芯国际概念</td><td class="up">+0.61%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>四、领跌板块</h3>
+      <table>
+        <thead><tr><th>板块</th><th>涨跌幅</th><th>特征</th></tr></thead>
+        <tbody>
+          <tr><td>贵金属</td><td class="down">-4.76%</td><td>黄金股领跌</td></tr>
+          <tr><td>赛马概念</td><td class="down">-4.55%</td><td>跌幅居前</td></tr>
+          <tr><td>生物制品 / 创新药</td><td class="down">-4.26%</td><td>海南海药一字跌停</td></tr>
+          <tr><td>有色金属</td><td class="down">走弱</td><td>周期回落（华锡有色跌停）</td></tr>
+          <tr><td>算力租赁 / 存储芯片</td><td class="down">集体调整</td><td>利通电子跌停，PCB/存储跟跌</td></tr>
+        </tbody>
+      </table>
+      <div class="note">半导体板块整体 <span class="flat">-0.12%</span>，但当日振幅达 <b>7.74%</b>，年初至今累计 <b class="up">+83.67%</b>；日韩存储三巨头大跌（三星/SK海力士均跌超6%、铠侠-11%）拖累A股存储链，北京君正、德明利、江波龙等高位兑现。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>五、资金流向分析</h3>
+    <p style="margin:0 0 6px;color:var(--sub);font-size:13px;">行业主力净流入/净流出（亿元，红=净流入 / 绿=净流出）：</p>
+    <div id="capChart"></div>
+    <div class="grid" style="margin-top:6px">
+      <div>
+        <table>
+          <thead><tr><th>个股主力净流入 TOP</th><th>金额</th></tr></thead>
+          <tbody>
+            <tr><td>华天科技（先进封装·涨停）</td><td class="up">+35.18亿</td></tr>
+            <tr><td>东山精密（PCB/光模块）</td><td class="up">+13.43亿</td></tr>
+            <tr><td>中际旭创 / 有研新材 / TCL中环</td><td class="up">均>6亿</td></tr>
+            <tr><td>光迅科技 / 浪潮信息</td><td class="up">均>6亿</td></tr>
+            <tr><td>新易盛（尾盘）</td><td class="up">+2.49亿</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <table>
+          <thead><tr><th>个股主力净流出 TOP</th><th>金额</th></tr></thead>
+          <tbody>
+            <tr><td>北京君正 / 东方财富</td><td class="down">均>10亿</td></tr>
+            <tr><td>兆易创新 / 德明利</td><td class="down">均>10亿</td></tr>
+            <tr><td>香农芯创（存储链）</td><td class="down">>10亿</td></tr>
+            <tr><td colspan="2" class="flat">存储概念（北京君正/德明利/香农芯创）集中兑现</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <ul style="margin:10px 0 0;padding-left:18px;color:#cbd5e1;">
+      <li><b>全市场主力净流出 511.35 亿</b>：创业板 -242.93 亿、沪深300 -137.95 亿；<b>尾盘</b>两市净流出 25.79 亿，但<b>沪深300 尾盘逆势净流入 5.86 亿</b>（护盘资金尾盘回补）。</li>
+      <li><b>行业结构</b>：仅 8 个申万一级行业获净流入——传媒 +11.86 亿居首，煤炭/公用事业均超 1 亿，钢铁/美容护理/综合/房地产微幅净流入；23 个行业净流出，<b>电子 -148 亿</b>居首，机械/医药均超 40 亿，计算机/有色/电力设备/通信均超 30 亿。</li>
+      <li><b>融资融券（截至 7/6，最新披露）</b>：两市两融余额 <b>29834.37 亿</b>（融资 29609.76 亿、融券 224.61 亿），较前一交易日<b class="down">减少 106.47 亿</b>（沪 -77.6 亿、深 -28.9 亿）——杠杆资金小幅撤退；7/7 盘后数据通常次日披露。</li>
+      <li><b>北向资金</b>：沪深港通自 2024-08 起不再披露实时净买入，仅公布成交额，故当日外资净流向无法直接给出。</li>
+    </ul>
+    <div class="note">资金画像：<b>"缩量 + 主力出逃 + 尾盘护盘"</b>。主动买盘不足，存量资金抱团"最能影响指数"的银行与科技核心龙头，造成个股普跌。短线关注两融是否延续降杠杆、以及电子/存储净流出能否收敛。</div>
+  </div>
+
+  <div class="card">
+    <h3>六、后市研判与策略</h3>
+    <p style="margin-top:0;color:#cbd5e1">指数已回到 6 月中旬底部量能区间并出现 V 反，但<b>缩量是资金观望而非主动买盘</b>，普跌说明风险偏好回落，"地量见地价"可期但暂不宜过早下结论。机构（巨丰/英大/财信）普遍认为市场进入<b>半年报业绩验证期</b>，定价逻辑由"流动性驱动"切向"业绩驱动"，短期高位科技波动或刚开启。短线关键看三点：</p>
+    <ul style="color:#cbd5e1">
+      <li><span class="tag">量能</span>成交额能否企稳回升，是止跌确认的第一信号；</li>
+      <li><span class="tag">主线</span>CPO/半导体能否持续带动成长赛道止跌、资金回流；</li>
+      <li><span class="tag">点位</span>沪指年线附近（约 3970）支撑力度与银行护盘持续性。</li>
+    </ul>
+    <p style="margin-bottom:0;color:#cbd5e1"><b>策略</b>：短线控制仓位、不追高，回避纯题材微盘与高位兑现压力大的品种；中线维持对业绩确定性强的 AI 算力硬件、半导体设备/材料、军工等景气方向的关注，等待量能回暖后的右侧信号。</p>
+  </div>
+
+  <div class="src">
+    <b>数据来源</b>：NeoData 金融数据（指数/板块/个股实时行情、主力资金流向，快照 2026-07-07 16:14）；公开资讯——央广财经《7月7日A股收评：沪指缩量跌超1% 失守4000点关口》、证券时报·数据宝《7月7日主力资金动态：沪深市场净流出511.35亿，传媒行业逆市流入11.86亿》、金融投资网《涨跌比接近1:7 极致分化行情或步入尾声》、南财《7月6日证券市场回顾（两融）》。<br>
+    注：北向资金净买入额因交易所披露规则调整，当日未单独公布；7/7 两融数据通常次一交易日披露，故引用 7/6 最新值。以上为行情复盘，<b>不构成投资建议</b>。
+  </div>
+
+</div>
+
+<script>
+  var axisColor = '#94a3b8', splitColor = '#2d2d44';
+  var UP='#d8392b', DOWN='#1a8f4c';
+
+  // 1. 指数柱状图
+  var idxData = [
+    {name:'上证指数',chg:-1.26},{name:'深证成指',chg:-1.24},{name:'沪深300',chg:-1.03},
+    {name:'创业板指',chg:-0.94},{name:'北证50',chg:-0.79},{name:'科创50',chg:0.28}
+  ];
+  echarts.init(document.getElementById('idxChart')).setOption({
+    tooltip:{trigger:'axis',formatter:function(p){return p[0].name+'：'+p[0].value+'%';}},
+    grid:{left:64,right:24,top:20,bottom:36},
+    xAxis:{type:'category',data:idxData.map(s=>s.name),axisLabel:{color:axisColor}},
+    yAxis:{type:'value',axisLabel:{color:axisColor,formatter:'{value}%'},splitLine:{lineStyle:{color:splitColor}}},
+    series:[{type:'bar',barWidth:'46%',
+      data:idxData.map(s=>({value:s.chg,itemStyle:{color:s.chg>=0?UP:DOWN}})),
+      label:{show:true,position:'top',formatter:'{c}%',color:'#e2e8f0'}}]
+  });
+
+  // 2. 涨跌家数 + 涨停跌停
+  echarts.init(document.getElementById('breadthChart')).setOption({
+    title:{text:'涨跌 / 涨跌停家数',left:'center',top:2,textStyle:{color:'#e2e8f0',fontSize:13}},
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+    legend:{bottom:0,textStyle:{color:axisColor}},
+    grid:{left:50,right:18,top:34,bottom:34},
+    xAxis:{type:'category',data:['上涨','下跌','涨停','跌停'],axisLabel:{color:axisColor}},
+    yAxis:{type:'value',axisLabel:{color:axisColor},splitLine:{lineStyle:{color:splitColor}}},
+    series:[
+      {name:'家数',type:'bar',barWidth:'50%',
+       data:[{value:693,itemStyle:{color:UP}},{value:4796,itemStyle:{color:DOWN}},
+             {value:34,itemStyle:{color:UP}},{value:50,itemStyle:{color:DOWN}}],
+       label:{show:true,position:'top',color:'#e2e8f0'}}
+    ]
+  });
+
+  // 3. 情绪温度计（gauge）
+  echarts.init(document.getElementById('gaugeChart')).setOption({
+    title:{text:'市场情绪温度计',left:'center',top:2,textStyle:{color:'#e2e8f0',fontSize:13}},
+    series:[{type:'gauge',min:0,max:100,radius:'78%',center:['50%','62%'],
+      progress:{show:false},axisLine:{lineStyle:{width:14,color:[[0.3,'#1a8f4c'],[0.5,'#facc15'],[0.7,'#fb923c'],[1,'#d8392b']]}},
+      pointer:{itemStyle:{color:'#a5b4fc'}},
+      axisTick:{distance:-14,length:4,lineStyle:{color:'#fff'}},
+      splitLine:{distance:-14,length:14,lineStyle:{color:'#fff'}},
+      axisLabel:{distance:16,color:axisColor,fontSize:10},
+      detail:{valueAnimation:true,formatter:'{value}°',color:'#e2e8f0',fontSize:22,offsetCenter:[0,'58%']},
+      data:[{value:18,name:'冰点'}]}]
+  });
+
+  // 4. 行业资金流向（红=净流入，绿=净流出）
+  var capData = [
+    {name:'电子',value:-148.06},{name:'医药生物',value:-40},{name:'机械设备',value:-40},
+    {name:'计算机',value:-32},{name:'有色金属',value:-32},{name:'电力设备',value:-32},
+    {name:'通信',value:-32},{name:'光伏设备',value:4.81},{name:'国有大行Ⅱ',value:9.23},
+    {name:'传媒',value:11.86},{name:'游戏Ⅱ',value:17.32}
+  ];
+  echarts.init(document.getElementById('capChart')).setOption({
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+'：'+(p[0].value>0?'+':'')+p[0].value+' 亿';}},
+    grid:{left:70,right:40,top:14,bottom:24},
+    xAxis:{type:'value',axisLabel:{color:axisColor,formatter:'{value}亿'},splitLine:{lineStyle:{color:splitColor}}},
+    yAxis:{type:'category',data:capData.map(s=>s.name),axisLabel:{color:axisColor}},
+    series:[{type:'bar',barWidth:'62%',
+      data:capData.map(s=>({value:s.value,itemStyle:{color:s.value>=0?UP:DOWN}})),
+      label:{show:true,position:'right',formatter:function(p){return (p.value>0?'+':'')+p.value;},color:'#e2e8f0'}}]
+  });
+
+  window.addEventListener('resize',function(){document.querySelectorAll('[_echarts_instance_]').forEach(function(el){var c=echarts.getInstanceByDom(el);if(c)c.resize();});});
+</script>
+</body>
+</html>

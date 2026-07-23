@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股午间复盘 · 2026-07-15 周三</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --accent1:#667eea; --accent2:#764ba2; --txt:#e2e8f0; --txt2:#94a3b8; --border:#2d2d44;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.55;padding:24px 16px 60px}
+  .wrap{max-width:1180px;margin:0 auto}
+  .glass{background:linear-gradient(135deg,rgba(102,126,234,.08),rgba(118,75,162,.06));border:1px solid var(--border);border-radius:16px}
+  header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:22px 26px;margin-bottom:20px}
+  header h1{font-size:24px;font-weight:700;letter-spacing:.5px}
+  header .sub{color:var(--txt2);font-size:13px;margin-top:4px}
+  .badge{font-size:19px;font-weight:800;padding:10px 22px;border-radius:12px;letter-spacing:1px}
+  .badge.warm{background:linear-gradient(135deg,#00d4aa,#00b894);color:#04201a;box-shadow:0 6px 20px rgba(0,212,170,.3)}
+  .grid{display:grid;gap:18px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:880px){.g3,.g2{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.g3,.g2{grid-template-columns:1fr}}
+  section{margin:20px 0}
+  .sec-title{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;margin:6px 4px 14px}
+  .sec-title::before{content:"";width:5px;height:18px;border-radius:3px;background:linear-gradient(var(--accent1),var(--accent2))}
+  .card{padding:18px 20px}
+  .idx-head{display:flex;justify-content:space-between;align-items:baseline}
+  .idx-name{font-size:15px;font-weight:600}
+  .idx-code{font-size:11px;color:var(--txt2)}
+  .idx-price{font-size:26px;font-weight:800;margin:6px 0 2px}
+  .idx-chg{font-size:14px;font-weight:700}
+  .down{color:var(--sell)} .up{color:var(--buy)} .flat{color:var(--hold)}
+  .spark{height:54px;margin-top:8px}
+  .stat-row{display:flex;justify-content:space-around;text-align:center;padding:14px 0}
+  .stat-row .v{font-size:30px;font-weight:800}
+  .stat-row .l{font-size:12px;color:var(--txt2);margin-top:2px}
+  .chart{height:340px}
+  .chart-sm{height:260px}
+  .alert{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:12px;margin:10px 0}
+  .alert.risk{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.35)}
+  .alert.pos{background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.35)}
+  .alert .ico{font-size:20px;line-height:1}
+  .alert .tt{font-weight:700;margin-bottom:3px}
+  .alert .bd{font-size:13px;color:var(--txt2)}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:680px){.kpis{grid-template-columns:1fr 1fr}}
+  .kpi{padding:14px;text-align:center}
+  .kpi .v{font-size:24px;font-weight:800}
+  .kpi .l{font-size:11px;color:var(--txt2);margin-top:3px}
+  .plan-card{padding:18px 20px}
+  .plan-card h3{font-size:15px;margin-bottom:10px;color:#a5b4fc}
+  .li{display:flex;gap:10px;padding:7px 0;font-size:13px;border-bottom:1px dashed rgba(45,45,68,.7)}
+  .li .dot{margin-top:6px;width:7px;height:7px;border-radius:50%;flex:0 0 auto}
+  .d-red{background:var(--sell)} .d-green{background:var(--buy)} .d-amber{background:var(--hold)}
+  .foot{font-size:11px;color:var(--txt2);text-align:center;margin-top:26px;line-height:1.8}
+  .meta-pill{display:inline-block;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;margin:4px 6px 0 0}
+  .summary-line{font-size:15px;font-weight:600;padding:14px 18px;border-left:4px solid var(--buy);background:rgba(0,212,170,.07);border-radius:0 10px 10px 0;margin:6px 0 14px}
+  .compare{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .chip{font-size:11px;padding:4px 10px;border-radius:8px;background:rgba(45,45,68,.5);border:1px solid var(--border);color:var(--txt2)}
+  .chip.now{border-color:var(--buy);color:var(--buy)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="glass">
+    <div>
+      <h1>📊 A股午间复盘 · 决策仪表盘</h1>
+      <div class="sub">2026-07-15 周三 · 午间收盘（11:30）· 数据来源：同花顺 / 财联社 / 每经 / 金融界 / 东方财富</div>
+    </div>
+    <div class="badge warm">回暖分化 · 结构切换</div>
+  </header>
+
+  <!-- 核心摘要 -->
+  <section>
+    <div class="summary-line">
+      指数近乎平盘（沪指仅 -0.08%）但 <b>广度显著回暖</b>：上涨 3682 家 vs 下跌 1772 家，<b>赚钱效应 67.5%</b>、涨停 64＞跌停 16、半日成交放量近 1.73 万亿 —— 市场从 7/14 的「弱修复」跃升为「回暖分化」。<b>核心特征：资金高低切，医药（创新药/CXO）全面爆发接棒，高位半导体/PCB 算力硬件继续出清（科创50 -3.67%）。</b> 维持中性偏积极仓位，顺势拥抱业绩确定性方向。
+    </div>
+    <div class="compare">
+      <span class="chip">7/13 冰点</span>
+      <span class="chip">7/14 弱修复（46%）</span>
+      <span class="chip now">▶ 7/15 回暖分化（67.5%）</span>
+    </div>
+  </section>
+
+  <!-- 主要指数 -->
+  <section>
+    <div class="sec-title">📈 主要指数 · 午间收盘</div>
+    <div class="grid g3" id="idxCards"></div>
+  </section>
+
+  <!-- 市场概况 -->
+  <section>
+    <div class="sec-title">🌡️ 市场概况 · 涨跌家数 / 涨停跌停 / 成交</div>
+    <div class="grid g2">
+      <div class="card glass">
+        <div class="chart-sm" id="donut"></div>
+      </div>
+      <div class="card glass">
+        <div class="stat-row">
+          <div><div class="v up">64</div><div class="l">涨停</div></div>
+          <div><div class="v down">16</div><div class="l">跌停</div></div>
+          <div><div class="v up">67.5%</div><div class="l">赚钱效应</div></div>
+          <div><div class="v" style="color:var(--buy)">1.73万亿</div><div class="l">半日成交</div></div>
+        </div>
+        <div class="li"><span class="dot d-green"></span><span>半日成交 <b>17264 亿</b>（沪 8093 + 深 9060 + 北证 111），较 7/14 午间（16256 亿）<b>放量约 1000 亿</b> —— 量能回升。</span></div>
+        <div class="li"><span class="dot d-green"></span><span>涨停 64 ＞ 跌停 16，<b>连续两日涨停数反超跌停</b>；赚钱效应 67.5% 较昨日 46.2% 大幅跃升。</span></div>
+        <div class="li"><span class="dot d-green"></span><span>上涨 3682 / 下跌 1772 / 平 92，<b>涨多跌少</b>，较 7/14（2491:2906）彻底反转。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 板块表现 -->
+  <section>
+    <div class="sec-title">🔥 板块表现 · 领涨 TOP5 / 领跌 TOP5</div>
+    <div class="grid g2">
+      <div class="card glass">
+        <h3 class="plan-card" style="padding:0 0 6px;color:var(--buy)">▲ 领涨行业 / 概念</h3>
+        <div class="chart-sm" id="leadUp"></div>
+      </div>
+      <div class="card glass">
+        <h3 class="plan-card" style="padding:0 0 6px;color:var(--sell)">▼ 领跌行业 / 概念</h3>
+        <div class="chart-sm" id="leadDown"></div>
+      </div>
+    </div>
+    <div class="card glass" style="margin-top:18px">
+      <div class="li"><span class="dot d-green"></span><span><b>医药（创新药 / CXO / 细胞免疫 / 减肥药）全线爆发</b>：创新药获主力 +73.84 亿居首，十余股 20CM 涨停（博瑞、迪哲、睿智），哈药股份 4 连板；催化=迪哲授权阿斯利康 6 亿美元首付款、医保支持创新药政策落地、上半年出海 BD 997 亿美元。</span></div>
+      <div class="li"><span class="dot d-green"></span><span><b>白酒 / 食品饮料 / 零售 / 宠物经济 / 传媒</b> 回暖：金种子酒涨停，食品饮料ETF +3.62%，暑期档近 80 部影片催化影视院线 +5.48%；社零数据 + 顺周期筑底逻辑驱动。</span></div>
+      <div class="li"><span class="dot d-red"></span><span><b>半导体产业链集体下挫</b>：半导体指数 -4.75%，先进封装 / HBM / 半导体设备领跌；德明利一字跌停，华峰测控、佰维存储、沐曦股份跌超 11%；PCB / 元件 / 电子化学品同步走弱。</span></div>
+    </div>
+  </section>
+
+  <!-- 资金流向 -->
+  <section>
+    <div class="sec-title">💰 资金流向 · 主力 / 北向 / ETF</div>
+    <div class="grid g2">
+      <div class="card glass">
+        <h3 class="plan-card" style="padding:0 0 6px;color:#a5b4fc">板块主力净流入（亿元）</h3>
+        <div class="chart-sm" id="flow"></div>
+      </div>
+      <div class="card glass">
+        <h3 class="plan-card" style="padding:0 0 6px;color:#a5b4fc">ETF 与北向</h3>
+        <div class="kpis" style="margin-bottom:12px">
+          <div class="kpi"><div class="v up">+73.8</div><div class="l">创新药主力净流入(亿)</div></div>
+          <div class="kpi"><div class="v down">-150+</div><div class="l">电子板块净流出(亿)</div></div>
+          <div class="kpi"><div class="v up">+5.17%</div><div class="l">港股通生物科技ETF</div></div>
+          <div class="kpi"><div class="v up">≈900</div><div class="l">上涨ETF只数</div></div>
+        </div>
+        <div class="li"><span class="dot d-green"></span><span>个股净买首位：<b>长飞光纤 +12.39 亿</b>（一度涨停）；宁德时代、东山精密、兆易创新净流入居前。</span></div>
+        <div class="li"><span class="dot d-red"></span><span>个股净卖首位：<b>长电科技 -34.47 亿</b>；华天科技 -27.06 亿、佰维存储 -24.81 亿、京东方A -21.37 亿、中芯国际 -7.96 亿。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span>ETF 半日成交 <b>3490.9 亿</b>（较上日 +25.6 亿），近 900 只 ETF 上涨；北向 7/15 午盘分项未单独披露，前一日（7/14）全天小幅净流入，外资偏好医药/消费顺周期、高位半导体兑现减仓。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 情绪温度计 -->
+  <section>
+    <div class="sec-title">🧭 市场情绪仪表盘</div>
+    <div class="grid g2">
+      <div class="card glass"><div class="chart" id="mood"></div></div>
+      <div class="card glass">
+        <h3 class="plan-card" style="padding:0 0 6px">情绪诊断</h3>
+        <div class="li"><span class="dot d-green"></span><span><b>温度 63/100（中性偏暖）</b>：较 7/14（46）明显抬升，重回 50 以上安全区，广度与量能同步改善。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>风险偏好修复</b>：涨停 64＞跌停 16，赚钱效应 67.5%，超 3600 股收红，短线情绪活跃。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>结构分化</b>：科创 50 -3.67% 显示高位科技仍在出清，指数微跌与个股普涨「背离」，属典型高低切换。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>主线清晰</b>：医药（创新药/CXO）成新抱团方向，资金共振 + 政策/出海催化，具备持续性。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 仓位管理 -->
+  <section>
+    <div class="sec-title">🎯 仓位管理推荐</div>
+    <div class="grid g2">
+      <div class="plan-card glass">
+        <h3>📦 仓位配置</h3>
+        <div class="kpis">
+          <div class="kpi"><div class="v flat">55-65%</div><div class="l">总仓位上限</div></div>
+          <div class="kpi"><div class="v up">25-35%</div><div class="l">现金 / 逆回购</div></div>
+          <div class="kpi"><div class="v down">回避</div><div class="l">半导体/科创50</div></div>
+          <div class="kpi"><div class="v" style="color:var(--buy)">加仓</div><div class="l">医药/消费/金融</div></div>
+        </div>
+      </div>
+      <div class="plan-card glass">
+        <h3>✅ 操作纪律 / 加仓触发条件</h3>
+        <div class="li"><span class="dot d-green"></span><span><b>加</b>：医药（CXO/创新药，业绩+出海BD催化）、白酒/食品饮料（顺周期筑底）、保险/证券（市场活跃度回升）。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>持</b>：低位防御、业绩确定性强的核心资产，避免追高日内脉冲板块。</span></div>
+        <div class="li"><span class="dot d-red"></span><span><b>减 / 回避</b>：高位半导体 / PCB / 算力硬件 / 科创 50（长鑫 7/16 IPO 落地前谨慎，等企稳），纯题材无业绩高位小票。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>加仓条件</b>：沪指站稳 3965 筹码中枢 + 科创 50 止跌回升 + 成交维持 1.7 万亿+。</span></div>
+        <div class="li"><span class="dot d-red"></span><span><b>失效离场</b>：沪指有效跌破 3900 或科创 50 破 1900、跌停扩散至 &gt;30。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 风险与催化 -->
+  <section>
+    <div class="sec-title">⚠️ 风险警报 / 积极催化</div>
+    <div class="alert risk">
+      <div class="ico">🔴</div>
+      <div><div class="tt">风险警报</div>
+      <div class="bd">① 科创 50 高开低走 -3.67%，高位科技（半导体/PCB/算力硬件）仍在出清，德明利一字跌停、佰维存储 -11%+；② 长鑫存储 7/16 IPO 抽血预期压制半导体估值，明日落地前资金谨慎；③ 中报预告 7/15 收盘前强制截止，纯题材无业绩高位小票面临暴雷杀跌；④ 板块轮动过快、缺乏单一持续主线，追高风险大。</div></div>
+    </div>
+    <div class="alert pos">
+      <div class="ico">🟢</div>
+      <div><div class="tt">积极催化</div>
+      <div class="bd">① 美国 6 月 CPI 同比 +3.5%、核心 +2.6% 低于预期，降息预期升温，利好全球风险资产；② 广度与量能同步改善（赚钱效应 67.5%、成交放量近 1.73 万亿），市场情绪回暖；③ 医药主线资金共振（创新药 +73.8 亿）+ 政策（医保支持创新药）+ 出海 BD（迪哲 6 亿美元首付款）三重催化，具备持续性；④ 7/15 中报预告截止后业绩真空期利空出尽，逻辑从题材切向业绩验证。</div></div>
+    </div>
+  </section>
+
+  <!-- 信号归因 -->
+  <section>
+    <div class="sec-title">📊 信号归因 · 今日大盘定性由何而来</div>
+    <div class="card glass">
+      <div class="li"><span class="dot d-amber"></span><span><b>指数层面（20%）</b>：沪 -0.08% / 深 -0.38% / 创 -0.36% 近乎平盘，但科创 50 -3.67% 拖累结构，指数稳定与个股普涨呈背离。</span></div>
+      <div class="li"><span class="dot d-green"></span><span><b>广度层面（35%）</b>：上涨 3682＞下跌 1772，赚钱效应 67.5%，涨停 64＞跌停 16，广度较 7/14 彻底反转，是今日最强支撑。</span></div>
+      <div class="li"><span class="dot d-green"></span><span><b>资金层面（30%）</b>：半日放量约 1000 亿至 1.73 万亿；主力涌入医药（创新药 +73.8 亿、医药生物一级 +93 亿），电子板块净流出超 150 亿，高低切迹象明确。</span></div>
+      <div class="li"><span class="dot d-amber"></span><span><b>催化层面（15%）</b>：美 CPI 低于预期（降息预期升温）+ 中报切换 + 社零数据落地，整体偏利好但内部存在结构分化。</span></div>
+      <div class="li" style="border-bottom:none"><span class="dot d-green"></span><span><b>最强看多信号</b>：广度显著回暖（赚钱效应 67.5%、涨停 64＞跌停 16、上涨 3682 家）+ 成交放量近 1.73 万亿 + 医药主线资金共振。　<b>最强看空信号</b>：科创 50 -3.67% 高位科技仍在出清、电子板块主力净流出超 150 亿、半导体产业链集体下挫。</span></div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span class="meta-pill">分析时间 2026-07-15 11:55 GMT+8</span>
+    <span class="meta-pill">策略：大盘午间复盘（多头趋势框架）</span>
+    <span class="meta-pill">数据：同花顺 / 财联社 / 每经 / 金融界 / 东方财富</span><br>
+    本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论基于公开午评数据，迷你走势图为基于午盘 OHLC 的示意路径，非逐笔成交还原。
+  </div>
+
+</div>
+
+<script>
+// ===== 数据 =====
+const indices = [
+  {name:'上证指数', code:'000001', price:3963.90, chg:-0.08, spark:[3963.73,3976,3981.67,3969,3950.29,3963.90]},
+  {name:'深证成指', code:'399001', price:14868.23, chg:-0.38, spark:[14925,14955,14960,14895,14830,14868.23]},
+  {name:'创业板指', code:'399006', price:3837.23, chg:-0.36, spark:[3879.77,3905.31,3885,3850,3815.94,3837.23]},
+  {name:'科创50',   code:'000688', price:1936.06, chg:-3.67, spark:[2010,2015,2008,1975,1940,1936.06]},
+  {name:'北证50',   code:'899050', price:1145.09, chg:-0.65, spark:[1152,1151,1149,1146,1145.09,1145.09]},
+];
+
+// 指数卡片
+const ic = document.getElementById('idxCards');
+indices.forEach(d=>{
+  const cls = d.chg>0?'up':(d.chg<0?'down':'flat');
+  const sign = d.chg>0?'+':'';
+  ic.insertAdjacentHTML('beforeend', `
+    <div class="card glass">
+      <div class="idx-head"><span class="idx-name">${d.name}</span><span class="idx-code">${d.code}</span></div>
+      <div class="idx-price ${cls}">${d.price.toLocaleString()}</div>
+      <div class="idx-chg ${cls}">${sign}${d.chg.toFixed(2)}%</div>
+      <div class="spark" id="sp_${d.code}"></div>
+    </div>`);
+});
+indices.forEach(d=>{
+  const el=document.getElementById('sp_'+d.code);
+  const c=echarts.init(el);
+  c.setOption({
+    grid:{left:0,right:0,top:6,bottom:0},
+    xAxis:{type:'category',show:false,data:d.spark.map((_,i)=>i)},
+    yAxis:{type:'value',show:false,scale:true},
+    series:[{type:'line',data:d.spark,smooth:true,symbol:'none',
+      lineStyle:{width:2,color:d.chg<0?'#ff4757':'#00d4aa'},
+      areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[
+        {offset:0,color:d.chg<0?'rgba(255,71,87,.35)':'rgba(0,212,170,.35)'},
+        {offset:1,color:'rgba(0,0,0,0)'}])}}]
+  });
+  window.addEventListener('resize',()=>c.resize());
+});
+
+// 涨跌家数 donut
+const donut=echarts.init(document.getElementById('donut'));
+donut.setOption({
+  title:{text:'涨跌家数',left:'center',top:6,textStyle:{color:'#e2e8f0',fontSize:14}},
+  tooltip:{trigger:'item',formatter:'{b}: {c} ({d}%)'},
+  legend:{bottom:4,textStyle:{color:'#94a3b8',fontSize:11},itemWidth:10,itemHeight:10},
+  series:[{type:'pie',radius:['45%','70%'],center:['50%','52%'],
+    label:{show:false},
+    data:[
+      {name:'上涨',value:3682,itemStyle:{color:'#00d4aa'}},
+      {name:'下跌',value:1772,itemStyle:{color:'#ff4757'}},
+      {name:'平盘',value:92,itemStyle:{color:'#ffa502'}}
+    ]}]
+});
+window.addEventListener('resize',()=>donut.resize());
+
+// 领涨
+const up=echarts.init(document.getElementById('leadUp'));
+up.setOption({
+  grid:{left:90,right:36,top:10,bottom:10},
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:'{b}<br/>{c}%'},
+  xAxis:{type:'value',axisLabel:{color:'#94a3b8',formatter:'{value}%'}},
+  yAxis:{type:'category',data:['影视院线','生物制品','化学制药','医疗服务','医药生物'],axisLabel:{color:'#e2e8f0'}},
+  series:[{type:'bar',data:[5.48,4.49,5.89,6.37,4.80],
+    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[
+      {offset:0,color:'#00d4aa'},{offset:1,color:'#00b894'}])},
+    label:{show:true,position:'right',color:'#00d4aa',formatter:'{c}%'}}]
+});
+window.addEventListener('resize',()=>up.resize());
+
+// 领跌
+const dn=echarts.init(document.getElementById('leadDown'));
+dn.setOption({
+  grid:{left:96,right:40,top:10,bottom:10},
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:'{b}<br/>{c}%'},
+  xAxis:{type:'value',axisLabel:{color:'#94a3b8',formatter:'{value}%'}},
+  yAxis:{type:'category',data:['电子化学品','元件','半导体设备','半导体','先进封装'],axisLabel:{color:'#e2e8f0'}},
+  series:[{type:'bar',data:[-3.50,-3.80,-4.20,-4.75,-5.00],
+    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[
+      {offset:0,color:'#ff4757'},{offset:1,color:'#ff6b81'}])},
+    label:{show:true,position:'left',color:'#ff4757',formatter:'{c}%'}}]
+});
+window.addEventListener('resize',()=>dn.resize());
+
+// 资金流向（板块主力净流入）
+const flow=echarts.init(document.getElementById('flow'));
+flow.setOption({
+  grid:{left:78,right:46,top:10,bottom:10},
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:'{b}<br/>{c} 亿'},
+  xAxis:{type:'value',axisLabel:{color:'#94a3b8',formatter:'{value}'}},
+  yAxis:{type:'category',data:['电子板块','半导体','减肥药','细胞免疫','CRO概念','创新药'],axisLabel:{color:'#e2e8f0'}},
+  series:[{type:'bar',data:[-150,-90,-26.39,-28.57,-32.38,73.84],
+    itemStyle:{color:p=>p.value<0?'#ff4757':'#00d4aa'},
+    label:{show:true,position:'right',color:'#e2e8f0',formatter:'{c}'}}]
+});
+window.addEventListener('resize',()=>flow.resize());
+
+// 情绪温度计
+const mood=echarts.init(document.getElementById('mood'));
+mood.setOption({
+  series:[{
+    type:'gauge',startAngle:200,endAngle:-20,min:0,max:100,
+    center:['50%','58%'],radius:'82%',
+    progress:{show:true,width:18,itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[
+      {offset:0,color:'#ff4757'},{offset:0.5,color:'#ffa502'},{offset:1,color:'#00d4aa'}])}},
+    axisLine:{lineStyle:{width:18,color:[[0.4,'#ff4757'],[0.6,'#ffa502'],[1,'#00d4aa']]}},
+    pointer:{itemStyle:{color:'#e2e8f0'}},
+    axisTick:{distance:-22,length:5,lineStyle:{color:'#94a3b8'}},
+    splitLine:{distance:-26,length:12,lineStyle:{color:'#94a3b8'}},
+    axisLabel:{distance:-2,color:'#94a3b8',fontSize:10},
+    anchor:{show:true,size:14,itemStyle:{color:'#e2e8f0'}},
+    detail:{valueAnimation:true,formatter:'{value} 分',color:'#e2e8f0',fontSize:30,offsetCenter:[0,'42%']},
+    title:{offsetCenter:[0,'70%'],color:'#94a3b8',fontSize:13},
+    data:[{value:63,name:'市场情绪：中性偏暖'}]
+  }]
+});
+window.addEventListener('resize',()=>mood.resize());
+</script>
+</body>
+</html>

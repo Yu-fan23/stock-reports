@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股每日研报看板</title>
+<style>
+  :root{
+    --bg:#0a0e1a; --panel:#0f1424; --card:#121829; --card2:#161d33;
+    --bd:#1f2940; --bd2:#2a3550;
+    --txt:#e6ecf5; --sub:#8a97b0; --dim:#5b667e;
+    --red:#ff3b5c; --grn:#22c98a; --blue:#4f9dff; --yel:#ffcc33; --org:#ff6b35;
+    --sidebar:284px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    background:var(--bg); color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;
+    display:flex; overflow:hidden;
+  }
+  /* ===== 侧栏 ===== */
+  .sidebar{
+    width:var(--sidebar); flex:0 0 var(--sidebar); height:100vh;
+    background:linear-gradient(180deg,#0d1220 0%,#0a0e1a 100%);
+    border-right:1px solid var(--bd);
+    display:flex; flex-direction:column;
+  }
+  .brand{padding:20px 20px 16px; border-bottom:1px solid var(--bd)}
+  .brand h1{font-size:18px; font-weight:800; letter-spacing:.5px; display:flex; align-items:center; gap:9px}
+  .brand .logo{
+    width:30px;height:30px;border-radius:8px;
+    background:linear-gradient(135deg,var(--red),var(--org));
+    display:flex;align-items:center;justify-content:center;font-size:16px;
+  }
+  .brand .sub{font-size:11.5px; color:var(--dim); margin-top:7px; line-height:1.5}
+  .brand .sub b{color:var(--grn)}
+
+  .cats{padding:12px 12px 4px; display:flex; flex-direction:column; gap:6px}
+  .cat{
+    border:1px solid var(--bd); background:var(--card); border-radius:11px;
+    padding:11px 13px; cursor:pointer; transition:.15s; user-select:none;
+  }
+  .cat:hover{background:var(--card2); border-color:var(--bd2)}
+  .cat.active{background:var(--card2); border-color:var(--accent); box-shadow:0 0 0 1px var(--accent) inset}
+  .cat .row1{display:flex; align-items:center; gap:9px}
+  .cat .ico{font-size:17px}
+  .cat .nm{font-size:14px; font-weight:700; flex:1}
+  .cat .badge{
+    font-size:11px; font-weight:700; color:#0a0e1a; background:var(--accent);
+    padding:1px 8px; border-radius:20px; min-width:22px; text-align:center;
+  }
+  .cat .row2{display:flex; align-items:center; justify-content:space-between; margin-top:6px}
+  .cat .tm{font-size:11px; color:var(--dim)}
+  .cat .lt{font-size:11px; color:var(--sub)}
+
+  .dates{flex:1; overflow-y:auto; padding:6px 12px 12px}
+  .dates-hd{font-size:11px; color:var(--dim); font-weight:700; letter-spacing:1px;
+    padding:10px 4px 8px; text-transform:uppercase}
+  .date-item{
+    display:flex; align-items:center; gap:8px; padding:9px 11px; border-radius:9px;
+    cursor:pointer; transition:.12s; font-size:13px; color:var(--sub); margin-bottom:3px;
+    border:1px solid transparent;
+  }
+  .date-item:hover{background:var(--card); color:var(--txt)}
+  .date-item.active{background:var(--card2); color:var(--txt); border-color:var(--bd2)}
+  .date-item .dot{width:7px;height:7px;border-radius:50%; background:var(--dim); flex:0 0 7px}
+  .date-item.active .dot{background:var(--accent)}
+  .date-item.today .tag{
+    font-size:10px; color:#0a0e1a; background:var(--grn); font-weight:700;
+    padding:0 6px; border-radius:10px; margin-left:auto;
+  }
+  .foot{padding:11px 16px; border-top:1px solid var(--bd); font-size:11px; color:var(--dim)}
+  .foot span{color:var(--sub)}
+
+  /* ===== 主区 ===== */
+  .main{flex:1; height:100vh; display:flex; flex-direction:column; min-width:0}
+  .topbar{
+    height:56px; flex:0 0 56px; border-bottom:1px solid var(--bd);
+    background:var(--panel); display:flex; align-items:center; gap:14px; padding:0 20px;
+  }
+  .topbar .cur-ico{font-size:20px}
+  .topbar .cur-title{font-size:14px; font-weight:600; color:var(--txt);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1}
+  .topbar .cur-title small{color:var(--dim); font-weight:400}
+  .topbar .actions{display:flex; gap:8px; flex:0 0 auto}
+  .btn{
+    font-size:12.5px; color:var(--sub); background:var(--card); border:1px solid var(--bd);
+    padding:7px 13px; border-radius:8px; cursor:pointer; transition:.15s; text-decoration:none;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .btn:hover{background:var(--card2); color:var(--txt); border-color:var(--bd2)}
+
+  /* 最后更新角标 */
+  .upd-badge{
+    display:inline-flex; align-items:center; gap:7px; flex:0 0 auto;
+    font-size:12px; color:var(--sub);
+    background:var(--card); border:1px solid var(--bd);
+    padding:6px 13px; border-radius:20px; white-space:nowrap;
+  }
+  .upd-badge .dot{width:8px;height:8px;border-radius:50%; background:var(--grn);
+    box-shadow:0 0 0 0 rgba(34,201,138,.6); animation:pulse 2s infinite}
+  .upd-badge .lbl{color:var(--dim); font-size:11px}
+  .upd-badge .val{color:var(--txt); font-weight:600; font-variant-numeric:tabular-nums}
+  .upd-badge.stale .dot{background:var(--yel); animation:none; box-shadow:none}
+  .upd-badge.stale .val{color:var(--yel)}
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(34,201,138,.5)}
+    70%{box-shadow:0 0 0 6px rgba(34,201,138,0)}
+    100%{box-shadow:0 0 0 0 rgba(34,201,138,0)}
+  }
+
+  .stage{flex:1; position:relative; background:#0a0e1a; min-height:0}
+  iframe{width:100%; height:100%; border:0; background:#0a0e1a; display:block}
+  .empty{position:absolute; inset:0; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; color:var(--dim); gap:14px}
+  .empty .big{font-size:54px; opacity:.4}
+  .empty .t{font-size:15px; color:var(--sub)}
+  .empty .s{font-size:12.5px}
+
+  ::-webkit-scrollbar{width:8px}
+  ::-webkit-scrollbar-thumb{background:#1f2940; border-radius:8px}
+  ::-webkit-scrollbar-thumb:hover{background:#2a3550}
+
+  @media(max-width:820px){
+    body{flex-direction:column; overflow:auto; height:auto}
+    .sidebar{width:100%; flex:none; height:auto; border-right:0; border-bottom:1px solid var(--bd)}
+    .dates{max-height:230px}
+    .main{height:auto}
+    .stage{height:78vh}
+  }
+</style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <h1><span class="logo">📈</span> A股研报看板</h1>
+      <div class="sub">每日定时任务自动汇总 · 更新于 <b id="gen-time">--</b></div>
+    </div>
+    <div class="cats" id="cats"></div>
+    <div class="dates">
+      <div class="dates-hd">历史日期</div>
+      <div id="date-list"></div>
+    </div>
+    <div class="foot">共 <span id="total-count">0</span> 篇研报 · 红涨绿跌</div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <span class="cur-ico" id="cur-ico">📄</span>
+      <div class="cur-title" id="cur-title">请选择研报</div>
+      <div class="upd-badge" id="upd-badge" title="站点最后更新时间">
+        <span class="dot"></span>
+        <span class="lbl">最后更新</span>
+        <span class="val" id="upd-val">--</span>
+      </div>
+      <div class="actions">
+        <a class="btn" id="btn-open" href="#" target="_blank" style="display:none">↗ 新窗口打开</a>
+      </div>
+    </div>
+    <div class="stage">
+      <iframe id="viewer" title="研报内容" style="display:none"></iframe>
+      <div class="empty" id="empty">
+        <div class="big">📊</div>
+        <div class="t">A股每日研报聚合看板</div>
+        <div class="s">从左侧选择分类与日期查看研报</div>
+      </div>
+    </div>
+  </main>
+
+<script src="data.js"></script>
+<script>
+(function(){
+  var DATA = window.SITE_DATA || {categories:[],total:0,generatedAt:'--'};
+  var curCat=null, curDate=null;
+
+  var catsEl=document.getElementById('cats');
+  var dateListEl=document.getElementById('date-list');
+  var viewer=document.getElementById('viewer');
+  var emptyEl=document.getElementById('empty');
+  var curTitle=document.getElementById('cur-title');
+  var curIco=document.getElementById('cur-ico');
+  var btnOpen=document.getElementById('btn-open');
+
+  document.getElementById('gen-time').textContent = DATA.generatedAt || '--';
+  document.getElementById('total-count').textContent = DATA.total || 0;
+
+  // 顶部「最后更新」角标：填充时间 + 新鲜度（24h 内绿色，否则琥珀色）
+  var genTime = DATA.generatedAt || '';
+  document.getElementById('upd-val').textContent = genTime || '--';
+  if(genTime){
+    var gd = new Date(genTime.replace(/-/g,'/'));
+    var hrs = (new Date() - gd) / 3600000;
+    if(!(hrs >= 0 && hrs <= 24)){ document.getElementById('upd-badge').classList.add('stale'); }
+  }
+
+  var todayStr = (function(){
+    var d=new Date();
+    return ''+d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');
+  })();
+
+  function catByKey(k){ return DATA.categories.find(function(c){return c.key===k}); }
+
+  // 渲染分类卡片
+  DATA.categories.forEach(function(c){
+    var el=document.createElement('div');
+    el.className='cat'; el.dataset.key=c.key;
+    el.style.setProperty('--accent', c.color);
+    el.innerHTML =
+      '<div class="row1"><span class="ico">'+c.icon+'</span>'+
+      '<span class="nm">'+c.name+'</span>'+
+      '<span class="badge">'+c.count+'</span></div>'+
+      '<div class="row2"><span class="tm">⏰ '+c.time+'</span>'+
+      '<span class="lt">'+(c.latest? '最新 '+c.latest.slice(4,6)+'/'+c.latest.slice(6,8):'暂无')+'</span></div>';
+    el.addEventListener('click', function(){ selectCat(c.key); });
+    catsEl.appendChild(el);
+  });
+
+  function selectCat(key, keepDate){
+    curCat=key;
+    document.querySelectorAll('.cat').forEach(function(n){
+      n.classList.toggle('active', n.dataset.key===key);
+    });
+    var c=catByKey(key);
+    // 渲染日期列表
+    dateListEl.innerHTML='';
+    c.reports.forEach(function(r){
+      var it=document.createElement('div');
+      it.className='date-item'+(r.date===todayStr?' today':'');
+      it.dataset.date=r.date;
+      it.innerHTML='<span class="dot"></span><span>'+r.dateLabel+'</span>'+
+        (r.date===todayStr?'<span class="tag">今日</span>':'');
+      it.addEventListener('click', function(){ selectDate(r.date); });
+      dateListEl.appendChild(it);
+    });
+    // 选中日期：优先保留、否则最新
+    var target=null;
+    if(keepDate){ target=c.reports.find(function(r){return r.date===keepDate}); }
+    if(!target){ target=c.reports[0]; }
+    if(target){ selectDate(target.date); }
+    else{ showEmpty(); }
+  }
+
+  function selectDate(date){
+    curDate=date;
+    var c=catByKey(curCat);
+    var r=c.reports.find(function(x){return x.date===date});
+    document.querySelectorAll('.date-item').forEach(function(n){
+      n.classList.toggle('active', n.dataset.date===date);
+    });
+    if(!r){ showEmpty(); return; }
+    emptyEl.style.display='none';
+    viewer.style.display='block';
+    viewer.src=r.file;
+    curIco.textContent=c.icon;
+    curTitle.innerHTML=r.title.replace(/</g,'&lt;');
+    btnOpen.style.display='inline-flex';
+    btnOpen.href=r.file;
+  }
+
+  function showEmpty(){
+    viewer.style.display='none'; viewer.src='about:blank';
+    emptyEl.style.display='flex';
+    btnOpen.style.display='none';
+    curTitle.textContent='暂无研报'; curIco.textContent='📄';
+  }
+
+  // 初始：选中有数据且最新的分类
+  var first=DATA.categories.filter(function(c){return c.count>0})
+    .sort(function(a,b){return (b.latest||'').localeCompare(a.latest||'')})[0]
+    || DATA.categories[0];
+  if(first){ selectCat(first.key); } else { showEmpty(); }
+})();
+</script>
+</body>
+</html>

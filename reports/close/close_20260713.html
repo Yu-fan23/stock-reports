@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股行情复盘 · 2026-07-13（周一·收盘版·年线告破·普跌冰点）· 星辰</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23;
+    --card:#1a1a2e;
+    --card2:#16162a;
+    --line:#2d2d44;
+    --ink:#e2e8f0;
+    --sub:#94a3b8;
+    --up:#d8392b;       /* 涨·红 (A股惯例) */
+    --down:#1a8f4c;     /* 跌·绿 */
+    --accent:#667eea;
+    --accent2:#764ba2;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.6;font-size:14px;}
+  .wrap{max-width:1060px;margin:0 auto;padding:24px 18px 64px;}
+  header{border-left:4px solid transparent;border-image:linear-gradient(180deg,var(--accent),var(--accent2)) 1;
+    padding:4px 0 4px 14px;margin-bottom:18px;}
+  header h1{font-size:22px;margin:0;font-weight:700;
+    background:linear-gradient(90deg,#a5b4fc,#c4b5fd);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  header .meta{color:var(--sub);font-size:13px;margin-top:4px;}
+  .tldr{background:linear-gradient(135deg,#1a1a2e,#16162a);border:1px solid var(--line);border-radius:12px;
+    padding:16px 18px;margin-bottom:18px;box-shadow:0 4px 18px rgba(0,0,0,.35);}
+  .tldr h2{margin:0 0 8px;font-size:15px;color:#a5b4fc;}
+  .tldr ul{margin:0;padding-left:18px;}
+  .tldr li{margin:5px 0;color:#cbd5e1;}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:780px){.grid{grid-template-columns:1fr;}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 18px;box-shadow:0 4px 18px rgba(0,0,0,.30);margin-bottom:16px;}
+  .card h3{margin:0 0 12px;font-size:15px;display:flex;align-items:center;gap:8px;color:#e2e8f0;}
+  .card h3::before{content:"";width:6px;height:16px;background:linear-gradient(180deg,var(--accent),var(--accent2));
+    border-radius:2px;display:inline-block;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);}
+  th{color:var(--sub);font-weight:600;}
+  .up{color:var(--up);font-weight:600;}
+  .down{color:var(--down);font-weight:600;}
+  .flat{color:var(--sub);}
+  #idxChart,#capChart,#gaugeChart,#leadChart,#marginChart{width:100%;height:300px;}
+  #gaugeChart{height:240px;}
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+  @media(max-width:780px){.kpis{grid-template-columns:1fr 1fr;}}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:14px;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,.30);}
+  .kpi .v{font-size:20px;font-weight:700;}
+  .kpi .k{font-size:12px;color:var(--sub);margin-top:2px;}
+  .note{background:rgba(26,143,76,.10);border:1px solid rgba(26,143,76,.40);border-radius:10px;
+    padding:10px 14px;color:#7ee0a3;font-size:13px;margin:10px 0;}
+  .note.danger{background:rgba(216,57,43,.10);border-color:rgba(216,57,43,.40);color:#ff9d8a;}
+  .note.info{background:rgba(102,126,234,.10);border-color:rgba(102,126,234,.40);color:#a5b4fc;}
+  .note.warn{background:rgba(250,204,21,.10);border-color:rgba(250,204,21,.40);color:#facc15;}
+  .pill{font-size:11px;padding:2px 8px;border-radius:20px;background:rgba(102,126,234,.18);color:#a5b4fc;font-weight:600;}
+  .tag{display:inline-block;background:rgba(102,126,234,.15);color:#a5b4fc;border-radius:6px;
+    padding:1px 7px;font-size:12px;margin-right:4px;}
+  .src{font-size:12px;color:var(--sub);border-top:1px dashed var(--line);margin-top:20px;padding-top:12px;line-height:1.7;}
+  .subgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:780px){.subgrid{grid-template-columns:1fr;}}
+  .heat{display:flex;align-items:center;gap:12px;background:var(--card2);border:1px solid var(--line);
+    border-radius:10px;padding:10px 14px;margin:8px 0;}
+  .heat .bar{flex:1;height:10px;border-radius:6px;background:linear-gradient(90deg,#1a8f4c,#facc15,#d8392b);position:relative;}
+  .heat .dot{position:absolute;top:-3px;width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid #667eea;}
+  .heat .lab{font-size:12px;color:var(--sub);white-space:nowrap;}
+  .pos{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:6px;}
+  @media(max-width:780px){.pos{grid-template-columns:1fr 1fr;}}
+  .pos .p{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:12px;}
+  .pos .p h4{margin:0 0 4px;font-size:13px;color:#a5b4fc;}
+  .pos .p .big{font-size:22px;font-weight:700;}
+  .pos .p p{margin:6px 0 0;font-size:12px;color:var(--sub);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>A股行情复盘 · 2026-07-13（周一 · 收盘版 · 年线告破 · 普跌冰点）</h1>
+    <div class="meta">收盘数据更新 15:26 · 数据来源：NeoData 实时行情 + 公开资讯（财联社 / 大河财立方 / 科创板日报 / 证券之星·数据宝）· 分析师：星辰</div>
+  </header>
+
+  <div class="note danger">⚠️ <b>年线警报触发！</b> 上证指数今日收 3913.79，<b>正式跌破 3970 年线（盘中最低 3900.67）</b>，且深成(-3.48%)、创业(-3.10%)、科创50(-3.42%) 全线下挫。这与 7/10 复盘设定的「减仓触发 &lt;4 成（跌破 3970 年线放量）」条件吻合——<b>减仓条件已触发</b>，仓位中枢由上周的 4.5–5.5 成下调至 3–4 成。</div>
+
+  <div class="tldr">
+    <h2>一句话结论（7/13 收盘）</h2>
+    <ul>
+      <li><b>四大指数全线重挫 · 年线告破</b>：上证 <b>-2.06% 收 3913.79</b>（跌破 3970 年线，最低 3900.67）、深成 <b>-3.48%</b>、创业 <b>-3.10%</b>、科创50 <b>-3.42%</b>（AI 硬件抱团瓦解，长盈通 20CM 跌停、多只翻倍牛股集体跌停）。两市成交约 <b>2.82 万亿</b>（较 7/10 的 3.37 万亿缩量，但仍是天量），呈「放量破位、恐慌释放」特征。</li>
+      <li><b>赚钱效应冰点</b>：全市场 <b>超 4500 只个股下跌（红盘仅约 800 只、占比 ~15%）</b>，涨停 27 只 / <b>跌停超 50 只（跌停 &gt; 涨停）</b>，封板率 68%（较 7/10 的 49% 回升但仍难做），连板 9 只（恒尚节能 9 天 8 板独苗，立方制药 / 亚联机械 3 连板）。情绪温度计 <b>≈22°（冰点区）</b>。</li>
+      <li><b>资金：从高拥挤科技 / 高位牛股夺路而逃</b>：板块主力净流入极弱（主营聚乙烯 +7.06 亿、血氧仪 +6.69 亿、创新药 +6.16 亿），整体主力<b>大幅净流出</b>；两融(7/10) <b>29447.74 亿、七连降、上周净减 579 亿</b>，杠杆加速撤退。</li>
+      <li><b>仓位（触发减仓 · 下调中枢）</b>：总仓 <b>3–4 成</b>、现金 60–70%；年线破位 + 普跌已触发此前「&lt;4 成」减仓条件，建议降至 4 成以下；<b>加仓需上证重回 4000 + 主线止跌放量反包</b>，严禁抄底高位拥挤科技。</li>
+    </ul>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="v down">-2.06%</div><div class="k">上证 3913.79 · 跌破3970年线</div></div>
+    <div class="kpi"><div class="v down">-3.42%</div><div class="k">科创50 1994.32 · AI硬件抱团瓦解</div></div>
+    <div class="kpi"><div class="v down">≈2.82万亿</div><div class="k">两市成交 · 较7/10缩量5500亿</div></div>
+    <div class="kpi"><div class="v down">~800 只</div><div class="k">红盘 · 下跌超4500只（占比~15%）</div></div>
+    <div class="kpi"><div class="v down">&gt;50 只</div><div class="k">跌停（午间53）· 涨停仅27只</div></div>
+    <div class="kpi"><div class="v" style="color:#a5b4fc">3–4 成</div><div class="k">仓位建议 · 减仓触发·防御</div></div>
+  </div>
+
+  <div class="card">
+    <h3>一、核心指数表现（收盘 · 上证近期点位与年线）</h3>
+    <div id="idxChart"></div>
+    <table>
+      <thead><tr><th>指数</th><th>收盘</th><th>涨跌幅</th><th>最高</th><th>最低</th><th>成交额</th><th>5日</th><th>年初至今</th><th>PE(TTM)/百分位</th></tr></thead>
+      <tbody>
+        <tr><td>上证指数</td><td>3913.79</td><td class="down">-2.06%</td><td>3983.05</td><td class="down">3900.67</td><td>1.33万亿</td><td class="down">-3.15%</td><td class="down">-1.39%</td><td>17.42 / 95.51%</td></tr>
+        <tr><td>深证成指</td><td>14522.85</td><td class="down">-3.48%</td><td>14997.07</td><td class="down">14437.07</td><td>1.48万亿</td><td class="down">-5.80%</td><td class="up">+7.38%</td><td>47.34 / 98.27%</td></tr>
+        <tr><td>创业板指</td><td>3723.52</td><td class="down">-3.10%</td><td>3855.75</td><td class="down">3691.23</td><td>6929.71亿</td><td class="down">-5.71%</td><td class="up">+16.24%</td><td>65.06 / 63.74%</td></tr>
+        <tr><td>科创50</td><td>1994.32</td><td class="down">-3.42%</td><td>2110.18</td><td class="down">1974.05</td><td>2148.51亿</td><td class="flat">-0.09%</td><td class="up">+48.36%</td><td>243.56 / —</td></tr>
+      </tbody>
+    </table>
+    <div class="note danger">⚠️ <b>年线正式失守</b>：上证自 7/9 反包至 4036 后连续回落，今日收 3913.79、最低 3900.67，<b>收盘已位于 3970 年线下方</b>。这是 7/7 以来第二次考验年线、且首次收盘破位——此前 7/10 复盘设定的「跌破 3970 年线放量 = 减仓信号」条件成立。深成 / 创业 / 科创同步破位，系统性风险偏好显著降温。</div>
+  </div>
+
+  <div class="card">
+    <h3>二、市场赚钱效应总结（情绪温度计 · 冰点区）</h3>
+    <div class="heat">
+      <span class="lab">冰点</span>
+      <div class="bar"><div class="dot" style="left:22%"></div></div>
+      <span class="lab">沸点</span>
+    </div>
+    <p style="margin:6px 0 4px;color:var(--sub);font-size:13px;">市场情绪温度计：<b style="color:#ff9d8a">48°（7/10 分歧）→ ≈22°（7/13 冰点）</b>。从上一个交易日的「中性分歧」急转为「普跌冰点」——跌停家数反超涨停、红盘占比仅约 15%，属典型恐慌释放日。</p>
+    <div class="subgrid">
+      <div id="gaugeChart"></div>
+      <div id="leadChart"></div>
+    </div>
+    <table>
+      <thead><tr><th>赚钱效应信号</th><th>今日表现</th><th>解读</th></tr></thead>
+      <tbody>
+        <tr><td>红盘广度</td><td class="down">红盘约 800 只 / 下跌超 4500 只（占比 ~15%）</td><td class="down">普跌，赚钱效应极差（vs 7/10 的「指数跌、个股活」已逆转）</td></tr>
+        <tr><td>涨停 / 跌停</td><td class="down">涨停 27 只 / 跌停 &gt;50 只</td><td class="down">跌停反超涨停，亏钱效应弥漫</td></tr>
+        <tr><td>封板率</td><td class="flat">68%（13 股封板未遂）</td><td class="flat">较 7/10 的 49% 回升，但高位板易炸，追板性价比仍低</td></tr>
+        <tr><td>连板高度</td><td class="flat">连板 9 只 · 恒尚节能 9 天 8 板独苗</td><td class="flat">立方制药 / 亚联机械 3 连板；高度股抱团但范围收窄</td></tr>
+        <tr><td>局部亮点</td><td class="up">中药 / 银行 / GPU 个别标的</td><td class="up">政策催化（中医药规划）+ 防御（银行）+ 少数活口，非主线</td></tr>
+      </tbody>
+    </table>
+    <div class="note info">赚钱效应本质：今日是「<b>指数与个股双杀</b>」——不同于 7/10「指数跌、个股活」的结构轮动，今日高位拥挤科技与前期翻倍牛股<b>集体兑现跌停</b>（风华高科 MLCC、多氟多氟化工业绩利好出尽反跌停；长盈通 20CM 跌停、香农芯创近 20% 跌停、中船特气 / 北京君正 / 信维通信 / 国瓷材料等多股跌超 10%）。仅医药（政策）、银行（防御）等少数方向逆势，属「避险 + 事件」而非「进攻」。</div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>三、今日领涨方向（行业 / 概念）</h3>
+      <table>
+        <thead><tr><th>行业</th><th>涨幅</th><th>驱动</th></tr></thead>
+        <tbody>
+          <tr><td>中药Ⅱ</td><td class="up">+3.28%</td><td>国务院批复《中医药振兴发展"十五五"规划》(7/10)</td></tr>
+          <tr><td>农商行Ⅱ</td><td class="up">+2.66%</td><td>银行防御属性，苏州银行 +6.15%</td></tr>
+          <tr><td>国有大型银行Ⅱ</td><td class="up">+2.15%</td><td>建设银行 +3.56%、中行 / 交行 +2%</td></tr>
+          <tr><td>城商行Ⅱ</td><td class="up">+1.99%</td><td>资金避险涌入低估值银行</td></tr>
+          <tr><td>调味发酵品Ⅱ</td><td class="up">+1.37%</td><td>消费防御，千禾味业 +2.13%</td></tr>
+          <tr><td>白色家电</td><td class="up">+1.22%</td><td>TCL智家 +2.19%，低位消费修复</td></tr>
+        </tbody>
+      </table>
+      <div class="note">概念涨幅居前：超级真菌 +2.71%、昨日连板 +2.25%、银行概念 +2.07%、禽流感 +1.79%、独家药品 +1.75%。<b>资金在「政策 + 防御」中抱团</b>，强度弱、持续性待验。</div>
+    </div>
+
+    <div class="card">
+      <h3>四、今日弱势 / 退潮方向（跌停集中营）</h3>
+      <table>
+        <thead><tr><th>方向</th><th>特征</th><th>代表</th></tr></thead>
+        <tbody>
+          <tr><td>半导体 / AI硬件</td><td class="down">科创50 -3.42%</td><td>长盈通 20CM 跌停、瑞华泰 -16%、普冉 -14%、龙腾光电 -13%</td></tr>
+          <tr><td>光通信 / PCB</td><td class="down">集体大跌</td><td>亨通光电、大族激光、烽火通信、特发信息 跌停</td></tr>
+          <tr><td>翻倍牛股（抱团瓦解）</td><td class="down">利好出尽式跌停</td><td>风华高科(MLCC)、多氟多(氟化工)、香农芯创近20%跌停</td></tr>
+          <tr><td>商业航天 / 卫星导航</td><td class="down">高位退潮</td><td>海格通信、航天发展、海特高新 跌停</td></tr>
+          <tr><td>培育钻石 / 玻纤 / 发电设备 / 化纤 / 基本金属</td><td class="down">概念跌幅居前</td><td>前期热门题材集体调整</td></tr>
+        </tbody>
+      </table>
+      <div class="note danger">⚠️ <b>高位拥挤抱团踩踏</b>：今日跌停板集中了大批「近一年翻倍甚至数倍」的牛股（风华高科年内 +350%、中船特气 +720%、长盈通 +250% 等）。这些标的在 7/10 晚间披露中报预增后反遭「利好出尽」砸盘，印证<b>估值与情绪双高、筹码松动、获利盘踩踏</b>。短线追高者普遍深套。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>五、资金流向分析（板块主力净流入 + 两融）</h3>
+    <p style="margin:0 0 6px;color:var(--sub);font-size:13px;">① 概念主力净流入（亿元，红=流入；今日净流入量级极小，整体大幅净流出）：</p>
+    <div id="capChart"></div>
+    <div class="note danger">⚠️ <b>整体主力大幅净流出</b>：今日为普跌破位日，全市场主力净流出规模显著扩大（7/10 派发日已净流出 397.9 亿，今日跌幅更深、个股更弱，净流出只多不少）。净流入板块仅「主营聚乙烯 +7.06 亿、血氧仪 +6.69 亿、创新药 +6.16 亿」等微量级，资金<b>从高拥挤科技、高位牛股、军工 / 航天夺路而逃</b>，避险进入银行 / 中药 / 低位消费。</div>
+    <p style="margin:10px 0 6px;color:var(--sub);font-size:13px;">② 两融余额走势（亿元，杠杆七连降 · 上周净减 579 亿）：</p>
+    <div id="marginChart"></div>
+    <div class="note warn">⚠️ <b>两融七连降 · 杠杆加速撤退</b>：截至 7/10，A 股两融余额 <b>29447.74 亿</b>（融资 29228.04 + 融券 219.69），较上日 -114.22 亿；<b>上周（7/6–7/10）融资余额累计减少 579.19 亿、连续 5 个交易日净减</b>。行业上，上周仅 6 个行业融资增加（通信 +20.12 亿居首、国防军工 +3.14 亿），<b>电子 -146.02 亿、电力设备 -89.25 亿、有色金属 -89.05 亿</b> 净卖出居前——与「科技派发、高低切」主线一致。7/13 当日两融于次交易日（7/14）披露，最新公开口径为 7/10 的 29447.74 亿。</div>
+  </div>
+
+  <div class="card">
+    <h3>六、仓位管理推荐（7/14 起 · 防御 · 减仓触发）</h3>
+    <div class="pos">
+      <div class="p"><h4>总仓位</h4><div class="big" style="color:#ff9d8a">3–4 成</div><p>下调中枢（上周 4.5–5.5 成）。年线破位 + 普跌冰点 + 跌停&gt;涨停，风险偏好降至防御区间。</p></div>
+      <div class="p"><h4>加仓触发</h4><div class="big up">&gt;5 成</div><p>上证重新站稳 4000 且主线止跌放量反包（非一日游），或成交 &gt;3 万亿且红盘扩散为普涨。</p></div>
+      <div class="p"><h4>减仓触发</h4><div class="big down">已触发·&lt;3成</div><p>跌破 3970 年线放量（今日已成立）；若放量跌破 3900 或连续两日收于年线下方，进一步降至 3 成以下。</p></div>
+      <div class="p"><h4>现金比例</h4><div class="big" style="color:#a5b4fc">60–70%</div><p>破位恐慌周，现金为王；等恐慌释放后的恐慌盘衰竭 / 新主线分歧低吸。</p></div>
+    </div>
+    <table style="margin-top:12px">
+      <thead><tr><th>操作</th><th>具体建议</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tag">减仓</span>高位拥挤科技</td><td>半导体 / CPO / PCB / 光模块 / 算力硬件 / 商业航天中前期抱团、今日破位的标的——趁任何反抽果断减仓，规避「盈利变深套」。</td></tr>
+        <tr><td><span class="tag">回避</span>翻倍牛股 / 纯题材</td><td>风华高科、多氟多、长盈通、香农芯创等「利好出尽 + 高拥挤 + 高估值」标的，回避抄底；纯题材与 ST 不参与。</td></tr>
+        <tr><td><span class="tag">防御</span>低估值 + 政策</td><td>银行（国有大行 / 农商行，低估值防御）、中药（中医药"十五五"规划政策催化）、低位消费（白电 / 调味品）；仅做底仓、不追高。</td></tr>
+        <tr><td><span class="tag">持有</span>业绩确定性</td><td>有中报业绩支撑、且未大幅上涨的细分龙头可保留底仓；回避「无业绩、纯概念、高位」三合一标的。</td></tr>
+        <tr><td><span class="tag">节奏</span>不接飞刀</td><td>冰点日不急着抄底，等上证在 3900 附近缩量企稳、或重回 3970 上方并放量，再分批回补；优先等恐慌盘衰竭信号。</td></tr>
+      </tbody>
+    </table>
+    <div class="note danger">⚠️ <b>年线破位 · 系统性降风险</b>：沪指收盘 3913.79 已位于 3970 年线下方，下方 3900 整数关为短期最后心理支撑；上方 3970–4000 转为压力区。当前是「<b>指数破位 + 个股普跌 + 杠杆撤退 + 高位踩踏</b>」组合，仓位中枢 <b>3–4 成、现金 60–70%</b>；外部扰动（美 301 关税听证、美联储货币政策、中东地缘）与中报业绩验证期均压低风险偏好。</div>
+  </div>
+
+  <div class="card">
+    <h3>七、后市研判（7/14 起）</h3>
+    <p style="margin-top:0;color:#cbd5e1">今日复盘显示：<b>① 这是一次「年线破位 + 高位抱团踩踏」的系统性回调，非单纯结构轮动</b>（红盘仅约 800 只、跌停 &gt;50 只）；<b>② 两融七连降、杠杆加速撤退</b>，资金风险偏好快速降温；<b>③ 仅医药（政策）、银行（防御）、低位消费逆势</b>，新主线尚未形成。因此操作上应「防御优先、现金为王」。</p>
+    <ul style="color:#cbd5e1">
+      <li><span class="tag">点位</span>上证收 3913.79 <b>已破 3970 年线</b>，3900 整数关为短期支撑；若放量跌破 3900，下一观察区在 3850–3870（前期平台）。重回 3970 上方并放量 = 减仓错误的纠错信号，站稳 4000 = 加仓信号。</li>
+      <li><span class="tag">量能</span>两市约 2.82 万亿，较 7/10 缩量但仍属天量；若后续缩量至 2 万亿附近并在 3900 止跌，属良性「恐慌释放 → 缩量企稳」；若继续放量下杀，则确认派发。</li>
+      <li><span class="tag">主线</span>半导体 / AI硬件退潮后，<b>承接方向</b>观察：中药（政策）、银行（防御）、中报业绩确定性且未大涨的细分龙头；机构共识仍指向有业绩的半导体设备 / 存储 / 国产算力，但须等拥挤度与估值充分消化（科创50 PE 仍 243 倍）。</li>
+      <li><span class="tag">事件</span>国新办 7/15 下午 3 时发布会（央行副行长邹澜介绍上半年货币政策执行与金融统计数据）——关注货币宽松信号对市场的托底作用；同时留意周末外盘（美股、大宗、地缘）对明日开盘映射。</li>
+    </ul>
+    <p style="margin-bottom:0;color:#cbd5e1"><b>策略</b>：<b>防御、控仓、不接飞刀</b>；总仓 <b>3–4 成</b>、现金 60–70%；减高位拥挤科技与翻倍牛股、配防御低估值，<b>严禁在跌停 &gt; 涨停的冰点日抄底高位题材</b>。待上证在 3900 附近缩量企稳或重回年线上方，再分批回补。</p>
+  </div>
+
+  <div class="src">
+    <b>数据来源</b>：NeoData 金融数据（四大指数实时行情 / 估值百分位 / 涨跌停与板块排行榜 / 概念主力资金统计）+ 公开资讯——财联社《7月13日涨停分析》（全市场 27 股涨停、连板 9 只、封板未遂 13 只、封板率 68%、恒尚节能 9 天 8 板 / 立方制药 / 亚联机械 3 连板）、大河财立方（午间上证 -1.54% / 深成 -2.61% / 创业 -2.38% / 科创综指 -2.55%、全市场超 4500 只下跌、53 只跌停、多只翻倍牛股跌停）、科创板日报（科创50 收跌 3.42%、半导体 / 光通信 / PCB 集体大跌、长盈通 20CM 跌停、创新药活跃）、证券之星·数据宝（两融 7/10 余额 29447.74 亿、较上日 -114.22 亿、上周融资净减 579.19 亿、通信 +20.12 亿居行业加仓首位、电子 -146.02 亿居净卖出首位）。<br>
+    注：① 北向资金净买入额因交易所披露规则调整（2024-08 起），当日未单独公布；② 7/13 当日两融数据次一交易日（7/14）披露，公开口径目前最新为 7/10 的 29447.74 亿；③ 全市场精确涨跌家数 API 未返回全量，红盘约 800 只 / 下跌超 4500 只为基于「午间超 4500 只下跌 + 收盘跌停 &gt; 涨停」的公开资讯估算（占比约 15%）；④ 行业主力净流入（主营聚乙烯 +7.06 / 血氧仪 +6.69 / 创新药 +6.16 亿，金额单位亿元）来自 NeoData「板块当日资金主力统计」，整体主力大幅净流出为普跌破位日定性判断（无单一汇总数字）；⑤ 以上为行情复盘与仓位参考，<b>不构成投资建议</b>。
+  </div>
+
+</div>
+<script>
+  var axisColor = '#94a3b8', splitColor = '#2d2d44';
+  var UP='#d8392b', DOWN='#1a8f4c';
+
+  // 1. 上证指数近期收盘点位（年线破位）
+  echarts.init(document.getElementById('idxChart')).setOption({
+    tooltip:{trigger:'axis',formatter:function(ps){return ps[0].name+'<br/>'+ps[0].marker+'上证收盘：'+ps[0].value;}},
+    grid:{left:56,right:24,top:30,bottom:30},
+    xAxis:{type:'category',data:['7/8','7/9','7/10','7/13'],axisLabel:{color:axisColor}},
+    yAxis:{type:'value',scale:true,axisLabel:{color:axisColor},splitLine:{lineStyle:{color:splitColor}}},
+    series:[{type:'line',smooth:false,data:[3970.88,4036.59,3996.16,3913.79],symbolSize:9,
+      itemStyle:{color:'#ff9d8a'},lineStyle:{width:3,color:'#ff9d8a'},
+      areaStyle:{color:'rgba(255,157,138,.10)'},
+      label:{show:true,formatter:function(p){return p.value;},color:'#e2e8f0',fontSize:11},
+      markLine:{silent:true,symbol:'none',data:[
+        {yAxis:3970,lineStyle:{color:'#d8392b',type:'dashed',width:2},label:{formatter:'年线≈3970',color:'#ff9d8a',position:'start'}},
+        {yAxis:4000,lineStyle:{color:'#94a3b8',type:'dotted'},label:{formatter:'4000压力',color:'#94a3b8',position:'end'}}
+      ]}}]
+  });
+
+  // 2. 情绪温度计（≈22° 冰点）
+  echarts.init(document.getElementById('gaugeChart')).setOption({
+    title:{text:'市场情绪温度计（7/13）',left:'center',top:2,textStyle:{color:'#e2e8f0',fontSize:13}},
+    series:[{type:'gauge',min:0,max:100,radius:'78%',center:['50%','62%'],
+      axisLine:{lineStyle:{width:14,color:[[0.3,'#1a8f4c'],[0.5,'#facc15'],[0.7,'#fb923c'],[1,'#d8392b']]}},
+      pointer:{itemStyle:{color:'#a5b4fc'}},
+      axisTick:{distance:-14,length:4,lineStyle:{color:'#fff'}},
+      splitLine:{distance:-14,length:14,lineStyle:{color:'#fff'}},
+      axisLabel:{distance:16,color:axisColor,fontSize:10},
+      detail:{valueAnimation:true,formatter:'{value}°',color:'#e2e8f0',fontSize:22,offsetCenter:[0,'58%']},
+      data:[{value:22,name:'冰点·普跌·跌停>涨停'}]}]
+  });
+
+  // 3. 领涨行业涨幅（横向柱状）
+  var leadData = [
+    {name:'中药Ⅱ',value:3.28},{name:'农商行Ⅱ',value:2.66},
+    {name:'国有大型银行Ⅱ',value:2.15},{name:'城商行Ⅱ',value:1.99},
+    {name:'调味发酵品Ⅱ',value:1.37},{name:'白色家电',value:1.22}
+  ];
+  echarts.init(document.getElementById('leadChart')).setOption({
+    title:{text:'今日领涨行业（涨幅%）',left:'center',top:2,textStyle:{color:'#e2e8f0',fontSize:13}},
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+'：+' +p[0].value+'%';}},
+    grid:{left:104,right:40,top:34,bottom:24},
+    xAxis:{type:'value',axisLabel:{color:axisColor,formatter:'{value}%'},splitLine:{lineStyle:{color:splitColor}}},
+    yAxis:{type:'category',data:leadData.map(function(s){return s.name;}),axisLabel:{color:axisColor}},
+    series:[{type:'bar',barWidth:'58%',
+      data:leadData.map(function(s){return {value:s.value,itemStyle:{color:UP}};}),
+      label:{show:true,position:'right',formatter:function(p){return '+'+p.value+'%';},color:'#e2e8f0'}}]
+  });
+
+  // 4. 概念主力净流入（仅微量级净流入，整体大幅净流出）
+  var capData = [
+    {name:'主营聚乙烯',value:7.06},{name:'血氧仪',value:6.69},{name:'创新药',value:6.16}
+  ];
+  echarts.init(document.getElementById('capChart')).setOption({
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+'：+' +p[0].value+' 亿';}},
+    grid:{left:96,right:46,top:14,bottom:24},
+    xAxis:{type:'value',axisLabel:{color:axisColor,formatter:'{value}亿'},splitLine:{lineStyle:{color:splitColor}}},
+    yAxis:{type:'category',data:capData.map(function(s){return s.name;}),axisLabel:{color:axisColor}},
+    series:[{type:'bar',barWidth:'58%',
+      data:capData.map(function(s){return {value:s.value,itemStyle:{color:UP}};}),
+      label:{show:true,position:'right',formatter:function(p){return '+'+p.value;},color:'#e2e8f0'}}]
+  });
+
+  // 5. 两融余额走势（七连降）
+  echarts.init(document.getElementById('marginChart')).setOption({
+    title:{text:'两融余额（亿元）· 杠杆七连降·上周净减579亿',left:'center',top:2,textStyle:{color:'#e2e8f0',fontSize:13}},
+    tooltip:{trigger:'axis',formatter:function(p){return p[0].name+'：'+p[0].value+' 亿';}},
+    grid:{left:64,right:24,top:34,bottom:30},
+    xAxis:{type:'category',data:['7/6','7/7','7/8','7/9','7/10'],axisLabel:{color:axisColor}},
+    yAxis:{type:'value',min:29300,max:29900,axisLabel:{color:axisColor,formatter:'{value}'},splitLine:{lineStyle:{color:splitColor}}},
+    series:[{type:'line',smooth:true,data:[29834,29790,29596.57,29561.96,29447.74],symbolSize:8,
+      itemStyle:{color:'#fb923c'},lineStyle:{width:3,color:'#fb923c'},
+      areaStyle:{color:'rgba(251,146,60,.12)'},
+      label:{show:true,formatter:function(p){return p.value;},color:'#e2e8f0',fontSize:11}}]
+  });
+
+  window.addEventListener('resize',function(){document.querySelectorAll('[_echarts_instance_]').forEach(function(el){var c=echarts.getInstanceByDom(el);if(c)c.resize();});});
+</script>
+</body>
+</html>

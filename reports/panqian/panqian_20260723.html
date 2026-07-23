@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盘前交易计划 | 2026年7月23日（周四）· v13.2 午后版（13:54）· 指数翻红+电力扩散至电网设备/特高压，立新能源6板·华银反包·盛达3板·美利云4板</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0f0f23; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; line-height: 1.7; padding: 20px; max-width: 1200px; margin: 0 auto; }
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 28px 32px; margin-bottom: 24px; border: 1px solid #2d2d44; }
+  .header h1 { font-size: 25px; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; }
+  .header .subtitle { color: #94a3b8; font-size: 14px; margin-bottom: 12px; }
+  .header .meta { color: #94a3b8; font-size: 13px; display: flex; gap: 20px; flex-wrap: wrap; }
+  .header .meta .tag { background: rgba(255,71,87,0.2); color: #ff4757; padding: 2px 10px; border-radius: 10px; font-size: 12px; }
+  .header .meta .tag.warn { background: rgba(255,165,2,0.2); color: #ffa502; }
+  .header .meta .tag.green { background: rgba(0,212,170,0.2); color: #00d4aa; }
+  .summary-bar { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 24px 28px; margin-bottom: 24px; border: 1px solid #00d4aa; border-left: 4px solid #00d4aa; }
+  .summary-bar .verdict { font-size: 21px; font-weight: 800; color: #00d4aa; margin-bottom: 8px; }
+  .summary-bar .verdict-desc { color: #cbd5e1; font-size: 14px; }
+  .q3-box { border-radius: 14px; padding: 20px 24px; margin-bottom: 24px; background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%); border: 1px solid #667eea; }
+  .q3-box h2 { font-size: 18px; color: #a78bfa; margin-bottom: 14px; }
+  .q3-item { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid rgba(45,45,68,0.5); }
+  .q3-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .q3-item .ql { font-size: 15px; font-weight: 700; color: #e2e8f0; margin-bottom: 6px; }
+  .q3-item .qa { font-size: 14px; color: #cbd5e1; }
+  .q3-item .qa b { color: #00d4aa; }
+  .q3-item .qa .r { color: #ffa502; }
+  .verify-box { border-radius: 10px; padding: 12px 16px; margin-bottom: 12px; font-size: 13px; }
+  .verify-bull { background: rgba(0,212,170,0.08); border-left: 3px solid #00d4aa; }
+  .verify-warn { background: rgba(255,165,2,0.08); border-left: 3px solid #ffa502; }
+  .index-cards { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 24px; }
+  .index-card { background: #1a1a2e; border-radius: 12px; padding: 16px; border: 1px solid #2d2d44; text-align: center; }
+  .index-card .name { font-size: 12px; color: #94a3b8; margin-bottom: 6px; }
+  .index-card .price { font-size: 19px; font-weight: 700; margin-bottom: 4px; }
+  .index-card .change { font-size: 13px; font-weight: 600; }
+  .index-card .change.green { color: #00d4aa; }
+  .index-card .change.red { color: #ff4757; }
+  .index-card .sub { font-size: 10px; color: #64748b; margin-top: 4px; }
+  .section { background: #1a1a2e; border-radius: 16px; padding: 24px 28px; margin-bottom: 20px; border: 1px solid #2d2d44; }
+  .section-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .section-title .num { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .theme-card { background: #16213e; border-radius: 14px; padding: 22px; margin-bottom: 16px; border: 1px solid #2d2d44; transition: border-color 0.3s; }
+  .theme-card:hover { border-color: #667eea; }
+  .theme-card.buy { border-left: 4px solid #00d4aa; }
+  .theme-card.watch { border-left: 4px solid #ffa502; }
+  .theme-card.avoid { border-left: 4px solid #ff4757; }
+  .theme-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+  .theme-name { font-size: 18px; font-weight: 700; }
+  .theme-signal { padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; }
+  .theme-signal.buy { background: rgba(0,212,170,0.15); color: #00d4aa; }
+  .theme-signal.watch { background: rgba(255,165,2,0.15); color: #ffa502; }
+  .theme-signal.avoid { background: rgba(255,71,87,0.15); color: #ff4757; }
+  .theme-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .theme-row .label { color: #64748b; font-size: 13px; margin-bottom: 4px; }
+  .theme-row .value { color: #e2e8f0; font-size: 14px; }
+  .theme-stocks { background: rgba(0,0,0,0.2); border-radius: 8px; padding: 12px 14px; margin-top: 8px; }
+  .theme-stocks .label { color: #64748b; font-size: 12px; margin-bottom: 6px; }
+  .stock-tag { display: inline-block; background: rgba(102,126,234,0.15); color: #a78bfa; padding: 3px 10px; border-radius: 6px; font-size: 12px; margin: 2px 4px 2px 0; }
+  .stock-tag.hl { background: rgba(0,212,170,0.15); color: #00d4aa; }
+  .stock-tag.gold { background: rgba(255,165,2,0.15); color: #ffa502; }
+  .catalyst-list { margin-top: 8px; }
+  .catalyst-list li { list-style: none; padding: 4px 0; font-size: 13px; color: #cbd5e1; padding-left: 18px; position: relative; }
+  .catalyst-list li::before { content: '▸'; position: absolute; left: 0; color: #667eea; }
+  .catalyst-list li.neg::before { color: #ff4757; }
+  .catalyst-list li.pos::before { color: #00d4aa; }
+  .stage-bar { background: rgba(0,0,0,0.3); border-radius: 8px; height: 32px; display: flex; align-items: center; position: relative; margin: 10px 0; overflow: hidden; }
+  .stage-segment { flex: 1; text-align: center; font-size: 11px; color: #64748b; border-right: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 1; }
+  .stage-segment:last-child { border-right: none; }
+  .stage-marker { position: absolute; top: 0; height: 100%; border-radius: 8px; z-index: 0; }
+  .stage-marker.buy { background: linear-gradient(90deg, rgba(0,212,170,0.3), rgba(0,212,170,0.5)); }
+  .stage-marker.warm { background: linear-gradient(90deg, rgba(255,165,2,0.3), rgba(255,165,2,0.5)); }
+  .plan-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .plan-table th { background: rgba(102,126,234,0.1); color: #a78bfa; padding: 10px 12px; text-align: left; font-weight: 600; border-bottom: 1px solid #2d2d44; }
+  .plan-table td { padding: 10px 12px; border-bottom: 1px solid rgba(45,45,68,0.5); color: #cbd5e1; }
+  .plan-table tr:hover td { background: rgba(102,126,234,0.05); }
+  .plan-table .action-buy { color: #00d4aa; font-weight: 600; }
+  .plan-table .action-sell { color: #ff4757; font-weight: 600; }
+  .plan-table .action-hold { color: #ffa502; font-weight: 600; }
+  .position-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center; }
+  .position-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #16213e; border-radius: 8px; margin-bottom: 8px; border: 1px solid #2d2d44; }
+  .position-item .name { font-size: 14px; }
+  .position-item .pct { font-size: 16px; font-weight: 700; }
+  .position-item .pct.green { color: #00d4aa; }
+  .position-item .pct.orange { color: #ffa502; }
+  .position-item .pct.gray { color: #64748b; }
+  .alert-box { border-radius: 10px; padding: 14px 18px; margin-bottom: 12px; font-size: 14px; }
+  .alert-box.danger { background: rgba(255,71,87,0.08); border: 1px solid rgba(255,71,87,0.3); color: #ff6b7a; }
+  .alert-box.success { background: rgba(0,212,170,0.08); border: 1px solid rgba(0,212,170,0.3); color: #3dd9b0; }
+  .alert-box.warning { background: rgba(255,165,2,0.08); border: 1px solid rgba(255,165,2,0.3); color: #ffb84d; }
+  .alert-box .title { font-weight: 700; margin-bottom: 4px; }
+  .checklist { list-style: none; }
+  .checklist li { padding: 8px 0 8px 28px; position: relative; font-size: 14px; color: #cbd5e1; border-bottom: 1px solid rgba(45,45,68,0.3); }
+  .checklist li::before { content: '☐'; position: absolute; left: 0; font-size: 18px; color: #667eea; }
+  .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .scenario-card { background: #16213e; border-radius: 12px; padding: 16px; border: 1px solid #2d2d44; }
+  .scenario-card .prob { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+  .scenario-card .prob.neutral { color: #ffa502; }
+  .scenario-card .prob.bear { color: #ff4757; }
+  .scenario-card .prob.bull { color: #00d4aa; }
+  .scenario-card .desc { font-size: 13px; color: #94a3b8; }
+  .chart-container { width: 100%; height: 320px; margin: 10px 0; }
+  .level-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 16px; }
+  .level-card { background: #16213e; border-radius: 10px; padding: 14px; border: 1px solid #2d2d44; text-align: center; }
+  .level-card .label { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+  .level-card .value { font-size: 20px; font-weight: 700; }
+  .level-card .value.red { color: #ff4757; }
+  .level-card .value.green { color: #00d4aa; }
+  .level-card .value.orange { color: #ffa502; }
+  .level-card .note { font-size: 11px; color: #64748b; margin-top: 2px; }
+  .footer { text-align: center; color: #475569; font-size: 12px; padding: 20px 0; border-top: 1px solid #2d2d44; margin-top: 24px; }
+  .footer .disclaimer { background: rgba(255,71,87,0.05); border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; color: #94a3b8; font-size: 12px; text-align: left; }
+  @media (max-width: 768px) {
+    .index-cards { grid-template-columns: repeat(2, 1fr); }
+    .theme-row { grid-template-columns: 1fr; }
+    .position-grid { grid-template-columns: 1fr; }
+    .scenario-grid { grid-template-columns: 1fr; }
+    .level-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+  <h1>盘前交易计划 | 2026年7月23日（周四）· v13.2 午后版（13:54）· 指数翻红 + 电力扩散至电网设备/特高压，立新能源6板·华银反包 +7.81%·盛达3板·美利云4板</h1>
+  <div class="subtitle">✅ <b style="color:#00d4aa">午后更新（vs 今晨 v13.1 10:30）</b>：v13.1 提出的「电力连板 + 油气贵金属 + 科技业绩分支」<b style="color:#00d4aa">三大主线延续成立并强化扩散</b>——① 电力<b style="color:#00d4aa">从纯连板扩散为「连板 + 电网设备/特高压」</b>：立新能源稳守<b>6板</b>(12.11,+9.99%，机构+深股通净买1.34亿)、华银电力<b>反包 +7.81%</b>(收回早盘-2.64%跌幅)、华电辽能涨停、<b>中国西电/中能电气(20cm)/汉缆涨停潮</b>，催化=《可再生能源十五五》5万亿电网投资+15回特高压+国网特高压采购292亿超去年；② 油气贵金属<b style="color:#00d4aa">中曼石油4天3板、四川黄金涨停、盛达资源晋级3板</b>；③ 科技<b style="color:#00d4aa">美利云算力租赁4连板、联讯仪器CPO新股王、MLCC昀冢+11.63%、液冷飞龙涨停</b>，但<b style="color:#ffa502">半导体(科创50午间-4%)仍弱</b>(中芯-5.43%/寒武纪-5.49%)。指数午后<b style="color:#00d4aa">翻红</b>(上证3868.85 +0.05%、创业板3568.60 +0.05%)，较午盘-0.19%/-0.33%明显修复。</div>
+  <div class="meta">
+    <span>📊 数据截至：2026-07-23 13:54（上证 3868.85 / 创业板 3568.60 / 科创50午间-4%半导体弱）+ 2026-07-22 收盘 + 2026-07-23 盘前</span>
+    <span>🔥 情绪评级：<span class="tag green">主线扩散 · 轻指数重个股 · 指数翻红修复</span></span>
+    <span>⏰ 生成时间：2026-07-23 13:54</span>
+  </div>
+</div>
+
+<!-- ===== SUMMARY BAR ===== -->
+<div class="summary-bar">
+  <div class="verdict">🟢 核心判断：总仓位 40-50%，「电力（连板前排+电网设备/特高压中军，15%）+ 油气/贵金属对冲（15%）+ 科技业绩分支（13% CPO/MLCC/算力租赁/液冷/电网设备）+ 现金（52-55%守分歧）」；7/23 午后<b>指数翻红、主线扩散</b>——立新能源6板（澄清无算力业务，注意叙事风险）、华银反包+7.81%、电网设备涨停潮（中国西电/中能电气20cm）、中曼4天3板/盛达3板/四川黄金涨停、美利云算力租赁4连板、MLCC昀冢+11.63%。但<b style="color:#ffa502">半导体(科创50午间-4%)仍弱</b>，纯芯片（中芯/寒武纪/海光）坚决不碰。立新能源发异动公告「无算力业务」为6板空间龙潜在炸板风险点。政策底+业绩线托底，结构性行情延续。</div>
+  <div class="verdict-desc">
+    7/23 午后（13:54）：沪指 <b style="color:#00d4aa">3868.85（+0.05%，午后翻红，区间3851.71-3878.28）</b>、创业板 <b style="color:#00d4aa">3568.60（+0.05%，区间3538.11-3621.73）</b>、科创50 <b style="color:#ff4757">午间-4%（半导体产业链调整，华虹宏力-12%/中芯-5.43%/寒武纪-5.49%）</b>；半日成交1.46万亿缩量3230亿；全市场3225涨/2159跌、71涨停/1跌停，<b>轻指数重个股</b>。
+    <b style="color:#00d4aa">主线强化</b>：① 电力——立新能源<b>6板</b>(封板资金2.15亿/机构净买5597万/深股通7802万)、华银<b>反包+7.81%</b>、华电辽能涨停、<b>中国西电/中能电气(20cm)/汉缆/顺钠涨停潮</b>（十五五5万亿电网投资+特高压）；② 油气贵金属——<b>中曼4天3板</b>、四川黄金涨停、盛达资源<b>3板</b>、紫金/赤峰/山金国际跟涨；③ 科技——<b>美利云算力租赁4板</b>、联讯仪器CPO新股王(1901,+0.69%)、工业富联+3.36%、MLCC昀冢+11.63%、液冷飞龙涨停。
+    <b style="color:#ff4757">分化信号</b>：半导体(中芯/寒武纪/海光/兆易)仍杀跌，科创50午间-4%；立新能源澄清「无算力产业相关业务」→ 6板空间龙叙事风险上升。
+    <b style="color:#ffa502">新催化</b>：锂矿爆发(国城/永杉/盛新锂能涨停、有色ETF+3.33%)、电网设备(十五五特高压)、联讯+8倍预增、体育强国十五五、高端PCB涨价、引力一号成功。
+  </div>
+</div>
+
+<!-- ===== 三大问题速答 ===== -->
+<div class="q3-box">
+  <h2>📌 三个核心问题速答（7/23 午后版 · v13.2）</h2>
+  <div class="q3-item">
+    <div class="ql">Q1 · 当下的主流题材是什么？（至多3个）</div>
+    <div class="qa">
+      ① <b>电力 / 绿电（连板抱团 + 电网设备/特高压扩散）</b> —— <b>逆势最强且午后扩散</b>，立新能源6板/华银反包+7.81%/华电辽能涨停，<b>中国西电/中能电气(20cm)/汉缆涨停潮</b>，催化=《可再生能源十五五》5万亿电网投资+15回特高压+国网特高压采购292亿；<br>
+      ② <b>油气 / 贵金属（地缘避险 + 涨价）</b> —— <b>逆势最稳</b>，中曼石油4天3板、四川黄金涨停、盛达资源3板、布油破95/霍尔木兹归零；<br>
+      ③ <b>科技业绩分支（CPO·MLCC·算力租赁·液冷·电网设备）</b> —— <b>分歧转强（半导体除外）</b>，美利云4板/联讯CPO新股王/昀冢MLCC+11.63%/飞龙液冷涨停/电网设备批量板，资金切向「业绩+估值匹配」硬科技；<span class="r">纯半导体(中芯/寒武纪/海光)仍退潮回避</span>。<br>
+      <span class="r">（创新药：趋势未破作第四观察；锂矿/有色：午后新爆发支线，WATCH；商业航天：引力一号成功反抽催化，未列前三）</span>
+    </div>
+  </div>
+  <div class="q3-item">
+    <div class="ql">Q2 · 主流题材的核心是谁？</div>
+    <div class="qa">
+      ① 电力连板+电网设备：<b>立新能源（6板空间龙）</b>、<b>华银电力(反包+7.81%)</b>、<b>华电辽能(涨停)</b>、<b>新中港/新能股份(2板)</b>；电网设备中军<b>中国西电/特变电工/平高电气/中能电气(20cm)</b>；<br>
+      ② 油气/贵金属：<b>中曼石油（4天3板）/通源石油/石化油服/三桶油</b>；<b>四川黄金(涨停)/盛达资源(3板)/紫金矿业/山金国际/赤峰黄金</b>；<br>
+      ③ 科技业绩分支：<b>联讯仪器（CPO新股王·+8倍预增）</b>/工业富联/中际旭创；<b>美利云(算力租赁4板)/证通电子(3板)</b>；<b>昀冢科技(MLCC+11.63%)/三环集团</b>；<b>杰瑞股份/飞龙股份(液冷涨停)</b>；<b>中国西电/中能电气(电网设备)</b>。
+    </div>
+  </div>
+  <div class="q3-item">
+    <div class="ql">Q3 · 走到哪个阶段？能不能买？盘前交易计划？</div>
+    <div class="qa">
+      ① 电力 = <b>连板抱团 + 基本面扩散（电网设备/特高压）双驱动</b>，<span class="r">能买，前排换手 + 电网设备中军趋势</span>；但立新能源澄清「无算力业务」→ 6板空间龙<b>叙事风险上升</b>，严禁追加速板；<br>
+      ② 油气/贵金属 = <b>事件驱动主升（布油破95/霍尔木兹归零）</b>，<span class="r">能买小仓对冲</span>，油价高位+加息预期双向波动；<br>
+      ③ 科技业绩分支 = <b>分歧转强·业绩轮动期</b>，<span class="r">能买精选业绩分支核心（不碰纯半导体）</span>。<br>
+      <b>总计划：总仓40-50%，电力15% + 油气贵金属15% + 科技业绩分支13% + 现金52-55%；做前排换手+电网中军+小仓对冲+业绩分支低吸，不追高不追连板加速；破3830降至30%防御。政策底托底，结构行情。</b>
+    </div>
+  </div>
+</div>
+
+<!-- ===== v13.1 → v13.2 验证说明 ===== -->
+<div class="verify-box verify-bull">
+  <strong style="color:#00d4aa">🔁 v13.1（今晨10:30）哪些判断被 7/23 午后验证/强化</strong><br>
+  <b>✅ 三大主线延续成立且扩散</b>：① <b style="color:#00d4aa">电力连板主攻→扩散为电网设备/特高压</b>——立新能源稳守6板、华银<b>反包+7.81%</b>（收回早盘-2.64%跌幅证伪「后排走弱」）、中国西电/中能电气(20cm)/汉缆涨停潮，催化从「高温用电」升维为「十五五5万亿电网投资+特高压」；② <b style="color:#00d4aa">油气BUY对冲</b>——中曼石油<b>4天3板</b>、四川黄金涨停、盛达资源<b>晋级3板</b>；③ <b style="color:#00d4aa">科技结构分歧低吸</b>——美利云算力租赁<b>4板</b>、联讯CPO新股王、MLCC昀冢+11.63%、液冷飞龙涨停，比v13.1更活跃。<br>
+  <b>✅ 指数修复</b>：上证/创业板午后<b style="color:#00d4aa">翻红(+0.05%)</b>，较午盘-0.19%/-0.33%明显修复，确认「震荡分化、轻指数重个股」而非系统性下跌。
+</div>
+<div class="verify-box verify-warn">
+  <strong style="color:#ffa502">⚠️ 新增变量（v13.1未充分覆盖，需纳入）</strong><br>
+  <b>① 立新能源澄清「无算力产业相关业务」</b>（7/22异动公告）：6板空间龙炒作核心=「算电协同」，公司主动否认→<b>叙事风险骤升</b>，6板随时炸板退潮，严禁追加速；<br>
+  <b>② 电网设备涨停潮</b>：中国西电/中能电气(20cm)/汉缆/顺钠/三变涨停，电网设备ETF+3.87%→电力主线从「连板情绪」补上「中军基本面」双轮，中军(中国西电/特变/平高)可趋势参与；<br>
+  <b>③ 锂矿/有色爆发</b>：国城/永杉/盛新锂能涨停、有色ETF+3.33%、南山铝业涨停→资源线新分支，WATCH不追高；<br>
+  <b>④ 半导体仍弱</b>：科创50午间-4%、中芯-5.43%/寒武纪-5.49%/海光-5.55%/兆易-3.87%→纯芯片坚决回避，科技只做业绩分支；<br>
+  <b>⑤ 美利云算力租赁4板</b>：Kimi暂停订阅→算力租赁量价齐升叙事强化。
+</div>
+
+<!-- ===== INDEX CARDS ===== -->
+<div class="index-cards">
+  <div class="index-card">
+    <div class="name">上证(7/23 13:54)</div>
+    <div class="price" style="color:#00d4aa;">3868.85</div>
+    <div class="change" style="color:#00d4aa;">+0.05%</div>
+    <div class="sub">午后翻红·区间3852-3878</div>
+  </div>
+  <div class="index-card">
+    <div class="name">创业板指</div>
+    <div class="price" style="color:#00d4aa;">3568.60</div>
+    <div class="change" style="color:#00d4aa;">+0.05%</div>
+    <div class="sub">午后翻红·区间3538-3622</div>
+  </div>
+  <div class="index-card">
+    <div class="name">科创50(午间)</div>
+    <div class="price" style="color:#ff4757;">-4.0%</div>
+    <div class="change red">半导体弱</div>
+    <div class="sub">中芯-5.43%/寒武纪-5.49%</div>
+  </div>
+  <div class="index-card">
+    <div class="name">立新能源</div>
+    <div class="price" style="color:#00d4aa;">6连板</div>
+    <div class="change" style="color:#00d4aa;">12.11 +9.99%</div>
+    <div class="sub">空间龙·澄清无算力</div>
+  </div>
+  <div class="index-card">
+    <div class="name">华银电力</div>
+    <div class="price" style="color:#00d4aa;">+7.81%</div>
+    <div class="change" style="color:#00d4aa;">8.56 反包</div>
+    <div class="sub">收回早盘-2.64%跌幅</div>
+  </div>
+  <div class="index-card">
+    <div class="name">盛达资源</div>
+    <div class="price" style="color:#00d4aa;">3连板</div>
+    <div class="change" style="color:#00d4aa;">贵金属</div>
+    <div class="sub">中曼4天3板·四川黄金涨停</div>
+  </div>
+</div>
+
+<!-- ===== Q1: 主流题材 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">1</span>当下主流题材（至多3个，基于7/23午后13:54 + 7/22收盘 + 7/23盘前，三大主线延续+扩散）</div>
+
+  <!-- Theme 1: 电力连板+电网设备 -->
+  <div class="theme-card buy">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🟢 电力 / 绿电（连板抱团 + 电网设备/特高压扩散）— 逆势最强·午后升维（已验证扩散）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">立新能源6板 / 华银反包+7.81% / 华电辽能涨停 / 中国西电·中能电气(20cm)·汉缆·顺钠涨停潮 · 十五五5万亿电网投资+15回特高压</div>
+      </div>
+      <div class="theme-signal buy">BUY · 前排+电网中军</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的（连板高度 + 电网中军）</div>
+        <div class="value">
+          <span class="stock-tag hl">立新能源 001258 6板</span>
+          <span class="stock-tag hl">华银电力 600744 反包+7.81%</span>
+          <span class="stock-tag hl">华电辽能 600396 涨停 / 新中港·新能股份 2板</span>
+          <span class="stock-tag">中国西电 601179 / 中能电气(20cm) / 特变·平高·汉缆</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金/强度信号（7/23午后）</div>
+        <div class="value" style="color:#00d4aa;">立新能源封板资金2.15亿、机构净买5597万+深股通7802万；华银反包收回跌幅；电网设备涨停潮(中国西电/中能电气20cm/汉缆)；电力ETF近9日净流入19.39亿、北向卖成长买公用</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          驱动升维：从「高温用电负荷15.51亿千瓦」→「《可再生能源十五五》5万亿电网投资+15回特高压直流+国网特高压采购292亿超去年」；防御属性+基本面双轮
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">空间龙立新能源稳守6板（全市场高度）、华银反包+7.81%、华电辽能涨停，连板梯队未断；电网设备爆发（中国西电/中能电气20cm/汉缆/顺钠/三变涨停）</li>
+        <li class="pos">政策升维：发改委/能源局《可再生能源十五五规划》——2030风光装机超50%、十五五电网投资超5万亿、新增15回特高压直流；国网特高压采购292亿超去年全年→设备订单放量</li>
+        <li class="pos">高温持续+容量电价+零碳工厂建设+电力市场化改革，火电/水电估值处近三年低位，机构看Q2业绩底+逐季改善</li>
+        <li class="neg">⚠️ 立新能源7/22异动公告澄清「无算力产业相关业务」→ 6板炒作核心叙事(算电协同)被公司否认，<b>空间龙炸板风险骤升，严禁追加速板</b>；后排仅做换手</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker warm" style="left:66%;width:30%;"></div>
+        <div class="stage-segment">启动</div>
+        <div class="stage-segment">上行</div>
+        <div class="stage-segment">主升</div>
+        <div class="stage-segment" style="color:#ffa502;font-weight:700;">↑ 连板+电网扩散(分化)</div>
+      </div>
+      <div style="font-size:13px;color:#00d4aa;margin-top:4px;">
+        ✅ 逆势最强且午后升维（已验证扩散）；<b>能买，前排换手(立新能源/华银/华电辽能/新中港)+电网设备中军趋势(中国西电/特变/平高)，不追连板加速；立新能源「无算力」澄清→6板炸板风险，仓位控15%以内</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme 2: 油气/贵金属 -->
+  <div class="theme-card buy">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🟢 油气 / 资源 + 贵金属（地缘避险 + 涨价）— 逆势最稳对冲（已验证）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">中曼石油4天3板、四川黄金涨停、盛达资源3板、布油破95/霍尔木兹归零、紫金/赤峰/山金国际跟涨</div>
+      </div>
+      <div class="theme-signal buy">BUY · 小仓对冲</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的</div>
+        <div class="value">
+          <span class="stock-tag gold">中曼石油 603619 4天3板</span>
+          <span class="stock-tag gold">通源石油 300164 / 石化油服 600871 / 三桶油</span>
+          <span class="stock-tag gold">四川黄金 001337 涨停 / 盛达资源 000603 3板</span>
+          <span class="stock-tag gold">紫金矿业 601899 / 山金国际·赤峰黄金 600988</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金/强度信号</div>
+        <div class="value" style="color:#ffa502;">7/23 中曼石油4天3板、四川黄金涨停、盛达资源晋级3板、贵金属/有色延续；布油高位95.5、现货黄金4135；油气设备服务+3.46%</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          逻辑：美伊急剧升级（霍尔木兹归零/伊朗威胁禁油）→ 油价与贵金属上行；但美联储7月加息概率回升至26%，油价高位双向波动
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">地缘升级：特朗普威胁轰炸伊朗基建、霍尔木兹通航归零、曼德-34%、三油轮遇袭 → 布油破95、黄金4135；中曼石油4天3板、四川黄金涨停确认资源主线</li>
+        <li class="pos">国内油价7/31或再上调（三地原油均价85.76，调价幅度10.13%，汽柴油预计涨490元/吨）→ 油气业绩支撑</li>
+        <li class="pos">避险+央行增持：多国央行购金、白银供需缺口，贵金属获托底；黄金突破4120、四川黄金涨停、盛达3板确认趋势</li>
+        <li class="neg">油价高位双向波动（美伊谈判反复+加息预期升温压制）；A股油气对油价存钝化；仅小仓对冲不重仓追高</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker buy" style="left:50%;width:30%;"></div>
+        <div class="stage-segment">启动</div>
+        <div class="stage-segment">上行</div>
+        <div class="stage-segment" style="color:#00d4aa;font-weight:700;">↑ 事件驱动升温(主升)</div>
+        <div class="stage-segment">加速</div>
+      </div>
+      <div style="font-size:13px;color:#00d4aa;margin-top:4px;">
+        ✅ 逆势最稳方向（已验证）；<b>能买，小仓对冲油气/黄金（中曼/紫金/山金国际/赤峰/四川黄金），油价破95不追加速、等回踩；加息预期+谈判扰动需控仓</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme 3: 科技业绩分支 -->
+  <div class="theme-card buy">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🟢 科技业绩分支（CPO·MLCC·算力租赁·液冷·电网设备）— 分歧转强主线（半导体除外）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">美利云算力租赁4板/联讯CPO新股王/昀冢MLCC+11.63%/飞龙液冷涨停/中国西电电网设备·但纯半导体(中芯-5.43%/寒武纪-5.49%)仍弱</div>
+      </div>
+      <div class="theme-signal buy">BUY · 业绩分支低吸</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的（业绩+估值匹配硬科技）</div>
+        <div class="value">
+          <span class="stock-tag hl">联讯仪器(CPO新股王·+8倍预增)/工业富联/中际旭创</span>
+          <span class="stock-tag hl">美利云(算力租赁4板)/证通电子(3板)</span>
+          <span class="stock-tag hl">昀冢科技(MLCC+11.63%)/三环集团/风华高科</span>
+          <span class="stock-tag hl">杰瑞股份/飞龙股份(液冷涨停)/英维克</span>
+          <span class="stock-tag">中国西电/中能电气(电网设备)</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金/强度信号</div>
+        <div class="value" style="color:#00d4aa;">7/23 科技分支轮动活跃：美利云算力租赁4板、联讯CPO新股王、MLCC昀冢+11.63%、液冷飞龙涨停、电网设备涨停潮；资金切向「业绩+估值匹配」硬科技</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          驱动：Kimi暂停订阅→算力租赁量价齐升、联讯+8倍预增、MLCC供需紧(产能锁定4倍)、杰瑞99.5亿订单、十五五电网投资；但<b style="color:#ff4757;">科创50午间-4%、中芯/寒武纪/海光/兆易仍杀跌</b>，纯半导体未反转
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">算力租赁/CPO：美利云4板、证通电子3板；联讯仪器中报预增超8倍成新股王(1901,+0.69%)、工业富联+3.36%、中际旭创+0.64% → 算力硬件业绩线最强</li>
+        <li class="pos">MLCC爆发：昀冢科技+11.63%、三环集团+2.76%、风华高科/火炬电子/赛伍技术涨停；供需偏紧、客户锁定4倍产能</li>
+        <li class="pos">液冷/电网设备：飞龙股份液冷涨停、杰瑞股份燃气轮机涨停(99.5亿订单)；中国西电/中能电气(20cm)/汉缆涨停→电网设备订单放量(十五五特高压)</li>
+        <li class="neg">科创50午间-4%、半导体整体调整（中芯-5.43%/寒武纪-5.49%/海光-5.55%/兆易-3.87%/华虹宏力-12%）；高位纯芯片不追，只低吸业绩分支核心</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker warm" style="left:42%;width:28%;"></div>
+        <div class="stage-segment">超跌反弹</div>
+        <div class="stage-segment">确认</div>
+        <div class="stage-segment" style="color:#00d4aa;font-weight:700;">↑ 分歧转强(业绩轮动)</div>
+        <div class="stage-segment">主升</div>
+      </div>
+      <div style="font-size:13px;color:#00d4aa;margin-top:4px;">
+        ✅ 分歧转强·业绩轮动期（半导体除外）；<b>能买，精选业绩分支核心（CPO联讯/工业富联、算力租赁美利云/证通、MLCC昀冢/三环、液冷飞龙/英维克、电网设备中国西电/中能电气），纯半导体(中芯/寒武纪/海光/兆易)坚决不碰；等板块站回5日线+缩量止跌，再考虑转主攻</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- 锂矿/有色 -->
+  <div class="theme-card watch">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name" style="color:#ffb84d;">🟠 锂矿 / 有色（午后新爆发支线）— 资源线扩散</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">国城矿业/永杉锂业/盛新锂能涨停、南山铝业涨停、有色ETF+3.33%、盛达资源3板</div>
+      </div>
+      <div class="theme-signal watch">WATCH · 不追高</div>
+    </div>
+    <div style="font-size:13px;color:#cbd5e1;margin-top:8px;">
+      资源线延伸（黄金→有色→锂矿），受地缘避险+商品价格上行驱动；<b>作观察支线</b>，等分歧低吸前排（国城/永杉/盛新），不追板块高潮。
+    </div>
+  </div>
+
+  <!-- 创新药支线 -->
+  <div class="theme-card watch">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name" style="color:#ffb84d;">🟠 创新药 / 医药（机构重仓支线）— 趋势未破，非逆势最强</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">海南海药6天3板、机构月余中幅加仓、收20日线附近趋势未转弱；7/23 制药跌幅居前（高低切）</div>
+      </div>
+      <div class="theme-signal watch">WATCH · 分歧低吸</div>
+    </div>
+    <div style="font-size:13px;color:#cbd5e1;margin-top:8px;">
+      产业逻辑（政策+出海+业绩）未变，7/23 早盘制药/医疗服务跌幅居前（资金高低切向科技业绩线）；<b>作第四观察方向</b>，等放量弱转强（昭衍/药明康德/凯莱英/众生）再升为主线。
+    </div>
+  </div>
+
+  <!-- 纯半导体退潮 -->
+  <div class="theme-card avoid">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name" style="color:#ff6b7a;">🔴 纯半导体 / 存储 / 高位PCB（退潮）— 坚决回避</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">科创50午间-4%、中芯-5.43%/寒武纪-5.49%/海光-5.55%/兆易-3.87%/华虹宏力-12%；德明利仍跌停区</div>
+      </div>
+      <div class="theme-signal avoid">AVOID · 不抄底</div>
+    </div>
+    <div style="font-size:13px;color:#cbd5e1;margin-top:8px;">
+      7/23 半导体整体调整未止，机构资金净流出半导体/元件；<b>不列主流，坚决回避等缩量企稳</b>；仅科技「业绩分支(CPO/MLCC/算力租赁/液冷/电网设备)」可参与。
+    </div>
+  </div>
+</div>
+
+<!-- ===== Q2: 核心标的全览 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">2</span>主流题材核心标的全览（7/23 午后版）</div>
+  <table class="plan-table">
+    <thead>
+      <tr>
+        <th>题材</th>
+        <th>核心标的</th>
+        <th>角色定位</th>
+        <th>逻辑/信号（7/23午后）</th>
+        <th>操作方向</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="3" style="color:#00d4aa;font-weight:700;">电力连板+电网设备</td>
+        <td><b>立新能源 001258 / 华银电力 600744 / 华电辽能 600396 / 新中港 605162</b></td>
+        <td>6板空间龙 / 反包 / 涨停 / 2板</td>
+        <td style="color:#00d4aa;">立新能源6板(机构+深股通净买1.34亿)、华银反包+7.81%、华电辽能涨停</td>
+        <td class="action-buy">前排换手，后排不碰</td>
+      </tr>
+      <tr>
+        <td><b>中国西电 601179 / 中能电气(20cm) / 特变电工 / 平高电气 / 汉缆股份</b></td>
+        <td>电网设备/特高压中军</td>
+        <td style="color:#00d4aa;">十五五5万亿电网投资+15回特高压+国网采购292亿；中国西电/中能电气涨停潮</td>
+        <td class="action-buy">中军趋势低吸</td>
+      </tr>
+      <tr>
+        <td><b>长江电力 / 国电电力 / 华能国际</b></td>
+        <td>防御底仓</td>
+        <td style="color:#ffa502;">北向卖成长买公用；水电来水偏丰、股息防御</td>
+        <td class="action-hold">底仓配置</td>
+      </tr>
+      <tr>
+        <td rowspan="2" style="color:#00d4aa;font-weight:700;">油气/贵金属</td>
+        <td><b>中曼石油 603619 / 通源石油 300164 / 石化油服 600871 / 三桶油</b></td>
+        <td>油气（地缘）</td>
+        <td style="color:#00d4aa;">中曼石油4天3板；布油破95/霍尔木兹归零</td>
+        <td class="action-buy">小仓对冲，不追高</td>
+      </tr>
+      <tr>
+        <td><b>四川黄金 001337 / 盛达资源 000603 / 紫金矿业 601899 / 山金国际·赤峰黄金 600988</b></td>
+        <td>黄金+有色（避险）</td>
+        <td style="color:#00d4aa;">四川黄金涨停、盛达资源3板；现货黄金4135/白银60</td>
+        <td class="action-buy">底仓对冲，回踩低吸</td>
+      </tr>
+      <tr>
+        <td rowspan="4" style="color:#00d4aa;font-weight:700;">科技业绩分支</td>
+        <td><b>联讯仪器(CPO新股王·+8倍预增)/工业富联 / 中际旭创</b></td>
+        <td>CPO/算力硬件</td>
+        <td style="color:#00d4aa;">联讯1901(+0.69%)成新股王、工业富联+3.36%、CPO连日强</td>
+        <td class="action-buy">业绩分支低吸</td>
+      </tr>
+      <tr>
+        <td><b>美利云 000815(算力租赁4板)/证通电子(3板)</b></td>
+        <td>算力租赁</td>
+        <td style="color:#00d4aa;">Kimi暂停订阅→算力租赁量价齐升；美利云4板/证通3板</td>
+        <td class="action-buy">前排换手</td>
+      </tr>
+      <tr>
+        <td><b>昀冢科技(MLCC+11.63%)/三环集团 / 风华高科 / 火炬电子</b></td>
+        <td>MLCC</td>
+        <td style="color:#00d4aa;">MLCC爆发，供需偏紧、客户锁定4倍产能</td>
+        <td class="action-buy">前排换手</td>
+      </tr>
+      <tr>
+        <td><b>杰瑞股份 / 飞龙股份(液冷涨停)/英维克 / 中国西电·中能电气(电网设备)</b></td>
+        <td>液冷/电网设备</td>
+        <td style="color:#00d4aa;">杰瑞99.5亿订单、飞龙液冷涨停、电网设备涨停潮</td>
+        <td class="action-buy">低吸，不追板</td>
+      </tr>
+      <tr>
+        <td style="color:#ffa502;font-weight:700;">锂矿/有色(支线)</td>
+        <td><b>国城矿业 / 永杉锂业 / 盛新锂能 / 南山铝业</b></td>
+        <td>资源扩散</td>
+        <td style="color:#ffa502;">午后爆发涨停潮、有色ETF+3.33%，资源线延伸</td>
+        <td class="action-hold">等分歧低吸前排</td>
+      </tr>
+      <tr>
+        <td style="color:#ffa502;font-weight:700;">创新药(支线)</td>
+        <td><b>药明康德 603259 / 昭衍 603127 / 凯莱英 002821 / 海南海药(6天3板)</b></td>
+        <td>CXO/中军</td>
+        <td style="color:#ffa502;">机构月余加仓、趋势未破；但7/23制药跌幅居前(高低切)</td>
+        <td class="action-hold">等弱转强再升主线</td>
+      </tr>
+      <tr>
+        <td style="color:#ff6b7a;font-weight:700;">纯半导体(退潮)</td>
+        <td><b>中芯国际 688981 / 寒武纪 688256 / 海光信息 688041 / 兆易创新 603986 / 德明利</b></td>
+        <td>高位杀跌</td>
+        <td style="color:#ff6b7a;">科创50午间-4%；中芯-5.43%/寒武纪-5.49%/海光-5.55%/兆易-3.87%/华虹-12%</td>
+        <td class="action-sell">坚决回避</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== Q3: 阶段判断 + 交易计划 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">3</span>阶段判断与 7/23 午后交易计划</div>
+
+  <!-- Key Levels -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📐 上证指数关键点位（7/23 午后）</div>
+    <div class="level-grid">
+      <div class="level-card">
+        <div class="label">强支撑</div>
+        <div class="value red">3740</div>
+        <div class="note">7/21盘中最低3743·验证有效</div>
+      </div>
+      <div class="level-card">
+        <div class="label">弱支撑</div>
+        <div class="value orange">3830-3852</div>
+        <div class="note">午后低点3851·降防线下限</div>
+      </div>
+      <div class="level-card">
+        <div class="label">当前位</div>
+        <div class="value green">3868.85</div>
+        <div class="note">7/23 13:54·午后翻红</div>
+      </div>
+      <div class="level-card">
+        <div class="label">趋势线压制</div>
+        <div class="value orange">3905-3910</div>
+        <div class="note">10日线·未破=下跌趋势未反转</div>
+      </div>
+      <div class="level-card">
+        <div class="label">反转确认</div>
+        <div class="value green">3950-4000</div>
+        <div class="note">需放量突破10日线+科技转强</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 能不能买 速览 -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">✅ 三大主线「能不能买」速览</div>
+    <div class="level-grid">
+      <div class="level-card">
+        <div class="label">电力(连板+电网)</div>
+        <div class="value green">能买·前排+中军</div>
+        <div class="note">立新能源6板·中国西电涨停潮</div>
+      </div>
+      <div class="level-card">
+        <div class="label">油气/贵金属</div>
+        <div class="value green">能买·对冲</div>
+        <div class="note">中曼4天3板·盛达3板</div>
+      </div>
+      <div class="level-card">
+        <div class="label">科技业绩分支</div>
+        <div class="value green">能买·精选</div>
+        <div class="note">美利云4板/昀冢+11.63%</div>
+      </div>
+      <div class="level-card">
+        <div class="label">锂矿/有色</div>
+        <div class="value orange">小仓试错</div>
+        <div class="note">等分歧低吸</div>
+      </div>
+      <div class="level-card">
+        <div class="label">纯半导体</div>
+        <div class="value red">不买</div>
+        <div class="note">科创50午间-4%退潮</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scenario -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">🎲 7/23 情景推演（三大主线扩散 + 指数翻红 + 政策底托底）</div>
+    <div class="scenario-grid">
+      <div class="scenario-card" style="border-color:rgba(0,212,170,0.3);">
+        <div class="prob bull">42%</div>
+        <div style="font-weight:600;margin-bottom:4px;">乐观：主线扩散+指数翻红延续</div>
+        <div class="desc">电力(连板+电网设备)延续、油气贵金属高位、科技业绩分支(CPO/MLCC/算力租赁/液冷)扩散，立新能源7板或华银趋势延续；沪指站稳3868冲击3905；成交维持2.6万亿+</div>
+      </div>
+      <div class="scenario-card" style="border-color:rgba(255,165,2,0.3);">
+        <div class="prob neutral">40%</div>
+        <div style="font-weight:600;margin-bottom:4px;">中性：结构震荡·轻指数重个股</div>
+        <div class="desc">指数在3852-3905窄幅震荡（午后已翻红），电力/油气抱团、科技内部分支轮动(前排强/纯半导体弱)，个股涨多跌少；成交2.5-2.7万亿</div>
+      </div>
+      <div class="scenario-card" style="border-color:rgba(255,71,87,0.3);">
+        <div class="prob bear">18%</div>
+        <div style="font-weight:600;margin-bottom:4px;">悲观：空间龙炸板+科技续杀</div>
+        <div class="desc">立新能源「无算力」澄清引发6板炸板退潮、纯半导体继续杀(拖累科创)、油价急涨推升加息预期；沪指回踩3830-3796；需降仓至30%防御</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Position Allocation -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">💰 仓位配置建议（总仓位 40-50%，主线扩散+指数翻红，现金守分歧）</div>
+    <div class="position-grid">
+      <div id="positionChart" class="chart-container" style="height:280px;"></div>
+      <div class="position-list">
+        <div class="position-item">
+          <span class="name">🟢 电力(连板+电网中军)</span>
+          <span class="pct green">15%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🟢 油气/贵金属对冲</span>
+          <span class="pct green">15%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🟢 科技业绩分支</span>
+          <span class="pct green">13%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">💵 现金（守分歧低吸）</span>
+          <span class="pct gray">52-55%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trading Plan Table -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📋 分批交易计划（7/23 午后版）</div>
+    <table class="plan-table">
+      <thead>
+        <tr>
+          <th>方向</th>
+          <th>触发条件</th>
+          <th>操作</th>
+          <th>仓位</th>
+          <th>止损/风控</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:#00d4aa;font-weight:700;">电力前排+电网中军</td>
+          <td>立新能源换手封板(6板不炸)/华银反包延续/华电辽能；或电网设备(中国西电/中能电气/特变/平高)回踩5日线低吸</td>
+          <td class="action-buy">做前排换手+电网中军趋势，后排不碰</td>
+          <td>15%</td>
+          <td>⚠️ 立新能源「无算力」澄清→炸板即退潮，速降至3%；电网中军破5日线撤</td>
+        </tr>
+        <tr>
+          <td style="color:#00d4aa;font-weight:700;">油气/贵金属对冲</td>
+          <td>布油破95/霍尔木兹归零推升时，中曼(4天3板)/通源或黄金(四川黄金/盛达/紫金/山金国际)回踩低吸</td>
+          <td class="action-buy">小仓对冲，不追高；油价高位双向波动需控仓</td>
+          <td>15%</td>
+          <td>美伊谈判缓和油价回落→油气撤仓；黄金作中期避险底仓</td>
+        </tr>
+        <tr>
+          <td style="color:#00d4aa;font-weight:700;">科技业绩分支</td>
+          <td>仅 CPO(联讯/工业富联/中际旭创)/MLCC(昀冢/三环/风华)/算力租赁(美利云/证通)/液冷(飞龙/英维克)/电网设备(中国西电/中能电气) 核心分歧回踩；<b>不碰纯半导体(中芯/寒武纪/海光/兆易)</b></td>
+          <td class="action-buy">精选业绩分支低吸，分批建仓</td>
+          <td>13%</td>
+          <td>科创续杀/半导体未止跌→降至8%；高位追板即撤</td>
+        </tr>
+        <tr>
+          <td style="color:#ffa502;font-weight:700;">锂矿/有色试错</td>
+          <td>国城/永杉/盛新/南山铝业放量分歧低吸，不追板块高潮</td>
+          <td class="action-hold">小仓试错前排，资源扩散支线</td>
+          <td>0-5%</td>
+          <td>冲高回落收上影→不补，等资源线分歧</td>
+        </tr>
+        <tr>
+          <td style="color:#ffa502;font-weight:700;">创新药试错</td>
+          <td>药明康德/昭衍/凯莱英放量弱转强、板块站上20日线</td>
+          <td class="action-hold">小仓试错前排，不追无业绩小票</td>
+          <td>0-5%</td>
+          <td>冲高回落收20日线下→不补，等止跌</td>
+        </tr>
+        <tr>
+          <td style="color:#ff6b7a;font-weight:700;">纯半导体/存储</td>
+          <td>中芯/寒武纪/海光/兆易/德明利止跌企稳</td>
+          <td class="action-sell">暂回避，等止跌信号</td>
+          <td>0%</td>
+          <td>不接飞刀，待科技全面反转后再看</td>
+        </tr>
+        <tr>
+          <td style="color:#94a3b8;font-weight:700;">现金</td>
+          <td colspan="2">守到盘中分歧/前排换手/科技回踩低吸机会；政策底托底不恐慌，但也不追高</td>
+          <td>52-55%</td>
+          <td>保留机动应对空间龙炸板/科技续杀/突发地缘</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Alerts -->
+  <div style="margin-bottom:16px;">
+    <div class="alert-box danger">
+      <div class="title">🚨 风险警报（7/23 午后关键变量）</div>
+      <div>① <b>立新能源「无算力」澄清</b> —— 7/22异动公告否认算力业务，6板炒作核心叙事(算电协同)被公司否认，<b>空间龙炸板退潮风险骤升</b>，严禁追加速板</div>
+      <div>② <b>纯半导体仍弱</b> —— 科创50午间-4%、中芯-5.43%/寒武纪-5.49%/海光-5.55%/兆易-3.87%/华虹宏力-12%；科技只做业绩分支，纯芯片不碰</div>
+      <div>③ <b>油价高位双刃</b> —— 布油破95利好油气但推升通胀→美联储7月加息概率回升至26%、压制成长估值；美伊谈判反复令油价双向剧烈波动</div>
+      <div>④ <b>连板高位风险</b> —— 立新能源6板/美利云4板/盛达3板，高位缩量加速即炸板；只做前排换手</div>
+      <div>⑤ <b>今晚美股财报+欧洲央行</b> —— 英特尔7/23盘后披露；欧洲央行利率决议+初请失业金，若鹰派将反向传导；谷歌/Meta资本开支指引决定AI叙事</div>
+    </div>
+    <div class="alert-box success">
+      <div class="title">✅ 积极催化（主线扩散 + 政策底 + 业绩+新分支）</div>
+      <div>① <b>三大主线延续+扩散</b> —— 立新能源6板/华银反包+7.81%/中国西电报涨停潮/中曼4天3板/盛达3板/美利云4板/昀冢MLCC+11.63%，v13.1核心假设成立并强化</div>
+      <div>② <b>电力升维</b> —— 《可再生能源十五五》5万亿电网投资+15回特高压+国网特高压采购292亿超去年→电网设备中军(中国西电/特变/平高)获基本面支撑，不止情绪连板</div>
+      <div>③ <b>政策底信号密集</b> —— 证监会主席见加方养老基金CEO(平稳健康运行)、北京国管近百亿、联讯仪器+8倍预增成新股王、体育强国十五五(7万亿)、32家回购增持</div>
+      <div>④ <b>资源线延伸</b> —— 美伊升级(霍尔木兹归零)→布油破95/黄金4135；锂矿/有色午后爆发(国城/永杉/盛新涨停、有色ETF+3.33%)</div>
+      <div>⑤ <b>海外科技修复</b> —— 日韩反弹、SK海力士/三星飙升，缓和市场对半导体的恐慌；机构「空翻多」加仓分散但风险偏好边际回升</div>
+    </div>
+  </div>
+
+  <!-- Checklist -->
+  <div style="margin-bottom:16px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">✅ 7/23 午后检查清单（基于13:54已发生事实）</div>
+    <ul class="checklist">
+      <li>✅ 已验证：立新能源6板(机构+深股通净买1.34亿)、华银反包+7.81%、中国西电/中能电气20cm涨停潮、中曼4天3板、盛达3板、美利云算力租赁4板、昀冢MLCC+11.63% → v13.1三大主线成立并扩散，持仓前排者继续持有</li>
+      <li>⚠️ 立新能源「无算力业务」澄清 → 6板空间龙叙事风险，<b>严禁追加速板</b>；若炸板则连板退潮，速降至3%</li>
+      <li>🔍 13:54后观察：立新能源能否封死6板不炸？华银/华电辽能是否延续？电网设备(中国西电/特变)趋势持续性</li>
+      <li>🔍 科技分支：美利云4板/联讯/工业富联是否强者恒强？科创50能否收回跌幅（半导体中芯/寒武纪是否止跌）？</li>
+      <li>🛡️ 油气/黄金：布油95附近是否站稳？中曼/四川黄金/盛达/紫金回踩是否给低吸机会？加息预期升温下不重仓</li>
+      <li>📊 14:30 尾盘决策：站稳3868+电力/资源抱团延续+科技分支活跃→总仓维持45-50%；破3830则降至30%防二次探底</li>
+      <li>全天纪律：<b>不追高、不追连板加速、只做前排换手+电网中军+业绩分支低吸</b>；现金52-55%守分歧；纯半导体/存储/无业绩纯题材不碰</li>
+      <li>盘后跟踪：英特尔财报(7/23夜)+谷歌/Meta资本开支+欧洲央行+初请→决定明日科技/成长延续性</li>
+    </ul>
+  </div>
+
+  <!-- Signal Attribution -->
+  <div style="margin-bottom:16px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📊 信号归因（四维雷达）</div>
+    <div id="radarChart" class="chart-container" style="height:320px;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+      <div class="alert-box success" style="margin:0;">
+        <div class="title">最强看多信号</div>
+        <div><b>三大主线延续并扩散</b>（立新能源6板/华银反包+7.81%/中国西电报涨停潮/中曼4天3板/盛达3板/美利云4板/昀冢MLCC+11.63%）+ <b>电力升维</b>（十五五5万亿电网投资+特高压，电网设备中军获基本面支撑）+ <b>政策底密集托底</b>（证监会主席见加方养老基金/北京国管近百亿/联讯+8倍预增/体育强国7万亿）+ <b>地缘升级推升资源</b>（布油破95/霍尔木兹归零/黄金4135）+ <b>科技业绩分支爆发</b>（算力租赁/MLCC/液冷/电网设备）+ <b>海外科技修复</b>（日韩反弹）+ 指数午后翻红。</div>
+      </div>
+      <div class="alert-box danger" style="margin:0;">
+        <div class="title">最强看空信号</div>
+        <div><b>立新能源「无算力」澄清</b>→6板空间龙叙事风险骤升、炸板即退潮；<b>纯半导体仍弱</b>（科创50午间-4%、中芯-5.43%/寒武纪-5.49%/海光-5.55%/兆易-3.87%）；<b>油价破95推升美联储加息概率至26%</b>压制成长估值；<b>连板高位（6板/4板/3板）缩量加速即炸板</b>；沪指3868未破10日线(约3905)、下跌趋势未反转；美伊冲突升级但谈判反复令资源高位双向波动。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+  <div class="disclaimer">
+    ⚠️ 免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论均基于 2026-07-23 盘中数据（截至13:54：上证3868.85 +0.05%、创业板3568.60 +0.05%、科创50午间-4%半导体调整；立新能源12.11 +9.99% 6连板且澄清无算力业务、华银电力8.56 +7.81%反包、华电辽能涨停、中国西电/中能电气(20cm)/汉缆涨停潮、中曼石油4天3板、四川黄金涨停、盛达资源3板、美利云算力租赁4板、联讯仪器1901 +0.69% CPO新股王、昀冢科技MLCC +11.63%、飞龙股份液冷涨停；中芯国际-5.43%/寒武纪-5.49%/海光-5.55%/兆易-3.87%/华虹宏力-12%仍弱）+ 2026-07-22 A股收盘（沪指3867.03 +0.07%、深成-1.42%、创业板3566.73 -3.23%）+ 2026-07-22 美股真实收盘（道指-0.01%/纳指-0.57%/费半+0.44%/英伟达+2.30%）+ 2026-07-23 盘前公开信息（特朗普威胁轰炸伊朗基建/霍尔木兹归零/布油破95.5/黄金4135/美联储加息概率26%/引力一号遥四东海发射成功/高端PCB价格涨超300%/体育强国十五五/北京国管近百亿/可再生能源十五五5万亿电网投资+15回特高压），不保证未来表现。<br>
+    数据来源：上证/深证/科创/创业板实时行情、新浪财经、腾讯财经、财联社、证券时报、东方财富、每日经济新闻、雪球等公开信息 | 生成时间：2026-07-23 13:54
+  </div>
+  <div>盘前计划 v13.2（7/23 周四 · 午后版 13:54 · 基于7/23午后13:54+7/22收盘+7/22美股+7/23盘前，验证v13.1三大主线并纳入电网设备/特高压扩散、立新能源无算力澄清、锂矿爆发、美利云4板） | automation-1783645264539 | Powered by 星辰智能分析</div>
+</div>
+
+<script>
+// ===== Position Pie Chart =====
+var posChart = echarts.init(document.getElementById('positionChart'));
+posChart.setOption({
+  backgroundColor: 'transparent',
+  tooltip: { trigger: 'item', formatter: '{b}: {c}%' },
+  legend: { bottom: 0, textStyle: { color: '#94a3b8', fontSize: 12 } },
+  series: [{
+    type: 'pie',
+    radius: ['45%', '70%'],
+    center: ['50%', '42%'],
+    avoidLabelOverlap: false,
+    itemStyle: { borderColor: '#0f0f23', borderWidth: 2 },
+    label: {
+      show: true,
+      position: 'center',
+      formatter: '机动\n52%+',
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: '#ffa502',
+      lineHeight: 24
+    },
+    data: [
+      { value: 15, name: '电力(连板+电网)', itemStyle: { color: '#00d4aa' } },
+      { value: 15, name: '油气/贵金属', itemStyle: { color: '#764ba2' } },
+      { value: 13, name: '科技业绩分支', itemStyle: { color: '#667eea' } },
+      { value: 55, name: '现金观望', itemStyle: { color: '#2d2d44' } }
+    ]
+  }]
+});
+
+// ===== Radar Chart =====
+var radarChart = echarts.init(document.getElementById('radarChart'));
+radarChart.setOption({
+  backgroundColor: 'transparent',
+  tooltip: {},
+  radar: {
+    indicator: [
+      { name: '技术指标', max: 100 },
+      { name: '新闻情绪', max: 100 },
+      { name: '基本面', max: 100 },
+      { name: '市场环境', max: 100 }
+    ],
+    center: ['50%', '55%'],
+    radius: '65%',
+    splitArea: { areaStyle: { color: ['rgba(102,126,234,0.03)', 'rgba(102,126,234,0.06)'] } },
+    axisLine: { lineStyle: { color: '#2d2d44' } },
+    splitLine: { lineStyle: { color: '#2d2d44' } },
+    axisName: { color: '#94a3b8', fontSize: 13 }
+  },
+  series: [{
+    type: 'radar',
+    data: [
+      {
+        value: [80, 76, 78, 78],
+        name: '电力(连板+电网)',
+        areaStyle: { color: 'rgba(0,212,170,0.2)' },
+        lineStyle: { color: '#00d4aa', width: 2 },
+        itemStyle: { color: '#00d4aa' }
+      },
+      {
+        value: [75, 88, 72, 82],
+        name: '油气/贵金属',
+        areaStyle: { color: 'rgba(118,75,162,0.18)' },
+        lineStyle: { color: '#764ba2', width: 2 },
+        itemStyle: { color: '#764ba2' }
+      },
+      {
+        value: [72, 72, 88, 68],
+        name: '科技业绩分支',
+        areaStyle: { color: 'rgba(102,126,234,0.2)' },
+        lineStyle: { color: '#667eea', width: 2 },
+        itemStyle: { color: '#667eea' }
+      },
+      {
+        value: [55, 60, 80, 60],
+        name: '创新药(支线)',
+        areaStyle: { color: 'rgba(255,165,2,0.12)' },
+        lineStyle: { color: '#ffa502', width: 2 },
+        itemStyle: { color: '#ffa502' }
+      },
+      {
+        value: [20, 30, 50, 25],
+        name: '纯半导体(退潮)',
+        areaStyle: { color: 'rgba(255,71,87,0.12)' },
+        lineStyle: { color: '#ff4757', width: 2 },
+        itemStyle: { color: '#ff4757' }
+      }
+    ]
+  }],
+  legend: {
+    bottom: 0,
+    textStyle: { color: '#94a3b8', fontSize: 12 },
+    data: ['电力(连板+电网)', '油气/贵金属', '科技业绩分支', '创新药(支线)', '纯半导体(退潮)']
+  }
+});
+
+window.addEventListener('resize', function() {
+  posChart.resize();
+  radarChart.resize();
+});
+</script>
+</body>
+</html>

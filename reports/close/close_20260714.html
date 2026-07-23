@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股行情复盘 · 2026-07-14（周二·收盘版·深V反弹·反抽未过年线·赚钱效应回暖）· 星辰</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23;
+    --card:#1a1a2e;
+    --card2:#16162a;
+    --line:#2d2d44;
+    --ink:#e2e8f0;
+    --sub:#94a3b8;
+    --up:#d8392b;       /* 涨·红 (A股惯例) */
+    --down:#1a8f4c;     /* 跌·绿 */
+    --accent:#667eea;
+    --accent2:#764ba2;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.6;font-size:14px;}
+  .wrap{max-width:1060px;margin:0 auto;padding:24px 18px 64px;}
+  header{border-left:4px solid transparent;border-image:linear-gradient(180deg,var(--accent),var(--accent2)) 1;
+    padding:4px 0 4px 14px;margin-bottom:18px;}
+  header h1{font-size:22px;margin:0;font-weight:700;
+    background:linear-gradient(90deg,#a5b4fc,#c4b5fd);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  header .meta{color:var(--sub);font-size:13px;margin-top:4px;}
+  .tldr{background:linear-gradient(135deg,#1a1a2e,#16162a);border:1px solid var(--line);border-radius:12px;
+    padding:16px 18px;margin-bottom:18px;box-shadow:0 4px 18px rgba(0,0,0,.35);}
+  .tldr h2{margin:0 0 8px;font-size:15px;color:#a5b4fc;}
+  .tldr ul{margin:0;padding-left:18px;}
+  .tldr li{margin:5px 0;color:#cbd5e1;}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:780px){.grid{grid-template-columns:1fr;}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 18px;box-shadow:0 4px 18px rgba(0,0,0,.30);margin-bottom:16px;}
+  .card h3{margin:0 0 12px;font-size:15px;display:flex;align-items:center;gap:8px;color:#e2e8f0;}
+  .card h3::before{content:"";width:6px;height:16px;background:linear-gradient(180deg,var(--accent),var(--accent2));
+    border-radius:2px;display:inline-block;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);}
+  th{color:var(--sub);font-weight:600;}
+  .up{color:var(--up);font-weight:600;}
+  .down{color:var(--down);font-weight:600;}
+  .flat{color:var(--sub);}
+  #idxChart,#capChart,#gaugeChart,#leadChart,#marginChart{width:100%;height:300px;}
+  #gaugeChart{height:240px;}
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+  @media(max-width:780px){.kpis{grid-template-columns:1fr 1fr;}}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:14px;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,.30);}
+  .kpi .v{font-size:20px;font-weight:700;}
+  .kpi .k{font-size:12px;color:var(--sub);margin-top:2px;}
+  .note{background:rgba(26,143,76,.10);border:1px solid rgba(26,143,76,.40);border-radius:10px;
+    padding:10px 14px;color:#7ee0a3;font-size:13px;margin:10px 0;}
+  .note.danger{background:rgba(216,57,43,.10);border-color:rgba(216,57,43,.40);color:#ff9d8a;}
+  .note.info{background:rgba(102,126,234,.10);border-color:rgba(102,126,234,.40);color:#a5b4fc;}
+  .note.warn{background:rgba(250,204,21,.10);border-color:rgba(250,204,21,.40);color:#facc15;}
+  .pill{font-size:11px;padding:2px 8px;border-radius:20px;background:rgba(102,126,234,.18);color:#a5b4fc;font-weight:600;}
+  .tag{display:inline-block;background:rgba(102,126,234,.15);color:#a5b4fc;border-radius:6px;
+    padding:1px 7px;font-size:12px;margin-right:4px;}
+  .src{font-size:12px;color:var(--sub);border-top:1px dashed var(--line);margin-top:20px;padding-top:12px;line-height:1.7;}
+  .subgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:780px){.subgrid{grid-template-columns:1fr;}}
+  .heat{display:flex;align-items:center;gap:12px;background:var(--card2);border:1px solid var(--line);
+    border-radius:10px;padding:10px 14px;margin:8px 0;}
+  .heat .bar{flex:1;height:10px;border-radius:6px;background:linear-gradient(90deg,#1a8f4c,#facc15,#d8392b);position:relative;}
+  .heat .dot{position:absolute;top:-3px;width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid #667eea;}
+  .heat .lab{font-size:12px;color:var(--sub);white-space:nowrap;}
+  .pos{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:6px;}
+  @media(max-width:780px){.pos{grid-template-columns:1fr 1fr;}}
+  .pos .p{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:12px;}
+  .pos .p h4{margin:0 0 4px;font-size:13px;color:#a5b4fc;}
+  .pos .p .big{font-size:22px;font-weight:700;}
+  .pos .p p{margin:6px 0 0;font-size:12px;color:var(--sub);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>A股行情复盘 · 2026-07-14（周二 · 收盘版 · 深V反弹 · 反抽未过年线 · 赚钱效应回暖）</h1>
+    <div class="meta">收盘数据更新 15:31 · 数据来源：NeoData 实时行情 + 公开资讯（财联社 / 蓝鲸 / 上证报 / 腾讯证券）· 分析师：星辰</div>
+  </header>
+
+  <div class="note warn">⚠️ <b>年线警报未解除 · 但下方有强支撑</b>：7/13 破位（收 3913.79）后，今日<b>深V反弹</b>——沪指最低探 3869.30、最高冲 3967.13（=收盘），单日 <b>+1.36% 收 3967.13</b>。<b>收盘仍低于 3970 年线约 3 点，年线警报未解除</b>；但 V 反显示年线区域买盘承接有力、恐慌释放而非持续下杀。仓位中枢由 7/13 的「3–4 成（减仓触发）」微调至 <b>3.5–4.5 成（防御·反抽未过线）</b>，不上调也不追杀。</div>
+
+  <div class="tldr">
+    <h2>一句话结论（7/14 收盘）</h2>
+    <ul>
+      <li><b>深V反弹 · 反抽未过年线</b>：7/13 破位次日即深V反转——上证 <b>+1.36% 收 3967.13</b>（最低 3869.30、收盘=最高 3967.13），深成 <b>+2.77%</b>、创业 <b>+3.43%</b>、科创50 <b>+0.77%</b>（弱于主板，半导体材料 / AI服务器仍拖累）。两市成交约 <b>2.7 万亿</b>（较 7/13 缩量 1138 亿），呈「缩量反弹、惜售企稳」特征。</li>
+      <li><b>赚钱效应回暖（脱离冰点）</b>：全市场 <b>超 4200 只个股上涨（红盘占比约 80%）</b>，涨停 <b>80 只（不含ST）/ 89 只（含ST）</b>、封板率 <b>79%</b>、连板 5 只（<b>恒尚节能 11 天 10 板</b>高度龙，哈药股份 3 连板）。情绪温度计 <b>≈22°（冰点）→ ≈55°（回暖·中性偏暖）</b>。</li>
+      <li><b>资金：切回业绩确定性 + 低位资源</b>：主线回归 <b>PCB / 算力硬件 / 光芯片（中报预增密集催化）+ 有色 / 油气 / 煤炭（资源）+ 医药商业</b>；半导体材料、AI服务器仍净流出。两融(7/13) <b>29101.95 亿、八连降、单日净减 345.78 亿</b>，杠杆续撤退但速度放缓。</li>
+      <li><b>仓位（防御 · 反抽未过线）</b>：总仓 <b>3.5–4.5 成</b>、现金 55–65%；年线未收复 + 两融续降，维持防御；<b>加仓需沪指站稳 3970→4000 且主线放量反包确认</b>，严禁抄底高位未止跌的半导体材料与纯题材。</li>
+    </ul>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="v up">+1.36%</div><div class="k">上证 3967.13 · 深V·年线未收复</div></div>
+    <div class="kpi"><div class="v up">+3.43%</div><div class="k">创业板 3851.14 · 反弹最强</div></div>
+    <div class="kpi"><div class="v up">≈2.7万亿</div><div class="k">两市成交 · 较7/13缩量1138亿</div></div>
+    <div class="kpi"><div class="v up">~4211 只</div><div class="k">红盘 · 下跌约1100只（占比~80%）</div></div>
+    <div class="kpi"><div class="v up">80 只</div><div class="k">涨停（不含ST）· 封板率79%·连板5只</div></div>
+    <div class="kpi"><div class="v" style="color:#a5b4fc">3.5–4.5 成</div><div class="k">仓位建议 · 防御·反抽未过线</div></div>
+  </div>
+
+  <div class="card">
+    <h3>一、核心指数表现（收盘 · 上证近期点位与年线）</h3>
+    <div id="idxChart"></div>
+    <table>
+      <thead><tr><th>指数</th><th>收盘</th><th>涨跌幅</th><th>最高</th><th>最低</th><th>成交额</th><th>5日</th><th>年初至今</th><th>PE(TTM)/百分位</th></tr></thead>
+      <tbody>
+        <tr><td>上证指数</td><td>3967.13</td><td class="up">+1.36%</td><td>3967.13</td><td class="down">3869.30</td><td>1.27万亿</td><td class="flat">-0.09%</td><td class="down">-1.4%</td><td>16.67 / 92.99%</td></tr>
+        <tr><td>深证成指</td><td>14924.87</td><td class="up">+2.77%</td><td>14924.87</td><td class="down">14338.36</td><td>1.43万亿</td><td class="flat">-0.10%</td><td class="up">+7.4%</td><td>34.65 / 96.66%</td></tr>
+        <tr><td>创业板指</td><td>3851.14</td><td class="up">+3.43%</td><td>3855.03</td><td class="down">3673.96</td><td>6532.70亿</td><td class="up">+0.15%</td><td class="up">+16.2%</td><td>47.23 / 61.09%</td></tr>
+        <tr><td>科创50</td><td>2009.73</td><td class="up">+0.77%</td><td>2026.47</td><td class="down">1895.56</td><td>2020.60亿</td><td class="down">-0.32%</td><td class="up">+48.4%</td><td>— / —</td></tr>
+      </tbody>
+    </table>
+    <div class="note warn">⚠️ <b>年线未收复 · 反抽不确认反转</b>：上证今日最低 3869.30（刺穿 3900 后 V 反），收盘 3967.13 = 全天最高，但<b>仍低于 3970 年线约 3 点</b>。这是 7/13（3913.79）后再度收于年线下方，技术上属「反抽未过线」。深成 / 创业反弹力度强于主板，但科创50（+0.77%）受半导体材料 / AI服务器拖累明显弱于 7/9 反包时的 +8.41%。量能缩至 2.7 万亿（缩量反弹），属惜售企稳而非增量进攻。</div>
+  </div>
+
+  <div class="card">
+    <h3>二、市场赚钱效应总结（情绪温度计 · 回暖）</h3>
+    <div class="heat">
+      <span class="lab">冰点</span>
+      <div class="bar"><div class="dot" style="left:55%"></div></div>
+      <span class="lab">沸点</span>
+    </div>
+    <p style="margin:6px 0 4px;color:var(--sub);font-size:13px;">市场情绪温度计：<b style="color:#facc15">22°（7/13 冰点）→ ≈55°（7/14 回暖）</b>。从「普跌冰点」急转为「缩量反弹、局部进攻」——红盘占比由约 15% 回升至约 80%，涨停由 27 只回升至 80 只，封板率由 68% 升至 79%。但年线未收复，定性为「回暖·中性偏暖」，非沸点。</p>
+    <div class="subgrid">
+      <div id="gaugeChart"></div>
+      <div id="leadChart"></div>
+    </div>
+    <table>
+      <thead><tr><th>赚钱效应信号</th><th>今日表现</th><th>解读</th></tr></thead>
+      <tbody>
+        <tr><td>红盘广度</td><td class="up">红盘约 4211 只 / 下跌约 1100 只（占比 ~80%）</td><td class="up">较 7/13 的「约 800 红 / 4500 跌」全面修复，普反格局</td></tr>
+        <tr><td>涨停 / 跌停</td><td class="up">涨停 80 只（不含ST）/ 89 只（含ST）</td><td class="up">跌停大幅减少、亏钱效应缓解（精确跌停数未披露，反弹日约低个位数）</td></tr>
+        <tr><td>封板率</td><td class="up">79%（21 股封板未遂）</td><td class="up">较 7/13 的 68% 回升，追板性价比改善但高位板仍易炸</td></tr>
+        <tr><td>连板高度</td><td class="up">连板 5 只 · 恒尚节能 11 天 10 板</td><td class="up">哈药股份 3 连板（业绩超预期）、艾艾精工 6天4板、宿迁联盛 6天3板；高度龙仍抱团</td></tr>
+        <tr><td>主线结构</td><td class="up">PCB/算力硬件/光芯片 + 资源 + 医药商业</td><td class="up">业绩预增驱动 PCB 批量涨停，新易盛涨超10%；半导体材料/AI服务器仍弱</td></tr>
+      </tbody>
+    </table>
+    <div class="note info">赚钱效应本质：今日是「<b>指数与个股双修复</b>」——不同于 7/13「指数与个股双杀」，今日超 4200 只收红、80 股涨停，情绪由冰点回暖至中性偏暖。但结构分化仍在：<b>强者为「中报业绩确定性」</b>（PCB/光模块/算力硬件预增密集）+ <b>低位资源</b>（有色/油气/煤炭）+ 医药商业；<b>弱者仍是高位拥挤的半导体材料与 AI服务器</b>（中国长城大跌、上海合晶/有研硅/沪硅产业大跌）。属「业绩线修复 + 高位线去杠杆」并行。</div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>三、今日领涨方向（行业 / 概念）</h3>
+      <table>
+        <thead><tr><th>方向</th><th>涨幅</th><th>驱动</th></tr></thead>
+        <tbody>
+          <tr><td>锗镓概念</td><td class="up">+8.00%</td><td>半导体材料上游，光智科技 +14.35% 领涨</td></tr>
+          <tr><td>电子布</td><td class="up">+7.65%</td><td>PCB 上游材料，国际复材 +15.08%</td></tr>
+          <tr><td>博通概念</td><td class="up">+6.89%</td><td>算力硬件映射，生益电子 +14.21%</td></tr>
+          <tr><td>光芯片</td><td class="up">+5.51%</td><td>长光华芯 +13.70%、源杰科技 +13.12%</td></tr>
+          <tr><td>有色（锡/铋）</td><td class="up">+5.35% / +5.04%</td><td>资源品修复，和邦生物/驰宏锌锗涨停</td></tr>
+          <tr><td>油气 / 煤炭</td><td class="up">通源石油20CM·大有能源/昊华能源涨停</td><td>地缘 + 煤价企稳，避险资源属性</td></tr>
+        </tbody>
+      </table>
+      <div class="note">盘面核心：<b>PCB 概念批量涨停</b>——则成电子 30CM、广合科技、生益科技、金安国纪、沪电股份涨停，东山精密 4天2板，新易盛涨超 10%；<b>医药商业</b>药易购 20CM、人民同泰涨停。驱动为「7/13 晚间多家 PCB 核心公司中报预增 + 2026 世界人工智能大会（7/17–20）预期」。</div>
+    </div>
+
+    <div class="card">
+      <h3>四、今日弱势 / 退潮方向（仍承压）</h3>
+      <table>
+        <thead><tr><th>方向</th><th>特征</th><th>代表</th></tr></thead>
+        <tbody>
+          <tr><td>AI服务器概念</td><td class="down">震荡下挫</td><td>中国长城大跌，资金兑现高位算力整机</td></tr>
+          <tr><td>半导体材料</td><td class="down">集体调整</td><td>上海合晶、有研硅、沪硅产业大跌（与锗镓/光芯片分化）</td></tr>
+          <tr><td>军工</td><td class="down">领跌两市</td><td>7/13 强势方向今日补跌，高低切延续</td></tr>
+          <tr><td>银行</td><td class="down">防御属性失效·领跌</td><td>7/13 护盘方向今日回落，资金从防御切回进攻</td></tr>
+          <tr><td>传媒</td><td class="down">领跌</td><td>前期题材退潮，无催化</td></tr>
+        </tbody>
+      </table>
+      <div class="note danger">⚠️ <b>高低切仍未结束</b>：今日反弹由「业绩确定性（PCB/光模块）+ 低位资源」主导，而昨日护盘的银行、逆势的军工今日补跌，高位 AI服务器 / 半导体材料仍被抛售。说明<b>资金在「去高拥挤、切业绩 / 低位」</b>，并非全面风险偏好回升。科创50 仅 +0.77% 即印证科技企业内部分化剧烈。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>五、资金流向分析（板块主力净流入 + 两融）</h3>
+    <p style="margin:0 0 6px;color:var(--sub);font-size:13px;">① 概念主力净流入（亿元，红=流入；整体资金回补，集中于宽基与业绩主线）：</p>
+    <div id="capChart"></div>
+    <div class="note info">① <b>整体资金回补、结构偏爱业绩线</b>：宽基指数概念主力净流入居前（纳入富时罗素 +267.1 亿、大盘股 +229.8 亿、标普道琼斯中国 +214.5 亿），反映普反日资金回补。板块层面，主力明显追逐 <b>中报业绩已验证的 PCB / 光模块 / 算力硬件</b> 与 <b>低位资源（有色 / 油气 / 煤炭）</b>；而半导体材料、AI服务器仍处净流出（企业内部分化）。这与「去高拥挤、切业绩确定性」主线一致。</div>
+    <p style="margin:10px 0 6px;color:var(--sub);font-size:13px;">② 两融余额走势（亿元，杠杆八连降 · 7/13 单日净减 345.78 亿）：</p>
+    <div id="marginChart"></div>
+    <div class="note warn">⚠️ <b>两融八连降 · 杠杆续撤退</b>：截至 7/13，A 股两融余额 <b>29101.95 亿</b>（融资约 2.92 万亿），较上日（7/10 的 29447.74 亿）<b>净减 345.78 亿</b>、占流通市值 2.92%；两融交易额 2341.02 亿（较上日 -885.05 亿，占成交 8.25%）。<b>8 个交易日内由 7/6 的 29834 亿降至 29101.95 亿、累计净减约 732 亿</b>。行业端仅 5 个行业获融资净买入（房地产 +1.82 亿居首、国防军工 / 钢铁 / 综合 / 美容护理），个股拓荆科技 +4.77 亿居首——杠杆仍在降，但降幅较 7/13 恐慌日放缓。</div>
+  </div>
+
+  <div class="card">
+    <h3>六、仓位管理推荐（7/15 起 · 防御 · 反抽未过线）</h3>
+    <div class="pos">
+      <div class="p"><h4>总仓位</h4><div class="big" style="color:#a5b4fc">3.5–4.5 成</div><p>较 7/13 的 3–4 成微上调（V反回暖），但年线未收复、两融续降，仍处防御区间。不上调也不追杀。</p></div>
+      <div class="p"><h4>加仓触发</h4><div class="big up">&gt;5 成</div><p>沪指放量站稳 3970 年线并进一步站上 4000，且 PCB/算力硬件主线放量反包确认（非一日游），或成交&gt;3万亿+普涨扩散。</p></div>
+      <div class="p"><h4>减仓触发</h4><div class="big down">&lt;3 成</div><p>再度放量跌破 3900（今日最低 3869.30 已刺穿），或连续两日收于年线下方且主线转弱。当前年线警报未解除，保持警惕。</p></div>
+      <div class="p"><h4>现金比例</h4><div class="big" style="color:#a5b4fc">55–65%</div><p>反抽未过线 + 杠杆撤退，现金仍主导；等年线有效收复或恐慌盘衰竭后再分批回补。</p></div>
+    </div>
+    <table style="margin-top:12px">
+      <thead><tr><th>操作</th><th>具体建议</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tag">加仓</span>业绩确定性</td><td>中报预增已验证的 PCB / 光模块 / 算力硬件细分龙头（沪电、生益、新易盛等），待回踩均线且年线收复时分批低吸，不追板。</td></tr>
+        <tr><td><span class="tag">持有</span>低位资源 / 消费</td><td>有色（锡/铋）、油气、煤炭（煤价企稳）、医药商业，估值低、有催化，可作防御底仓；业绩预喜且未大涨的细分龙头保留。</td></tr>
+        <tr><td><span class="tag">回避</span>高位未止跌</td><td>半导体材料（上海合晶/有研硅/沪硅产业）、AI服务器整机（中国长城）等仍净流出、去杠杆中的高位方向，不抄底飞刀。</td></tr>
+        <tr><td><span class="tag">减仓</span>防御变弱方向</td><td>昨日护盘、今日补跌的银行，及补跌的军工/传媒，反弹中择机降低仓位、兑现防御收益。</td></tr>
+        <tr><td><span class="tag">节奏</span>等年线确认</td><td>上证收 3967 仍低于年线 3970，定性为「反抽未过线」。等站稳 3970→4000 再上调中枢；若破 3900 则执行 &lt;3 成减仓。</td></tr>
+      </tbody>
+    </table>
+    <div class="note warn">⚠️ <b>年线未收复 · 防御为主</b>：沪指收盘 3967.13 仍位于 3970 年线下方约 3 点，上方 3970–4000 转为压力区；下方 3900（今日最低 3869.30）为短期强支撑。当前是「<b>V反修复 + 两融续降 + 高低切未完</b>」组合，仓位中枢 <b>3.5–4.5 成、现金 55–65%</b>；明早关注美 6 月 CPI（美东 7/14 公布）与国新办 7/15 发布会（货币政策）的映射。</div>
+  </div>
+
+  <div class="card">
+    <h3>七、后市研判（7/15 起）</h3>
+    <p style="margin-top:0;color:#cbd5e1">今日复盘显示：<b>① 这是一次「年线区域 V 反修复」，非趋势反转确认</b>（收 3967.13 仍低于 3970 年线、量能缩至 2.7 万亿）；<b>② 赚钱效应由冰点回暖</b>（4200+ 红盘、80 涨停、封板率 79%），但结构分化（业绩线强、高位半导体材料/AI服务器弱）；<b>③ 两融八连降、杠杆续撤退</b>，风险偏好修复但偏谨慎。操作上「防御 + 结构优于总量」。</p>
+    <ul style="color:#cbd5e1">
+      <li><span class="tag">点位</span>上证收 3967.13 <b>仍低于 3970 年线</b>，年线警报未解除；3900（今日低 3869.30）为强支撑。站稳 3970→4000 = 加仓信号；放量破 3900 = 执行 &lt;3 成减仓。</li>
+      <li><span class="tag">量能</span>两市约 2.7 万亿、缩量 1138 亿，属「缩量反弹、惜售企稳」。若后续放量至 3 万亿+且站稳年线，确认反转；若缩量滞涨或再回落破 3900，则反抽结束。</li>
+      <li><span class="tag">主线</span><b>承接方向</b>：① 中报业绩确定性（PCB/光模块/算力硬件，预增密集）；② 低位资源（有色/油气/煤炭）；③ 医药商业 / 低位消费。机构共识仍指向有业绩的硬科技（算力硬件/存储/国产算力），但须等拥挤度与估值充分消化。</li>
+      <li><span class="tag">事件</span>① 2026 世界人工智能大会 7/17–20 举办（算力/AI 催化）；② 国新办 7/15 下午 3 时发布会（央行副行长邹澜介绍上半年货币政策与金融统计数据）；③ 美东 7/14 公布美国 6 月 CPI——影响美联储预期与外围风险偏好，关注明日开盘映射。</li>
+    </ul>
+    <p style="margin-bottom:0;color:#cbd5e1"><b>策略</b>：<b>防御、控仓、结构优于总量</b>；总仓 <b>3.5–4.5 成</b>、现金 55–65%；加业绩确定性（待年线收复后低吸）、配低位资源/消费，<b>减高位未止跌的半导体材料与 AI服务器、兑现补跌的防御方向</b>。等上证站稳 3970→4000 再上调中枢，破 3900 则降至 3 成以下。</p>
+  </div>
+
+  <div class="src">
+    <b>数据来源</b>：NeoData 金融数据（四大指数 7/9–7/14 历史行情 / 估值百分位 / 涨跌停与板块排行榜 / 概念主力资金统计）+ 公开资讯——财联社《7月14日涨停分析》（全市场 80 股涨停、连板 5 只、21 股封板未遂、封板率 79%、恒尚节能 11天10板 / 哈药股份 3连板 / 艾艾精工 6天4板 / 宿迁联盛 6天3板）、蓝鲸新闻（同口径 80 涨停）、腾讯证券《A股复盘|V型反弹来袭》（沪指 +1.36% / 深成 +2.77% / 创业 +3.43%、逾 4200 股飘红、成交 2.7 万亿、缩量 1138 亿、89 股涨停、PCB/算力硬件/光芯片/油气/煤炭/医药商业领涨、半导体材料/AI服务器/军工/银行/传媒领跌、五因素助推反弹）、上证报·中国证券网《资金风向标|13日两融余额减少345.78亿元》（7/13 两融 29101.95 亿、较上日 -345.78 亿、占流通市值 2.92%、5 行业融资净买入居首房地产 +1.82 亿、拓荆科技 +4.77 亿居个股首）。<br>
+    注：① 北向资金净买入额因交易所披露规则调整（2024-08 起），当日未单独公布；② 7/14 当日两融数据次一交易日（7/15）披露，公开口径目前最新为 7/13 的 29101.95 亿；③ 全市场精确涨跌家数 API 未返回全量（红盘约 4211 只 / 下跌约 1100 只为基于「腾讯证券复盘·逾4200股飘红」的公开资讯估算，占比约 80%；精确跌停数未披露，反弹日约低个位数）；④ 行业主力净流入（纳入富时罗素 +267.1 / 大盘股 +229.8 / 标普道琼斯中国 +214.5 亿，金额单位亿元）来自 NeoData「板块当日资金主力统计（概念主力降序）」，整体主力净流入为普反日定性判断（宽基主线回补）；⑤ 以上为行情复盘与仓位参考，<b>不构成投资建议</b>。
+  </div>
+
+</div>
+<script>
+  var axisColor = '#94a3b8', splitColor = '#2d2d44';
+  var UP='#d8392b', DOWN='#1a8f4c';
+
+  // 1. 上证指数近期收盘点位（深V反抽·年线未收复）
+  echarts.init(document.getElementById('idxChart')).setOption({
+    tooltip:{trigger:'axis',formatter:function(ps){return ps[0].name+'<br/>'+ps[0].marker+'上证收盘：'+ps[0].value;}},
+    grid:{left:56,right:24,top:30,bottom:30},
+    xAxis:{type:'category',data:['7/9','7/10','7/13','7/14'],axisLabel:{color:axisColor}},
+    yAxis:{type:'value',scale:true,axisLabel:{color:axisColor},splitLine:{lineStyle:{color:splitColor}}},
+    series:[{type:'line',smooth:false,data:[4036.59,3996.16,3913.79,3967.13],symbolSize:9,
+      itemStyle:{color:'#a5b4fc'},lineStyle:{width:3,color:'#a5b4fc'},
+      areaStyle:{color:'rgba(165,180,252,.10)'},
+      label:{show:true,formatter:function(p){return p.value;},color:'#e2e8f0',fontSize:11},
+      markLine:{silent:true,symbol:'none',data:[
+        {yAxis:3970,lineStyle:{color:'#d8392b',type:'dashed',width:2},label:{formatter:'年线≈3970',color:'#ff9d8a',position:'start'}},
+        {yAxis:4000,lineStyle:{color:'#94a3b8',type:'dotted'},label:{formatter:'4000压力',color:'#94a3b8',position:'end'}}
+      ]}}]
+  });
+
+  // 2. 情绪温度计（≈55° 回暖·中性偏暖）
+  echarts.init(document.getElementById('gaugeChart')).setOption({
+    title:{text:'市场情绪温度计（7/14）',left:'center',top:2,textStyle:{color:'#e2e8f0',fontSize:13}},
+    series:[{type:'gauge',min:0,max:100,radius:'78%',center:['50%','62%'],
+      axisLine:{lineStyle:{width:14,color:[[0.3,'#1a8f4c'],[0.5,'#facc15'],[0.7,'#fb923c'],[1,'#d8392b']]}},
+      pointer:{itemStyle:{color:'#a5b4fc'}},
+      axisTick:{distance:-14,length:4,lineStyle:{color:'#fff'}},
+      splitLine:{distance:-14,length:14,lineStyle:{color:'#fff'}},
+      axisLabel:{distance:16,color:axisColor,fontSize:10},
+      detail:{valueAnimation:true,formatter:'{value}°',color:'#e2e8f0',fontSize:22,offsetCenter:[0,'58%']},
+      data:[{value:55,name:'回暖·反抽未过年线·4200+红盘'}]}]
+  });
+
+  // 3. 领涨概念涨幅（横向柱状）
+  var leadData = [
+    {name:'锗镓概念',value:8.00},{name:'电子布',value:7.65},
+    {name:'博通概念',value:6.89},{name:'光芯片',value:5.51},
+    {name:'有色(锡)',value:5.35},{name:'有色(铋)',value:5.04}
+  ];
+  echarts.init(document.getElementById('leadChart')).setOption({
+    title:{text:'今日领涨概念（涨幅%）',left:'center',top:2,textStyle:{color:'#e2e8f0',fontSize:13}},
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+'：+' +p[0].value+'%';}},
+    grid:{left:96,right:40,top:34,bottom:24},
+    xAxis:{type:'value',axisLabel:{color:axisColor,formatter:'{value}%'},splitLine:{lineStyle:{color:splitColor}}},
+    yAxis:{type:'category',data:leadData.map(function(s){return s.name;}),axisLabel:{color:axisColor}},
+    series:[{type:'bar',barWidth:'58%',
+      data:leadData.map(function(s){return {value:s.value,itemStyle:{color:UP}};}),
+      label:{show:true,position:'right',formatter:function(p){return '+'+p.value+'%';},color:'#e2e8f0'}}]
+  });
+
+  // 4. 概念主力净流入（宽基主线回补）
+  var capData = [
+    {name:'纳入富时罗素',value:267.1},{name:'大盘股',value:229.8},{name:'标普道琼斯中国',value:214.5}
+  ];
+  echarts.init(document.getElementById('capChart')).setOption({
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+'：+' +p[0].value+' 亿';}},
+    grid:{left:120,right:46,top:14,bottom:24},
+    xAxis:{type:'value',axisLabel:{color:axisColor,formatter:'{value}亿'},splitLine:{lineStyle:{color:splitColor}}},
+    yAxis:{type:'category',data:capData.map(function(s){return s.name;}),axisLabel:{color:axisColor}},
+    series:[{type:'bar',barWidth:'58%',
+      data:capData.map(function(s){return {value:s.value,itemStyle:{color:UP}};}),
+      label:{show:true,position:'right',formatter:function(p){return '+'+p.value;},color:'#e2e8f0'}}]
+  });
+
+  // 5. 两融余额走势（八连降）
+  echarts.init(document.getElementById('marginChart')).setOption({
+    title:{text:'两融余额（亿元）· 杠杆八连降·7/13单日净减345.78亿',left:'center',top:2,textStyle:{color:'#e2e8f0',fontSize:13}},
+    tooltip:{trigger:'axis',formatter:function(p){return p[0].name+'：'+p[0].value+' 亿';}},
+    grid:{left:64,right:24,top:34,bottom:30},
+    xAxis:{type:'category',data:['7/6','7/7','7/8','7/9','7/10','7/13'],axisLabel:{color:axisColor}},
+    yAxis:{type:'value',min:29000,max:29900,axisLabel:{color:axisColor,formatter:'{value}'},splitLine:{lineStyle:{color:splitColor}}},
+    series:[{type:'line',smooth:true,data:[29834,29790,29596.57,29561.96,29447.74,29101.95],symbolSize:8,
+      itemStyle:{color:'#fb923c'},lineStyle:{width:3,color:'#fb923c'},
+      areaStyle:{color:'rgba(251,146,60,.12)'},
+      label:{show:true,formatter:function(p){return p.value;},color:'#e2e8f0',fontSize:11}}]
+  });
+
+  window.addEventListener('resize',function(){document.querySelectorAll('[_echarts_instance_]').forEach(function(el){var c=echarts.getInstanceByDom(el);if(c)c.resize();});});
+</script>
+</body>
+</html>

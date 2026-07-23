@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>涨停梯队复盘 · 2026-07-10（周五）</title>
+<style>
+  :root{
+    --bg:#0a0e1a; --card:#121829; --card2:#0f1424; --bd:#1f2940;
+    --txt:#e6ecf5; --sub:#8a97b0; --dim:#5b667e;
+    --red:#ff3b5c; --redbg:rgba(255,59,92,.14); --redbd:rgba(255,59,92,.55);
+    --yel:#ffcc33; --yelbg:rgba(255,204,51,.12); --yelbd:rgba(255,204,51,.5);
+    --grn:#22c98a; --blue:#4f9dff; --pur:#9b7bff;
+    --mut:#6b7689;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    background:radial-gradient(1200px 700px at 80% -10%,#15203a 0%,var(--bg) 55%);color:var(--txt);
+    line-height:1.55;padding:22px 14px 60px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto}
+  header{margin-bottom:18px}
+  .ttl{font-size:26px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .ttl .dot{width:11px;height:11px;border-radius:50%;background:var(--red);box-shadow:0 0 14px var(--red)}
+  .meta{color:var(--sub);font-size:13px;margin-top:6px}
+  .flag{display:inline-block;background:var(--yelbg);color:var(--yel);border:1px solid var(--yelbd);
+    border-radius:6px;padding:2px 9px;font-size:12px;font-weight:600;margin-left:6px}
+  /* market summary */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:16px 0}
+  .stat{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px 14px}
+  .stat .k{font-size:12px;color:var(--sub)}
+  .stat .v{font-size:21px;font-weight:800;margin-top:3px}
+  .stat .s{font-size:12px;color:var(--dim);margin-top:1px}
+  .down{color:var(--red)} .up{color:var(--grn)}
+  /* mood bar */
+  .mood{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .mood .lab{font-weight:700;font-size:14px;white-space:nowrap}
+  .thermo{flex:1;min-width:220px;height:14px;border-radius:8px;background:linear-gradient(90deg,#ff3b5c,#ff8a3b,#ffcc33,#22c98a);position:relative;opacity:.9}
+  .thermo i{position:absolute;top:-5px;width:4px;height:24px;background:#fff;border-radius:3px;box-shadow:0 0 8px #fff}
+  .mood .txt{font-size:13px;color:var(--sub)}
+  /* ladder */
+  .ladder{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px 18px;margin-bottom:18px}
+  .ladder h2,.sec h2{font-size:16px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .ladder h2:before,.sec h2:before{content:"";width:4px;height:16px;background:var(--blue);border-radius:3px}
+  .rung{display:flex;align-items:center;gap:12px;padding:7px 0;border-bottom:1px dashed var(--bd)}
+  .rung:last-child{border-bottom:none}
+  .lv{font-weight:800;font-size:14px;min-width:104px;color:var(--yel)}
+  .names{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{background:var(--card2);border:1px solid var(--bd);border-radius:20px;padding:3px 11px;font-size:13px}
+  .chip.boom{background:var(--redbg);border-color:var(--redbd);color:#ffb3c0}
+  /* sector */
+  .sec{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px 18px;margin-bottom:16px}
+  .sechead{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .b-red{background:var(--redbg);color:#ff6b85;border:1px solid var(--redbd);border-radius:6px;padding:2px 9px;font-size:12px;font-weight:700}
+  .b-yel{background:var(--yelbg);color:var(--yel);border:1px solid var(--yelbd);border-radius:6px;padding:2px 9px;font-size:12px;font-weight:700}
+  .cnt{color:var(--sub);font-size:13px}
+  .tbl{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}
+  .tbl th{position:sticky;top:0;background:#0d1322;color:var(--sub);font-weight:600;text-align:left;
+    padding:8px 9px;border-bottom:1px solid var(--bd);font-size:12px;white-space:nowrap}
+  .tbl td{padding:9px 9px;border-bottom:1px solid #161d30;vertical-align:top}
+  .tbl tr:hover td{background:rgba(79,157,255,.05)}
+  .stk{font-weight:700;color:var(--txt)}
+  .code{color:var(--dim);font-size:11px}
+  .lb{font-weight:800;font-size:12px}
+  .lb.b2{color:var(--yel)} .lb.f{color:var(--blue)} .lb.zb{color:var(--mut)}
+  .mk{display:inline-block;font-size:10px;font-weight:800;border-radius:4px;padding:1px 6px;margin-left:5px;vertical-align:middle}
+  .mk.red{background:var(--red);color:#fff}
+  .mk.yel{background:var(--yel);color:#1a1a1a}
+  .mk.boom{background:var(--mut);color:#cfd6e4;border:1px dashed #4a5468}
+  .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tlimit{color:var(--sub);font-size:12px;white-space:nowrap}
+  .logic{color:var(--sub);font-size:12px;line-height:1.5}
+  .est{color:var(--dim);font-size:11px}
+  .note{font-size:12px;color:var(--dim);margin-top:6px}
+  .warn{background:rgba(255,59,92,.08);border:1px solid var(--redbd);border-radius:12px;padding:14px 16px;margin-bottom:16px}
+  .warn h2{color:#ff8095;font-size:15px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .warn ul{margin:4px 0 0 18px;font-size:13px;color:#ffc2cd}
+  .warn li{margin:3px 0}
+  footer{color:var(--dim);font-size:11.5px;margin-top:22px;border-top:1px solid var(--bd);padding-top:14px;line-height:1.7}
+  .src{color:var(--sub)}
+  @media(max-width:640px){.tbl{font-size:11.5px}.tbl th,.tbl td{padding:6px 5px}.ttl{font-size:21px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="ttl"><span class="dot"></span>涨停梯队复盘</div>
+  <div class="meta">最近交易日 <b>2026-07-10（周五）</b> 收盘数据 ·
+    <span class="flag">今日 2026-07-12 周日 · 休市，无涨停数据</span></div>
+  <div class="meta src">数据来源：腾讯自选股 / 财联社 / NeoData 金融数据 · 口径：沪深京A股（剔除ST、退市股）</div>
+</header>
+
+<!-- 大盘情绪概览 -->
+<div class="grid">
+  <div class="stat"><div class="k">上证指数</div><div class="v down">-1.00%</div><div class="s">失守4000点</div></div>
+  <div class="stat"><div class="k">深成指</div><div class="v down">-2.29%</div><div class="s">权重补跌</div></div>
+  <div class="stat"><div class="k">创业板指</div><div class="v down">-4.37%</div><div class="s">双创领跌</div></div>
+  <div class="stat"><div class="k">两市成交额</div><div class="v">3.39万亿</div><div class="s">放量4748亿</div></div>
+  <div class="stat"><div class="k">涨停 / 跌停</div><div class="v"><span class="up">92</span> / <span class="down">5</span></div><div class="s">超3700股上涨</div></div>
+  <div class="stat"><div class="k">封板率</div><div class="v down">≈50%</div><div class="s">炸板91~92只</div></div>
+  <div class="stat"><div class="k">连板股</div><div class="v">9只</div><div class="s">高度降至2板</div></div>
+</div>
+
+<!-- 情绪温度计 -->
+<div class="mood">
+  <span class="lab">短线情绪</span>
+  <div class="thermo"><i style="left:14%"></i></div>
+  <span class="txt"><b style="color:var(--red)">冰点 · 降温</b>　昨日连板股全部断板、连板晋级率0%、午后炸板率激增至五成；热点无序快速轮动，资金从AI科技主线撤离。</span>
+</div>
+
+<!-- 连板梯队总览 -->
+<div class="ladder">
+  <h2>连板梯队总览（收盘口径 · 连板优先）</h2>
+  <div class="rung"><span class="lv">7天4板</span><div class="names"><span class="chip">欢瑞世纪（AI应用/影视）</span></div></div>
+  <div class="rung"><span class="lv">6天3板</span><div class="names"><span class="chip">晋拓股份（机器人）</span></div></div>
+  <div class="rung"><span class="lv">3天2板</span><div class="names"><span class="chip">华菱线缆（军工/商业航天）</span></div></div>
+  <div class="rung"><span class="lv" style="color:var(--blue)">2连板</span><div class="names">
+    <span class="chip">贵绳股份</span><span class="chip">好莱客</span><span class="chip">中鼎股份</span>
+    <span class="chip">高德红外</span><span class="chip">柘中股份</span><span class="chip">星网宇达</span>
+    <span class="chip">立方制药</span></div></div>
+  <div class="rung"><span class="lv" style="color:var(--mut)">炸板空间板</span><div class="names">
+    <span class="chip boom">恒尚节能 9板→炸（并购重组）</span>
+    <span class="chip boom">华天科技 4天3板→炸（先进封装）</span></div></div>
+  <div class="note">梯队断层明显：最高连板仅欢瑞世纪7天4板，恒尚节能9连板、华天科技4天3板午后双双炸板，连板高度由早盘9板骤降至收盘2板，退潮信号强烈。</div>
+</div>
+
+<!-- ============ 板块1：医药 ============ -->
+<div class="sec">
+  <div class="sechead">
+    <h2>一、医药（创新药 / CRO / 减肥药）</h2>
+    <div class="badges"><span class="cnt">涨停 8 只</span><span class="b-red">情绪龙头：常山药业</span><span class="b-yel">中军：众生药业</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>连板</th><th>个股</th><th>涨停时间</th><th class="num">现价/涨幅</th><th class="num">总市值</th><th class="num">成交额</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td class="lb b2">2板</td><td><span class="stk">立方制药</span> <span class="code">003020</span></td><td class="tlimit">盘中</td><td class="num">18.74<br><span class="up">+9.98%</span></td><td class="num">42.8亿</td><td class="num">3.24亿</td><td class="logic">医药（中枢神经/原料药），板块内最高连板</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">哈药股份</span> <span class="code">600664</span></td><td class="tlimit">09:30</td><td class="num">3.37<br><span class="up">+10.13%</span></td><td class="num">84.9亿</td><td class="num">3.37亿</td><td class="logic">中报预增+医药工业+创新药（最快涨停板之一）</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">常山药业</span> <span class="code">300255</span><span class="mk red">龙头</span></td><td class="tlimit">盘中</td><td class="num">26.34<br><span class="up">+20.00%</span></td><td class="num">242.1亿</td><td class="num">17.67亿</td><td class="logic">减肥药（司美格鲁肽原料药）+创新药，20cm弹性标杆</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">众生药业</span> <span class="code">002317</span><span class="mk yel">中军</span></td><td class="tlimit">盘中</td><td class="num">29.54<br><span class="up">+10.02%</span></td><td class="num">251.1亿</td><td class="num">20.42亿</td><td class="logic">减肥药+创新药，板块大容量中军</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">联环药业</span> <span class="code">600513</span></td><td class="tlimit">盘中</td><td class="num">15.49<br><span class="up">+10.01%</span></td><td class="num">44.2亿</td><td class="num">2.56亿</td><td class="logic">创新药（泌尿外科/抗组胺）</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">双鹭药业</span> <span class="code">002038</span></td><td class="tlimit">盘中</td><td class="num">6.38<br><span class="up">+10.00%</span></td><td class="num">65.5亿</td><td class="num">4.48亿</td><td class="logic">创新药（重组蛋白/多肽）</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">新里程</span> <span class="code">002219</span></td><td class="tlimit">盘中</td><td class="num">1.98<br><span class="up">+10.00%</span></td><td class="num">68.4亿</td><td class="num">3.71亿</td><td class="logic">创新药（医疗服务/医院）</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">昭衍新药</span> <span class="code">603127</span></td><td class="tlimit">盘中</td><td class="num">43.22<br><span class="up">+10.00%</span></td><td class="num">323.9亿</td><td class="num">22.73亿</td><td class="logic">CRO/CMO龙头，创新药服务中军（成交额22.7亿）</td></tr>
+    </tbody>
+  </table>
+  <div class="note">板块强度：强。催化=新版基药目录批量纳入国产1类新药 + 上半年创新药BD出海交易逼近千亿 + 翰森B7-H3 ADC三期OS阳性。和元生物(+16.70%)、康龙化成(+9.55%)等跟涨未封板。</div>
+</div>
+
+<!-- ============ 板块2：商业航天 ============ -->
+<div class="sec">
+  <div class="sechead">
+    <h2>二、商业航天 / 航天系</h2>
+    <div class="badges"><span class="cnt">涨停 14+ 只</span><span class="b-red">情绪龙头：海兰信</span><span class="b-yel">中军：中国卫星</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>连板</th><th>个股</th><th>涨停时间</th><th class="num">现价/涨幅</th><th class="num">总市值</th><th class="num">成交额</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td class="lb b2">2板</td><td><span class="stk">高德红外</span> <span class="code">002414</span></td><td class="tlimit">午后</td><td class="num">14.64<br><span class="up">+9.99%</span></td><td class="num">625.2亿</td><td class="num">29.79亿</td><td class="logic">军工红外（2连板）+商业航天遥感</td></tr>
+      <tr><td class="lb b2">2板</td><td><span class="stk">星网宇达</span> <span class="code">002829</span></td><td class="tlimit">午后</td><td class="num">19.50<br><span class="up">+9.98%</span></td><td class="num">40.5亿</td><td class="num">2.80亿</td><td class="logic">卫星通信/惯性导航（2连板）</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">海兰信</span> <span class="code">300065</span><span class="mk red">龙头</span></td><td class="tlimit">午后</td><td class="num">28.79<br><span class="up">+20.01%</span></td><td class="num">207.7亿</td><td class="num">32.79亿</td><td class="logic">并购重组（收购海兰寰宇100%）+商业航天双催化，20cm弹性总龙头</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">航天环宇</span> <span class="code">688523</span></td><td class="tlimit">午后</td><td class="num">61.18<br><span class="up">+20.01%</span></td><td class="num">248.9亿</td><td class="num">9.30亿</td><td class="logic">航天系/卫星制造结构件</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">金利华电</span> <span class="code">300069</span></td><td class="tlimit">午后</td><td class="num">36.86<br><span class="up">+19.99%</span></td><td class="num">43.1亿</td><td class="num">5.41亿</td><td class="logic">商业航天（特高压绝缘子主业+航天联动）</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">佳缘科技</span> <span class="code">301117</span></td><td class="tlimit">午后</td><td class="num">20.29<br><span class="up">+19.99%</span></td><td class="num">36.7亿</td><td class="num">5.71亿</td><td class="logic">商业航天+信息安全（卫星通信加密）</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">同益中</span> <span class="code">688722</span></td><td class="tlimit">午后</td><td class="num">18.31<br><span class="up">+19.99%</span></td><td class="num">41.0亿</td><td class="num">3.61亿</td><td class="logic">商业航天（防护/防弹材料航天应用）</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">中信重工</span> <span class="code">601608</span></td><td class="tlimit">午后</td><td class="num">5.04<br><span class="up">+10.04%</span></td><td class="num">230.8亿</td><td class="num">3.77亿</td><td class="logic">央企+特种装备制造（商业航天/军工）</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">航天发展</span> <span class="code">000547</span></td><td class="tlimit">午后</td><td class="num">18.17<br><span class="up">+9.99%</span></td><td class="num">290.4亿</td><td class="num">23.43亿</td><td class="logic">航天系（军工电子信息）</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">金风科技</span> <span class="code">002202</span></td><td class="tlimit">午后</td><td class="num">22.36<br><span class="up">+9.99%</span></td><td class="num">944.4亿</td><td class="num">58.10亿</td><td class="logic">风电设备（板块领涨）+商业航天联动，最大容量标的</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">巨力索具</span> <span class="code">002342</span></td><td class="tlimit">午后</td><td class="num">11.07<br><span class="up">+10.04%</span></td><td class="num">106.3亿</td><td class="num">18.48亿</td><td class="logic">商业航天（绳索）+军工</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">神剑股份</span> <span class="code">002361</span></td><td class="tlimit">午后</td><td class="num">12.73<br><span class="up">+10.03%</span></td><td class="num">121.1亿</td><td class="num">—</td><td class="logic">商业航天（军工+航天材料）</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">三维通信</span> <span class="code">002115</span></td><td class="tlimit">09:25</td><td class="num">10.95<br><span class="up">+10.05%</span></td><td class="num">88.2亿</td><td class="num">1.06亿</td><td class="logic">中报预增+短剧+卫星通信（最快涨停板）</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">中国卫星</span> <span class="code">600118</span><span class="mk yel">中军</span></td><td class="tlimit">午后</td><td class="num">90.02<br><span class="up">涨停</span></td><td class="num">1064亿</td><td class="num"><span class="est">待补充</span></td><td class="logic">商业航天绝对中军，中报扭亏为盈+午后火箭回收消息直线拉升引爆板块</td></tr>
+    </tbody>
+  </table>
+  <div class="note">板块强度：当日最强（航天系 +6.60% 居概念涨幅榜首）。核心催化=7/10午间央视：长征十号乙一子级海上网系回收成功（全球首次）。中国卫通、航天工程、航天动力等亦涨停（市值/成交额待补充）。</div>
+</div>
+
+<!-- ============ 板块3：并购重组 ============ -->
+<div class="sec">
+  <div class="sechead">
+    <h2>三、并购重组</h2>
+    <div class="badges"><span class="cnt">涨停 3 只（首板）</span><span class="b-red">情绪龙头：海兰信</span><span class="b-yel">中军：恒尚节能（炸板标杆）</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>连板</th><th>个股</th><th>涨停时间</th><th class="num">现价/涨幅</th><th class="num">总市值</th><th class="num">成交额</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td class="lb f">首板</td><td><span class="stk">海兰信</span> <span class="code">300065</span><span class="mk red">龙头</span></td><td class="tlimit">午后</td><td class="num">28.79<br><span class="up">+20.01%</span></td><td class="num">207.7亿</td><td class="num">32.79亿</td><td class="logic">拟收购海兰寰宇100%股权，切入卫星/海洋监测（与商业航天共振）</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">国林科技</span> <span class="code">300786</span></td><td class="tlimit">盘中</td><td class="num">23.90<br><span class="up">+19.98%</span></td><td class="num">44.0亿</td><td class="num">2.37亿</td><td class="logic">拟收购凯涟捷91.07%股权（并购）+存储芯片</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">时空科技</span> <span class="code">605178</span></td><td class="tlimit">盘中</td><td class="num">涨停</td><td class="num">—</td><td class="num"><span class="est">待补充</span></td><td class="logic">拟收购嘉合劲威100%股权（存储模组）</td></tr>
+    </tbody>
+  </table>
+  <div class="note">板块空间板 <b>恒尚节能（603137）</b> 早盘冲9连板后<b>午后炸板</b>，收+6.15%、成交10.67亿——并购重组（收购金胜电子切入存储）标杆断板，是当日情绪退潮的关键信号之一。本周18家A股披露并购重组进展（拓荆科技、日科化学等）。</div>
+</div>
+
+<!-- ============ 板块4：中报预增/业绩线 ============ -->
+<div class="sec">
+  <div class="sechead">
+    <h2>四、中报预增 / 业绩线（跨题材）</h2>
+    <div class="badges"><span class="cnt">涨停 8 只</span><span class="b-red">情绪龙头：大连电瓷</span><span class="b-yel">中军：神火股份</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>连板</th><th>个股</th><th>涨停时间</th><th class="num">现价/涨幅</th><th class="num">总市值</th><th class="num">成交额</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td class="lb f">首板</td><td><span class="stk">大连电瓷</span> <span class="code">002606</span><span class="mk red">龙头</span></td><td class="tlimit">09:25</td><td class="num">13.70<br><span class="up">+10.04%</span></td><td class="num">60.2亿</td><td class="num">1.77亿</td><td class="logic">特高压+中报预增200%~286%（最快涨停板第一），完成多项重点特高压供货</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">三维通信</span> <span class="code">002115</span></td><td class="tlimit">09:25</td><td class="num">10.95<br><span class="up">+10.05%</span></td><td class="num">88.2亿</td><td class="num">1.06亿</td><td class="logic">中报预增1429%~2002%（短剧/互联网业务红利）</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">科陆电子</span> <span class="code">002121</span></td><td class="tlimit">09:30</td><td class="num">5.34<br><span class="up">+10.10%</span></td><td class="num">89.3亿</td><td class="num">1.06亿</td><td class="logic">美的集团定增+储能（控股股东全额认购不超25亿）</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">哈药股份</span> <span class="code">600664</span></td><td class="tlimit">09:30</td><td class="num">3.37<br><span class="up">+10.13%</span></td><td class="num">84.9亿</td><td class="num">3.37亿</td><td class="logic">中报预增+医药工业+创新药（见医药板块）</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">中远海特</span> <span class="code">600428</span></td><td class="tlimit">09:30</td><td class="num">8.99<br><span class="up">+10.04%</span></td><td class="num">246.7亿</td><td class="num">3.63亿</td><td class="logic">中报预增55%~70%（特种船运价上行）+央企</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">神火股份</span> <span class="code">000933</span><span class="mk yel">中军</span></td><td class="tlimit">盘中</td><td class="num">23.49<br><span class="up">+10.02%</span></td><td class="num">528.3亿</td><td class="num">24.26亿</td><td class="logic">中报预增152%（电解铝/煤炭售价上涨、氧化铝降价）</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">钧达股份</span> <span class="code">002865</span></td><td class="tlimit">盘中</td><td class="num">55.94<br><span class="up">+10.01%</span></td><td class="num">174.1亿</td><td class="num">7.52亿</td><td class="logic">光伏/钙钛矿太空电池（商业航天低轨卫星组网受益）</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">创维数字</span> <span class="code">000810</span></td><td class="tlimit">盘中</td><td class="num">12.84<br><span class="up">+10.03%</span></td><td class="num">147.7亿</td><td class="num">4.90亿</td><td class="logic">中报预增/AI终端（具体催化待核实）</td></tr>
+    </tbody>
+  </table>
+  <div class="note">业绩线为当日最强支撑逻辑之一：全市场16家上市公司中报净利最高预增超10倍（天华新能、兆易创新、恩捷股份等），资金偏好"确定性预增"对冲科技主线退潮。</div>
+</div>
+
+<!-- ============ 板块5：影视/AI应用 ============ -->
+<div class="sec">
+  <div class="sechead">
+    <h2>五、影视 / 短剧 / AI应用</h2>
+    <div class="badges"><span class="cnt">涨停 2 只</span><span class="b-red">情绪龙头：欢瑞世纪</span><span class="b-yel">中军：幸福蓝海</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>连板</th><th>个股</th><th>涨停时间</th><th class="num">现价/涨幅</th><th class="num">总市值</th><th class="num">成交额</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td class="lb" style="color:var(--yel)">7天4板</td><td><span class="stk">欢瑞世纪</span> <span class="code">000892</span><span class="mk red">龙头</span></td><td class="tlimit">盘中</td><td class="num">涨停</td><td class="num">—</td><td class="num"><span class="est">待补充</span></td><td class="logic">AI应用（影视AI/短剧）—全市场最高连板标杆</td></tr>
+      <tr><td class="lb f">首板</td><td><span class="stk">幸福蓝海</span> <span class="code">300528</span><span class="mk yel">中军</span></td><td class="tlimit">盘中</td><td class="num">15.90<br><span class="up">+10.80%</span></td><td class="num">59.2亿</td><td class="num">4.25亿</td><td class="logic">影视/爱奇艺概念，板块活跃</td></tr>
+    </tbody>
+  </table>
+  <div class="note">欢瑞世纪为当日唯一高标活口（7天4板），但所处AI应用线在科技退潮中孤立，需警惕高位分歧。</div>
+</div>
+
+<!-- ============ 退潮/炸板专区 ============ -->
+<div class="warn">
+  <h2>⚠ 高标炸板 / 退潮专区（非涨停，但决定次日情绪）</h2>
+  <ul>
+    <li><b>恒尚节能（603137）</b> 早盘摸9连板 → 午后炸板，收+6.15%，成交10.67亿（并购重组空间板断板）</li>
+    <li><b>华天科技（002185）</b> 一字板4天3板 → 尾盘炸板，收+6.66%，成交127.64亿（先进封装龙头炸板，40万股民"过山车"）</li>
+    <li><b>深科达（688328）</b> 早盘20cm 2连板 → 回落至+15.89%，成交24.52亿（科创板未封板）</li>
+    <li><b>先进封装(Chiplet)板块</b> 当日收-3.67%，半导体材料/设备端跌超10%个股达30余只（中船特气-19%、晶合集成-17%），科技线全面补跌</li>
+    <li>兆易创新（603986）业绩预增1099%却遭砸盘，成交593.8亿刷新历史天量，H股-21%，AI存储主线分歧剧烈</li>
+  </ul>
+</div>
+
+<footer>
+  <b>情绪结论：</b>涨停家数（92）与上涨家数（3700+）尚可，但<b>连板高度由9板骤降至2板、昨日连板全部断板、炸板率超40%</b>，属典型"数量不弱、质量退潮"的冰点结构。资金从AI科技主线出逃，切换至低位防御性题材（医药、商业航天、业绩预增）。<br>
+  <b>明日博弈焦点：</b>① 欢瑞世纪7天4板能否脱离科技退潮独立晋级；② 商业航天（火箭回收）持续性 vs 一日游；③ 医药能否接棒成为新主线；④ 恒尚节能/华天科技炸板高标是否继续杀跌拖累情绪。<br><br>
+  <span class="src">数据来源：腾讯自选股行情、财联社涨停分析/市场综述、NeoData金融数据（查询时点 2026-07-10 收盘）。市值/成交额四舍五入，"待补充"为数据源未返回该字段。涨停时间除标注09:25/09:30外多为盘中/午后（火箭回收消息12:15后板块才爆发）。</span><br>
+  <span class="src">⚠ 免责声明：本报告仅基于公开市场数据做客观复盘，不构成任何投资建议。股市有风险，投资需谨慎。</span>
+</footer>
+
+</div>
+</body>
+</html>

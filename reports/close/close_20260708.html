@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股行情复盘 · 2026-07-08（周三·收盘版）· 星辰</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23;
+    --card:#1a1a2e;
+    --card2:#16162a;
+    --line:#2d2d44;
+    --ink:#e2e8f0;
+    --sub:#94a3b8;
+    --up:#d8392b;       /* 涨·红 (A股惯例) */
+    --down:#1a8f4c;     /* 跌·绿 */
+    --in:#d8392b;       /* 主力净流入·红 */
+    --out:#1a8f4c;      /* 主力净流出·绿 */
+    --accent:#667eea;
+    --accent2:#764ba2;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.6;font-size:14px;}
+  .wrap{max-width:1060px;margin:0 auto;padding:24px 18px 64px;}
+  header{border-left:4px solid transparent;border-image:linear-gradient(180deg,var(--accent),var(--accent2)) 1;
+    padding:4px 0 4px 14px;margin-bottom:18px;}
+  header h1{font-size:22px;margin:0;font-weight:700;
+    background:linear-gradient(90deg,#a5b4fc,#c4b5fd);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  header .meta{color:var(--sub);font-size:13px;margin-top:4px;}
+  .tldr{background:linear-gradient(135deg,#1a1a2e,#16162a);border:1px solid var(--line);border-radius:12px;
+    padding:16px 18px;margin-bottom:18px;box-shadow:0 4px 18px rgba(0,0,0,.35);}
+  .tldr h2{margin:0 0 8px;font-size:15px;color:#a5b4fc;}
+  .tldr ul{margin:0;padding-left:18px;}
+  .tldr li{margin:5px 0;color:#cbd5e1;}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:780px){.grid{grid-template-columns:1fr;}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 18px;box-shadow:0 4px 18px rgba(0,0,0,.30);margin-bottom:16px;}
+  .card h3{margin:0 0 12px;font-size:15px;display:flex;align-items:center;gap:8px;color:#e2e8f0;}
+  .card h3::before{content:"";width:6px;height:16px;background:linear-gradient(180deg,var(--accent),var(--accent2));
+    border-radius:2px;display:inline-block;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);}
+  th{color:var(--sub);font-weight:600;}
+  .up{color:var(--up);font-weight:600;}
+  .down{color:var(--down);font-weight:600;}
+  .flat{color:var(--sub);}
+  #idxChart,#capChart,#gaugeChart,#moodChart{width:100%;height:300px;}
+  #gaugeChart{height:240px;}
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+  @media(max-width:780px){.kpis{grid-template-columns:1fr 1fr;}}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:14px;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,.30);}
+  .kpi .v{font-size:20px;font-weight:700;}
+  .kpi .k{font-size:12px;color:var(--sub);margin-top:2px;}
+  .note{background:rgba(255,169,2,.08);border:1px solid rgba(255,169,2,.35);border-radius:10px;
+    padding:10px 14px;color:#ffd58a;font-size:13px;margin:10px 0;}
+  .note.danger{background:rgba(216,57,43,.10);border-color:rgba(216,57,43,.40);color:#ff9d8a;}
+  .pill{font-size:11px;padding:2px 8px;border-radius:20px;background:rgba(102,126,234,.18);color:#a5b4fc;font-weight:600;}
+  .tag{display:inline-block;background:rgba(102,126,234,.15);color:#a5b4fc;border-radius:6px;
+    padding:1px 7px;font-size:12px;margin-right:4px;}
+  .src{font-size:12px;color:var(--sub);border-top:1px dashed var(--line);margin-top:20px;padding-top:12px;line-height:1.7;}
+  .subgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:780px){.subgrid{grid-template-columns:1fr;}}
+  .heat{display:flex;align-items:center;gap:12px;background:var(--card2);border:1px solid var(--line);
+    border-radius:10px;padding:10px 14px;margin:8px 0;}
+  .heat .bar{flex:1;height:10px;border-radius:6px;background:linear-gradient(90deg,#1a8f4c,#facc15,#d8392b);position:relative;}
+  .heat .dot{position:absolute;top:-3px;width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid #667eea;}
+  .heat .lab{font-size:12px;color:var(--sub);white-space:nowrap;}
+  .pos{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:6px;}
+  @media(max-width:780px){.pos{grid-template-columns:1fr 1fr;}}
+  .pos .p{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:12px;}
+  .pos .p h4{margin:0 0 4px;font-size:13px;color:#a5b4fc;}
+  .pos .p .big{font-size:22px;font-weight:700;}
+  .pos .p p{margin:6px 0 0;font-size:12px;color:var(--sub);}
+  .cmp{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:10px 0;}
+  @media(max-width:780px){.cmp{grid-template-columns:1fr;}}
+  .cmp .c{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;}
+  .cmp .c .t{font-size:12px;color:var(--sub);}
+  .cmp .c .r{font-size:16px;font-weight:700;margin-top:2px;}
+  .cmp .c .d{font-size:11px;margin-top:2px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>A股行情复盘 · 2026-07-08（周三）· 收盘版</h1>
+    <div class="meta">收盘数据 15:31 / 较盘中 14:07 快照显著走弱 · 数据来源：NeoData 实时行情 + 公开资讯 · 分析师：星辰</div>
+  </header>
+
+  <div class="tldr">
+    <h2>一句话结论</h2>
+    <ul>
+      <li><b>午后全面走弱、年线告急</b>：收盘 <b class="down">上证 -0.49%（3970.88，最低 3967.91 一度刺破年线）</b>、<b class="down">深成 -1.87%、创业板 -1.70%</b>，仅 <b class="up">科创50 +0.73%</b> 收红——与盘中相比（上证曾 +0.01%、科创 +2.15%），尾盘急转直下，呈现"<b>指数收绿、个股普弱、年线受考验</b>"的弱势收盘。</li>
+      <li><b>赚钱效应"极致分化"</b>：情绪温度计由盘中 38° 回落至 <b class="down">≈31°（偏弱·年线考验区）</b>；但<b>涨停家数不降反升（≥9.97% 的批量封板个股逾 50 只）</b>，集中在 信创/网安/软件/云计算（深信服、绿盟、网宿、芯朋微等 20cm 封板），属"指数弱、局部强"的极端结构市。</li>
+      <li><b>资金抱团信创/云安全</b>：概念主力净流入前三 <b>云计算 +125.4 亿、网络安全 +91.7 亿、算力租赁 +89.6 亿</b>；行业 IT服务Ⅱ +52.6 亿、计算机设备 +24.0 亿、通信设备 +19.7 亿——钱往"<b>低位软件 + 网络安全</b>"集中，而半导体/电池仍呈"价涨钱出"净流出。</li>
+      <li><b>量能持平、杠杆续撤</b>：两市成交约 <b>2.56 万亿</b>（较 7/7 ~2.58 万亿 微缩）；两融(7/7) <b>29790 亿、较前值减 136 亿</b>，融资买入降至 2289 亿——存量博弈 + 去杠杆格局未改。</li>
+    </ul>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="v down">-0.49%</div><div class="k">上证指数 3970.88（碰年线）</div></div>
+    <div class="kpi"><div class="v down">-1.87%</div><div class="k">深证成指 14939.73</div></div>
+    <div class="kpi"><div class="v up">+0.73%</div><div class="k">科创50 2016.23（独红）</div></div>
+    <div class="kpi"><div class="v down">-1.70%</div><div class="k">创业板指 3845.35</div></div>
+    <div class="kpi"><div class="v">≈2.56万亿</div><div class="k">两市成交（较前日微缩）</div></div>
+    <div class="kpi"><div class="v down">29790亿</div><div class="k">两融余额(7/7)·-136亿</div></div>
+  </div>
+
+  <div class="card">
+    <h3>一、核心指数表现（收盘）</h3>
+    <div class="cmp">
+      <div class="c"><div class="t">上证指数</div><div class="r down">-0.49%</div><div class="d down">盘中 +0.01% → 收绿（尾盘跳水）</div></div>
+      <div class="c"><div class="t">深证成指</div><div class="r down">-1.87%</div><div class="d down">盘中 -1.00% → 跌幅扩大</div></div>
+      <div class="c"><div class="t">创业板指</div><div class="r down">-1.70%</div><div class="d down">盘中 -0.57% → 加速下杀</div></div>
+      <div class="c"><div class="t">科创50</div><div class="r up">+0.73%</div><div class="d down">盘中 +2.15% → 回吐大半涨幅</div></div>
+      <div class="c"><div class="t">市场温度</div><div class="r down">≈31°</div><div class="d down">盘中 38° → 回落至偏弱区</div></div>
+      <div class="c"><div class="t">涨停家数</div><div class="r up">≥50 只</div><div class="d up">较前日 34 只回升·集中信创</div></div>
+    </div>
+    <div id="idxChart"></div>
+    <table>
+      <thead><tr><th>指数</th><th>收盘</th><th>涨跌幅</th><th>今开</th><th>最高 / 最低</th><th>振幅</th><th>5日</th><th>年初至今</th></tr></thead>
+      <tbody>
+        <tr><td>上证指数</td><td>3970.88</td><td class="down">-0.49%</td><td>3996.81</td><td>4016.03 / 3967.91</td><td>1.21%</td><td>-3.44%</td><td>+0.05%</td></tr>
+        <tr><td>深证成指</td><td>14939.73</td><td class="down">-1.87%</td><td>15269.82</td><td>15292.12 / 14907.62</td><td>2.53%</td><td>-7.32%</td><td>+10.46%</td></tr>
+        <tr><td>创业板指</td><td>3845.35</td><td class="down">-1.70%</td><td>3932.42</td><td>3965.39 / 3824.33</td><td>3.61%</td><td>-9.75%</td><td>+20.05%</td></tr>
+        <tr><td>科创50</td><td>2016.23</td><td class="up">+0.73%</td><td>2022.45</td><td>2078.64 / 1961.64</td><td>5.85%</td><td>-6.35%</td><td>+49.99%</td></tr>
+      </tbody>
+    </table>
+    <div class="note danger">⚠️ <b>年线警报</b>：上证收盘 3970.88，盘中最低 3967.91，已<b>逼近年线（约 3970 一带）</b>并一度小幅刺破。这是 7/7 以来的关键支撑位，若次日确认放量跌破，将触发防御性减仓条件（见第六节）。科创50 虽收红，但尾盘回吐明显（最高 2078→收 2016），硬科技内部高低切仍在。</div>
+  </div>
+
+  <div class="card">
+    <h3>二、市场赚钱效应总结</h3>
+    <div class="heat">
+      <span class="lab">冰点</span>
+      <div class="bar"><div class="dot" style="left:28%"></div></div>
+      <span class="lab">沸点</span>
+    </div>
+    <p style="margin:6px 0 4px;color:var(--sub);font-size:13px;">市场情绪温度计：<b style="color:#fb923c">≈31°（偏弱·年线考验区）</b> —— 较盘中 38° 回落，回到冰点边缘；但<b>涨停潮（≥50 只封板）逆势放大</b>，赚钱效应呈"指数弱、局部极致强"的分裂格局。</p>
+    <div class="subgrid">
+      <div id="gaugeChart"></div>
+      <div id="moodChart"></div>
+    </div>
+    <table>
+      <thead><tr><th>赚钱效应信号</th><th>收盘表现</th><th>解读</th></tr></thead>
+      <tbody>
+        <tr><td>涨停密度</td><td class="up">≥50 只封板（前日 34）</td><td class="up">信创/网安/软件 20cm·10cm 批量涨停</td></tr>
+        <tr><td>强势主线</td><td class="up">VPN +6.36%、网安 +1.99%、云计算 +1.75%</td><td class="up">深信服/绿盟/网宿 20cm、芯朋微/中科飞测/华虹强</td></tr>
+        <tr><td>拖累方向</td><td class="down">深成 -1.87%、创业 -1.70%、电池/贵金属续弱</td><td class="down">权重与成长双双承压，多数个股收绿</td></tr>
+        <tr><td>量能</td><td class="flat">两市 ≈2.56 万亿，较前日微缩</td><td class="flat">非主动放量，存量博弈未改</td></tr>
+        <tr><td>连板/接力</td><td class="flat">昨日连板 +3.32%，但高度仍受限</td><td class="flat">多为首板，持续性待次日验证</td></tr>
+      </tbody>
+    </table>
+    <div class="note">赚钱效应"分裂"特征：<b>当日能赚钱的几乎只在"信创 + 网络安全 + 云计算 + 低位软件"</b>，且多为开盘快速封板（深信服、绿盟科技、网宿科技、芯朋微），盘中追入难度极大；而权重（银行/保险走弱托而不举）、电池、贵金属、创新药及绝大多数个股仍在水下，<b>红盘个股占比估算约 25%–30%，普涨远未到来</b>。情绪修复需等待"量能回升 + 主线扩散 + 年线守住"三者共振。</div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>三、领涨板块（收盘）</h3>
+      <table>
+        <thead><tr><th>概念/行业</th><th>涨跌幅</th><th>代表个股</th></tr></thead>
+        <tbody>
+          <tr><td>VPN</td><td class="up">+6.36%</td><td>深信服 20cm</td></tr>
+          <tr><td>词元概念</td><td class="up">+5.07%</td><td>网宿科技 19.97%</td></tr>
+          <tr><td>腾讯云概念</td><td class="up">+4.83%</td><td>朗威股份 19.99%</td></tr>
+          <tr><td>甲骨文概念</td><td class="up">+3.69%</td><td>荣联科技 10.02%</td></tr>
+          <tr><td>OpenClaw 概念</td><td class="up">+3.52%</td><td>云赛智联 10.01%</td></tr>
+          <tr><td>IT服务Ⅱ（行业）</td><td class="up">+2.93%</td><td>网宿科技 / 熙菱信息 +17%</td></tr>
+          <tr><td>计算机设备（行业）</td><td class="up">+2.55%</td><td>锐捷网络 +11.6%、星网锐捷 10%</td></tr>
+        </tbody>
+      </table>
+      <div style="height:8px"></div>
+      <table>
+        <thead><tr><th>硬科技·结构</th><th>涨跌幅</th><th>代表</th></tr></thead>
+        <tbody>
+          <tr><td>半导体设备/代工</td><td class="up">中科飞测 +14.4%、华虹宏力 +10.6%</td><td>科创50 收 +0.73%</td></tr>
+          <tr><td>模拟芯片</td><td class="up">芯朋微 +16.8%、晶丰明源 +10.5%</td><td>硬科技内部修复</td></tr>
+          <tr><td>网络安全</td><td class="up">绿盟科技 20cm、奇安信 +11.3%</td><td>资金净流入 +91.7 亿</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>四、领跌板块（收盘）</h3>
+      <table>
+        <thead><tr><th>板块</th><th>特征</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>深市主板/创业板</td><td class="down">深成 -1.87% / 创业 -1.70%</td><td>权重成长双杀</td></tr>
+          <tr><td>电池链</td><td class="down">主力净流出延续</td><td>政策扰动（海外产能合规）+ 高位兑现</td></tr>
+          <tr><td>贵金属</td><td class="down">延续弱势</td><td>金价调整，前期涨幅回吐</td></tr>
+          <tr><td>创新药</td><td class="down">分化承压</td><td>个别授权利好，整体资金流出</td></tr>
+          <tr><td>半导体（整体）</td><td class="flat">价涨钱出</td><td>科创收红但资金仍净流出（盘中 -8.4 亿）</td></tr>
+          <tr><td>自动化设备</td><td class="down">净流出</td><td>高价成长兑现</td></tr>
+        </tbody>
+      </table>
+      <div class="note">电池链负面催化延续：匈牙利环保新政重击中资电池产能（恩捷股份德布勒森工厂停产），叠加碳酸锂高位、获利盘兑现，短线仍承压。半导体呈"价涨钱出"——资金在硬科技内部做高低切，存储/高位品种仍在兑现，仅设备/代工/模拟获承接。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>五、资金流向分析</h3>
+    <p style="margin:0 0 6px;color:var(--sub);font-size:13px;">概念 / 行业 主力净流入（亿元，红=净流入 / 绿=净流出）：</p>
+    <div id="capChart"></div>
+    <div class="grid" style="margin-top:6px">
+      <div>
+        <table>
+          <thead><tr><th>主力净流入 TOP（概念）</th><th>金额</th><th>涨股比</th></tr></thead>
+          <tbody>
+            <tr><td>云计算</td><td class="up">+125.40 亿</td><td>175/239</td></tr>
+            <tr><td>网络安全</td><td class="up">+91.73 亿</td><td>140/202</td></tr>
+            <tr><td>算力租赁</td><td class="up">+89.60 亿</td><td>53/99</td></tr>
+            <tr><td colspan="3" class="flat">信创/软件/云安全 三线并进，资金高度抱团</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <table>
+          <thead><tr><th>主力净流入 TOP（行业）</th><th>金额</th><th>涨股比</th></tr></thead>
+          <tbody>
+            <tr><td>IT服务Ⅱ</td><td class="up">+52.62 亿</td><td>90/122</td></tr>
+            <tr><td>计算机设备</td><td class="up">+24.00 亿</td><td>42/82</td></tr>
+            <tr><td>通信设备</td><td class="up">+19.68 亿</td><td>41/85</td></tr>
+            <tr><td colspan="3" class="flat">净流入行业稀少，集中计算机/通信</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <ul style="margin:10px 0 0;padding-left:18px;color:#cbd5e1;">
+      <li><b>净流出方向（盘中口径延续）</b>：半导体（价涨但主力净流出 -8.4 亿）、电池 -6.1 亿、自动化设备 -2.7 亿——"<b>价涨钱出</b>"特征延续，资金从高位科技向低位信创/软件做"跷跷板"切换。</li>
+      <li><b>两融（截至 7/7）</b>：两市两融余额 <b class="down">29790.12 亿</b>，较前一交易日（29926.14 亿）<b class="down">减少 136.02 亿</b>；当日融资买入额 <b>2289.77 亿</b>（前日 2816.76 亿），<b>杠杆资金连续撤退、买入意愿降温</b>。7/8 两融数据次一交易日披露，故引用 7/7 最新值。</li>
+      <li><b>北向资金</b>：沪深港通自 2024-08 起不再披露实时净买入，仅公布成交额，故当日外资净流向无法直接给出。</li>
+      <li><b>资金画像</b>：<b>"极度抱团 + 高低切换 + 杠杆降温"</b>。全市场资金高度集中于信创/网安/云计算少数方向，其余板块普遍失血，护盘力量托而不举。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>六、仓位管理推荐（核心）</h3>
+    <div class="pos">
+      <div class="p"><h4>总仓位</h4><div class="big" style="color:#fb923c">4.5–5 成</div><p>防御优先。收盘贴近年线、尾盘跳水，不空仓也不重仓，留足机动现金。</p></div>
+      <div class="p"><h4>加仓触发</h4><div class="big up">&gt;6 成</div><p>放量（成交 &gt;2.8 万亿）站稳 4030，且涨跌家数转为多数红盘。</p></div>
+      <div class="p"><h4>减仓触发</h4><div class="big down">&lt;4 成</div><p>确认跌破年线 3970（放量下杀）或主线全面退潮，即降至 4 成以下。</p></div>
+      <div class="p"><h4>现金比例</h4><div class="big" style="color:#a5b4fc">≥50%</div><p>年线未明前保持高现金，等中报验证与右侧信号。</p></div>
+    </div>
+    <table style="margin-top:12px">
+      <thead><tr><th>操作</th><th>具体建议</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tag">持有</span>业绩确定性</td><td>半导体设备/材料、模拟芯片、AI 算力硬件（光模块/PCB）、信创/网络安全——逻辑未破，逢回踩均线（MA20）分批低吸，<b>不追日内涨停潮</b>（今日已批量封板，追高性价比极低）。</td></tr>
+        <tr><td><span class="tag">减仓</span>高位兑现</td><td>纯题材微盘、高位存储/电池链、累计涨幅巨大且中报存疑品种——冲高减、破位走；半导体"价涨钱出"提示内部分化，去弱留强。</td></tr>
+        <tr><td><span class="tag">回避</span>风险方向</td><td>政策扰动板块（海外产能存合规风险的电池链）、贵金属（金价调整中）、无业绩支撑的连板接力。</td></tr>
+        <tr><td><span class="tag">节奏</span>等分歧</td><td>网安/信创今日批量涨停，次日大概率分化；等待分歧回踩或新催化确认后再介入，避免成为"接盘最后一棒"。</td></tr>
+      </tbody>
+    </table>
+    <div class="note danger">⚠️ <b>年线防御线已亮黄灯</b>：上证收盘 3970.88 与盘中最低 3967.91 均已逼近年线。当前仓位管理的第一原则是<b>不跌破不加、跌破即减</b>——若次日（7/9）放量确认跌破 3970，应果断降至 4 成以下，优先砍掉高位与弱势品种，保留现金等待重新站回。</div>
+  </div>
+
+  <div class="card">
+    <h3>七、后市研判</h3>
+    <p style="margin-top:0;color:#cbd5e1">7 月市场进入<b>半年报业绩验证期</b>，定价逻辑由"流动性/预期驱动"切向"业绩驱动"，高位科技波动加大、板块轮动快且持续性弱。当日收盘较盘中明显走弱，<b>年线支撑面临真正考验</b>——这是比"信创涨停潮"更值得关注的信号。短线盯三件事：</p>
+    <ul style="color:#cbd5e1">
+      <li><span class="tag">点位</span>沪指 3970（年线）能否守住——<b>这是当前多空分水岭</b>，守住则维持震荡，跌破则下看 3900 一带；</li>
+      <li><span class="tag">量能</span>成交能否持续 &gt;2.8 万亿并企稳，是止跌确认的第一信号，当前 2.56 万亿仍属存量；</li>
+      <li><span class="tag">主线</span>信创/网安/软件涨停潮次日是否分化退潮，以及能否带动深成/创业板止跌。</li>
+    </ul>
+    <p style="margin-bottom:0;color:#cbd5e1"><b>策略</b>：<b>防御优先、结构优于总量</b>；中线维持对业绩确定性强的硬科技（半导体设备/材料、AI 算力硬件、信创/网安）的关注，但<b>年线未明确守住前不轻易加仓</b>，等待右侧信号。本复盘为收盘版，最终以交易所及中国结算官方披露为准。</p>
+  </div>
+
+  <div class="src">
+    <b>数据来源</b>：NeoData 金融数据（指数/板块/个股收盘行情、主力资金流向，快照 2026-07-08 15:31）；公开资讯——腾讯财经盯盘（两市成交额约 2.56 万亿）、证券时报·数据宝（7月7日融资融券余额 29790.12 亿元）、自建资讯《7月A股震荡调整，资金高低切换加剧》《电池概念走弱 碳酸锂需求旺盛》。<br>
+    注：① 本报告为<b>收盘版</b>，指数/板块/个股数据以交易所 15:31 快照为准；② 北向资金净买入额因交易所披露规则调整（2024-08 起），当日未单独公布；③ 7/8 两融数据通常次一交易日披露，故引用 7/7 最新值（29790.12 亿）；④ 当日<b>精确涨跌家数/跌停家数 API 未返回全量</b>，本报告以涨停封板密度（≥9.97% 个股逾 50 只）+ 板块/个股涨跌结构刻画赚钱效应，红盘占比为估算值（约 25%–30%）；⑤ 半导体/电池/自动化设备净流出为盘中口径、收盘趋势延续。以上为行情复盘与仓位参考，<b>不构成投资建议</b>。
+  </div>
+
+</div>
+
+<script>
+  var axisColor = '#94a3b8', splitColor = '#2d2d44';
+  var UP='#d8392b', DOWN='#1a8f4c';
+
+  // 1. 指数柱状图（收盘）
+  var idxData = [
+    {name:'上证指数',chg:-0.49},{name:'深证成指',chg:-1.87},{name:'创业板指',chg:-1.70},{name:'科创50',chg:0.73}
+  ];
+  echarts.init(document.getElementById('idxChart')).setOption({
+    tooltip:{trigger:'axis',formatter:function(p){return p[0].name+'：'+(p[0].value>0?'+':'')+p[0].value+'%';}},
+    grid:{left:64,right:24,top:20,bottom:36},
+    xAxis:{type:'category',data:idxData.map(s=>s.name),axisLabel:{color:axisColor}},
+    yAxis:{type:'value',axisLabel:{color:axisColor,formatter:'{value}%'},splitLine:{lineStyle:{color:splitColor}}},
+    series:[{type:'bar',barWidth:'46%',
+      data:idxData.map(s=>({value:s.chg,itemStyle:{color:s.chg>=0?UP:DOWN}})),
+      label:{show:true,position:'top',formatter:function(p){return (p.value>0?'+':'')+p.value+'%';},color:'#e2e8f0'}}]
+  });
+
+  // 2. 情绪温度计（收盘 ≈31°）
+  echarts.init(document.getElementById('gaugeChart')).setOption({
+    title:{text:'市场情绪温度计',left:'center',top:2,textStyle:{color:'#e2e8f0',fontSize:13}},
+    series:[{type:'gauge',min:0,max:100,radius:'78%',center:['50%','62%'],
+      axisLine:{lineStyle:{width:14,color:[[0.3,'#1a8f4c'],[0.5,'#facc15'],[0.7,'#fb923c'],[1,'#d8392b']]}},
+      pointer:{itemStyle:{color:'#a5b4fc'}},
+      axisTick:{distance:-14,length:4,lineStyle:{color:'#fff'}},
+      splitLine:{distance:-14,length:14,lineStyle:{color:'#fff'}},
+      axisLabel:{distance:16,color:axisColor,fontSize:10},
+      detail:{valueAnimation:true,formatter:'{value}°',color:'#e2e8f0',fontSize:22,offsetCenter:[0,'58%']},
+      data:[{value:31,name:'偏弱·年线考验'}]}]
+  });
+
+  // 3. 领涨方向涨股比（收盘，真实 涨股比）
+  echarts.init(document.getElementById('moodChart')).setOption({
+    title:{text:'领涨方向涨股比（收盘）',left:'center',top:2,textStyle:{color:'#e2e8f0',fontSize:13}},
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+'：'+p[0].value+'% 个股上涨';}},
+    grid:{left:84,right:34,top:34,bottom:30},
+    xAxis:{type:'value',max:100,axisLabel:{color:axisColor,formatter:'{value}%'},splitLine:{lineStyle:{color:splitColor}}},
+    yAxis:{type:'category',data:['通信设备','计算机设备','网络安全','云计算','IT服务Ⅱ'],axisLabel:{color:axisColor}},
+    series:[{type:'bar',barWidth:'55%',
+      data:[48,51,69,73,74].map(function(v){return {value:v,itemStyle:{color:UP}};}),
+      label:{show:true,position:'right',formatter:'{c}%',color:'#e2e8f0'}}]
+  });
+
+  // 4. 资金流向（净流入：概念+行业，亿元）
+  var capData = [
+    {name:'半导体(净流出)',value:-8.37},{name:'电池(净流出)',value:-6.10},{name:'自动化设备(净流出)',value:-2.68},
+    {name:'通信设备',value:19.68},{name:'计算机设备',value:24.00},{name:'IT服务Ⅱ',value:52.62},
+    {name:'算力租赁',value:89.60},{name:'网络安全',value:91.73},{name:'云计算',value:125.40}
+  ];
+  echarts.init(document.getElementById('capChart')).setOption({
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+'：'+(p[0].value>0?'+':'')+p[0].value+' 亿';}},
+    grid:{left:118,right:46,top:14,bottom:24},
+    xAxis:{type:'value',axisLabel:{color:axisColor,formatter:'{value}亿'},splitLine:{lineStyle:{color:splitColor}}},
+    yAxis:{type:'category',data:capData.map(s=>s.name),axisLabel:{color:axisColor}},
+    series:[{type:'bar',barWidth:'62%',
+      data:capData.map(s=>({value:s.value,itemStyle:{color:s.value>=0?UP:DOWN}})),
+      label:{show:true,position:'right',formatter:function(p){return (p.value>0?'+':'')+p.value;},color:'#e2e8f0'}}]
+  });
+
+  window.addEventListener('resize',function(){document.querySelectorAll('[_echarts_instance_]').forEach(function(el){var c=echarts.getInstanceByDom(el);if(c)c.resize();});});
+</script>
+</body>
+</html>

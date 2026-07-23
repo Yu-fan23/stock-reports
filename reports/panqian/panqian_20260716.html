@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盘前交易计划 | 2026年7月16日（周四）· 早盘终版（长鑫正式申购+机构共识防御主线）</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0f0f23;
+    color: #e2e8f0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    line-height: 1.7;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    border: 1px solid #2d2d44;
+  }
+  .header h1 {
+    font-size: 26px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+  .header .subtitle { color: #94a3b8; font-size: 14px; margin-bottom: 12px; }
+  .header .meta {
+    color: #94a3b8;
+    font-size: 13px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .header .meta span { display: flex; align-items: center; gap: 4px; }
+  .header .meta .tag {
+    background: rgba(0,212,170,0.2);
+    color: #00d4aa;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+  }
+  .header .meta .tag.warn {
+    background: rgba(255,165,2,0.2);
+    color: #ffa502;
+  }
+  .header .meta .tag.red {
+    background: rgba(255,71,87,0.2);
+    color: #ff4757;
+  }
+
+  .summary-bar {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    border: 1px solid #00d4aa;
+    border-left: 4px solid #00d4aa;
+  }
+  .summary-bar .verdict {
+    font-size: 22px;
+    font-weight: 800;
+    color: #00d4aa;
+    margin-bottom: 8px;
+  }
+  .summary-bar .verdict-desc { color: #cbd5e1; font-size: 15px; }
+
+  .verify-box {
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    font-size: 13px;
+  }
+  .verify-wrong { background: rgba(255,165,2,0.08); border-left: 3px solid #ffa502; }
+  .verify-bull { background: rgba(0,212,170,0.08); border-left: 3px solid #00d4aa; }
+
+  .index-cards {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .index-card {
+    background: #1a1a2e;
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid #2d2d44;
+    text-align: center;
+  }
+  .index-card .name { font-size: 13px; color: #94a3b8; margin-bottom: 6px; }
+  .index-card .price { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  .index-card .change { font-size: 14px; font-weight: 600; }
+  .index-card .change.green { color: #00d4aa; }
+  .index-card .change.red { color: #ff4757; }
+  .index-card .sub { font-size: 11px; color: #64748b; margin-top: 4px; }
+
+  .section {
+    background: #1a1a2e;
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    border: 1px solid #2d2d44;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .num {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .theme-card {
+    background: #16213e;
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 16px;
+    border: 1px solid #2d2d44;
+    transition: border-color 0.3s;
+  }
+  .theme-card:hover { border-color: #667eea; }
+  .theme-card.buy { border-left: 4px solid #00d4aa; }
+  .theme-card.watch { border-left: 4px solid #ffa502; }
+  .theme-card.avoid { border-left: 4px solid #ff4757; }
+  .theme-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .theme-name { font-size: 18px; font-weight: 700; }
+  .theme-signal {
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .theme-signal.buy { background: rgba(0,212,170,0.15); color: #00d4aa; }
+  .theme-signal.watch { background: rgba(255,165,2,0.15); color: #ffa502; }
+  .theme-signal.avoid { background: rgba(255,71,87,0.15); color: #ff4757; }
+  .theme-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .theme-row .label { color: #64748b; font-size: 13px; margin-bottom: 4px; }
+  .theme-row .value { color: #e2e8f0; font-size: 14px; }
+  .theme-stocks {
+    background: rgba(0,0,0,0.2);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-top: 8px;
+  }
+  .theme-stocks .label { color: #64748b; font-size: 12px; margin-bottom: 6px; }
+  .stock-tag {
+    display: inline-block;
+    background: rgba(102,126,234,0.15);
+    color: #a78bfa;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    margin: 2px 4px 2px 0;
+  }
+  .stock-tag.hl { background: rgba(0,212,170,0.15); color: #00d4aa; }
+  .stock-tag.up { background: rgba(255,71,87,0.15); color: #ff6b7a; }
+  .catalyst-list { margin-top: 8px; }
+  .catalyst-list li {
+    list-style: none;
+    padding: 4px 0;
+    font-size: 13px;
+    color: #cbd5e1;
+    padding-left: 18px;
+    position: relative;
+  }
+  .catalyst-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #667eea;
+  }
+  .catalyst-list li.neg::before { color: #ff4757; }
+  .catalyst-list li.pos::before { color: #00d4aa; }
+
+  .stage-bar {
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin: 10px 0;
+    overflow: hidden;
+  }
+  .stage-segment {
+    flex: 1;
+    text-align: center;
+    font-size: 11px;
+    color: #64748b;
+    border-right: 1px solid rgba(255,255,255,0.05);
+    position: relative;
+    z-index: 1;
+  }
+  .stage-segment:last-child { border-right: none; }
+  .stage-marker {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255,165,2,0.3), rgba(255,165,2,0.5));
+    border-radius: 8px;
+    z-index: 0;
+  }
+  .stage-marker.buy { background: linear-gradient(90deg, rgba(0,212,170,0.3), rgba(0,212,170,0.5)); }
+  .stage-marker.avoid { background: linear-gradient(90deg, rgba(255,71,87,0.3), rgba(255,71,87,0.5)); }
+
+  .plan-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .plan-table th {
+    background: rgba(102,126,234,0.1);
+    color: #a78bfa;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 1px solid #2d2d44;
+  }
+  .plan-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(45,45,68,0.5);
+    color: #cbd5e1;
+  }
+  .plan-table tr:hover td { background: rgba(102,126,234,0.05); }
+  .plan-table .action-buy { color: #00d4aa; font-weight: 600; }
+  .plan-table .action-sell { color: #ff4757; font-weight: 600; }
+  .plan-table .action-hold { color: #ffa502; font-weight: 600; }
+
+  .position-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: center;
+  }
+  .position-list { }
+  .position-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    background: #16213e;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #2d2d44;
+  }
+  .position-item .name { font-size: 14px; }
+  .position-item .pct { font-size: 16px; font-weight: 700; }
+  .position-item .pct.green { color: #00d4aa; }
+  .position-item .pct.orange { color: #ffa502; }
+  .position-item .pct.gray { color: #64748b; }
+
+  .alert-box {
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+  .alert-box.danger {
+    background: rgba(255,71,87,0.08);
+    border: 1px solid rgba(255,71,87,0.3);
+    color: #ff6b7a;
+  }
+  .alert-box.success {
+    background: rgba(0,212,170,0.08);
+    border: 1px solid rgba(0,212,170,0.3);
+    color: #3dd9b0;
+  }
+  .alert-box.warning {
+    background: rgba(255,165,2,0.08);
+    border: 1px solid rgba(255,165,2,0.3);
+    color: #ffb84d;
+  }
+  .alert-box .title { font-weight: 700; margin-bottom: 4px; }
+
+  .checklist {
+    list-style: none;
+  }
+  .checklist li {
+    padding: 8px 0 8px 28px;
+    position: relative;
+    font-size: 14px;
+    color: #cbd5e1;
+    border-bottom: 1px solid rgba(45,45,68,0.3);
+  }
+  .checklist li::before {
+    content: '☐';
+    position: absolute;
+    left: 0;
+    font-size: 18px;
+    color: #667eea;
+  }
+
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .scenario-card {
+    background: #16213e;
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid #2d2d44;
+  }
+  .scenario-card .prob {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .scenario-card .prob.neutral { color: #ffa502; }
+  .scenario-card .prob.bear { color: #ff4757; }
+  .scenario-card .prob.bull { color: #00d4aa; }
+  .scenario-card .desc { font-size: 13px; color: #94a3b8; }
+
+  .chart-container { width: 100%; height: 320px; margin: 10px 0; }
+
+  .level-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .level-card {
+    background: #16213e;
+    border-radius: 10px;
+    padding: 14px;
+    border: 1px solid #2d2d44;
+    text-align: center;
+  }
+  .level-card .label { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+  .level-card .value { font-size: 20px; font-weight: 700; }
+  .level-card .value.red { color: #ff4757; }
+  .level-card .value.green { color: #00d4aa; }
+  .level-card .value.orange { color: #ffa502; }
+  .level-card .note { font-size: 11px; color: #64748b; margin-top: 2px; }
+
+  .footer {
+    text-align: center;
+    color: #475569;
+    font-size: 12px;
+    padding: 20px 0;
+    border-top: 1px solid #2d2d44;
+    margin-top: 24px;
+  }
+  .footer .disclaimer {
+    background: rgba(255,71,87,0.05);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    color: #94a3b8;
+    font-size: 12px;
+    text-align: left;
+  }
+
+  @media (max-width: 768px) {
+    .index-cards { grid-template-columns: repeat(2, 1fr); }
+    .theme-row { grid-template-columns: 1fr; }
+    .position-grid { grid-template-columns: 1fr; }
+    .scenario-grid { grid-template-columns: 1fr; }
+    .level-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+  <h1>盘前交易计划 | 2026年7月16日（周四）· 早盘终版</h1>
+  <div class="subtitle">⚠️ 隔夜确认：美股存储逆市暴跌（SK海力力士-9%/美光-8%）与 A 股算力跳水共振→科技退潮趋势确立；<b style="color:#ffa502">长鑫科技今日9:30正式申购（787825·募资579亿·A股近19年最大IPO）</b>；多家机构共识"规避高位科技，均衡配置防御，主线优先级=创新药&gt;白酒消费&gt;证券"</div>
+  <div class="meta">
+    <span>📊 数据截至：2026-07-15 收盘 + 2026-07-16 盘前</span>
+    <span>🔥 情绪评级：<span class="tag warn">分歧·结构·偏谨慎</span></span>
+    <span>⏰ 生成时间：2026-07-16 07:48</span>
+  </div>
+</div>
+
+<!-- ===== SUMMARY BAR ===== -->
+<div class="summary-bar">
+  <div class="verdict">✅ 核心判断：降仓做结构！总仓位 50-60% —— 创新药（分歧去弱留强·主攻）+ 大消费（低位潜伏·次攻），高位科技一律等"长鑫申购落地+美股存储利空出尽"后再低吸</div>
+  <div class="verdict-desc">
+    昨夜数据<b style="color:#ff4757">全面确认</b>科技退潮是趋势性的：7/15 美股虽三大指数收涨，但存储/硬件<b>逆市暴跌</b>——SK海力士 <b style="color:#ff4757">-9%</b>、美光 <b style="color:#ff4757">-8%</b>、闪迪/西部数据 <b style="color:#ff4757">-8%</b>、AMD -3%，
+    与 7/15 A 股算力跳水（科创50 -4.25%、电子单日净流出超400亿）<b>完全共振</b>，彻底逆转 7/14「芯片暴涨」预期。今日<b style="color:#ffa502">长鑫科技正式申购（发行价8.66、募资579亿绿鞋前、发行市值5800亿，A股近19年最大IPO、科创板历史最大）</b>，
+    战配锁定50%（澜起/小米/蔚来/美团/腾讯/阿里云/中兴等顶级阵容），定价审慎→此前减仓避险的"靴子"今日落地，偏"利空出尽"。
+    但<b style="color:#ff4757">严禁在美股存储暴跌阴影下抢反弹高位PCB/CPO/存储</b>。当前最确定的主线仍是<b style="color:#00d4aa">创新药（逆势近30股涨停、主力净流入全场第一+77亿、连续5日净流入）</b>与<b style="color:#00d4aa">低位大消费（政策+高低切换）</b>。
+    <b style="color:#ffa502">7/16 策略：仓位压到 50-60%，只在创新药分歧中低吸前排、大消费潜伏核心，科技留现金等止跌信号，油气/保险作防御对冲。</b>
+  </div>
+</div>
+
+<!-- ===== 隔夜重大更新 ===== -->
+<div class="verify-box verify-wrong">
+  <strong style="color:#ff4757">🌟 隔夜重大更新（相对 7/15 17:14 收盘版 + 7/16 07:35 隔夜版）</strong><br>
+  ① <b style="color:#ff4757">美股存储/芯片逆市暴跌（7/15收盘确认）</b>：三大指数收涨（道指+0.29%、纳指+0.62%、标普+0.38%），但存储概念股/计算机硬件<b>逆市大跌</b>——SK海力士 <b>-9%</b>、美光 <b>-8%</b>、闪迪/西部数据 <b>-8%</b>、AMD -3%；苹果+4%、谷歌/Meta/亚马逊+3%逆势走强，中概金龙指数<b>+2.92%</b>。与 7/14「芯片暴涨带动A股反包」的预期<b>彻底逆转</b>。<br>
+  ② <b style="color:#ffa502">长鑫科技今日（7/16）9:30正式申购</b>：代码787825，发行价8.66元，募资约579亿（绿鞋前，较原295亿预期<b>超募近300亿</b>），发行市值5800亿，为 A股近19年最大IPO、科创板历史最大。战略配售锁定50%（澜起科技/小米/蔚来/美团/腾讯/阿里云/中兴等30家机构重金锁价），机构预期上市市值或超2万亿→硬科技估值新锚。今日申购兑现更可能"利空出尽"。<br>
+  ③ <b style="color:#ffa502">机构盘前共识收敛</b>：东方财富/券商中国等多家观点一致——"规避高位科技，均衡配置防御"；资金抱团<b>三大防御主线优先级=创新药&gt;白酒消费&gt;证券</b>；电子板块单日净流出超400亿，短期难反转。<br>
+  ④ <b style="color:#ff4757">矛盾信号</b>：佰维存储中报预增<b style="color:#00d4aa">3200%-3422%</b>（AI算力+存储高景气），但隔夜美股存储仍暴跌→说明短期<b>筹码/情绪主导而非基本面</b>，业绩强≠股价强。<br>
+  ⑤ <b>地缘再升级</b>：美对伊朗第二波打击+对俄能源100%关税→油价续涨（WTI 79.60、布伦特84.95），油气/煤炭避险逻辑强化。
+</div>
+
+<!-- ===== 7/15 验证（三层） ===== -->
+<div class="verify-box verify-wrong">
+  <strong style="color:#ffa502">🔁 7/15 盘前(07:50) → 收盘复盘 → 隔夜更新，三层验证</strong><br>
+  <b>① 证伪「乐观进攻55-75%高开突破4000」</b>：7/15 沪指仅收 3955.58（-0.29%），高开低走未触4000，选择"利好兑现+高低切换"路径。<br>
+  <b>② 证伪「算力硬件回踩低吸主攻」</b>：7/15 算力/半导体集体跳水（德明利/华天/立昂微跌停、科创50 -4.25%、电子净流出超400亿）→ 隔夜美股存储再暴跌，<b>科技退潮趋势确认</b>。<br>
+  <b>③ 确认「创新药确定性最高/主攻」</b>：逆势近30股涨停、主力净流入+77亿居全市场第一、连续5日净流入；哈药4连板、迪哲20CM 2连板、昭衍新药引爆CRO"炒猴热"——判断完全正确且强度超预期。<br>
+  <b>④ 新增「大消费低位崛起」</b>：白酒/影视/零售首日爆发（古井/金种子涨停、茅台+3%、幸福蓝海20CM），政策+低位驱动，机构列为防御主线第二顺位。<br>
+  <b>⑤ 隔夜再修正「科技反弹」预期</b>：因美股存储暴跌，科技今日即便"利空出尽"也更可能是弱反抽而非主升，只限低位设备/抗跌核心（东山精密/通富微电），高位PCB/CPO/存储继续回避。
+</div>
+
+<!-- ===== INDEX CARDS ===== -->
+<div class="index-cards">
+  <div class="index-card">
+    <div class="name">上证指数(7/15)</div>
+    <div class="price" style="color:#ff4757;">3955.58</div>
+    <div class="change red">-0.29%</div>
+    <div class="sub">高开低走·未破3950</div>
+  </div>
+  <div class="index-card">
+    <div class="name">深证成指</div>
+    <div class="price" style="color:#ff4757;">14779.40</div>
+    <div class="change red">-0.97%</div>
+    <div class="sub">回吐7/14部分涨幅</div>
+  </div>
+  <div class="index-card">
+    <div class="name">创业板指</div>
+    <div class="price" style="color:#ff4757;">3804.70</div>
+    <div class="change red">-1.21%</div>
+    <div class="sub">成长回落</div>
+  </div>
+  <div class="index-card">
+    <div class="name">科创50</div>
+    <div class="price" style="color:#ff4757;">-4.25%</div>
+    <div class="change red">重灾区</div>
+    <div class="sub">半导体集体跳水</div>
+  </div>
+  <div class="index-card">
+    <div class="name">成交额</div>
+    <div class="price" style="color:#ffa502;">2.57万亿</div>
+    <div class="change" style="color:#ff4757;">缩量</div>
+    <div class="sub">长鑫申购前避险</div>
+  </div>
+</div>
+
+<!-- ===== Q1: 主流题材 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">1</span>当下主流题材（至多3个，基于7/15收盘 + 7/16盘前机构共识）</div>
+
+  <!-- Theme 1: 创新药/医药 -->
+  <div class="theme-card buy">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🟢 创新药 / 医药（CRO / 减肥药 / 细胞治疗 / 中药）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">7/15 全场唯一逆势主线 · 主力净流入+77亿居首 · 连续5日净流入 · 机构防御主线第一顺位</div>
+      </div>
+      <div class="theme-signal buy">BUY · 分歧低吸前排</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的</div>
+        <div class="value">
+          <span class="stock-tag hl">迪哲医药 688192</span>
+          <span class="stock-tag hl">哈药股份 600664</span>
+          <span class="stock-tag hl">药明康德 603259</span>
+          <span class="stock-tag hl">昭衍新药 603127</span>
+          <span class="stock-tag">凯莱英 002821</span>
+          <span class="stock-tag">美诺华 603538</span>
+          <span class="stock-tag">众生药业 002317</span>
+          <span class="stock-tag">博瑞医药 688166</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金/强度信号</div>
+        <div class="value" style="color:#00d4aa;">创新药+77.28亿 / CRO+35.62亿 / 减肥药+33.51亿 / 细胞免疫+32.28亿</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          哈药4连板(风向标)、迪哲20CM 2连板；昭衍新药= CRO绝对核心(中报引爆"炒猴热")、凯莱英= CRO中军、美诺华= 换手龙潜力
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">基药目录扩容：首次将创新药作为基药遴选重要方向，缩短上市到纳入周期</li>
+        <li class="pos">1-6月创新药出海81笔、总额约1100亿美元（达2025全年80%）；上半年批准38个1类新药</li>
+        <li class="pos">国务院《国民健康"十五五"规划》全链条支持；昭衍超强中报预期引爆CRO容量炒作，避险资金涌入</li>
+        <li class="pos">隔夜中概/港股生物医药无利空、金龙指数+2.92%，持续性最强；机构防御主线第一顺位</li>
+        <li class="neg">近30股涨停后明日或分化，后排追高易被套；需去弱留强、只低吸前排（盯哈药/昭衍竞价反馈）</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker buy" style="left:50%;width:25%;"></div>
+        <div class="stage-segment">启动期</div>
+        <div class="stage-segment">上行期</div>
+        <div class="stage-segment" style="color:#00d4aa;font-weight:700;">↑ 加速爆发期</div>
+        <div class="stage-segment">高潮/分歧</div>
+      </div>
+      <div style="font-size:13px;color:#00d4aa;margin-top:4px;">
+        ✅ 从7/13抗跌→7/14延续→7/15逆势爆发，进入加速；<b>能买，但只分歧低吸前排龙头（哈药/迪哲/昭衍/药明），不追后排</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme 2: 大消费 -->
+  <div class="theme-card buy">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🟢 大消费（白酒 / 零售 / 影视院线 / 食品饮料）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">高低切换新方向 · 低位+政策催化 · 机构防御主线第二顺位</div>
+      </div>
+      <div class="theme-signal buy">BUY · 低位潜伏核心</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的</div>
+        <div class="value">
+          <span class="stock-tag hl">贵州茅台 600519</span>
+          <span class="stock-tag hl">古井贡酒 000596</span>
+          <span class="stock-tag hl">中国中免 601888</span>
+          <span class="stock-tag">金种子酒 600199</span>
+          <span class="stock-tag">永辉超市 601933</span>
+          <span class="stock-tag">幸福蓝海 300528</span>
+          <span class="stock-tag">王府井 600859</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金/强度信号</div>
+        <div class="value" style="color:#00d4aa;">食品饮料ETF(510630) +3.67% / 消费ETF广发(560680) +4.17%</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          古井贡酒/金种子酒涨停、茅台+3%、幸福蓝海20CM、零售/影视联动
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">国务院批复《扩大消费"十五五"规划》：到2030年社零达60万亿左右</li>
+        <li class="pos">板块低位、估值性价比高，是科技兑现后资金的天然承接方向；央行宽松利好消费</li>
+        <li class="pos">机构列为防御主线第二顺位、白酒消费作底仓对冲波动</li>
+        <li class="neg">上半年社零累计仅+1.3%、消费复苏偏弱，首日爆发后持续性需验证，勿无脑追</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker buy" style="left:20%;width:22%;"></div>
+        <div class="stage-segment" style="color:#00d4aa;font-weight:700;">↑ 启动期</div>
+        <div class="stage-segment">上行期</div>
+        <div class="stage-segment">加速期</div>
+        <div class="stage-segment">高潮期</div>
+      </div>
+      <div style="font-size:13px;color:#00d4aa;margin-top:4px;">
+        ✅ 低位首爆发、政策加持；<b>能买，但属"新题材首日"，宜潜伏核心（茅台/中免/古井），等确认延续再加</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme 3: AI算力硬件（退潮·利空出尽反抽观察） -->
+  <div class="theme-card avoid">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🔴 AI算力硬件（PCB + CPO + 存储芯片）— 旧主线退潮中</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">7/14涨停潮→7/15跳水→隔夜美股存储再暴跌 · 等"长鑫落地+利空出尽"弱反抽</div>
+      </div>
+      <div>
+      <div class="theme-signal avoid">AVOID · 不追高位·等企稳</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的（观察区，非买入）</div>
+        <div class="value">
+          <span class="stock-tag up">沪电股份 002463</span>
+          <span class="stock-tag up">生益科技 600183</span>
+          <span class="stock-tag up">新易盛 300502</span>
+          <span class="stock-tag">东山精密 002384</span>
+          <span class="stock-tag">通富微电 002156</span>
+          <span class="stock-tag">立讯精密 002475</span>
+          <span class="stock-tag">北方华创 002371</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">风险/转折信号</div>
+        <div class="value" style="color:#ff4757;">科创50 -4.25% · 电子单日净流出超400亿 · 隔夜SK海力士-9%/美光-8%</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          抗跌新核心=东山精密/通富微电（科技选股新方向）；转折：长鑫今日申购落地(利空出尽)+7款AI手机模型备案+7/17 AI大会埋伏
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 关键判断</div>
+      <ul class="catalyst-list">
+        <li class="neg">7/15 A股跳水 + 隔夜美股存储暴跌共振，确认科技退潮是趋势性的，交易拥挤+获利了结主导；电子单日净流出超400亿</li>
+        <li class="neg">长鑫科技7/16申购（579亿）今日兑现，短期抽血；但定价审慎+战配锁定50%，偏"利空出尽"</li>
+        <li class="pos">佰维存储中报预增3200%-3422%（AI算力+存储高景气），AI基建资本开支2026-2027仍增；基本面未变</li>
+        <li class="pos">7款手机端侧大模型备案（苹果/阿里/百度）→ 利好 AI手机/消费电子（立讯精密等低位品种抗跌）；7/17上海AI大会临近埋伏</li>
+        <li class="pos">待缩量企稳后仍是中线最强赛道，但需"连续3日缩量企稳"才考虑回补</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker avoid" style="left:0%;width:25%;"></div>
+        <div class="stage-segment" style="color:#ff4757;font-weight:700;">↑ 退潮/分歧杀跌</div>
+        <div class="stage-segment">利空出尽·企稳</div>
+        <div class="stage-segment">二波启动</div>
+        <div class="stage-segment">主升</div>
+      </div>
+      <div style="font-size:13px;color:#ff4757;margin-top:4px;">
+        ❌ <b>当前不能追高位（PCB/CPO/存储）——隔夜美股存储暴跌压制；仅可等"长鑫落地+科技止跌"后小仓试探抗跌核心/低位设备/AI手机链</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- 补充：长鑫申购事件 + 油气/保险防御 + 商业航天反抽窗口 -->
+  <div class="theme-card watch">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name" style="color:#ffb84d;">🟡 长鑫科技申购（今日9:30启动·事件驱动）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">787825 · 发行价8.66 · 募资579亿绿鞋前 · 市值5800亿 · A股近19年最大IPO</div>
+      </div>
+      <div class="theme-signal watch">WATCH · 利空出尽观察</div>
+    </div>
+    <div style="font-size:13px;color:#cbd5e1;margin-top:8px;">
+      战配50%锁定（澜起/小米/蔚来/美团/腾讯/阿里云/中兴等顶级阵容），机构预期上市市值或超2万亿→硬科技估值新锚。
+      今日申购落地=靴子落地，偏"利空出尽"；但募资规模巨大短期抽血，<b style="color:#ffb84d">不因此追高存储/PCB，等上市日附近再评估二波。</b>
+    </div>
+  </div>
+
+  <div class="theme-card watch">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name" style="color:#ffb84d;">🟡 油气/资源 + 高股息/保险（防御对冲）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">中东升级+美对俄能源关税推升油气；保险/银行低估值防御受捧（中国人寿+4%）</div>
+      </div>
+      <div class="theme-signal watch">WATCH · 对冲小仓</div>
+    </div>
+    <div style="font-size:13px;color:#cbd5e1;margin-top:8px;">
+      美油79.60、布油84.95续涨；但贵金属回落（伦敦金4060、白银走弱），油价到阻力，弹性下降。
+      <b style="color:#ffb84d">油气/煤炭作事件对冲（≤5%），保险/银行作底仓防御；不追高。</b>
+    </div>
+  </div>
+
+  <div class="theme-card watch">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name" style="color:#ffb84d;">🔶 商业航天（弱反抽窗口 · 空天信息大会+引力一号）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">空天信息大会7.16-7.17 + 引力一号遥四7/22海上发射；但朱雀三号无催化</div>
+      </div>
+      <div class="theme-signal watch">WATCH · 仅小反抽</div>
+    </div>
+    <div style="font-size:13px;color:#cbd5e1;margin-top:8px;">
+      板块整体仍弱（7/14-7/15跌停潮未修复），仅借大会+发射窗口超跌反抽。
+      <b style="color:#ffb84d">小仓位博弈弹性，非主流；朱雀三号无催化前不碰高位航天股。</b>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Q2: 核心标的总览 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">2</span>主流题材核心标的全览</div>
+  <table class="plan-table">
+    <thead>
+      <tr>
+        <th>题材</th>
+        <th>核心标的</th>
+        <th>角色定位</th>
+        <th>逻辑/信号（7/15+盘前）</th>
+        <th>操作方向</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="7" style="color:#00d4aa;font-weight:700;">创新药/医药</td>
+        <td><b>迪哲医药 688192</b></td>
+        <td>弹性龙头 · 20CM 2连板</td>
+        <td style="color:#00d4aa;">创新药高度标，资金抱团</td>
+        <td class="action-buy">分歧换手低吸</td>
+      </tr>
+      <tr>
+        <td><b>哈药股份 600664</b></td>
+        <td>连板高度 · 4连板(风向标)</td>
+        <td style="color:#00d4aa;">板块情绪锚，竞价反馈定全天</td>
+        <td class="action-buy">看承接，不追高</td>
+      </tr>
+      <tr>
+        <td><b>药明康德 603259</b></td>
+        <td>CRO 绝对中军 · 机构重仓</td>
+        <td style="color:#00d4aa;">TIDES高增，订单覆盖2年</td>
+        <td class="action-buy">回踩5/10日线低吸</td>
+      </td>
+      </tr>
+      <tr>
+        <td><b>昭衍新药 603127</b></td>
+        <td>CRO 绝对核心 · 中报引爆</td>
+        <td style="color:#00d4aa;">超强中报预期→"炒猴热"龙头</td>
+        <td class="action-buy">早盘强承接上板可跟</td>
+      </tr>
+      <tr>
+        <td><b>凯莱英 002821</b></td>
+        <td>CRO 中军</td>
+        <td style="color:#00d4aa;">尾盘上板呼应昭衍，趋势中军</td>
+        <td class="action-buy">分歧低吸</td>
+      </tr>
+      <tr>
+        <td><b>美诺华 603538</b></td>
+        <td>趋势换手龙潜力</td>
+        <td style="color:#ffa502;">连续高换手趋势向上，位置不高</td>
+        <td class="action-buy">哈药强则接力</td>
+      </tr>
+      <tr>
+        <td><b>众生药业 002317</b></td>
+        <td>中药+减肥药弹性</td>
+        <td style="color:#00d4aa;">趋势完好</td>
+        <td class="action-buy">5日线低吸</td>
+      </tr>
+      <tr>
+        <td rowspan="4" style="color:#00d4aa;font-weight:700;">大消费</td>
+        <td><b>贵州茅台 600519</b></td>
+        <td>白酒中军 · +3%</td>
+        <td style="color:#00d4aa;">低位蓝筹，避险+配置</td>
+        <td class="action-buy">低位潜伏</td>
+      </tr>
+      <tr>
+        <td><b>古井贡酒 000596</b></td>
+        <td>白酒先锋 · 涨停</td>
+        <td style="color:#00d4aa;">消费首日爆发领涨</td>
+        <td class="action-buy">看延续性</td>
+      </tr>
+      <tr>
+        <td><b>中国中免 601888</b></td>
+        <td>免税/零售中军</td>
+        <td style="color:#00d4aa;">社零回暖+政策催化</td>
+        <td class="action-buy">低位潜伏</td>
+      </tr>
+      <tr>
+        <td><b>幸福蓝海 300528</b></td>
+        <td>影视弹性 · 20CM</td>
+        <td style="color:#00d4aa;">院线板块大涨</td>
+        <td class="action-hold">观察持续性</td>
+      </tr>
+      <tr>
+        <td rowspan="3" style="color:#ff4757;font-weight:700;">算力硬件</td>
+        <td><b>沪电/生益 002463/600183</b></td>
+        <td>PCB双雄（7/14涨停）</td>
+        <td style="color:#ff4757;">7/15回落+隔夜美股存储暴跌</td>
+        <td class="action-sell">不抄底·等企稳</td>
+      </tr>
+      <tr>
+        <td><b>新易盛 300502</b></td>
+        <td>CPO三剑客之首</td>
+        <td style="color:#ff4757;">板块下挫，获利盘出逃</td>
+        <td class="action-sell">观望</td>
+      </tr>
+      <tr>
+        <td><b>东山/通富 002384/002156 · 立讯/北方华创</b></td>
+        <td>抗跌新核心/低位设备/AI手机链</td>
+        <td style="color:#ffa502;">科技选股新方向+AI手机备案</td>
+        <td class="action-hold">仅企稳后小仓试错</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== Q3: 阶段判断 + 交易计划 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">3</span>阶段判断与 7/16 盘前交易计划</div>
+
+  <!-- Key Levels -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📐 上证指数关键点位</div>
+    <div class="level-grid">
+      <div class="level-card">
+        <div class="label">强支撑</div>
+        <div class="value red">3844</div>
+        <div class="note">3月低点·生命线</div>
+      </div>
+      <div class="level-card">
+        <div class="label">核心支撑</div>
+        <div class="value orange">3880</div>
+        <div class="note">7/14最低3869·已验证</div>
+      </div>
+      <div class="level-card">
+        <div class="label">短线支撑</div>
+        <div class="value orange">3930-40</div>
+        <div class="note">今日回踩观察区</div>
+      </div>
+      <div class="level-card">
+        <div class="label">当前位</div>
+        <div class="value orange">3955</div>
+        <div class="note">7/15收盘·区间中轴</div>
+      </div>
+      <div class="level-card">
+        <div class="label">强压力</div>
+        <div class="value orange">4000</div>
+        <div class="note">整数关口·套牢区</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 能不能买 速览 -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">✅ 三大主线「能不能买」速览</div>
+    <div class="level-grid">
+      <div class="level-card">
+        <div class="label">创新药/医药</div>
+        <div class="value green">能买·主攻</div>
+        <div class="note">加速爆发·分歧低吸前排</div>
+      </div>
+      <div class="level-card">
+        <div class="label">大消费</div>
+        <div class="value green">能买·潜伏</div>
+        <div class="note">低位启动·等确认延续</div>
+      </div>
+      <div class="level-card">
+        <div class="label">算力硬件</div>
+        <div class="value red">不买高位</div>
+        <div class="note">退潮·等利空出尽企稳</div>
+      </div>
+      <div class="level-card">
+        <div class="label">长鑫申购</div>
+        <div class="value orange">利空出尽</div>
+        <div class="note">靴子落地·不追存储</div>
+      </div>
+      <div class="level-card">
+        <div class="label">油气/保险</div>
+        <div class="value orange">小仓对冲</div>
+        <div class="note">防御·不追高</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scenario -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">🎲 7/16 情景推演</div>
+    <div class="scenario-grid">
+      <div class="scenario-card" style="border-color:rgba(0,212,170,0.3);">
+        <div class="prob bull">40%</div>
+        <div style="font-weight:600;margin-bottom:4px;">乐观：结构延续</div>
+        <div class="desc">创新药前排继续、大消费延续，长鑫申购落地后科技利空出尽弱反抽（AI大会埋伏）→指数守3950，结构性赚钱效应维持</div>
+      </div>
+      <div class="scenario-card" style="border-color:rgba(255,165,2,0.3);">
+        <div class="prob neutral">40%</div>
+        <div style="font-weight:600;margin-bottom:4px;">中性：分化震荡</div>
+        <div class="desc">医药分化去弱留强、消费冲高回落，科技弱反弹后回落→沪指3900-3980窄幅震荡，成交继续缩量</div>
+      </div>
+      <div class="scenario-card" style="border-color:rgba(255,71,87,0.3);">
+        <div class="prob bear">20%</div>
+        <div style="font-weight:600;margin-bottom:4px;">悲观：科技续杀</div>
+        <div class="desc">美股存储暴跌传导+长鑫抽血→科技继续下挫拖累，回踩3880/3930，仅创新药抗跌，消费一日游</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Position Allocation -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">💰 仓位配置建议（总仓位 50-60%）</div>
+    <div class="position-grid">
+      <div id="positionChart" class="chart-container" style="height:280px;"></div>
+      <div class="position-list">
+        <div class="position-item">
+          <span class="name">🟢 创新药/医药</span>
+          <span class="pct green">30%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🟢 大消费（低位）</span>
+          <span class="pct green">15%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🟡 科技观察（等企稳）</span>
+          <span class="pct gray">0-5%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">💵 现金（机动等信号）</span>
+          <span class="pct gray">50%+</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trading Plan Table -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📋 分批交易计划（7/16）</div>
+    <table class="plan-table">
+      <thead>
+        <tr>
+          <th>方向</th>
+          <th>触发条件</th>
+          <th>操作</th>
+          <th>仓位</th>
+          <th>止损/风控</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:#00d4aa;font-weight:700;">创新药低吸</td>
+          <td>哈药大单一字/迪哲换手不崩、昭衍强承接、药明回踩5/10日线企稳</td>
+          <td class="action-buy">低吸前排龙头（去弱留强）</td>
+          <td>20%</td>
+          <td>跌破10日线或板块放量滞涨离场</td>
+        </tr>
+        <tr>
+          <td style="color:#00d4aa;font-weight:700;">创新药加仓</td>
+          <td>CRO/中药延续涨停潮、资金续流入（昭衍/凯莱英/美诺华转一致）</td>
+          <td class="action-buy">加仓众生/博瑞/美诺华（分歧转一致）</td>
+          <td>10%</td>
+          <td>后排掉队即减</td>
+        </tr>
+        <tr>
+          <td style="color:#00d4aa;font-weight:700;">大消费潜伏</td>
+          <td>茅台/中免/古井不破今日阳线实体、消费ETF延续</td>
+          <td class="action-buy">低位建仓白酒/免税核心</td>
+          <td>15%</td>
+          <td>一日游（消费ETF转跌）则撤</td>
+        </tr>
+        <tr>
+          <td style="color:#ff4757;font-weight:700;">科技回避</td>
+          <td>沪电/新易盛/生益继续下挫 or 美股存储利空传导</td>
+          <td class="action-sell">不抄底高位PCB/CPO/存储，空仓观望</td>
+          <td>0%</td>
+          <td>等长鑫落地+缩量止跌+回踩20日线信号</td>
+        </tr>
+        <tr>
+          <td style="color:#ffa502;font-weight:700;">科技试错(低位)</td>
+          <td>仅长鑫申购落地后科技不崩+AI大会(7/17)埋伏+东山/通富/立讯/北方华创缩量企稳</td>
+          <td class="action-hold">极小仓观察抗跌核心/低位设备/AI手机链</td>
+          <td>≤5%</td>
+          <td>破5日线即撤；不碰高位</td>
+        </tr>
+        <tr>
+          <td style="color:#ffa502;font-weight:700;">油气/保险对冲</td>
+          <td>中东升级+美对俄能源关税；保险/银行低估值防御</td>
+          <td class="action-hold">小仓紫金/通源/保险脉冲，不追</td>
+          <td>≤5%</td>
+          <td>地缘缓和/贵金属续跌即撤</td>
+        </tr>
+        <tr>
+          <td style="color:#94a3b8;font-weight:700;">商业航天</td>
+          <td>仅空天信息大会+引力一号发射窗口超跌反抽</td>
+          <td class="action-sell">小仓博弈弹性，朱雀无催化不碰</td>
+          <td>0-5%</td>
+          <td>无催化不参与</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Alerts -->
+  <div style="margin-bottom:16px;">
+    <div class="alert-box danger">
+      <div class="title">🚨 风险警报（7/16 关键变量）</div>
+      <div>① <b>隔夜美股存储暴跌（SK海力士-9%、美光-8%）</b> —— 与A股算力跳水共振，确认科技退潮趋势，今日高位科技严禁抢反弹</div>
+      <div>② <b>长鑫科技7/16申购（579亿）</b> —— 抽血效应今日兑现，观察是"利空出尽止跌"还是"继续抽血下挫"</div>
+      <div>③ <b>创新药高潮后分化</b> —— 近30股涨停次日易分歧，后排追高被套风险大；哈药竞价反馈定全天</div>
+      <div>④ <b>大消费"一日游"风险</b> —— 社零上半年仅+1.3%、复苏偏弱，首日爆发后持续性待验证</div>
+      <div>⑤ <b>美伊冲突升级+美对俄能源关税</b> —— 避险与资源波动加剧，但贵金属已回落，油价到阻力</div>
+      <div>⑥ <b>矛盾信号</b>：佰维存储中报预增3200%+但隔夜美股存储暴跌→业绩强≠股价强，勿因业绩追高存储</div>
+    </div>
+    <div class="alert-box success">
+      <div class="title">✅ 积极催化</div>
+      <div>① 创新药政策+出海+业绩三重共振，逆势爆发印证主线地位，连续5日净流入，机构防御主线第一顺位，隔夜中概/港股生物医药无利空</div>
+      <div>② 央行强化逆周期调节+经济承压→宽松预期，利好券商/保险/消费/科技；国务院《扩大消费"十五五"规划》托底低位消费</div>
+      <div>③ 长鑫申购落地=靴子落地；7/17上海AI大会临近埋伏+7款AI手机模型备案+佰维存储业绩高增→科技待止跌后仍是中线最强</div>
+      <div>④ 中概股走强（金龙指数+2.92%）、港股生物医药全线走高，外围情绪不差</div>
+    </div>
+  </div>
+
+  <!-- Checklist -->
+  <div style="margin-bottom:16px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">✅ 7/16 盘前检查清单</div>
+    <ul class="checklist">
+      <li>隔夜复盘：美股存储暴跌（SK海力士-9%）与A股算力跳水共振→科技退潮趋势确认，今日不抄高位</li>
+      <li>9:15 集合竞价：哈药是否大单一字（医药定调）？迪哲/昭衍/美诺华是否分歧换手？科技（沪电/新易盛）是否因美股存储利空低开</li>
+      <li>9:25 开盘定位：沪指能否守住3950？消费（茅台/古井）是否高开延续？长鑫申购日科技是否"利空出尽"</li>
+      <li>9:30 长鑫科技正式申购（787825）启动：观察半导体/存储是否止跌（利空出尽）还是继续下挫（抽血延续）</li>
+      <li>10:00 创新药：前排能否换手封板？强则按计划低吸中军（药明康德/昭衍/凯莱英）</li>
+      <li>10:30 大消费：消费ETF/白酒是否延续？延续则加仓核心，回落则只留底仓</li>
+      <li>13:00 午后观察：3930-3940/3880支撑有效性，科技是否出现缩量止跌K线（仅低位设备/AI手机链可小仓）</li>
+      <li>14:30 尾盘决策：沪指守稳3950+医药消费共振→总仓可加至60%；否则维持50%防回踩3880</li>
+      <li>全天不碰高位科技与商业航天，等明确企稳信号再动手</li>
+    </ul>
+  </div>
+
+  <!-- Signal Attribution -->
+  <div style="margin-bottom:16px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📊 信号归因（四维雷达）</div>
+    <div id="radarChart" class="chart-container" style="height:320px;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+      <div class="alert-box success" style="margin:0;">
+        <div class="title">最强看多信号</div>
+        <div>创新药逆势近30股涨停、主力净流入+77亿居全市场第一、连续5日净流入，叠加基药目录扩容+出海1100亿美元+健康十五五规划+昭衍中报引爆CRO三重共振，弱市抱团逻辑最强，是当下唯一确定性主线；机构防御主线第一顺位、隔夜中概无利空</div>
+      </div>
+      <div class="alert-box danger" style="margin:0;">
+        <div class="title">最强看空信号</div>
+        <div>算力硬件/半导体7/15高位跳水（科创50 -4.25%、电子净流出超400亿、多股跌停）+隔夜美股存储逆市暴跌（SK海力士-9%、美光-8%），退潮趋势确认；长鑫7/16申购抽血尚未完全落地，科技严禁抄底</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+  <div class="disclaimer">
+    ⚠️ 免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论均基于 2026-07-15 A股收盘公开数据（沪指3955.58、创新药净流入+77亿、半导体跳水等）及 2026-07-16 盘前公开信息（美股存储暴跌、长鑫申购、机构共识、地缘升级等），不保证未来表现。<br>
+    数据来源：证券时报、每日经济新闻、第一财经、东方财富、财联社、新浪财经、券商中国、腾讯财经等公开信息 | 生成时间：2026-07-16 07:48
+  </div>
+  <div>盘前计划 v7.1（7/16 早盘终版 · 基于7/15收盘+7/16盘前机构共识） | automation-1783645264539 | Powered by 星辰智能分析</div>
+</div>
+
+<script>
+// ===== Position Pie Chart =====
+var posChart = echarts.init(document.getElementById('positionChart'));
+posChart.setOption({
+  backgroundColor: 'transparent',
+  tooltip: { trigger: 'item', formatter: '{b}: {c}%' },
+  legend: { bottom: 0, textStyle: { color: '#94a3b8', fontSize: 12 } },
+  series: [{
+    type: 'pie',
+    radius: ['45%', '70%'],
+    center: ['50%', '42%'],
+    avoidLabelOverlap: false,
+    itemStyle: { borderColor: '#0f0f23', borderWidth: 2 },
+    label: {
+      show: true,
+      position: 'center',
+      formatter: '机动\n50%+',
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: '#00d4aa',
+      lineHeight: 24
+    },
+    data: [
+      { value: 30, name: '创新药/医药', itemStyle: { color: '#00d4aa' } },
+      { value: 15, name: '大消费', itemStyle: { color: '#667eea' } },
+      { value: 5, name: '科技(待企稳)', itemStyle: { color: '#ff4757' } },
+      { value: 50, name: '现金观望', itemStyle: { color: '#2d2d44' } }
+    ]
+  }]
+});
+
+// ===== Radar Chart =====
+var radarChart = echarts.init(document.getElementById('radarChart'));
+radarChart.setOption({
+  backgroundColor: 'transparent',
+  tooltip: {},
+  radar: {
+    indicator: [
+      { name: '技术指标', max: 100 },
+      { name: '新闻情绪', max: 100 },
+      { name: '基本面', max: 100 },
+      { name: '市场环境', max: 100 }
+    ],
+    center: ['50%', '55%'],
+    radius: '65%',
+    splitArea: { areaStyle: { color: ['rgba(102,126,234,0.03)', 'rgba(102,126,234,0.06)'] } },
+    axisLine: { lineStyle: { color: '#2d2d44' } },
+    splitLine: { lineStyle: { color: '#2d2d44' } },
+    axisName: { color: '#94a3b8', fontSize: 13 }
+  },
+  series: [{
+    type: 'radar',
+    data: [
+      {
+        value: [85, 95, 88, 82],
+        name: '创新药/医药',
+        areaStyle: { color: 'rgba(0,212,170,0.2)' },
+        lineStyle: { color: '#00d4aa', width: 2 },
+        itemStyle: { color: '#00d4aa' }
+      },
+      {
+        value: [62, 85, 68, 72],
+        name: '大消费',
+        areaStyle: { color: 'rgba(102,126,234,0.2)' },
+        lineStyle: { color: '#667eea', width: 2 },
+        itemStyle: { color: '#667eea' }
+      },
+      {
+        value: [40, 42, 78, 38],
+        name: '算力硬件(退潮)',
+        areaStyle: { color: 'rgba(255,71,87,0.15)' },
+        lineStyle: { color: '#ff4757', width: 2 },
+        itemStyle: { color: '#ff4757' }
+      }
+    ]
+  }],
+  legend: {
+    bottom: 0,
+    textStyle: { color: '#94a3b8', fontSize: 12 },
+    data: ['创新药/医药', '大消费', '算力硬件(退潮)']
+  }
+});
+
+window.addEventListener('resize', function() {
+  posChart.resize();
+  radarChart.resize();
+});
+</script>
+
+</body>
+</html>

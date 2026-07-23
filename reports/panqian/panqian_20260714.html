@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盘前交易计划 | 2026年7月15日（周三）· 基于7/14收盘</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0f0f23;
+    color: #e2e8f0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    line-height: 1.7;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    border: 1px solid #2d2d44;
+  }
+  .header h1 {
+    font-size: 26px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+  .header .subtitle { color: #94a3b8; font-size: 14px; margin-bottom: 12px; }
+  .header .meta {
+    color: #94a3b8;
+    font-size: 13px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .header .meta span { display: flex; align-items: center; gap: 4px; }
+  .header .meta .tag {
+    background: rgba(0,212,170,0.2);
+    color: #00d4aa;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+  }
+  .header .meta .tag.warn {
+    background: rgba(255,165,2,0.2);
+    color: #ffa502;
+  }
+
+  /* Summary Bar */
+  .summary-bar {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    border: 1px solid #00d4aa;
+    border-left: 4px solid #00d4aa;
+  }
+  .summary-bar .verdict {
+    font-size: 22px;
+    font-weight: 800;
+    color: #00d4aa;
+    margin-bottom: 8px;
+  }
+  .summary-bar .verdict-desc { color: #cbd5e1; font-size: 15px; }
+
+  /* verify / correction box */
+  .verify-box {
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    font-size: 13px;
+  }
+  .verify-wrong { background: rgba(255,165,2,0.08); border-left: 3px solid #ffa502; }
+
+  /* Index Cards */
+  .index-cards {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .index-card {
+    background: #1a1a2e;
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid #2d2d44;
+    text-align: center;
+  }
+  .index-card .name { font-size: 13px; color: #94a3b8; margin-bottom: 6px; }
+  .index-card .price { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  .index-card .change { font-size: 14px; font-weight: 600; }
+  .index-card .change.green { color: #00d4aa; }
+  .index-card .change.red { color: #ff4757; }
+  .index-card .sub { font-size: 11px; color: #64748b; margin-top: 4px; }
+
+  /* Section */
+  .section {
+    background: #1a1a2e;
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    border: 1px solid #2d2d44;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .num {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  /* Theme Card */
+  .theme-card {
+    background: #16213e;
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 16px;
+    border: 1px solid #2d2d44;
+    transition: border-color 0.3s;
+  }
+  .theme-card:hover { border-color: #667eea; }
+  .theme-card.buy { border-left: 4px solid #00d4aa; }
+  .theme-card.watch { border-left: 4px solid #ffa502; }
+  .theme-card.avoid { border-left: 4px solid #ff4757; }
+  .theme-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .theme-name { font-size: 18px; font-weight: 700; }
+  .theme-signal {
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .theme-signal.buy { background: rgba(0,212,170,0.15); color: #00d4aa; }
+  .theme-signal.watch { background: rgba(255,165,2,0.15); color: #ffa502; }
+  .theme-signal.avoid { background: rgba(255,71,87,0.15); color: #ff4757; }
+  .theme-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .theme-row .label { color: #64748b; font-size: 13px; margin-bottom: 4px; }
+  .theme-row .value { color: #e2e8f0; font-size: 14px; }
+  .theme-stocks {
+    background: rgba(0,0,0,0.2);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-top: 8px;
+  }
+  .theme-stocks .label { color: #64748b; font-size: 12px; margin-bottom: 6px; }
+  .stock-tag {
+    display: inline-block;
+    background: rgba(102,126,234,0.15);
+    color: #a78bfa;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    margin: 2px 4px 2px 0;
+  }
+  .stock-tag.hl { background: rgba(0,212,170,0.15); color: #00d4aa; }
+  .stock-tag.up { background: rgba(255,71,87,0.15); color: #ff6b7a; }
+  .catalyst-list { margin-top: 8px; }
+  .catalyst-list li {
+    list-style: none;
+    padding: 4px 0;
+    font-size: 13px;
+    color: #cbd5e1;
+    padding-left: 18px;
+    position: relative;
+  }
+  .catalyst-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #667eea;
+  }
+  .catalyst-list li.neg::before { color: #ff4757; }
+  .catalyst-list li.pos::before { color: #00d4aa; }
+
+  /* Stage Bar */
+  .stage-bar {
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin: 10px 0;
+    overflow: hidden;
+  }
+  .stage-segment {
+    flex: 1;
+    text-align: center;
+    font-size: 11px;
+    color: #64748b;
+    border-right: 1px solid rgba(255,255,255,0.05);
+    position: relative;
+    z-index: 1;
+  }
+  .stage-segment:last-child { border-right: none; }
+  .stage-marker {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255,165,2,0.3), rgba(255,165,2,0.5));
+    border-radius: 8px;
+    z-index: 0;
+  }
+  .stage-marker.buy { background: linear-gradient(90deg, rgba(0,212,170,0.3), rgba(0,212,170,0.5)); }
+  .stage-marker.avoid { background: linear-gradient(90deg, rgba(255,71,87,0.3), rgba(255,71,87,0.5)); }
+
+  /* Table */
+  .plan-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .plan-table th {
+    background: rgba(102,126,234,0.1);
+    color: #a78bfa;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 1px solid #2d2d44;
+  }
+  .plan-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(45,45,68,0.5);
+    color: #cbd5e1;
+  }
+  .plan-table tr:hover td { background: rgba(102,126,234,0.05); }
+  .plan-table .action-buy { color: #00d4aa; font-weight: 600; }
+  .plan-table .action-sell { color: #ff4757; font-weight: 600; }
+  .plan-table .action-hold { color: #ffa502; font-weight: 600; }
+
+  /* Position Pie */
+  .position-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: center;
+  }
+  .position-list { }
+  .position-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    background: #16213e;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #2d2d44;
+  }
+  .position-item .name { font-size: 14px; }
+  .position-item .pct { font-size: 16px; font-weight: 700; }
+  .position-item .pct.green { color: #00d4aa; }
+  .position-item .pct.orange { color: #ffa502; }
+  .position-item .pct.gray { color: #64748b; }
+
+  /* Alert Box */
+  .alert-box {
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+  .alert-box.danger {
+    background: rgba(255,71,87,0.08);
+    border: 1px solid rgba(255,71,87,0.3);
+    color: #ff6b7a;
+  }
+  .alert-box.success {
+    background: rgba(0,212,170,0.08);
+    border: 1px solid rgba(0,212,170,0.3);
+    color: #3dd9b0;
+  }
+  .alert-box.warning {
+    background: rgba(255,165,2,0.08);
+    border: 1px solid rgba(255,165,2,0.3);
+    color: #ffb84d;
+  }
+  .alert-box .title { font-weight: 700; margin-bottom: 4px; }
+
+  /* Checklist */
+  .checklist {
+    list-style: none;
+  }
+  .checklist li {
+    padding: 8px 0 8px 28px;
+    position: relative;
+    font-size: 14px;
+    color: #cbd5e1;
+    border-bottom: 1px solid rgba(45,45,68,0.3);
+  }
+  .checklist li::before {
+    content: '☐';
+    position: absolute;
+    left: 0;
+    font-size: 18px;
+    color: #667eea;
+  }
+
+  /* Scenario Cards */
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .scenario-card {
+    background: #16213e;
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid #2d2d44;
+  }
+  .scenario-card .prob {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .scenario-card .prob.neutral { color: #ffa502; }
+  .scenario-card .prob.bear { color: #ff4757; }
+  .scenario-card .prob.bull { color: #00d4aa; }
+  .scenario-card .desc { font-size: 13px; color: #94a3b8; }
+
+  /* Chart container */
+  .chart-container { width: 100%; height: 320px; margin: 10px 0; }
+
+  /* Key Levels */
+  .level-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .level-card {
+    background: #16213e;
+    border-radius: 10px;
+    padding: 14px;
+    border: 1px solid #2d2d44;
+    text-align: center;
+  }
+  .level-card .label { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+  .level-card .value { font-size: 20px; font-weight: 700; }
+  .level-card .value.red { color: #ff4757; }
+  .level-card .value.green { color: #00d4aa; }
+  .level-card .value.orange { color: #ffa502; }
+  .level-card .note { font-size: 11px; color: #64748b; margin-top: 2px; }
+
+  .footer {
+    text-align: center;
+    color: #475569;
+    font-size: 12px;
+    padding: 20px 0;
+    border-top: 1px solid #2d2d44;
+    margin-top: 24px;
+  }
+  .footer .disclaimer {
+    background: rgba(255,71,87,0.05);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    color: #94a3b8;
+    font-size: 12px;
+  }
+
+  @media (max-width: 768px) {
+    .index-cards { grid-template-columns: repeat(2, 1fr); }
+    .theme-row { grid-template-columns: 1fr; }
+    .position-grid { grid-template-columns: 1fr; }
+    .scenario-grid { grid-template-columns: 1fr; }
+    .level-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+  <h1>盘前交易计划 | 2026年7月15日（周三）· 基于7/14收盘</h1>
+  <div class="subtitle">V型大反攻！7/13恐慌洗盘后市场强势反包，主流题材全面切换至算力硬件 / 创新药 / 油气资源</div>
+  <div class="meta">
+    <span>📊 数据截至：2026-07-14 收盘</span>
+    <span>🔥 情绪评级：<span class="tag">修复</span></span>
+    <span>⏰ 生成时间：2026-07-14 16:47</span>
+  </div>
+</div>
+
+<!-- ===== SUMMARY BAR ===== -->
+<div class="summary-bar">
+  <div class="verdict">✅ 核心判断：恐慌洗盘结束，转进攻！总仓位 60-70%，主攻创新药，算力等回踩低吸，油气小仓对冲</div>
+  <div class="verdict-desc">
+    7/14 市场上演教科书级 V 型反包：早盘一度跌超 1%，午后 13:00 强势拉升，<b style="color:#00d4aa">创业板指大涨 3.43%、逾 4200 股上涨、近 90 只涨停</b>，
+    一举吞没 7/13「黑色星期一」阴线。主线从「防御」切回「成长」——<b style="color:#00d4aa">算力硬件（PCB/CPO）全线爆发</b>、
+    <b style="color:#00d4aa">创新药/医药延续强势</b>、<b style="color:#ffa502">油气/资源受地缘推升</b>。
+    <b style="color:#ff6b7a">商业航天彻底退潮（中国卫星跌停）</b>，已非主流。当前为缩量反弹首日，需等回踩确认，<b>严禁追涨停</b>。
+  </div>
+</div>
+
+<!-- ===== 早盘计划验证 ===== -->
+<div class="verify-box verify-wrong">
+  <strong style="color:#ffa502">⚠️ 7/14 早盘（08:32）计划复盘：防御判断被盘中反转证伪</strong><br>
+  今早盘前计划基于 7/13 收盘的「恐慌冰点」判断「恐慌未止、总仓位 ≤ 3 成、多看少动」。但 7/14 实际走出 V 型大反攻，
+  早盘恐慌为<b>情绪性洗盘见底</b>而非风险延续。教训：在连续急跌后出现「缩量+跌停骤减+指数长下影」是见底信号，应敢于在恐慌中逆势布局，
+  而非机械降仓。本计划据此修正，转为进攻姿态，但保留现金应对今晚美国 CPI 与 7/15 中报预告截止的不确定性。
+</div>
+
+<!-- ===== INDEX CARDS ===== -->
+<div class="index-cards">
+  <div class="index-card">
+    <div class="name">上证指数</div>
+    <div class="price" style="color:#00d4aa;">3967.13</div>
+    <div class="change green">+1.36%</div>
+    <div class="sub">收于全天最高</div>
+  </div>
+  <div class="index-card">
+    <div class="name">深证成指</div>
+    <div class="price" style="color:#00d4aa;">14924.87</div>
+    <div class="change green">+2.77%</div>
+    <div class="sub">反包 7/13 阴线</div>
+  </div>
+  <div class="index-card">
+    <div class="name">创业板指</div>
+    <div class="price" style="color:#00d4aa;">3851.14</div>
+    <div class="change green">+3.43%</div>
+    <div class="sub">领涨 · 成长回归</div>
+  </div>
+  <div class="index-card">
+    <div class="name">科创50</div>
+    <div class="price" style="color:#00d4aa;">+0.77%</div>
+    <div class="change green">修复</div>
+    <div class="sub">科技企稳</div>
+  </div>
+  <div class="index-card">
+    <div class="name">成交额</div>
+    <div class="price" style="color:#ffa502;">2.72万亿</div>
+    <div class="change" style="color:#ff4757;">-1100亿</div>
+    <div class="sub">缩量反弹</div>
+  </div>
+</div>
+
+<!-- ===== Q1: 主流题材 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">1</span>当下主流题材（至多3个）</div>
+
+  <!-- Theme 1: 算力硬件 -->
+  <div class="theme-card buy">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🟢 算力硬件（PCB + CPO光模块 + AI服务器 + 数据中心）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">今日绝对主线 · 涨停潮 · 主力资金集中轰炸</div>
+      </div>
+      <div class="theme-signal buy">BUY · 回踩低吸</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的</div>
+        <div class="value">
+          <span class="stock-tag hl">沪电股份 002463</span>
+          <span class="stock-tag hl">生益科技 600183</span>
+          <span class="stock-tag hl">新易盛 300502</span>
+          <span class="stock-tag">中际旭创 300308</span>
+          <span class="stock-tag">胜宏科技 300476</span>
+          <span class="stock-tag">东山精密 002384</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金信号</div>
+        <div class="value" style="color:#00d4aa;">元件板块净流入 152.6亿（全市场第一）</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          新易盛+44.2亿、东山精密+41.8亿、中际旭创+35.8亿、沪电+26.6亿、生益+21.9亿
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">英伟达黄仁勋：Rubin Ultra 明年出货，否认延后传闻，AI 算力需求再确认</li>
+        <li class="pos">建滔等上游 CCL 企业 7 月初再发涨价函，树脂/电子布价格持续走高</li>
+        <li class="pos">谷歌供应商大会释放 AI 商业化信号，提振光模块/数据中心产业链</li>
+        <li class="pos">中信建投/银河：AI 服务器推动 PCB 向高多层/HDI 升级，覆铜板龙头持续涨价</li>
+        <li class="neg">今日涨停潮后乖离率偏大，明日（7/15）有高潮分化风险，勿追涨停</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker buy" style="left:50%;width:25%;"></div>
+        <div class="stage-segment">启动期</div>
+        <div class="stage-segment">上行期</div>
+        <div class="stage-segment" style="color:#00d4aa;font-weight:700;">↑ 主升重启/加速爆发</div>
+        <div class="stage-segment">高潮分化</div>
+      </div>
+      <div style="font-size:13px;color:#94a3b8;margin-top:4px;">
+        7/13 暴跌洗盘后今日反包，属「洗盘后主升」。强但已高潮，<b style="color:#ffa502">明日策略：等回踩 5/10 日线低吸龙头，不追打板</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme 2: 创新药/医药 -->
+  <div class="theme-card buy">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🟢 创新药 / 医药（中药 / 医药商业 / CRO）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">韧性最强主线 · 政策+业绩双驱动 · 中报验证期最优解</div>
+      </div>
+      <div class="theme-signal buy">BUY · 主攻方向</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的</div>
+        <div class="value">
+          <span class="stock-tag hl">迪哲医药 688192</span>
+          <span class="stock-tag hl">药明康德 603259</span>
+          <span class="stock-tag hl">陇神戎发 300534</span>
+          <span class="stock-tag">药易购 300937</span>
+          <span class="stock-tag">众生药业 002317</span>
+          <span class="stock-tag">济民健康</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金信号</div>
+        <div class="value" style="color:#00d4aa;">医药生物板块净流入 66亿</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          迪哲医药 20CM 涨停、药易购 20CM 涨停、济民健康涨停、陇神戎发跟涨
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">国务院《国民健康"十五五"规划》：全链条支持创新药+医疗器械，优化审评审批</li>
+        <li class="pos">7/15 主板中报预告强制披露截止，医药预增企业集中释放利好</li>
+        <li class="pos">上半年创新药对外授权交易总额接近 1100 亿美元，出海逻辑持续验证</li>
+        <li class="pos">CXO 订单回暖 + 减肥药/CAR-T 订单涌入，药明康德等机构重仓企稳</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker buy" style="left:25%;width:25%;"></div>
+        <div class="stage-segment">启动期</div>
+        <div class="stage-segment" style="color:#00d4aa;font-weight:700;">↑ 健康上行期</div>
+        <div class="stage-segment">加速期</div>
+        <div class="stage-segment">高潮期</div>
+      </div>
+      <div style="font-size:13px;color:#00d4aa;margin-top:4px;">
+        ✅ 逆市抗跌（7/13）+ 延续上涨（7/14），政策+业绩确定性最高 —— <b>当前最适合积极布局的方向</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme 3: 油气/资源 -->
+  <div class="theme-card watch">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🟡 油气 / 资源（石油 / 有色 / 煤炭 / 贵金属）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">事件驱动升温 · 地缘+涨价 · 弹性对冲</div>
+      </div>
+      <div class="theme-signal watch">WATCH · 小仓对冲</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的</div>
+        <div class="value">
+          <span class="stock-tag">通源石油 300164</span>
+          <span class="stock-tag">紫金矿业 601899</span>
+          <span class="stock-tag">赤峰黄金 600988</span>
+          <span class="stock-tag">铜陵有色 000630</span>
+          <span class="stock-tag">中曼石油 603619</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金信号</div>
+        <div class="value" style="color:#ffa502;">工业金属+46.9亿 / 贵金属+19.9亿</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          紫金矿业+6.21%（主力+13亿）、赤峰黄金+8%、通源石油 20CM 涨停
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">美伊冲突再起、霍尔木兹海峡争议 → 国际油价暴涨，油气板块应声上涨</li>
+        <li class="pos">铜陵有色中报预增 84%-119%，印证有色景气；紫金矿业创新高</li>
+        <li class="pos">7/17 国内成品油调价窗口，油价上行预期支撑能源链</li>
+        <li class="neg">地缘风险主导、波动剧烈；油气追高性价比低，宜作为对冲而非主攻</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker" style="left:35%;width:22%;"></div>
+        <div class="stage-segment">启动期</div>
+        <div class="stage-segment">上行期</div>
+        <div class="stage-segment" style="color:#ffa502;font-weight:700;">↑ 事件驱动升温期</div>
+        <div class="stage-segment">退潮期</div>
+      </div>
+      <div style="font-size:13px;color:#ffa502;margin-top:4px;">
+        ⚠️ 受地缘主导、持续性看油价；<b>小仓位弹性对冲，不重仓追高油气</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- 退潮题材提示 -->
+  <div class="theme-card avoid">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name" style="color:#ff6b7a;">🔻 商业航天（已退潮，移出主流）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">中国卫星、星网宇达跌停 · 板块延续回调</div>
+      </div>
+      <div class="theme-signal avoid">AVOID · 不抄底</div>
+    </div>
+    <div style="font-size:13px;color:#cbd5e1;margin-top:8px;">
+      尽管 7/15 朱雀三号遥二发射（带真实载荷+一子级陆地垂直回收）是最后一个催化窗口，但今日板块继续杀跌、中国卫星/星网宇达跌停，
+      资金已彻底撤离。<b style="color:#ff6b7a">仅可等待 7/15 发射成功后的超跌反抽，绝不在退潮中抄底。</b>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Q2: 核心标的总览 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">2</span>主流题材核心标的全览（7/14 收盘）</div>
+  <table class="plan-table">
+    <thead>
+      <tr>
+        <th>题材</th>
+        <th>核心标的</th>
+        <th>角色定位</th>
+        <th>7/14 表现</th>
+        <th>操作方向</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="4" style="color:#00d4aa;font-weight:700;">算力硬件</td>
+        <td><b>沪电股份 002463</b></td>
+        <td>PCB 龙头 · 涨停</td>
+        <td style="color:#00d4aa;">+10.00% 涨停，主力+26.6亿</td>
+        <td class="action-buy">回踩5日线低吸</td>
+      </tr>
+      <tr>
+        <td><b>生益科技 600183</b></td>
+        <td>CCL/PCB 双龙头 · 涨停</td>
+        <td style="color:#00d4aa;">+10.00% 涨停，主力+21.9亿</td>
+        <td class="action-buy">回踩不破实体低吸</td>
+      </tr>
+      <tr>
+        <td><b>新易盛 300502</b></td>
+        <td>CPO 三剑客之首</td>
+        <td style="color:#00d4aa;">+10.99%，主力+44.2亿（全市场第一）</td>
+        <td class="action-buy">分歧低吸，不追高</td>
+      </tr>
+      <tr>
+        <td><b>东山精密 002384</b></td>
+        <td>情绪龙头 · 4天2板</td>
+        <td style="color:#00d4aa;">+10.00%，主力+41.8亿</td>
+        <td class="action-hold">观察连板持续性</td>
+      </tr>
+      <tr>
+        <td rowspan="3" style="color:#00d4aa;font-weight:700;">创新药/医药</td>
+        <td><b>迪哲医药 688192</b></td>
+        <td>弹性龙头 · 20CM</td>
+        <td style="color:#00d4aa;">+20.00% 涨停</td>
+        <td class="action-buy">回踩关注</td>
+      </tr>
+      <tr>
+        <td><b>药明康德 603259</b></td>
+        <td>CRO 绝对龙头 · 机构重仓</td>
+        <td style="color:#94a3b8;">企稳，中报验证期</td>
+        <td class="action-buy">分批低吸布局</td>
+      </tr>
+      <tr>
+        <td><b>陇神戎发 300534</b></td>
+        <td>中药弹性标</td>
+        <td style="color:#00d4aa;">跟涨，延续强势</td>
+        <td class="action-buy">5日线低吸</td>
+      </tr>
+      <tr>
+        <td rowspan="2" style="color:#ffa502;font-weight:700;">油气/资源</td>
+        <td><b>通源石油 300164</b></td>
+        <td>油气弹性龙 · 20CM</td>
+        <td style="color:#00d4aa;">+20.04% 涨停</td>
+        <td class="action-hold">脉冲止盈，不追</td>
+      </tr>
+      <tr>
+        <td><b>紫金矿业 601899</b></td>
+        <td>有色龙头 · 中报高增</td>
+        <td style="color:#00d4aa;">+6.21%，主力+13亿</td>
+        <td class="action-buy">回踩低吸</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== Q3: 阶段判断 + 交易计划 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">3</span>阶段判断与 7/15 盘前交易计划</div>
+
+  <!-- Key Levels -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📐 上证指数关键点位</div>
+    <div class="level-grid">
+      <div class="level-card">
+        <div class="label">强支撑</div>
+        <div class="value red">3844</div>
+        <div class="note">3月低点·生命线</div>
+      </div>
+      <div class="level-card">
+        <div class="label">核心支撑</div>
+        <div class="value orange">3880</div>
+        <div class="note">今日最低3869·已验证</div>
+      </div>
+      <div class="level-card">
+        <div class="label">当前位</div>
+        <div class="value green">3967</div>
+        <div class="note">收于全天最高</div>
+      </div>
+      <div class="level-card">
+        <div class="label">强压力</div>
+        <div class="value orange">4000</div>
+        <div class="note">整数关口·套牢区</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scenario -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">🎲 7/15 情景推演</div>
+    <div class="scenario-grid">
+      <div class="scenario-card" style="border-color:rgba(255,165,2,0.3);">
+        <div class="prob neutral">55%</div>
+        <div style="font-weight:600;margin-bottom:4px;">中性：震荡整固</div>
+        <div class="desc">3970 附近消化今日获利盘，算力分歧、创新药延续、油气脉冲→收小阳/十字星</div>
+      </div>
+      <div class="scenario-card" style="border-color:rgba(0,212,170,0.3);">
+        <div class="prob bull">30%</div>
+        <div style="font-weight:600;margin-bottom:4px;">乐观：放量突破</div>
+        <div class="desc">美国CPI温和+资金续攻→突破4000→算力续涨、创新药加速</div>
+      </div>
+      <div class="scenario-card" style="border-color:rgba(255,71,87,0.3);">
+        <div class="prob bear">15%</div>
+        <div style="font-weight:600;margin-bottom:4px;">悲观：回踩确认</div>
+        <div class="desc">CPI超预期/中报雷→回踩3880→仅创新药/油气抗跌</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Position Allocation -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">💰 仓位配置建议（总仓位 60-70%）</div>
+    <div class="position-grid">
+      <div id="positionChart" class="chart-container" style="height:280px;"></div>
+      <div class="position-list">
+        <div class="position-item">
+          <span class="name">🟢 创新药/医药</span>
+          <span class="pct green">30%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🟢 算力硬件（回踩低吸）</span>
+          <span class="pct green">25%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🟡 油气/资源（对冲）</span>
+          <span class="pct orange">10%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">💵 现金（等CPI+回踩）</span>
+          <span class="pct gray">35%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trading Plan Table -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📋 分批交易计划（7/15）</div>
+    <table class="plan-table">
+      <thead>
+        <tr>
+          <th>方向</th>
+          <th>触发条件</th>
+          <th>操作</th>
+          <th>仓位</th>
+          <th>止损/风控</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:#00d4aa;font-weight:700;">创新药低吸</td>
+          <td>药明康德/迪哲医药回踩5日线不破</td>
+          <td class="action-buy">低吸 CRO 龙头 + 中药弹性</td>
+          <td>20%</td>
+          <td>跌破10日线止损</td>
+        </tr>
+        <tr>
+          <td style="color:#00d4aa;font-weight:700;">创新药加仓</td>
+          <td>医药商业/中药延续涨停潮</td>
+          <td class="action-buy">加仓药易购/陇神戎发（分歧转一致）</td>
+          <td>10%</td>
+          <td>板块放量滞涨减仓</td>
+        </tr>
+        <tr>
+          <td style="color:#00d4aa;font-weight:700;">算力低吸</td>
+          <td>沪电/生益/新易盛回踩5或10日线</td>
+          <td class="action-buy">低吸 PCB/CPO 龙头（不追涨停）</td>
+          <td>25%</td>
+          <td>跌破今日阳线实体50%离场</td>
+        </tr>
+        <tr>
+          <td style="color:#ffa502;font-weight:700;">油气对冲</td>
+          <td>中东局势升级+油价继续涨</td>
+          <td class="action-hold">小仓紫金/通源脉冲，冲高止盈</td>
+          <td>10%</td>
+          <td>地缘缓和即撤</td>
+        </tr>
+        <tr>
+          <td style="color:#ff4757;font-weight:700;">高位科技减仓</td>
+          <td>算力早盘大幅冲高（乖离>8%）</td>
+          <td class="action-sell">分批止盈昨日涨停持仓</td>
+          <td>—</td>
+          <td>不贪，落袋为安</td>
+        </tr>
+        <tr>
+          <td style="color:#94a3b8;font-weight:700;">商业航天</td>
+          <td>仅 7/15 朱雀三号发射成功</td>
+          <td class="action-sell">轻仓超跌反抽，否则不碰</td>
+          <td>0-5%</td>
+          <td>发射失败则放弃</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Alerts -->
+  <div style="margin-bottom:16px;">
+    <div class="alert-box danger">
+      <div class="title">🚨 风险警报（7/15 关键变量）</div>
+      <div>① <b>今晚 20:30 美国 6 月 CPI</b> + 美联储主席沃什国会证词 —— 若通胀超预期/释放加息信号，全球科技股（含算力）将承压</div>
+      <div>② <b>7/15 主板中报预告强制披露截止</b> —— 高位题材股业绩证伪风险，警惕「利好出尽」</div>
+      <div>③ <b>缩量反弹首日</b> —— 成交 2.72 万亿较昨日缩量，持续性需明日放量确认</div>
+      <div>④ <b>4000 整数关口</b> —— 套牢盘密集区，一次突破难度大，谨防冲高回落</div>
+      <div>⑤ <b>商业航天退潮</b> —— 中国卫星跌停，7/15 朱雀三号若失败将继续杀跌</div>
+    </div>
+    <div class="alert-box success">
+      <div class="title">✅ 积极催化</div>
+      <div>① V 型反包确认 7/13 为恐慌洗盘底，创业板 +3.43% 领涨，成长风格回归</div>
+      <div>② 算力硬件获元件板块 152.6 亿净流入（全市场第一），产业催化密集（英伟达/谷歌/CCL涨价）</div>
+      <div>③ 国务院《国民健康"十五五"规划》为创新药提供政策顶层加持，中报预增集中释放</div>
+      <div>④ 美国 6 月 CPI 因油价回落大概率降温（整体 CPI 预计环比 -0.1%），利好风险资产</div>
+      <div>⑤ 中东局势+7/17 成品油调价窗口，资源/油气具备对冲价值</div>
+    </div>
+  </div>
+
+  <!-- Checklist -->
+  <div style="margin-bottom:16px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">✅ 7/15 盘前检查清单</div>
+    <ul class="checklist">
+      <li>今晚 20:30 盯美国 6 月 CPI + 沃什证词：温和则利好算力，超预期则降低加仓节奏</li>
+      <li>9:15 集合竞价：观察算力PCB/CPO是否大幅高开（乖离>8%则放弃追入，等回踩）</li>
+      <li>9:25 开盘定位：上证能否站稳 3967？冲 4000 注意量能，无量则高抛</li>
+      <li>9:30-10:00 量能确认：反弹放量（>3000亿/半小时）则加仓；缩量则观望</li>
+      <li>10:00 创新药：迪哲医药/药易购是否延续强势？强则按计划低吸 CRO 龙头</li>
+      <li>10:30 算力分歧：新易盛/沪电是否回踩5日线企稳？企稳则低吸，否则等10日线</li>
+      <li>13:00 午后观察：3880 支撑是否有效（若回踩不破可加仓），4000 压力是否突破</li>
+      <li>14:30 尾盘决策：若放量站稳 3980+，总仓位可加至 70%；否则维持 60% 防回踩</li>
+      <li>全天关注 7/15 朱雀三号发射结果（商业航天唯一反抽窗口）</li>
+    </ul>
+  </div>
+
+  <!-- Signal Attribution -->
+  <div style="margin-bottom:16px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📊 信号归因（四维雷达）</div>
+    <div id="radarChart" class="chart-container" style="height:320px;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+      <div class="alert-box warning" style="margin:0;">
+        <div class="title">最强看多信号</div>
+        <div>算力硬件获全市场第一资金净流入（元件 152.6 亿）+ 英伟达/谷歌/CCL 涨价三重催化 + V 型反包确认见底，成长风格强势回归</div>
+      </div>
+      <div class="alert-box danger" style="margin:0;">
+        <div class="title">最强看空信号</div>
+        <div>今晚美国 CPI+沃什证词悬而未决、缩量反弹首日持续性存疑、4000 套牢区压制、中报预告截止业绩雷区，高位追涨风险大</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+  <div class="disclaimer">
+    ⚠️ 免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有分析结论均基于 2026-07-14 收盘公开数据和技术模型，不保证未来表现。<br>
+    数据来源：东方财富、腾讯财经、新浪财经、每日经济新闻、同花顺等公开信息 | 生成时间：2026-07-14 16:47
+  </div>
+  <div>盘前计划 v4.0 | automation-1783645264539 | Powered by 星辰智能分析</div>
+</div>
+
+<script>
+// ===== Position Pie Chart =====
+var posChart = echarts.init(document.getElementById('positionChart'));
+posChart.setOption({
+  backgroundColor: 'transparent',
+  tooltip: { trigger: 'item', formatter: '{b}: {c}%' },
+  legend: { bottom: 0, textStyle: { color: '#94a3b8', fontSize: 12 } },
+  series: [{
+    type: 'pie',
+    radius: ['45%', '70%'],
+    center: ['50%', '42%'],
+    avoidLabelOverlap: false,
+    itemStyle: { borderColor: '#0f0f23', borderWidth: 2 },
+    label: {
+      show: true,
+      position: 'center',
+      formatter: '总仓位\n65%',
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: '#00d4aa',
+      lineHeight: 24
+    },
+    data: [
+      { value: 30, name: '创新药/医药', itemStyle: { color: '#00d4aa' } },
+      { value: 25, name: '算力硬件', itemStyle: { color: '#667eea' } },
+      { value: 10, name: '油气/资源', itemStyle: { color: '#ffa502' } },
+      { value: 35, name: '现金观望', itemStyle: { color: '#2d2d44' } }
+    ]
+  }]
+});
+
+// ===== Radar Chart =====
+var radarChart = echarts.init(document.getElementById('radarChart'));
+radarChart.setOption({
+  backgroundColor: 'transparent',
+  tooltip: {},
+  radar: {
+    indicator: [
+      { name: '技术指标', max: 100 },
+      { name: '新闻情绪', max: 100 },
+      { name: '基本面', max: 100 },
+      { name: '市场环境', max: 100 }
+    ],
+    center: ['50%', '55%'],
+    radius: '65%',
+    splitArea: { areaStyle: { color: ['rgba(102,126,234,0.03)', 'rgba(102,126,234,0.06)'] } },
+    axisLine: { lineStyle: { color: '#2d2d44' } },
+    splitLine: { lineStyle: { color: '#2d2d44' } },
+    axisName: { color: '#94a3b8', fontSize: 13 }
+  },
+  series: [{
+    type: 'radar',
+    data: [
+      {
+        value: [78, 88, 82, 62],
+        name: '算力硬件',
+        areaStyle: { color: 'rgba(102,126,234,0.2)' },
+        lineStyle: { color: '#667eea', width: 2 },
+        itemStyle: { color: '#667eea' }
+      },
+      {
+        value: [68, 86, 82, 72],
+        name: '创新药/医药',
+        areaStyle: { color: 'rgba(0,212,170,0.2)' },
+        lineStyle: { color: '#00d4aa', width: 2 },
+        itemStyle: { color: '#00d4aa' }
+      },
+      {
+        value: [55, 75, 66, 60],
+        name: '油气/资源',
+        areaStyle: { color: 'rgba(255,165,2,0.15)' },
+        lineStyle: { color: '#ffa502', width: 2 },
+        itemStyle: { color: '#ffa502' }
+      }
+    ]
+  }],
+  legend: {
+    bottom: 0,
+    textStyle: { color: '#94a3b8', fontSize: 12 },
+    data: ['算力硬件', '创新药/医药', '油气/资源']
+  }
+});
+
+window.addEventListener('resize', function() {
+  posChart.resize();
+  radarChart.resize();
+});
+</script>
+
+</body>
+</html>
