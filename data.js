@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-07-23 20:40:53",
-  "total": 41,
+  "generatedAt": "2026-07-24 07:58:33",
+  "total": 42,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 9,
-      "latest": "20260723",
+      "count": 10,
+      "latest": "20260724",
       "reports": [
+        {
+          "date": "20260724",
+          "dateLabel": "2026-07-24（周五）",
+          "file": "reports/panqian/panqian_20260724.html",
+          "title": "盘前交易计划 | 2026年7月24日（周五）· v14.0 盘前版 · 电网设备绝对主线+锂矿升格主流+油气破百，隔夜美股暴跌/布油破100/黄金下跌",
+          "size": 57195
+        },
         {
           "date": "20260723",
           "dateLabel": "2026-07-23（周四）",
