@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股午间复盘 · 2026-07-24 周五</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --accent1:#667eea; --accent2:#764ba2; --txt:#e2e8f0; --txt2:#94a3b8; --border:#2d2d44;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.55;padding:24px 16px 60px}
+  .wrap{max-width:1180px;margin:0 auto}
+  .glass{background:linear-gradient(135deg,rgba(102,126,234,.08),rgba(118,75,162,.06));border:1px solid var(--border);border-radius:16px}
+  header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:22px 26px;margin-bottom:20px}
+  header h1{font-size:24px;font-weight:700;letter-spacing:.5px}
+  header .sub{color:var(--txt2);font-size:13px;margin-top:4px}
+  .badge{font-size:18px;font-weight:800;padding:10px 20px;border-radius:12px;letter-spacing:1px}
+  .badge.danger{background:linear-gradient(135deg,#ff4757,#c0392b);color:#fff;box-shadow:0 6px 20px rgba(255,71,87,.4)}
+  .badge.warn{background:linear-gradient(135deg,#ffa502,#e67e22);color:#1a1a2e;box-shadow:0 6px 20px rgba(255,165,2,.35)}
+  .badge.rev{background:linear-gradient(135deg,#00d4aa,#00b894);color:#1a1a2e;box-shadow:0 6px 20px rgba(0,212,170,.4)}
+  .grid{display:grid;gap:18px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:880px){.g3,.g2{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.g3,.g2{grid-template-columns:1fr}}
+  section{margin:20px 0}
+  .sec-title{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;margin:6px 4px 14px}
+  .sec-title::before{content:"";width:5px;height:18px;border-radius:3px;background:linear-gradient(var(--accent1),var(--accent2))}
+  .card{padding:18px 20px}
+  .idx-head{display:flex;justify-content:space-between;align-items:baseline}
+  .idx-name{font-size:15px;font-weight:600}
+  .idx-code{font-size:11px;color:var(--txt2)}
+  .idx-price{font-size:26px;font-weight:800;margin:6px 0 2px}
+  .idx-chg{font-size:14px;font-weight:700}
+  .down{color:var(--sell)} .up{color:var(--buy)} .flat{color:var(--hold)}
+  .spark{height:54px;margin-top:8px}
+  .stat-row{display:flex;justify-content:space-around;text-align:center;padding:14px 0}
+  .stat-row .v{font-size:30px;font-weight:800}
+  .stat-row .l{font-size:12px;color:var(--txt2);margin-top:2px}
+  .chart{height:340px}
+  .chart-sm{height:260px}
+  .alert{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:12px;margin:10px 0}
+  .alert.risk{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.35)}
+  .alert.pos{background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.35)}
+  .alert .ico{font-size:20px;line-height:1}
+  .alert .tt{font-weight:700;margin-bottom:3px}
+  .alert .bd{font-size:13px;color:var(--txt2)}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:680px){.kpis{grid-template-columns:1fr 1fr}}
+  .kpi{padding:14px;text-align:center}
+  .kpi .v{font-size:24px;font-weight:800}
+  .kpi .l{font-size:11px;color:var(--txt2);margin-top:3px}
+  .plan-card{padding:18px 20px}
+  .plan-card h3{font-size:15px;margin-bottom:10px;color:#a5b4fc}
+  .li{display:flex;gap:10px;padding:7px 0;font-size:13px;border-bottom:1px dashed rgba(45,45,68,.7)}
+  .li .dot{margin-top:6px;width:7px;height:7px;border-radius:50%;flex:0 0 auto}
+  .d-red{background:var(--sell)} .d-green{background:var(--buy)} .d-amber{background:var(--hold)}
+  .foot{font-size:11px;color:var(--txt2);text-align:center;margin-top:26px;line-height:1.8}
+  .meta-pill{display:inline-block;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;margin:4px 6px 0 0}
+  .summary-line{font-size:15px;font-weight:600;padding:14px 18px;border-left:4px solid var(--sell);background:rgba(255,71,87,.07);border-radius:0 10px 10px 0;margin:6px 0 14px}
+  .compare{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .chip{font-size:11px;padding:4px 10px;border-radius:8px;background:rgba(45,45,68,.5);border:1px solid var(--border);color:var(--txt2)}
+  .chip.now{border-color:var(--sell);color:var(--sell)}
+  .chip.up{border-color:var(--buy);color:var(--buy)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="glass">
+    <div>
+      <h1>📊 A股午间复盘 · 决策仪表盘</h1>
+      <div class="sub">2026-07-24 周五 · 午间收盘（11:55，行情 11:55 更新）· 数据来源：腾讯财经 / 每经 / 新浪 / 东方财富 / 澎湃 午评</div>
+    </div>
+    <div class="badge danger">全线调整 · 个股普跌 · 避险防御</div>
+  </header>
+
+  <!-- 核心摘要 -->
+  <section>
+    <div class="summary-line">
+      今日早盘 A股 <b>避险情绪主导、指数与个股共振下挫</b>：三大指数<b>低开低走、全线收绿</b>——沪指 <b>-1.20%（3830.19）</b> / 深成指 <b>-1.77%（13873.50）</b> / 创业板指 <b>-1.78%（3511.75）</b> / <b>北证50 跌约 3%</b> / <b>科创50 逆势小涨 +0.27%（1794.48）</b>。全市场 <b>约 548 涨 / 4939 跌</b>，<b>赚钱效应广度骤降至 ≈10%</b>（昨日 60%、前日 36%），<b>超 4900 只个股飘绿</b>，为近一周最差；但<b>跌停仅 4 家</b>、无系统性恐慌。半日成交 <b>约 1.23 万亿</b>，较昨日 <b>缩量约 2306 亿</b>。结构呈「<b>指数跌、个股更跌、少数逆势题材独活</b>」：军工装备/中兵系/中船系、电网设备、半导体设备、端侧AI <b>逆势抗跌</b>；而昨日领涨的<b>贵金属、有色金属、算力租赁、AI应用集体补跌</b>，电力/通信/元件/证券/IT服务主力净流出居前。整体主力<b>净流出近 493 亿</b>，存量博弈、增量观望。操作上宜<b>「降仓避险、弃高位周期金融、守逆势主线、控现金」</b>：今日是明确的防守日，待广度回暖与指数止跌后再回补。
+    </div>
+    <div class="compare">
+      <span class="chip">7/13 冰点</span>
+      <span class="chip">7/14 弱修复（46%）</span>
+      <span class="chip">7/15 回暖分化（67.5%）</span>
+      <span class="chip">7/16 缩量回调（60.8%）</span>
+      <span class="chip">7/17 放量重挫（≈19%）</span>
+      <span class="chip">7/20 弱反弹（≈54%）</span>
+      <span class="chip up">7/21 深V反转（广度≈47%）</span>
+      <span class="chip">7/22 指数红·个股绿（≈36%）</span>
+      <span class="chip">7/23 指数绿·个股红（≈60%）</span>
+      <span class="chip now">▶ 7/24 全线调整·个股普跌（≈10%）</span>
+    </div>
+  </section>
+
+  <!-- 主要指数 -->
+  <section>
+    <div class="sec-title">📈 主要指数 · 午间收盘</div>
+    <div class="grid g3" id="idxCards"></div>
+  </section>
+
+  <!-- 市场概况 -->
+  <section>
+    <div class="sec-title">🌡️ 市场概况 · 涨跌家数 / 涨停跌停 / 成交</div>
+    <div class="grid g2">
+      <div class="card glass">
+        <div class="chart-sm" id="donut"></div>
+      </div>
+      <div class="card glass">
+        <div class="stat-row">
+          <div><div class="v up">32</div><div class="l">涨停</div></div>
+          <div><div class="v down">4</div><div class="l">跌停</div></div>
+          <div><div class="v down">≈10%</div><div class="l">广度赚钱效应</div></div>
+          <div><div class="v flat">1.23万亿</div><div class="l">半日成交</div></div>
+        </div>
+        <div class="li"><span class="dot d-red"></span><span>半日成交 <b>约 1.23 万亿（沪深 12253.66 亿）</b>，较 7/23 午间（14559.94 亿）<b>缩量约 2306 亿</b>；量能连续两日降温，属「缩量普跌」。</span></div>
+        <div class="li"><span class="dot d-red"></span><span><b>涨停 32 ＞ 跌停 4</b>，多空比 8（仍偏正面，无恐慌踩踏）；但<b>全市场约 548 涨 / 4939 跌、超 4900 只个股飘绿</b>——<b>「指数跌、个股更跌」</b>，赚钱效应广度骤降至 ≈10%，为 7/17 冰点（19%）以来最差。</span></div>
+        <div class="li"><span class="dot d-red"></span><span>广度 ≈10%（按涨跌家数加权），较昨日 <b>60% 大幅回落 50 个百分点</b>，与 7/22（36%）、7/23（60%）的「指数—个股背离」相反，今日<b>指数与个股同步走弱</b>，多数持仓者今日亏损。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 板块表现 -->
+  <section>
+    <div class="sec-title">🔥 板块表现 · 逆势主线 / 补跌方向</div>
+    <div class="grid g2">
+      <div class="card glass">
+        <h3 class="plan-card" style="padding:0 0 6px;color:var(--buy)">▲ 主力净流入居前概念（亿元 · 实值）</h3>
+        <div class="chart-sm" id="leadUp"></div>
+      </div>
+      <div class="card glass">
+        <h3 class="plan-card" style="padding:0 0 6px;color:var(--sell)">▼ 主力净流出居前行业（亿元 · 实值）</h3>
+        <div class="chart-sm" id="leadDown"></div>
+      </div>
+    </div>
+    <div class="card glass" style="margin-top:18px">
+      <div class="li"><span class="dot d-green"></span><span><b>军工装备 / 中兵系 / 中船系（今日最强逆势主线）</b>：板块 <b>+0.46%</b>，长城军工、湖南天雁走出 <b>2 连板</b>，建设工业封死涨停，航天南湖、内蒙一机、江龙船艇跟涨；驱动=十五五国防科创顶层规划落地+全军装备批量列装+实战化训练耗材增量+军民融合产业扩容，机构称产业链订单储备充足、业绩兑现确定性提升。</span></div>
+      <div class="li"><span class="dot d-green"></span><span><b>电网设备（迎峰度夏逻辑延续）</b>：长缆科技 <b>4 连板</b>，顺钠股份、太阳电缆、汉缆股份斩获 <b>2 连板</b>，中能电气涨超 10%；驱动=南方电网上半年固投 892.62 亿（同比 +14.79% 创同期最高、完成全年 1800 亿目标 49.59%）+ 多地用电负荷连创新高（江苏 1.5759 亿千瓦、浙江 1.33 亿、全国峰值 15.51 亿）。</span></div>
+      <div class="li"><span class="dot d-green"></span><span><b>半导体设备（逆势吸金）</b>：板块微跌 0.25% 但<b>主力净流入 +17.38 亿居所有行业首位</b>、至纯科技直线涨停、托伦斯涨超 12%、长川科技/华亚智能跟涨；驱动=SEMI 报告预计 2026 全球半导体设备销售额 +23.2% 至 1659 亿美元、2028 年创 2295 亿新高。</span></div>
+      <div class="li"><span class="dot d-green"></span><span><b>端侧AI（独立行情）</b>：博通集成直线涨停，带动细分芯片标的跟涨；华为海思概念主力净流入 <b>+15.26 亿</b>、氟化工 +11.08 亿（3 涨停）、先进封装 +10.84 亿（48 涨）、传感器 +6.60 亿（4 涨停）、玻璃基板 +6.17 亿。</span></div>
+      <div class="li"><span class="dot d-red"></span><span><b>周期金融高位兑现（今日补跌重灾区）</b>：电力 <b>-3.37%（净流出 34.00 亿）</b>、通信设备 -1.85%（净流出 33.32 亿）、元件 -2.42%（净流出 31.50 亿）、证券 -2.01%（净流出 26.99 亿）、IT 服务 -3.54%（净流出 19.63 亿）——资金从前几日累计涨幅较大的周期与金融品种明显获利了结。</span></div>
+      <div class="li"><span class="dot d-red"></span><span><b>昨日领涨资源今日补跌</b>：贵金属、有色金属（东方锆业、华锡有色等大幅下挫）、算力租赁（利通电子跌停）、AI 应用集体走弱——「前一天最强的，今天最弱」，轮动加快、持续性偏弱。</span></div>
+    </div>
+  </section>
+
+  <!-- 资金流向 -->
+  <section>
+    <div class="sec-title">💰 资金流向 · 主力净流入板块 / ETF / 北向</div>
+    <div class="grid g2">
+      <div class="card glass">
+        <h3 class="plan-card" style="padding:0 0 6px;color:#a5b4fc">主力净流入 TOP5（亿元 · 实值）</h3>
+        <div class="chart-sm" id="flow"></div>
+        <div style="font-size:11px;color:var(--txt2);margin-top:6px">★ 实值数据（每经）：主力净流入 <b>半导体 +17.38 亿（行业居首、板块微跌 0.25%、2 股涨停）/ 军工装备 +1.38 亿（板块 +0.46%）/ 军工电子 +2.98 亿 / 纺织制造 +1.37 亿</b>——逆势主线（科技硬件+军工）获资金逆向加仓；整体主力<b>净流出约 493.20 亿</b>（流入 4256 亿 / 流出 4749 亿）。</div>
+      </div>
+      <div class="card glass">
+        <h3 class="plan-card" style="padding:0 0 6px;color:#a5b4fc">ETF / 北向 / 净流出要点</h3>
+        <div class="kpis" style="margin-bottom:12px">
+          <div class="kpi"><div class="v down">-493</div><div class="l">主力净流出(亿·整体)</div></div>
+          <div class="kpi"><div class="v flat">12300</div><div class="l">半日成交(亿·缩量2306)</div></div>
+          <div class="kpi"><div class="v down">-34</div><div class="l">电力净流出(亿·居首)</div></div>
+          <div class="kpi"><div class="v up">4</div><div class="l">跌停(家·无恐慌)</div></div>
+        </div>
+        <div class="li"><span class="dot d-red"></span><span><b>整体主力净流出近 493 亿</b>：流入 4256 亿、流出 4749 亿，抛压集中于前几日累计涨幅大的周期与金融（电力 -34 亿、通信 -33.32 亿、元件 -31.50 亿、证券 -26.99 亿、IT 服务 -19.63 亿）。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>逆势吸金集中科技硬件+军工</b>：半导体 +17.38 亿居首（资金逆向加仓意愿强）、军工装备 +1.38 亿、军工电子 +2.98 亿、华为海思 +15.26 亿、氟化工 +11.08 亿、先进封装 +10.84 亿——调仓方向明确。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>ETF 交投活跃但普跌</b>：全市场 ETF 今日半日合计成交 <b>3153.9 亿（放量 440.8 亿）</b>，但仅 <b>130 余只 ETF 上涨</b>，避险/调仓资金在场内大幅换手。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>北向午盘分项未披露</b>：光大证券指「中东地缘进一步升温扰动全球风险偏好、海外科技估值仍待消化、增量资金不愿入场」，短线或延续「缩量弱势震荡、结构性分化」。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 情绪温度计 -->
+  <section>
+    <div class="sec-title">🧭 市场情绪仪表盘</div>
+    <div class="grid g2">
+      <div class="card glass"><div class="chart" id="mood"></div></div>
+      <div class="card glass">
+        <h3 class="plan-card" style="padding:0 0 6px">情绪诊断</h3>
+        <div class="li"><span class="dot d-red"></span><span><b>温度 32/100（全线调整 · 个股普跌 · 避险防御）</b>：较 7/23（63）断崖回落 31 点，逼近 7/17 冰点（22）；广度 ≈10%、超 4900 股飘绿，为近一周最差，属明确防守日。</span></div>
+        <div class="li"><span class="dot d-red"></span><span><b>广度骤降（核心负面）</b>：548 涨 ＜＜ 4939 跌，广度 ≈10%（昨日 60%、前日 36%），<b>「指数跌、账户更跌」</b>——赚钱效应从资源/周期扩散回落后，今日多数持仓者亏损，风险偏好快速收敛。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>跌停仅 4 家（缓冲项）</b>：虽广度极差，但无明显恐慌踩踏（对比 7/17 冰点 52 家跌停），说明是「缩量阴跌、高位兑现」而非「流动性踩踏」，尾部风险可控。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>逆势主线仍在</b>：军工/电网/半导体设备/端侧AI 逆势抗跌，科创50 收 +0.27%，显示结构性机会未绝；但持续性偏弱、轮动过快，不宜重仓追。</span></div>
+        <div class="li"><span class="dot d-red"></span><span><b>量能降温+地缘扰动</b>：半日缩量 2306 亿至 1.23 万亿，中东局势升温压制风险偏好，反弹需待增量资金回流信号。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 仓位管理 -->
+  <section>
+    <div class="sec-title">🎯 仓位管理推荐</div>
+    <div class="grid g2">
+      <div class="plan-card glass">
+        <h3>📦 仓位配置（降仓 · 避险 · 守逆势主线）</h3>
+        <div class="kpis">
+          <div class="kpi"><div class="v" style="color:var(--sell)">35-45%</div><div class="l">总仓位区间</div></div>
+          <div class="kpi"><div class="v up">50-60%</div><div class="l">现金 / 逆回购</div></div>
+          <div class="kpi"><div class="v" style="color:var(--buy)">军工/电网/半导体设备</div><div class="l">逆势小仓(不追高)</div></div>
+          <div class="kpi"><div class="v down">减</div><div class="l">周期金融/有色/算力租赁</div></div>
+        </div>
+      </div>
+      <div class="plan-card glass">
+        <h3>✅ 操作纪律 / 加减仓触发</h3>
+        <div class="li"><span class="dot d-green"></span><span><b>逆势小仓（低吸不追高）</b>：① <b>军工装备</b>（十五五规划+装备列装，长城军工/建设工业/内蒙一机，回踩不破 5 日线）；② <b>电网设备</b>（迎峰度夏+南网投资，长缆科技/顺钠/汉缆，连板不追）；③ <b>半导体设备/先进封装</b>（SEMI 上修，至纯科技/托伦斯/长川科技，逆势吸金但忌追长阳）；④ <b>端侧AI/华为海思</b> 细分龙头（博通集成等）。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>保留对冲</b>：高股息/银行/公用事业极小仓作压舱石，待主线确认后再调。</span></div>
+        <div class="li"><span class="dot d-red"></span><span><b>减 / 清仓</b>：① <b>高位周期金融</b>（电力 -34 亿、证券 -27 亿、有色/贵金属补跌）<b>果断降仓</b>；② <b>算力租赁/AI应用/光模块</b>（利通电子跌停、情绪退潮）；③ 昨日连续大涨的资源/油气<b>不抄底接飞刀</b>；④ 北证50（今日 -3%）高弹性品种减仓。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>回补确认（趋势转暖）</b>：沪指站稳 <b>3850-3870</b> + 半日成交回 1.5 万亿+ + 跌停维持 &lt;10 + 广度回升至 &gt;35% + 逆势主线延续。</span></div>
+        <div class="li"><span class="dot d-red"></span><span><b>失效 / 立即减仓</b>：沪指有效跌破 <b>3780</b>（下方 3743=7/21 最低）+ 或创业板破 3450 + 或跌停扩散至 &gt;30 + 或广度回落至 &lt;8% + 或中东地缘升级引发全球risk-off。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 风险与催化 -->
+  <section>
+    <div class="sec-title">⚠️ 风险警报 / 积极催化</div>
+    <div class="alert risk">
+      <div class="ico">🔴</div>
+      <div><div class="tt">风险警报</div>
+      <div class="bd">① <b>全线调整</b>：三大指数低开低走、全线下挫，沪指 -1.20%/深成 -1.77%/创业板 -1.78%/北证50 -3%；② <b>个股普跌</b>：超 4900 只个股飘绿、广度 ≈10%（近一周最差），多数持仓亏损；③ <b>整体主力净流出近 493 亿</b>，存量博弈、增量观望；④ <b>周期金融高位兑现</b>：电力/通信/元件/证券/IT服务净流出居前，昨日领涨资源（贵金属/有色/算力租赁/AI应用）今日补跌；⑤ <b>缩量 2306 亿</b>至 1.23 万亿，反弹动能不足；⑥ <b>地缘扰动</b>：中东局势升温压制全球风险偏好、海外科技估值仍待消化（光大证券）。</div></div>
+    </div>
+    <div class="alert pos">
+      <div class="ico">🟢</div>
+      <div><div class="tt">积极催化</div>
+      <div class="bd">① <b>军工顶层逻辑</b>：十五五国防科创规划落地+装备批量列装+实战化训练耗材增量+军民融合，订单储备充足；② <b>电网高景气</b>：南网上半年固投 892.62 亿（同比 +14.79% 创同期最高）+ 多地用电负荷连创新高（全国峰值 15.51 亿千瓦）；③ <b>半导体设备景气上修</b>：SEMI 预计 2026 全球设备销售额 +23.2% 至 1659 亿美元、2028 年创 2295 亿新高，板块逆势吸金 +17.38 亿；④ <b>跌停仅 4 家</b>：无系统性恐慌、尾部风险可控；⑤ <b>机构中期看多科技</b>：华安证券称「AI硬件将重回上涨主线，当下可能是下半年最佳入局时机」；⑥ 端侧AI/华为海思/先进封装等细分逆势活跃，结构性机会未绝。</div></div>
+    </div>
+  </section>
+
+  <!-- 信号归因 -->
+  <section>
+    <div class="sec-title">📊 信号归因 · 今日大盘定性由何而来</div>
+    <div class="card glass">
+      <div class="li"><span class="dot d-red"></span><span><b>指数层面（30%）</b>：三大指数低开低走、全线收绿——沪指 -1.20%（3830.19）、深成 -1.77%（13873.50）、创业板 -1.78%（3511.75）；<b>北证50 跌约 3%</b>、<b>科创50 逆势 +0.27%（1794.48）</b>。指数级信号偏弱（仅科创50收红，其余全绿），构成今日风险底色。</span></div>
+      <div class="li"><span class="dot d-red"></span><span><b>广度层面（30%）</b>：约 548 涨 ＜＜ 4939 跌，广度 ≈10%（昨日 60%、前日 36%），<b>「指数跌、个股更跌」</b>极端普跌——赚钱效应从资源/周期扩散回落后，今日多数持仓者亏损，<b>「宽度」成为今日最大负面拖累</b>，温度因此断崖至 32。</span></div>
+      <div class="li"><span class="dot d-red"></span><span><b>资金层面（30%）</b>：半日缩量 2306 亿至 1.23 万亿（量能降温）；<b>整体主力净流出近 493 亿</b>（流入 4256/流出 4749）；净流出居前=电力 -34 亿/通信 -33.32 亿/元件 -31.50 亿/证券 -26.99 亿/IT服务 -19.63 亿（周期金融高位兑现）；<b>跌停仅 4 家、涨停 32 家</b>，非恐慌踩踏、尾部风险可控。</span></div>
+      <div class="li"><span class="dot d-amber"></span><span><b>催化层面（10%）</b>：正面=军工顶层规划+南网投资创新高+SEMI上修半导体设备+用电负荷新高+华安看多AI硬件；负面=中东地缘升温+海外科技估值消化+缩量+周期金融兑现，多空交织但个股层面偏冷。</span></div>
+      <div class="li" style="border-bottom:none"><span class="dot d-green"></span><span><b>最强看多信号</b>：科创50 +0.27% + 半导体逆势吸金 +17.38 亿（居首）+ 军工/电网设备逆势连板 + 跌停仅 4 家（无恐慌）。　<b>最强看空信号</b>：三大指数全线下挫 + 广度 ≈10%（超 4900 股飘绿）+ 整体主力净流出近 493 亿 + 半日缩量 2306 亿 + 周期金融高位兑现。</span></div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span class="meta-pill">分析时间 2026-07-24 11:55 GMT+8</span>
+    <span class="meta-pill">策略：大盘午间复盘（多头趋势框架 · 风险优先）</span>
+    <span class="meta-pill">数据：腾讯财经 / 每经 / 新浪 / 东方财富 / 澎湃</span><br>
+    本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论基于公开午评与行情库数据，迷你走势图为基于午盘 OHLC 的示意路径，非逐笔成交还原；板块主力净流入/净流出（半导体 +17.38 亿、电力 -34.00 亿、通信设备 -33.32 亿、元件 -31.50 亿、证券 -26.99 亿、IT服务 -19.63 亿、华为海思 +15.26 亿、氟化工 +11.08 亿、先进封装 +10.84 亿、传感器 +6.60 亿、玻璃基板 +6.17 亿）为每经行情库实值数据；指数点位与涨跌幅为交易所实时行情；涨跌家数取 548 涨 / 4939 跌口径（腾讯/每经一致）；涨停 32 / 跌停 4 家；半日成交取 12253.66 亿元（沪深，约 1.23 万亿）；北证50 点位（-3.00%≈1068）为按涨跌幅推算的近似值，并非交易所披露精确值。
+  </div>
+
+</div>
+
+<script>
+// ===== 数据 =====
+const indices = [
+  {name:'上证指数', code:'000001', price:3830.19, chg:-1.20, spark:[3853.63,3861.04,3835,3822.22,3830.19]},
+  {name:'深证成指', code:'399001', price:13873.50, chg:-1.77, spark:[13915.04,14061.03,13850,13800.13,13873.50]},
+  {name:'创业板指', code:'399006', price:3511.75, chg:-1.78, spark:[3515.50,3561.35,3500,3488.09,3511.75]},
+  {name:'科创50',   code:'000688', price:1794.48, chg:0.27, spark:[1766.26,1748.80,1808.61,1770,1794.48]},
+  {name:'北证50',   code:'899050', price:1068.00, chg:-3.00, spark:[1095,1080,1068,1060,1068]},
+];
+
+// 指数卡片
+const ic = document.getElementById('idxCards');
+indices.forEach(d=>{
+  const cls = d.chg>0?'up':(d.chg<0?'down':'flat');
+  const sign = d.chg>0?'+':'';
+  ic.insertAdjacentHTML('beforeend', `
+    <div class="card glass">
+      <div class="idx-head"><span class="idx-name">${d.name}</span><span class="idx-code">${d.code}</span></div>
+      <div class="idx-price ${cls}">${d.price.toLocaleString()}</div>
+      <div class="idx-chg ${cls}">${sign}${d.chg.toFixed(2)}%</div>
+      <div class="spark" id="sp_${d.code}"></div>
+    </div>`);
+});
+indices.forEach(d=>{
+  const el=document.getElementById('sp_'+d.code);
+  const c=echarts.init(el);
+  c.setOption({
+    grid:{left:0,right:0,top:6,bottom:0},
+    xAxis:{type:'category',show:false,data:d.spark.map((_,i)=>i)},
+    yAxis:{type:'value',show:false,scale:true},
+    series:[{type:'line',data:d.spark,smooth:true,symbol:'none',
+      lineStyle:{width:2,color:d.chg<0?'#ff4757':'#00d4aa'},
+      areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[
+        {offset:0,color:d.chg<0?'rgba(255,71,87,.35)':'rgba(0,212,170,.35)'},
+        {offset:1,color:'rgba(0,0,0,0)'}])}}]
+  });
+  window.addEventListener('resize',()=>c.resize());
+});
+
+// 涨跌家数 donut
+const donut=echarts.init(document.getElementById('donut'));
+donut.setOption({
+  title:{text:'涨跌家数',left:'center',top:6,textStyle:{color:'#e2e8f0',fontSize:14}},
+  tooltip:{trigger:'item',formatter:'{b}: {c} ({d}%)'},
+  legend:{bottom:4,textStyle:{color:'#94a3b8',fontSize:11},itemWidth:10,itemHeight:10},
+  series:[{type:'pie',radius:['45%','70%'],center:['50%','52%'],
+    label:{show:false},
+    data:[
+      {name:'上涨',value:548,itemStyle:{color:'#00d4aa'}},
+      {name:'下跌',value:4939,itemStyle:{color:'#ff4757'}},
+      {name:'平盘',value:13,itemStyle:{color:'#ffa502'}}
+    ]}]
+});
+window.addEventListener('resize',()=>donut.resize());
+
+// 主力净流入居前概念（亿元 · 实值）
+const up=echarts.init(document.getElementById('leadUp'));
+up.setOption({
+  grid:{left:110,right:48,top:10,bottom:10},
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:'{b}<br/>{c} 亿'},
+  xAxis:{type:'value',axisLabel:{color:'#94a3b8',formatter:'{value}'}},
+  yAxis:{type:'category',data:['玻璃基板','传感器','先进封装','氟化工','华为海思'],axisLabel:{color:'#e2e8f0'}},
+  series:[{type:'bar',data:[6.17,6.60,10.84,11.08,15.26],
+    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[
+      {offset:0,color:'#00d4aa'},{offset:1,color:'#00b894'}])},
+    label:{show:true,position:'right',color:'#00d4aa',formatter:'{c}'}}]
+});
+window.addEventListener('resize',()=>up.resize());
+
+// 主力净流出居前行业（亿元 · 实值）
+const dn=echarts.init(document.getElementById('leadDown'));
+dn.setOption({
+  grid:{left:110,right:48,top:10,bottom:10},
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:'{b}<br/>{c} 亿'},
+  xAxis:{type:'value',axisLabel:{color:'#94a3b8',formatter:'{value}'}},
+  yAxis:{type:'category',data:['IT服务','证券','元件','通信设备','电力'],axisLabel:{color:'#e2e8f0'}},
+  series:[{type:'bar',data:[-19.63,-26.99,-31.50,-33.32,-34.00],
+    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[
+      {offset:0,color:'#ff4757'},{offset:1,color:'#ff6b81'}])},
+    label:{show:true,position:'left',color:'#ff4757',formatter:'{c}'}}]
+});
+window.addEventListener('resize',()=>dn.resize());
+
+// 资金流向（主力净流入 TOP5，亿元 · 实值）
+const flow=echarts.init(document.getElementById('flow'));
+flow.setOption({
+  grid:{left:120,right:46,top:10,bottom:10},
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:'{b}<br/>{c} 亿'},
+  xAxis:{type:'value',axisLabel:{color:'#94a3b8',formatter:'{value}'}},
+  yAxis:{type:'category',data:['军工电子','纺织制造','军工装备','半导体','整体净流出'],axisLabel:{color:'#e2e8f0'}},
+  series:[{type:'bar',data:[2.98,1.37,1.38,17.38,-493.20],
+    itemStyle:{color:p=>p.value<0?'#ff4757':'#00d4aa'},
+    label:{show:true,position:'right',color:'#e2e8f0',formatter:'{c}'}}]
+});
+window.addEventListener('resize',()=>flow.resize());
+
+// 情绪温度计
+const mood=echarts.init(document.getElementById('mood'));
+mood.setOption({
+  series:[{
+    type:'gauge',startAngle:200,endAngle:-20,min:0,max:100,
+    center:['50%','58%'],radius:'82%',
+    progress:{show:true,width:18,itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[
+      {offset:0,color:'#ff4757'},{offset:0.5,color:'#ffa502'},{offset:1,color:'#00d4aa'}])}},
+    axisLine:{lineStyle:{width:18,color:[[0.4,'#ff4757'],[0.6,'#ffa502'],[1,'#00d4aa']]}},
+    pointer:{itemStyle:{color:'#e2e8f0'}},
+    axisTick:{distance:-22,length:5,lineStyle:{color:'#94a3b8'}},
+    splitLine:{distance:-26,length:12,lineStyle:{color:'#94a3b8'}},
+    axisLabel:{distance:-2,color:'#94a3b8',fontSize:10},
+    anchor:{show:true,size:14,itemStyle:{color:'#e2e8f0'}},
+    detail:{valueAnimation:true,formatter:'{value} 分',color:'#e2e8f0',fontSize:30,offsetCenter:[0,'42%']},
+    title:{offsetCenter:[0,'70%'],color:'#94a3b8',fontSize:13},
+    data:[{value:32,name:'市场情绪：全线调整 · 个股普跌 · 避险防御'}]
+  }]
+});
+window.addEventListener('resize',()=>mood.resize());
+</script>
+</body>
+</html>
