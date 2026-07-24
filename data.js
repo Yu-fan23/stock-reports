@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-07-24 16:45:58",
-  "total": 45,
+  "generatedAt": "2026-07-25 07:46:00",
+  "total": 46,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 10,
-      "latest": "20260724",
+      "count": 11,
+      "latest": "20260725",
       "reports": [
+        {
+          "date": "20260725",
+          "dateLabel": "2026-07-25（周六）",
+          "file": "reports/panqian/panqian_20260725.html",
+          "title": "盘前交易计划 | 2026年7月27日（周一）· v15.0 盘前版 · 主线大切换：半导体设备/端侧AI+军工逆势崛起，电力/锂矿/油气贵金属退潮；破3830降防+长鑫7/27挂牌+固态电池政策",
+          "size": 57937
+        },
         {
           "date": "20260724",
           "dateLabel": "2026-07-24（周五）",
