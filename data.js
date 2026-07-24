@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-07-24 13:06:13",
-  "total": 43,
+  "generatedAt": "2026-07-24 15:46:11",
+  "total": 44,
   "categories": [
     {
       "key": "panqian",
@@ -170,9 +170,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 14,
-      "latest": "20260723",
+      "count": 15,
+      "latest": "20260724",
       "reports": [
+        {
+          "date": "20260724",
+          "dateLabel": "2026-07-24（周五）",
+          "file": "reports/close/close_20260724.html",
+          "title": "A股行情复盘 · 2026-07-24（周五·收盘版·3800告急·深成创业收最低点·军工半导体回流·两融重减·下调防御）· 星辰",
+          "size": 36561
+        },
         {
           "date": "20260723",
           "dateLabel": "2026-07-23（周四）",
