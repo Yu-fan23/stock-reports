@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-07-25 16:45:33",
-  "total": 49,
+  "generatedAt": "2026-07-26 07:45:29",
+  "total": 50,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 11,
-      "latest": "20260725",
+      "count": 12,
+      "latest": "20260726",
       "reports": [
+        {
+          "date": "20260726",
+          "dateLabel": "2026-07-26（周日）",
+          "file": "reports/panqian/panqian_20260726.html",
+          "title": "盘前交易计划 | 2026年7月27日（周一）· v16.0 终版 · 周末重大变化：宁德时代200-400亿史诗回购+长鑫7/27挂牌+地缘再升级+固态电池标准开幕；主线重排「半导体设备/端侧AI + 军工 + 固态电池/新能源」",
+          "size": 59990
+        },
         {
           "date": "20260725",
           "dateLabel": "2026-07-25（周六）",
