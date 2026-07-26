@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-07-26 16:45:21",
-  "total": 53,
+  "generatedAt": "2026-07-27 07:45:21",
+  "total": 54,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 12,
-      "latest": "20260726",
+      "count": 13,
+      "latest": "20260727",
       "reports": [
+        {
+          "date": "20260727",
+          "dateLabel": "2026-07-27（周一）",
+          "file": "reports/panqian/panqian_20260727.html",
+          "title": "盘前交易计划 | 2026年7月27日（周一）· v17.0 终版 · 长鑫今日上市+9500亿芯片大单+央行2.1万亿逆回购+地缘缓和油价回落+两高新规；主线强化「半导体设备/封测/端侧AI + 固态电池/新能源 + 军工」",
+          "size": 61433
+        },
         {
           "date": "20260726",
           "dateLabel": "2026-07-26（周日）",
