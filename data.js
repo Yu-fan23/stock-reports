@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-07-27 16:45:20",
-  "total": 60,
+  "generatedAt": "2026-07-28 07:45:38",
+  "total": 61,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 13,
-      "latest": "20260727",
+      "count": 14,
+      "latest": "20260728",
       "reports": [
+        {
+          "date": "20260728",
+          "dateLabel": "2026-07-28（周二）",
+          "file": "reports/panqian/panqian_20260728.html",
+          "title": "盘前交易计划 | 2026年7月28日（周二）· v18.0 · 长鑫首日+465%登顶A股一哥引爆硬科技、沪指收回3830、油气退潮油价暴跌、创新药/脑机接口重新走强；主线强化「半导体/硬科技 + 固态电池/新能源 + 军工」",
+          "size": 61617
+        },
         {
           "date": "20260727",
           "dateLabel": "2026-07-27（周一）",
