@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-07-27 07:45:21",
-  "total": 54,
+  "generatedAt": "2026-07-27 08:21:28",
+  "total": 57,
   "categories": [
     {
       "key": "panqian",
@@ -421,6 +421,38 @@ window.SITE_DATA = {
           "file": "reports/limitup/limitup_20260710.html",
           "title": "涨停梯队复盘 · 2026-07-10（周五）",
           "size": 27643
+        }
+      ]
+    },
+    {
+      "key": "global",
+      "name": "全球热点",
+      "time": "08:00",
+      "icon": "🌐",
+      "color": "#7c5cff",
+      "count": 3,
+      "latest": "20260727",
+      "reports": [
+        {
+          "date": "20260727",
+          "dateLabel": "2026-07-27（周一）",
+          "file": "reports/global/global_20260727.html",
+          "title": "全球资本市场十大热点（7月26日盘后 — 7月27日早8点）",
+          "size": 9977
+        },
+        {
+          "date": "20260726",
+          "dateLabel": "2026-07-26（周日）",
+          "file": "reports/global/global_20260726.html",
+          "title": "全球资本市场十大热点（7月24日美盘收盘 — 7月26日早8点）",
+          "size": 10207
+        },
+        {
+          "date": "20260724",
+          "dateLabel": "2026-07-24（周五）",
+          "file": "reports/global/global_20260724.html",
+          "title": "全球资本市场十大热点（7月23日美盘收盘 — 7月24日早8点）",
+          "size": 6900
         }
       ]
     }
