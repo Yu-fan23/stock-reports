@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盘前交易计划 | 2026年7月29日（周三）· v19.0 · 科技崩塌→高低切换，FOMC日：主线重排为「大消费(白酒/食品) + 医药/脑机接口 + 财税数字化/信创软件」，半导体/CPO/存储彻底退潮</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0f0f23; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; line-height: 1.7; padding: 20px; max-width: 1200px; margin: 0 auto; }
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 28px 32px; margin-bottom: 24px; border: 1px solid #2d2d44; }
+  .header h1 { font-size: 24px; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; }
+  .header .subtitle { color: #94a3b8; font-size: 14px; margin-bottom: 12px; }
+  .header .meta { color: #94a3b8; font-size: 13px; display: flex; gap: 20px; flex-wrap: wrap; }
+  .header .meta .tag { background: rgba(0,212,170,0.2); color: #00d4aa; padding: 2px 10px; border-radius: 10px; font-size: 12px; }
+  .header .meta .tag.warn { background: rgba(255,165,2,0.2); color: #ffa502; }
+  .header .meta .tag.green { background: rgba(0,212,170,0.2); color: #00d4aa; }
+  .summary-bar { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 24px 28px; margin-bottom: 24px; border: 1px solid #ffa502; border-left: 4px solid #ffa502; }
+  .summary-bar .verdict { font-size: 20px; font-weight: 800; color: #ffa502; margin-bottom: 8px; }
+  .summary-bar .verdict-desc { color: #cbd5e1; font-size: 14px; }
+  .q3-box { border-radius: 14px; padding: 20px 24px; margin-bottom: 24px; background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%); border: 1px solid #667eea; }
+  .q3-box h2 { font-size: 18px; color: #a78bfa; margin-bottom: 14px; }
+  .q3-item { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid rgba(45,45,68,0.5); }
+  .q3-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .q3-item .ql { font-size: 15px; font-weight: 700; color: #e2e8f0; margin-bottom: 6px; }
+  .q3-item .qa { font-size: 14px; color: #cbd5e1; }
+  .q3-item .qa b { color: #00d4aa; }
+  .q3-item .qa .r { color: #ffa502; }
+  .verify-box { border-radius: 10px; padding: 12px 16px; margin-bottom: 12px; font-size: 13px; }
+  .verify-bull { background: rgba(0,212,170,0.08); border-left: 3px solid #00d4aa; }
+  .verify-warn { background: rgba(255,165,2,0.08); border-left: 3px solid #ffa502; }
+  .verify-danger { background: rgba(255,71,87,0.08); border-left: 3px solid #ff4757; }
+  .index-cards { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 24px; }
+  .index-card { background: #1a1a2e; border-radius: 12px; padding: 16px; border: 1px solid #2d2d44; text-align: center; }
+  .index-card .name { font-size: 12px; color: #94a3b8; margin-bottom: 6px; }
+  .index-card .price { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .index-card .change { font-size: 13px; font-weight: 600; }
+  .index-card .change.green { color: #00d4aa; }
+  .index-card .change.red { color: #ff4757; }
+  .index-card .sub { font-size: 10px; color: #64748b; margin-top: 4px; }
+  .section { background: #1a1a2e; border-radius: 16px; padding: 24px 28px; margin-bottom: 20px; border: 1px solid #2d2d44; }
+  .section-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .section-title .num { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .theme-card { background: #16213e; border-radius: 14px; padding: 22px; margin-bottom: 16px; border: 1px solid #2d2d44; transition: border-color 0.3s; }
+  .theme-card:hover { border-color: #667eea; }
+  .theme-card.buy { border-left: 4px solid #00d4aa; }
+  .theme-card.watch { border-left: 4px solid #ffa502; }
+  .theme-card.avoid { border-left: 4px solid #ff4757; }
+  .theme-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+  .theme-name { font-size: 17px; font-weight: 700; }
+  .theme-signal { padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; }
+  .theme-signal.buy { background: rgba(0,212,170,0.15); color: #00d4aa; }
+  .theme-signal.watch { background: rgba(255,165,2,0.15); color: #ffa502; }
+  .theme-signal.avoid { background: rgba(255,71,87,0.15); color: #ff4757; }
+  .theme-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .theme-row .label { color: #64748b; font-size: 13px; margin-bottom: 4px; }
+  .theme-row .value { color: #e2e8f0; font-size: 14px; }
+  .theme-stocks { background: rgba(0,0,0,0.2); border-radius: 8px; padding: 12px 14px; margin-top: 8px; }
+  .theme-stocks .label { color: #64748b; font-size: 12px; margin-bottom: 6px; }
+  .stock-tag { display: inline-block; background: rgba(102,126,234,0.15); color: #a78bfa; padding: 3px 10px; border-radius: 6px; font-size: 12px; margin: 2px 4px 2px 0; }
+  .stock-tag.hl { background: rgba(0,212,170,0.15); color: #00d4aa; }
+  .stock-tag.gold { background: rgba(255,165,2,0.15); color: #ffa502; }
+  .catalyst-list { margin-top: 8px; }
+  .catalyst-list li { list-style: none; padding: 4px 0; font-size: 13px; color: #cbd5e1; padding-left: 18px; position: relative; }
+  .catalyst-list li::before { content: '▸'; position: absolute; left: 0; color: #667eea; }
+  .catalyst-list li.neg::before { color: #ff4757; }
+  .catalyst-list li.pos::before { color: #00d4aa; }
+  .stage-bar { background: rgba(0,0,0,0.3); border-radius: 8px; height: 32px; display: flex; align-items: center; position: relative; margin: 10px 0; overflow: hidden; }
+  .stage-segment { flex: 1; text-align: center; font-size: 11px; color: #64748b; border-right: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 1; }
+  .stage-segment:last-child { border-right: none; }
+  .stage-marker { position: absolute; top: 0; height: 100%; border-radius: 8px; z-index: 0; }
+  .stage-marker.buy { background: linear-gradient(90deg, rgba(0,212,170,0.3), rgba(0,212,170,0.5)); }
+  .stage-marker.warm { background: linear-gradient(90deg, rgba(255,165,2,0.3), rgba(255,165,2,0.5)); }
+  .plan-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .plan-table th { background: rgba(102,126,234,0.1); color: #a78bfa; padding: 10px 12px; text-align: left; font-weight: 600; border-bottom: 1px solid #2d2d44; }
+  .plan-table td { padding: 10px 12px; border-bottom: 1px solid rgba(45,45,68,0.5); color: #cbd5e1; }
+  .plan-table tr:hover td { background: rgba(102,126,234,0.05); }
+  .plan-table .action-buy { color: #00d4aa; font-weight: 600; }
+  .plan-table .action-sell { color: #ff4757; font-weight: 600; }
+  .plan-table .action-hold { color: #ffa502; font-weight: 600; }
+  .position-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center; }
+  .position-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #16213e; border-radius: 8px; margin-bottom: 8px; border: 1px solid #2d2d44; }
+  .position-item .name { font-size: 14px; }
+  .position-item .pct { font-size: 16px; font-weight: 700; }
+  .position-item .pct.green { color: #00d4aa; }
+  .position-item .pct.orange { color: #ffa502; }
+  .position-item .pct.gray { color: #64748b; }
+  .alert-box { border-radius: 10px; padding: 14px 18px; margin-bottom: 12px; font-size: 14px; }
+  .alert-box.danger { background: rgba(255,71,87,0.08); border: 1px solid rgba(255,71,87,0.3); color: #ff6b7a; }
+  .alert-box.success { background: rgba(0,212,170,0.08); border: 1px solid rgba(0,212,170,0.3); color: #3dd9b0; }
+  .alert-box.warning { background: rgba(255,165,2,0.08); border: 1px solid rgba(255,165,2,0.3); color: #ffb84d; }
+  .alert-box .title { font-weight: 700; margin-bottom: 4px; }
+  .checklist { list-style: none; }
+  .checklist li { padding: 8px 0 8px 28px; position: relative; font-size: 14px; color: #cbd5e1; border-bottom: 1px solid rgba(45,45,68,0.3); }
+  .checklist li::before { content: '☐'; position: absolute; left: 0; font-size: 18px; color: #667eea; }
+  .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .scenario-card { background: #16213e; border-radius: 12px; padding: 16px; border: 1px solid #2d2d44; }
+  .scenario-card .prob { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+  .scenario-card .prob.neutral { color: #ffa502; }
+  .scenario-card .prob.bear { color: #ff4757; }
+  .scenario-card .prob.bull { color: #00d4aa; }
+  .scenario-card .desc { font-size: 13px; color: #94a3b8; }
+  .chart-container { width: 100%; height: 320px; margin: 10px 0; }
+  .level-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 16px; }
+  .level-card { background: #16213e; border-radius: 10px; padding: 14px; border: 1px solid #2d2d44; text-align: center; }
+  .level-card .label { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+  .level-card .value { font-size: 20px; font-weight: 700; }
+  .level-card .value.red { color: #ff4757; }
+  .level-card .value.green { color: #00d4aa; }
+  .level-card .value.orange { color: #ffa502; }
+  .level-card .note { font-size: 11px; color: #64748b; margin-top: 2px; }
+  .footer { text-align: center; color: #475569; font-size: 12px; padding: 20px 0; border-top: 1px solid #2d2d44; margin-top: 24px; }
+  .footer .disclaimer { background: rgba(255,71,87,0.05); border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; color: #94a3b8; font-size: 12px; text-align: left; }
+  @media (max-width: 768px) {
+    .index-cards { grid-template-columns: repeat(2, 1fr); }
+    .theme-row { grid-template-columns: 1fr; }
+    .position-grid { grid-template-columns: 1fr; }
+    .scenario-grid { grid-template-columns: 1fr; }
+    .level-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+  <h1>盘前交易计划 | 2026年7月29日（周三）· v19.0 · 科技崩塌→高低切换，FOMC日：主线重排为「大消费(白酒/食品) + 医药/脑机接口 + 财税数字化/信创软件」，半导体/CPO/存储彻底退潮</h1>
+  <div class="subtitle">⚠️ <b style="color:#ffa502">v18.0（7/28盘前）"科技主升加速"假设被7/28收盘全面证伪——市场完成极端高低切换</b>：半导体-7.47%/CPO-15%/元件跌停潮、创业板-7.35%(较年内高点跌逾千点)、长鑫-4.08%收于47元(市值3.14万亿)；逆势新主线=<b>大消费(食品饮料+2.14%/白酒领涨·金种子涨停·茅台+2.37%) + 医药脑机(海南海药/创新医疗涨停潮) + 财税数字化(科蓝/南天/浪潮涨停)</b>。今日为<b>美联储7/29 FOMC日</b>(北京时间7/30凌晨出结果，CME 84.5%按兵不动但偏鹰)，总仓<b style="color:#ffa502">30-40%</b>(防守+低位主线)。</div>
+  <div class="meta">
+    <span>📊 数据截至：2026-07-28 A股全天收盘（上证3813.31 -1.16%、创业板3327.03 -7.35%、科创50 1693.48 -6.33%）+ 2026-07-28 美股收盘（道指+0.51%/纳指-0.18%/费半-2.23%/英伟达-4.99%/闪迪-11%）+ 2026-07-29 盘前</span>
+    <span>🔥 情绪评级：<span class="tag warn">高低切换 · 科技退潮 · 低位防御 · FOMC前夕偏谨慎</span></span>
+    <span>⏰ 生成时间：2026-07-29 06:55</span>
+  </div>
+</div>
+
+<!-- ===== SUMMARY BAR ===== -->
+<div class="summary-bar">
+  <div class="verdict">🟠 核心判断：总仓位 <b>30-40%</b>（7/28科技崩塌+创业板-7.35%风险偏好骤降，较v18.0的40-50%下调；今日FOMC结果北京时间凌晨落地，白天交易在前、不确定性高），三大主流重排为「<b>大消费(白酒/食品饮料/乳业·12-15%) + 医药/脑机接口(8-10%) + 财税数字化/信创软件(6-8%)</b>」+ 银行/红利防御底仓(0-3%) + 现金(55-65%)；破3780降至25%防御、破3740极端20%。</div>
+  <div class="verdict-desc">
+    <b style="color:#ffa502">7/28收盘四大转折信号（彻底重排v18.0主线）</b>：① <b>科技全面崩塌</b>——半导体-7.47%、CPO中际旭创-15.69%/新易盛-17%、元件(沪电/生益/东山等)跌停潮、创业板-7.35%(较6/25高点4380跌逾千点)、长鑫-4.08%收47元(市值3.14万亿)；v18.0"半导体主升加速BUY"被证伪；② <b>大消费逆势最强</b>——食品饮料+2.14%、白酒领涨(金种子酒涨停/茅台+2.37%/今世缘+4.6%)、乳业(一鸣食品涨停/品渥+10.8%)；茅台直营提价(北京上海1719元、i茅台1639)催化；③ <b>医药/脑机接口连续涨停潮</b>——海南海药(9天4板)/创新医疗/爱朋医疗(+18.58%)涨停，美国Science Corp.视网膜芯片欧盟获批(BCI商业化里程碑)再添催化；④ <b>财税数字化/信创逆势</b>——科蓝/南天/浪潮/天融信/久其软件涨停，AI应用从硬件切软件。<br>
+    <b style="color:#00d4aa">隔夜（7/29凌晨）新变量</b>：① 美股<b>芯片风暴延续</b>(费半-2.23%/英伟达-4.99%因循环融资质疑+为OpenAI担保2500亿/闪迪-11%/美光-8.85%)，A股科技今日继续承压、不抄底；② <b>美联储今日FOMC</b>(CME 84.5%按兵不动3.5-3.75%、偏鹰、1-3鹰派反对票；真正悬念9月加息)→结果北京时间7/30凌晨落地，白天A股在结果前交易、偏谨慎；③ 苹果+1%创新高重夺全球第一(4.95万亿)，中概金龙指数+2.51%→资金高低切向防御/消费。<br>
+    <b style="color:#ff4757">仍存风险</b>：创业板-7.35%恐慌未止、科创50破1700、FOMC偏鹰或压制成长、科技财报季(微软/Meta/苹果本周)高估值扰动；纯科技(半导体/CPO/存储/元件)坚决回避。<br>
+    <b style="color:#ffa502">盘前策略：做低位前排换手（白酒/食品核心+脑机前排+财税软件），回避高位科技，银行/红利作防御底仓，现金守FOMC结果；不重仓押方向。</b>
+  </div>
+</div>
+
+<!-- ===== 三大问题速答 ===== -->
+<div class="q3-box">
+  <h2>📌 三个核心问题速答（7/29 周三盘前版 · v19.0）</h2>
+  <div class="q3-item">
+    <div class="ql">Q1 · 当下的主流题材是什么？（至多3个）</div>
+    <div class="qa">
+      ① <b>大消费（白酒 / 食品饮料 / 乳业 / 教育）</b> —— <b>7/28逆势最强主线·高低切换核心受益</b>。食品饮料+2.14%、白酒领涨(金种子酒涨停/今世缘+4.6%/泸州老窖+3.9%/茅台+2.37%)；乳业一鸣食品涨停、品渥食品+10.8%；茅台直营提价(北京上海1719元、i茅台7/18起1539→1639)催化行业价格回暖；板块估值十年极低(食品饮料PE约20X)。<br>
+      ② <b>医药 / 创新药 / 脑机接口</b> —— <b>连续2日涨停潮·BCI商业化催化</b>。海南海药(9天4板)/创新医疗/爱朋医疗(+18.58%)涨停，岩山科技/南京熊猫/塞力医疗跟板；美国Science Corp.视网膜芯片欧盟获批(BCI首例大规模商业化)强化脑机接口叙事；哈三联(4天3板)/珍宝岛(8天4板)延续。<br>
+      ③ <b>财税数字化 / 信创软件（AI应用从硬件→软件切换）</b> —— <b>7/28逆势涨停潮</b>。科蓝软件/天地在线/南天信息/浪潮软件/天融信/久其软件涨停，智度股份/数字认证/华宇软件跟涨；数字中国+财税改革+国产软件自主可控逻辑。<br>
+      <span class="r">（半导体/CPO/存储/元件：7/28崩塌→退潮AVOID；固态电池：-1.99%退潮分化；军工：-1.46%防御支线；银行/红利：建行盘中创历史新高→防御底仓0-3%）</span>
+    </div>
+  </div>
+  <div class="q3-item">
+    <div class="ql">Q2 · 主流题材的核心是谁？</div>
+    <div class="qa">
+      ① 大消费：<b>贵州茅台(600519·中军/1320/+2.37%/提价托底)</b>；<b>金种子酒(600199·涨停·弹性龙)、一鸣食品(605179·涨停·乳业)、品渥食品(300892·+10.8%)、盐津铺子(002847·涨停)、东鹏饮料(+5.28%)、万辰集团(+6.57%)</b>；白酒跟涨<b>今世缘/泸州老窖/迎驾贡酒</b>。<br>
+      ② 医药/脑机：<b>海南海药(000566·9天4板·BCI)、创新医疗(002173·脑机涨停)、爱朋医疗(300753·+18.58%·BCI)、哈三联(4天3板)、珍宝岛(8天4板)、岩山科技/南京熊猫/塞力医疗(涨停)</b>；<b>药明康德(中军)</b>。<br>
+      ③ 财税数字化/信创软件：<b>科蓝软件/南天信息/浪潮软件/天融信/久其软件(涨停前排)</b>；<b>智度股份(前期2连板·跟涨)、数字认证/华宇软件</b>。<br>
+    </div>
+  </div>
+  <div class="q3-item">
+    <div class="ql">Q3 · 走到哪个阶段？能不能买？盘前交易计划？</div>
+    <div class="qa">
+      ① 大消费 = <b>启动/分歧转强期（低位+茅台提价+防御避险）</b>，<span class="r">能买：分批低吸核心(茅台/金种子/一鸣/品渥)，不追涨停加速；食品饮料ETF(516900)/酒ETF(512690·+2.38%)可配置</span>；<br>
+      ② 医药/脑机 = <b>加速分化期（连板高位+BCI催化但后排易掉队）</b>，<span class="r">能买小仓：前排换手(海南海药/创新医疗/爱朋)+中军(药明康德)低吸，不追加速</span>；<br>
+      ③ 财税数字化/软件 = <b>启动发酵期（AI应用硬件→软件切换）</b>，<span class="r">能买小仓：前排换手(科蓝/南天/浪潮)，不追一字板</span>。<br>
+      <b>总计划：总仓30-40%，大消费12-15% + 医药脑机8-10% + 财税软件6-8% + 银行红利底仓0-3% + 现金55-65%；弃半导体/CPO/存储/元件高位(退潮)，做低位前排换手+中军分歧低吸，FOMC前夕不重仓押方向、现金守结果；破3780降至25%、破3740极端20%。</b>
+    </div>
+  </div>
+</div>
+
+<!-- ===== v18.0 → v19.0 变化 ===== -->
+<div class="verify-box verify-danger">
+  <strong style="color:#ff4757">🔁 v18.0（7/28盘前）→ v19.0（7/29盘前）哪些被验证 / 哪些被彻底证伪</strong><br>
+  <b style="color:#ff4757">⚠️ v18.0核心假设"半导体/硬科技主升加速→主攻(15-18%)"被7/28收盘全面证伪</b>：半导体-7.47%、CPO中际旭创-15.69%/新易盛-17%、元件(沪电/生益/东山等)跌停潮、长鑫-4.08%收47元(市值3.14万亿)、创业板-7.35%(较年内高点跌逾千点)——是v18.0"悲观情景25%"的兑现，隔夜美股芯片仍跌(费半-2.23%/英伟达-4.99%)→科技退潮确认，仓位由40-50%降至30-40%。<br>
+  <b style="color:#00d4aa">✅ v18.0"创新药/脑机WATCH支线"判断正确延续并升格</b>：7/28脑机接口涨停潮(海南海药/创新医疗/爱朋医疗+18.58%)→升为#2主线(8-10%)。<br>
+  <b style="color:#00d4aa">✅ v18.0"固态电池启动发酵"被弱化为退潮分化</b>：固态电池-1.99%→降至支线/回避；<b style="color:#00d4aa">✅ "军工高潮分化"被降级</b>：7/28军工-1.46%(整体微跌)→防御支线。<br>
+  <b style="color:#ffa502">⚠️ 新增主线（v18.0未覆盖）</b>：① <b>大消费</b>——7/28食品饮料+2.14%/白酒领涨(茅台提价催化)→升为#1主线(12-15%)；② <b>财税数字化/信创软件</b>——逆势涨停潮→升为#3主线(6-8%)；③ <b>银行/红利</b>——建行盘中创历史新高→防御底仓(0-3%)。<br>
+  <b style="color:#ff4757">⚠️ FOMC变量</b>：美联储7/29议息(北京时间7/30凌晨出结果，偏鹰/84.5%按兵不动)→白天A股在结果前交易，策略以谨慎防御+低位前排低吸为主、不重仓押方向。
+</div>
+<div class="verify-box verify-bull">
+  <strong style="color:#00d4aa">🔁 今日（7/29）必须盯的落地事件</strong><br>
+  <b>① 美联储7/29 FOMC</b>：结果北京时间7/30凌晨02:00落地，CME 84.5%维持3.5-3.75%、偏鹰声明/发布会(1-3鹰派反对票)、真正悬念在9月加息→白天交易在结果前，偏谨慎；偏鹰则成长继续承压、利好防御/消费/红利。<br>
+  <b>② 科技退潮是否止跌</b>：半导体/CPO/存储/元件7/28暴跌后，隔夜美股芯片仍跌(费半-2.23%/英伟达-4.99%)→观察长鑫(47元)/中际旭创(908元)是否缩量企稳，不抄底。<br>
+  <b>③ 低位主线(大消费/医药脑机/财税软件)延续性</b>：7/28逆势涨停潮的次日承接，前排(金种子/海南海药/科蓝)能否换手晋级、后排是否掉队。<br>
+  <b>④ 科技财报季</b>：微软/Meta/高通/苹果/亚马逊本周披露→检验AI支出叙事，影响全球成长股估值。<br>
+  <b>⑤ 油价/地缘</b>：美伊停火持续→布油回落至85附近、通胀预期缓和，利好消费/成长估值、压制油气贵金属。
+</div>
+
+<!-- ===== INDEX CARDS ===== -->
+<div class="index-cards">
+  <div class="index-card">
+    <div class="name">上证(7/28收盘)</div>
+    <div class="price" style="color:#ff4757;">3813.31</div>
+    <div class="change red">-1.16%</div>
+    <div class="sub">最低3797·守住3780</div>
+  </div>
+  <div class="index-card">
+    <div class="name">创业板指</div>
+    <div class="price" style="color:#ff4757;">3327.03</div>
+    <div class="change red">-7.35%</div>
+    <div class="sub">较年内高点跌逾千点</div>
+  </div>
+  <div class="index-card">
+    <div class="name">科创50</div>
+    <div class="price" style="color:#ff4757;">1693.48</div>
+    <div class="change red">-6.33%</div>
+    <div class="sub">破1700·科技崩塌</div>
+  </div>
+  <div class="index-card">
+    <div class="name">两市成交</div>
+    <div class="price" style="color:#ffa502;">2.04万亿</div>
+    <div class="change red">-495亿</div>
+    <div class="sub">缩量·恐慌出逃</div>
+  </div>
+  <div class="index-card">
+    <div class="name">长鑫688825</div>
+    <div class="price" style="color:#ff4757;">47.00</div>
+    <div class="change red">-4.08%</div>
+    <div class="sub">市值3.14万亿·退潮</div>
+  </div>
+  <div class="index-card">
+    <div class="name">费半(隔夜)</div>
+    <div class="price" style="color:#ff4757;">-2.23%</div>
+    <div class="change red">芯片风暴</div>
+    <div class="sub">英伟达-4.99%</div>
+  </div>
+</div>
+
+<!-- ===== Q1: 主流题材 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">1</span>当下主流题材（至多3个 + 支线，基于7/28收盘 + 7/29凌晨FOMC前夕重排，主线=「大消费 + 医药/脑机接口 + 财税数字化/信创软件」，科技退潮）</div>
+
+  <!-- Theme 1: 大消费 -->
+  <div class="theme-card buy">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🟢 大消费（白酒 / 食品饮料 / 乳业 / 教育）— 7/28逆势最强主线·高低切换核心受益（#1）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">食品饮料+2.14%、白酒领涨；金种子酒涨停/茅台+2.37%/今世缘+4.6%/泸州老窖+3.9%；乳业一鸣食品涨停、品渥+10.8%；茅台直营提价(北京上海1719元、i茅台1639)催化；板块估值十年极低(PE约20X)</div>
+      </div>
+      <div class="theme-signal buy">BUY · 低位核心分批低吸</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的（中军 + 弹性龙 + 细分）</div>
+        <div class="value">
+          <span class="stock-tag hl">贵州茅台 600519 中军·1320/+2.37%·提价托底</span>
+          <span class="stock-tag hl">金种子酒 600199 涨停·弹性龙</span>
+          <span class="stock-tag hl">一鸣食品 605179 涨停·乳业 / 品渥食品 300892 +10.8%</span>
+          <span class="stock-tag hl">盐津铺子 002847 涨停 / 东鹏饮料 +5.28% / 万辰集团 +6.57%</span>
+          <span class="stock-tag hl">今世缘 / 泸州老窖 / 迎驾贡酒(白酒跟涨)</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金/强度信号（7/28逆势，防御避险+低位）</div>
+        <div class="value" style="color:#00d4aa;">食品饮料指数+2.14%、白酒领涨；酒ETF(512690)+2.38%、食品饮料ETF(516900)+2.04%；茅台直营提价催化行业价格回暖预期；2603涨/2769跌中逆势最强方向</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          逻辑：科技崩塌后资金高低切换至低位防御，消费板块估值十年极低+茅台提价拐点+防御避险；但一日强度需确认，不追涨停加速
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">茅台直营提价：北京/上海直营店53度飞天提至1719元/瓶(高于i茅台1639)、i茅台7/18起1539→1639(年内二次提价)→行业价格回暖预期，白酒配置价值重估</li>
+        <li class="pos">科技崩塌→资金避险高低切换：7/28食品饮料+2.14%为全市场最强行业，白酒/乳业/零食逆势涨停潮；估值十年极低(食品饮料PE约20X、白酒接近15X)</li>
+        <li class="pos">油价回落(美伊停火布油至85附近)→通胀预期缓和、利好大众消费估值；"恢复和扩大消费"政策预期延续</li>
+        <li class="neg">⚠️ 板块一日强度，需观察次日承接；白酒中期仍处去库存周期(H2或迎拐点)，不追涨停加速、分批低吸核心；若指数破3780则降低弹性仓</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker buy" style="left:28%;width:28%;"></div>
+        <div class="stage-segment">退潮</div>
+        <div class="stage-segment" style="color:#00d4aa;font-weight:700;">↑ 启动/分歧转强(低位+提价)</div>
+        <div class="stage-segment">主升</div>
+        <div class="stage-segment">加速</div>
+      </div>
+      <div style="font-size:13px;color:#00d4aa;margin-top:4px;">
+        ✅ 高低切换核心受益·<b>能买：分批低吸核心(茅台/金种子/一鸣/品渥)，不追涨停加速；食品饮料ETF/酒ETF可配置；仓位12-15%</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme 2: 医药/脑机 -->
+  <div class="theme-card buy">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🟢 医药 / 创新药 / 脑机接口 — 连续2日涨停潮·BCI商业化催化（#2）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">海南海药(9天4板)/创新医疗/爱朋医疗(+18.58%)涨停；岩山科技/南京熊猫/塞力医疗跟板；美国Science Corp.视网膜芯片欧盟获批(BCI首例大规模商业化)强化叙事；哈三联(4天3板)/珍宝岛(8天4板)延续</div>
+      </div>
+      <div class="theme-signal buy">BUY · 前排小仓换手</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的</div>
+        <div class="value">
+          <span class="stock-tag hl">海南海药 000566 9天4板·BCI</span>
+          <span class="stock-tag hl">创新医疗 002173 脑机涨停 / 爱朋医疗 300753 +18.58%</span>
+          <span class="stock-tag hl">哈三联 4天3板 / 珍宝岛 8天4板</span>
+          <span class="stock-tag hl">岩山科技/南京熊猫/塞力医疗(涨停)</span>
+          <span class="stock-tag">药明康德(中军)</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金/强度信号</div>
+        <div class="value" style="color:#00d4aa;">脑机接口连续2日涨停潮(7/28爱朋+18.58%/海南海药/创新医疗涨停)；Science Corp.欧盟获批视网膜芯片→BCI商业化里程碑；医药逆势独立于科技崩塌</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          逻辑：BCI事件驱动+医药政策/出海/业绩三重共振；但连板高位、后排易掉队，需前排换手、不追加速
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">美国Science Corp.视网膜芯片获欧盟销售批准——BCI企业首次大规模面向患者商业化落地，脑机接口商业化元年预期强化；A股脑机接口连续2日涨停潮</li>
+        <li class="pos">医药政策+出海+业绩三重共振未变；哈三联/海南海药/珍宝岛连板惯性延续；药明康德中军托底</li>
+        <li class="pos">科技崩塌→资金避险高低切，医药作为低位景气方向获增量配置</li>
+        <li class="neg">⚠️ 连板高位(海南海药9天4板)后排易掉队、分化加剧；纯题材小票回避；不追加速、只做前排换手+中军低吸</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker buy" style="left:55%;width:28%;"></div>
+        <div class="stage-segment">启动</div>
+        <div class="stage-segment">主升</div>
+        <div class="stage-segment" style="color:#ffa502;font-weight:700;">↑ 加速分化(连板高位+BCI催化)</div>
+        <div class="stage-segment">退潮</div>
+      </div>
+      <div style="font-size:13px;color:#00d4aa;margin-top:4px;">
+        ✅ 加速分化期·<b>能买小仓：前排换手(海南海药/创新医疗/爱朋)+中军(药明康德)低吸，不追加速；仓位8-10%</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme 3: 财税数字化/信创软件 -->
+  <div class="theme-card buy">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🟢 财税数字化 / 信创软件（AI应用从硬件→软件切换）— 7/28逆势涨停潮（#3）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">科蓝软件/天地在线/南天信息/浪潮软件/天融信/久其软件涨停；智度股份/数字认证/华宇软件跟涨；数字中国+财税改革+国产软件自主可控逻辑</div>
+      </div>
+      <div class="theme-signal buy">BUY · 前排小仓换手</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的</div>
+        <div class="value">
+          <span class="stock-tag hl">科蓝软件 / 南天信息 / 浪潮软件 / 天融信 / 久其软件(涨停前排)</span>
+          <span class="stock-tag hl">智度股份(前期2连板·跟涨) / 数字认证 / 华宇软件</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金/强度信号</div>
+        <div class="value" style="color:#00d4aa;">7/28逆势涨停潮(财税数字化多股涨停)；AI应用从硬件(半导体/CPO崩塌)切软件的标志；数字中国+财税改革+国产信创中长期逻辑</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          逻辑：科技内部高低切、从硬件制造切软件应用；事件驱动(财税改革/数字中国)；但持续性弱于消费/医药，仅前排换手
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">AI应用从硬件→软件切换：半导体/CPO崩塌当日，软件(财税数字化/信创)逆势涨停，资金寻低位科技分支</li>
+        <li class="pos">财税改革+数字中国+国产软件自主可控中长期政策逻辑；智度股份(前期2连板)情绪标杆</li>
+        <li class="neg">⚠️ 题材持续性待验证，后排易掉队；不追一字板、只做前排换手；若科技整体退潮拖累则降至支线</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker buy" style="left:33%;width:26%;"></div>
+        <div class="stage-segment">退潮</div>
+        <div class="stage-segment" style="color:#00d4aa;font-weight:700;">↑ 启动发酵(硬件→软件切换)</div>
+        <div class="stage-segment">主升</div>
+        <div class="stage-segment">加速</div>
+      </div>
+      <div style="font-size:13px;color:#00d4aa;margin-top:4px;">
+        ✅ 启动发酵期·<b>能买小仓：前排换手(科蓝/南天/浪潮)，不追一字板；仓位6-8%</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- 银行/红利 支线 -->
+  <div class="theme-card watch">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name" style="color:#ffb84d;">🟠 银行 / 红利（防御底仓）— 支线（0-3%）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">建设银行盘中+3%创历史新高(A+H市值超2.1万亿)、农行/邮储/南京银行跟涨；市场调整中资金寻求确定性防御资产</div>
+      </div>
+      <div class="theme-signal watch">WATCH · 防御底仓</div>
+    </div>
+    <div style="font-size:13px;color:#cbd5e1;margin-top:8px;">
+      FOMC偏鹰预期下红利防御价值凸显。核心：<b>建设银行/农业银行/邮储银行/招商银行(权重蓝筹)</b>。低波动底仓，作组合压舱石，不追高、等回踩。
+    </div>
+  </div>
+
+  <!-- 退潮 -->
+  <div class="theme-card avoid">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name" style="color:#ff6b7a;">🔴 半导体 / CPO / 存储 / 元件（退潮）— 坚决回避</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">半导体-7.47%、中际旭创-15.69%/新易盛-17%、沪电/生益/东山等跌停潮、长鑫-4.08%收47元；隔夜费半-2.23%/英伟达-4.99%/闪迪-11%；固态电池-1.99%、军工-1.46%</div>
+      </div>
+      <div class="theme-signal avoid">AVOID · 不抄底</div>
+    </div>
+    <div style="font-size:13px;color:#cbd5e1;margin-top:8px;">
+      v18.0"半导体主升加速BUY"被7/28收盘彻底证伪——科技进入退潮杀跌。长鑫次日-4.08%(市值3.14万亿)、隔夜美股芯片续跌→<b>纯半导体/CPO/存储/元件坚决回避，等缩量止跌+美联储落地</b>。固态电池(-1.99%)/军工(-1.46%)降级为退潮分化支线。
+    </div>
+  </div>
+</div>
+
+<!-- ===== Q2: 核心标的全览 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">2</span>主流题材核心标的全览（7/29 周三盘前版 · v19.0）</div>
+  <table class="plan-table">
+    <thead>
+      <tr>
+        <th>题材</th>
+        <th>核心标的</th>
+        <th>角色定位</th>
+        <th>逻辑/信号（7/28收盘+隔夜）</th>
+        <th>操作方向</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="4" style="color:#00d4aa;font-weight:700;">大消费</td>
+        <td><b>贵州茅台 600519</b></td>
+        <td>中军(1320/+2.37%)</td>
+        <td style="color:#00d4aa;">直营提价(1719/i茅台1639)托底；白酒估值拐点</td>
+        <td class="action-buy">中军托底·分批低吸</td>
+      </tr>
+      <tr>
+        <td><b>金种子酒 600199 / 一鸣食品 605179 / 品渥食品 300892</b></td>
+        <td>弹性龙(涨停/乳业)</td>
+        <td style="color:#00d4aa;">食品饮料+2.14%逆势最强；低位+避险</td>
+        <td class="action-buy">前排换手，不追加速</td>
+      </tr>
+      <tr>
+        <td><b>盐津铺子 002847 / 东鹏饮料 / 万辰集团</b></td>
+        <td>零食/功能饮料</td>
+        <td style="color:#00d4aa;">大众品渗透率低+成长；逆势跟涨</td>
+        <td class="action-buy">趋势低吸</td>
+      </tr>
+      <tr>
+        <td><b>今世缘 / 泸州老窖 / 迎驾贡酒</b></td>
+        <td>白酒跟涨</td>
+        <td style="color:#00d4aa;">+3.9%~+4.6%；提价预期扩散</td>
+        <td class="action-buy">分歧低吸</td>
+      </tr>
+      <tr>
+        <td rowspan="3" style="color:#00d4aa;font-weight:700;">医药/脑机</td>
+        <td><b>海南海药 000566 / 创新医疗 002173 / 爱朋医疗 300753</b></td>
+        <td>脑机前排(涨停/+18.58%)</td>
+        <td style="color:#00d4aa;">Science Corp.欧盟获批催化BCI商业化</td>
+        <td class="action-buy">前排小仓换手</td>
+      </tr>
+      <tr>
+        <td><b>哈三联 / 珍宝岛 / 岩山科技 / 南京熊猫 / 塞力医疗</b></td>
+        <td>连板/跟板</td>
+        <td style="color:#00d4aa;">9天4板/8天4板惯性；后排分化</td>
+        <td class="action-buy">仅前排，不追加速</td>
+      </tr>
+      <tr>
+        <td><b>药明康德</b></td>
+        <td>中军</td>
+        <td style="color:#00d4aa;">医药逆势独立于科技崩塌</td>
+        <td class="action-buy">中军低吸</td>
+      </tr>
+      <tr>
+        <td rowspan="2" style="color:#00d4aa;font-weight:700;">财税软件</td>
+        <td><b>科蓝软件 / 南天信息 / 浪潮软件 / 天融信 / 久其软件</b></td>
+        <td>前排(涨停)</td>
+        <td style="color:#00d4aa;">AI应用硬件→软件切换；数字中国+财税改革</td>
+        <td class="action-buy">前排换手</td>
+      </tr>
+      <tr>
+        <td><b>智度股份 / 数字认证 / 华宇软件</b></td>
+        <td>跟涨/中军</td>
+        <td style="color:#00d4aa;">前期2连板标杆；国产信创</td>
+        <td class="action-buy">分歧低吸</td>
+      </tr>
+      <tr>
+        <td style="color:#ffa502;font-weight:700;">银行/红利(支线)</td>
+        <td><b>建设银行/农业银行/邮储银行/招商银行</b></td>
+        <td>防御底仓</td>
+        <td style="color:#ffa502;">建行盘中创历史新高；FOMC偏鹰利好红利</td>
+        <td class="action-hold">底仓·等回踩</td>
+      </tr>
+      <tr>
+        <td style="color:#ff6b7a;font-weight:700;">退潮(回避)</td>
+        <td><b>长鑫/中际旭创/新易盛/沪电/生益/兆易/德明利/东山</b></td>
+        <td>高位杀跌</td>
+        <td style="color:#ff6b7a;">半导体-7.47%/CPO-15%/元件跌停/长鑫-4.08%/隔夜费半-2.23%</td>
+        <td class="action-sell">坚决回避</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== Q3: 阶段判断 + 交易计划 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">3</span>阶段判断与 7/29 周三盘前交易计划（FOMC日 · 科技退潮·高低切换）</div>
+
+  <!-- Key Levels -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📐 上证指数关键点位（7/29 盘前 · 未收复3830、强支撑3780、极端3740；FOMC前夕偏谨慎）</div>
+    <div class="level-grid">
+      <div class="level-card">
+        <div class="label">极端支撑</div>
+        <div class="value red">3740</div>
+        <div class="note">7/20新低3741·破则20%防御</div>
+      </div>
+      <div class="level-card">
+        <div class="label">强支撑(守住)</div>
+        <div class="value orange">3780</div>
+        <div class="note">7/28最低3797·机构第一防守</div>
+      </div>
+      <div class="level-card">
+        <div class="label">当前位</div>
+        <div class="value orange">3813.31</div>
+        <div class="note">7/28收·低位震荡</div>
+      </div>
+      <div class="level-card">
+        <div class="label">未收复</div>
+        <div class="value orange">3830</div>
+        <div class="note">7/27收3858·科技崩塌失守</div>
+      </div>
+      <div class="level-card">
+        <div class="label">反转确认</div>
+        <div class="value green">3900-3950</div>
+        <div class="note">放量收回=修复延续</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 能不能买 速览 -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">✅ 三大主线「能不能买」速览</div>
+    <div class="level-grid">
+      <div class="level-card">
+        <div class="label">大消费</div>
+        <div class="value green">能买·低位低吸</div>
+        <div class="note">茅台提价·不追涨停</div>
+      </div>
+      <div class="level-card">
+        <div class="label">医药/脑机</div>
+        <div class="value green">能买·前排小仓</div>
+        <div class="note">BCI催化·不追加速</div>
+      </div>
+      <div class="level-card">
+        <div class="label">财税软件</div>
+        <div class="value green">能买·前排换手</div>
+        <div class="note">硬件→软件·不追一字</div>
+      </div>
+      <div class="level-card">
+        <div class="label">银行/红利</div>
+        <div class="value orange">谨慎·底仓</div>
+        <div class="note">防御·等回踩</div>
+      </div>
+      <div class="level-card">
+        <div class="label">半导体/CPO</div>
+        <div class="value red">不买</div>
+        <div class="note">退潮·-7%~-15%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scenario -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">🎲 7/29 情景推演（FOMC日 · 科技退潮 · 低位主线承接 · CME 84.5%按兵不动偏鹰）</div>
+    <div class="scenario-grid">
+      <div class="scenario-card" style="border-color:rgba(0,212,170,0.3);">
+        <div class="prob bull">30%</div>
+        <div style="font-weight:600;margin-bottom:4px;">乐观：低位主线延续·茅台托底·油价回落利好</div>
+        <div class="desc">大消费/医药脑机/财税软件前排换手晋级、低位轮动活跃；茅台中军稳、油价回落降通胀预期；中概金龙+2.51%情绪正向；沪指3780-3830区间、成交维持2万亿；FOMC偏鹰但已定价→成长尾盘修复</div>
+      </div>
+      <div class="scenario-card" style="border-color:rgba(255,165,2,0.3);">
+        <div class="prob neutral">40%</div>
+        <div style="font-weight:600;margin-bottom:4px;">中性：指数窄幅震荡·轻指数重个股·FOMC前观望</div>
+        <div class="desc">沪指3780-3830窄幅震荡、成交缩量；低位主线结构性活跃但后排掉队、前排换手；科技退潮但跌速放缓(长鑫/中际缩量)；FOMC结果前资金偏谨慎、不重仓押方向；白银行情防御</div>
+      </div>
+      <div class="scenario-card" style="border-color:rgba(255,71,87,0.3);">
+        <div class="prob bear">30%</div>
+        <div style="font-weight:600;margin-bottom:4px;">悲观：FOMC偏鹰+科技财报不及预期·破3780</div>
+        <div class="desc">美联储意外转鹰(加息或强烈前瞻指引)+微软/Meta财报不及预期→成长杀估值、科技退潮扩散；沪指破3780、低位前排炸板；需降至25%防御、破3740极端20%；银行/红利抱团</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Position Allocation -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">💰 仓位配置建议（总仓位 30-40%·科技崩塌下调+ FOMC前夕谨慎·现金守结果）</div>
+    <div class="position-grid">
+      <div id="positionChart" class="chart-container" style="height:280px;"></div>
+      <div class="position-list">
+        <div class="position-item">
+          <span class="name">🟢 大消费（白酒/食品）</span>
+          <span class="pct green">12-15%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🟢 医药/脑机</span>
+          <span class="pct green">8-10%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🟢 财税软件</span>
+          <span class="pct green">6-8%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🟠 银行/红利(底仓)</span>
+          <span class="pct orange">0-3%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">💵 现金（守FOMC结果）</span>
+          <span class="pct gray">55-65%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trading Plan Table -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📋 分批交易计划（7/29 周三盘前版 · v19.0 · FOMC日）</div>
+    <table class="plan-table">
+      <thead>
+        <tr>
+          <th>方向</th>
+          <th>触发条件</th>
+          <th>操作</th>
+          <th>仓位</th>
+          <th>止损/风控</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:#00d4aa;font-weight:700;">大消费</td>
+          <td>食品饮料/白酒前排(金种子/一鸣/品渥)换手不炸；茅台站稳1320不破；酒ETF(512690)/食品饮料ETF(516900)趋势低吸；不追涨停加速</td>
+          <td class="action-buy">分批低吸核心+ETF，茅台中军托底</td>
+          <td>12-15%</td>
+          <td>⚠️ 板块一日强度未确认→破5日线降仓；指数破3780降弹性至8%；白酒去库存未拐头不重仓</td>
+        </tr>
+        <tr>
+          <td style="color:#00d4aa;font-weight:700;">医药/脑机</td>
+          <td>海南海药/创新医疗/爱朋前排换手不炸；药明康德中军趋势低吸；Science Corp.BCI催化延续；后排不盲目追</td>
+          <td class="action-buy">前排小仓换手+中军低吸</td>
+          <td>8-10%</td>
+          <td>海南海药9天4板断板→降至5%；纯题材小票回避；脑机一日游则撤</td>
+        </tr>
+        <tr>
+          <td style="color:#00d4aa;font-weight:700;">财税软件</td>
+          <td>科蓝/南天/浪潮前排换手不炸；智度股份分歧低吸；数字中国/财税改革催化延续；不追一字板</td>
+          <td class="action-buy">仅前排换手，等确认</td>
+          <td>6-8%</td>
+          <td>软件随科技整体退潮拖累→降至3%；后排掉队即撤</td>
+        </tr>
+        <tr>
+          <td style="color:#ffa502;font-weight:700;">银行/红利(底仓)</td>
+          <td>建行/农行/邮储/招行回踩不破趋势；FOMC偏鹰利好红利；低波动防御</td>
+          <td class="action-hold">底仓配置，不追高</td>
+          <td>0-3%</td>
+          <td>银行独立行情终结→降至0；仅作压舱石</td>
+        </tr>
+        <tr>
+          <td style="color:#ff6b7a;font-weight:700;">退潮(半导体/CPO/存储/元件)</td>
+          <td>长鑫/中际/新易盛/沪电等缩量止跌</td>
+          <td class="action-sell">暂回避，等止跌+美联储落地</td>
+          <td>0%</td>
+          <td>不接飞刀；科技财报(微软/Meta)前不抄底；破位续跌则等下一轮</td>
+        </tr>
+        <tr>
+          <td style="color:#94a3b8;font-weight:700;">现金</td>
+          <td colspan="2">守到FOMC结果(7/30凌晨)、低位前排晋级确认、科技止跌信号；FOMC前夕不重仓押方向</td>
+          <td>55-65%</td>
+          <td>保留机动应对FOMC偏鹰/破3780/前排炸板/科技财报</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Alerts -->
+  <div style="margin-bottom:16px;">
+    <div class="alert-box danger">
+      <div class="title">🚨 风险警报（7/29 盘前关键变量 · FOMC日）</div>
+      <div>① <b>科技退潮未止</b> —— 7/28半导体-7.47%/CPO-15%/元件跌停潮/创业板-7.35%(较年内高点跌逾千点)/科创50破1700；隔夜费半-2.23%/英伟达-4.99%/闪迪-11%→今日继续承压，不抄底</div>
+      <div>② <b>美联储7/29 FOMC</b> —— 结果北京时间7/30凌晨02:00落地，CME 84.5%按兵不动但偏鹰(1-3鹰派反对票)、真正悬念9月加息；偏鹰声明/发布会或压制成长估值、扰动全天</div>
+      <div>③ <b>科技财报季</b> —— 微软/Meta/高通/苹果/亚马逊本周披露，检验AI支出叙事；若不及预期→全球成长股杀估值</div>
+      <div>④ <b>低位主线一日强度</b> —— 大消费/医药脑机/财税软件7/28逆势涨停潮，次日承接与后排分化需验证；连板高位(海南海药9天4板)断板风险</div>
+      <div>⑤ <b>指数未收复3830</b> —— 7/28收3813(最低3797守住3780)；破3780降至25%、破3740极端20%；成交缩量(2.04万亿)反映观望</div>
+      <div>⑥ <b>外围传导</b> —— 韩股7/28暴跌10.84%(SK海力士-14%/三星-13%)、日经-3.95%；全球科技"下跌循环"未止</div>
+    </div>
+    <div class="alert-box success">
+      <div class="title">✅ 积极催化（高低切换 + 提价 + BCI + 油价回落 + 红利）</div>
+      <div>① <b>高低切换明确</b> —— 科技崩塌后资金转入低位防御(大消费/医药/软件)，新主线逆势最强、结构清晰</div>
+      <div>② <b>茅台直营提价</b> —— 北京上海1719元、i茅台1639(年内二次提价)→白酒价格回暖预期、行业配置价值重估</div>
+      <div>③ <b>BCI商业化里程碑</b> —— 美国Science Corp.视网膜芯片欧盟获批→脑机接口首例大规模商业化，A股脑机涨停潮延续</div>
+      <div>④ <b>油价回落</b> —— 美伊停火持续、布油至85附近→通胀预期缓和、利好消费/成长估值、压制油气贵金属</div>
+      <div>⑤ <b>红利防御</b> —— 建行盘中创历史新高、银行逆势→FOMC偏鹰下红利底仓价值凸显</div>
+      <div>⑥ <b>中概走强</b> —— 纳斯达克中国金龙指数+2.51%→资金高低切向防御/消费的情绪正向</div>
+    </div>
+  </div>
+
+  <!-- Checklist -->
+  <div style="margin-bottom:16px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">✅ 7/29 盘前检查清单（基于7/28收盘+7/29凌晨FOMC前夕重排）</div>
+    <ul class="checklist">
+      <li>✅ 主线重排：大消费(#1·低位+茅台提价)、医药脑机(#2·BCI催化)、财税软件(#3·硬件→软件)；科技(半导体/CPO/存储/元件)退潮AVOID；总仓30-40%(较v18.0下调)</li>
+      <li>⚠️ FOMC日纪律：结果北京时间7/30凌晨落地，白天交易在结果前→偏谨慎、不重仓押方向；偏鹰则成长承压、利好防御/消费/红利</li>
+      <li>🔍 开盘观察：① 科技(长鑫47/中际908/沪电)是否缩量止跌 ② 大消费前排(金种子/一鸣/品渥)换手晋级 ③ 医药脑机(海南海药/创新医疗/爱朋)延续性 ④ 财税软件(科蓝/南天/浪潮)前排 ⑤ 银行(建行)防御强度 ⑥ 沪指能否守住3780</li>
+      <li>🛡️ 大消费：分批低吸核心(茅台/金种子/一鸣/品渥)+ETF，不追涨停加速；白酒去库存未拐头不重仓</li>
+      <li>🛡️ 医药脑机：前排小仓换手(海南海药/创新医疗/爱朋)+中军(药明康德)低吸，不追加速；连板断板即撤</li>
+      <li>📊 盘中决策：守3780上方→总仓30-40%低位主线；破3780降至25%防御；破3740降至20%极端防御；成交维持2万亿上方反弹才有持续性</li>
+      <li>全天纪律：<b>弃半导体/CPO/存储/元件高位(退潮)、做低位前排换手+中军分歧低吸、银行红利作防御底仓、现金55-65%守FOMC结果</b>；不追一字、不接飞刀</li>
+      <li>盘后跟踪：FOMC结果(7/30凌晨)偏鹰/按兵不动、美股科技财报(微软/Meta)、长鑫/中际承接、油价/地缘→决定下一日(7/30)方向</li>
+    </ul>
+  </div>
+
+  <!-- Signal Attribution -->
+  <div style="margin-bottom:16px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📊 信号归因（四维雷达）</div>
+    <div id="radarChart" class="chart-container" style="height:320px;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+      <div class="alert-box success" style="margin:0;">
+        <div class="title">最强看多信号</div>
+        <div><b>高低切换明确</b>（科技崩塌→资金转入低位防御）+ <b>茅台直营提价</b>(1719/1639→白酒价格回暖)+ <b>BCI商业化里程碑</b>(Science Corp.欧盟获批→脑机涨停潮)+ <b>油价回落</b>(美伊停火布油至85→通胀缓和)+ <b>红利防御</b>(建行创历史新高)+ <b>中概金龙+2.51%</b>。低位主线结构清晰、估值极低。</div>
+      </div>
+      <div class="alert-box danger" style="margin:0;">
+        <div class="title">最强看空信号</div>
+        <div><b>科技退潮</b>（半导体-7.47%/CPO-15%/创业板-7.35%/长鑫-4.08%）+ <b>隔夜美股芯片风暴</b>(费半-2.23%/英伟达-4.99%/闪迪-11%)+ <b>美联储FOMC偏鹰</b>(84.5%按兵不动但声明鹰派、9月加息悬念)+ <b>科技财报季</b>(微软/Meta检验AI支出)+ <b>韩股-10.84%全球下跌循环</b>+ <b>指数未收复3830</b>。整体偏谨慎防御，仅低位前排可参与。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+  <div class="disclaimer">
+    ⚠️ 免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论均基于 2026-07-28 A股全天收盘（上证3813.31 -1.16%、深成13509.68 -4.52%、创业板3327.03 -7.35%较年内高点4380.41跌逾千点、科创50 1693.48 -6.33%、科创综指-5.93%；三市成交20391亿缩495亿；2603涨/2769跌、68涨停/50跌停；长鑫科技688825收47.00 -4.08%换手20.66%成交444亿市值3.14万亿；半导体-7.47%、CPO中际旭创-15.69%/新易盛-17%、元件沪电/生益/东山等跌停潮、兆易/德明利/金海通/西安奕材等跌停；食品饮料+2.14%、白酒金种子酒涨停/茅台+2.37%/今世缘+4.6%/泸州老窖+3.9%、乳业一鸣食品涨停/品渥+10.8%；脑机接口海南海药(9天4板)/创新医疗/爱朋医疗+18.58%涨停；财税数字化科蓝/南天/浪潮/天融信/久其软件涨停；银行建行盘中创历史新高；外围日经-3.95%、韩KOSPI -10.84%）+ 2026-07-28 美股收盘（道指+0.51%、纳指-0.18%、费半-2.23%、英伟达-4.99%因循环融资质疑+为OpenAI担保2500亿、闪迪-11.02%、美光-8.85%、苹果+1%创新高重夺全球第一4.95万亿、中概金龙+2.51%；布油回落至85附近美伊停火）+ 美联储7/29 FOMC（CME 84.5%按兵不动3.5-3.75%、偏鹰、1-3鹰派反对票、9月加息悬念）+ 公开信息，不保证未来表现。<br>
+    数据来源：上证/深证/创业板/科创行情、证券时报、每日经济新闻、财联社、21世纪经济报道、东方财富、新浪财经、腾讯财经、新华社、汇通财经、Fx678等公开信息 | 生成时间：2026-07-29 06:55
+  </div>
+  <div>盘前计划 v19.0（7/29 周三 · FOMC日 · 基于7/28收盘+7/28美股+7/29盘前，主线重排=「大消费 + 医药/脑机接口 + 财税数字化/信创软件」，科技崩塌退潮、茅台提价、BCI商业化催化、FOMC偏鹰前夕谨慎防御）| automation-1783645264539 | Powered by 星辰智能分析</div>
+</div>
+
+<script>
+// ===== Position Pie Chart =====
+var posChart = echarts.init(document.getElementById('positionChart'));
+posChart.setOption({
+  backgroundColor: 'transparent',
+  tooltip: { trigger: 'item', formatter: '{b}: {c}%' },
+  legend: { bottom: 0, textStyle: { color: '#94a3b8', fontSize: 12 } },
+  series: [{
+    type: 'pie',
+    radius: ['45%', '70%'],
+    center: ['50%', '42%'],
+    avoidLabelOverlap: false,
+    itemStyle: { borderColor: '#0f0f23', borderWidth: 2 },
+    label: {
+      show: true,
+      position: 'center',
+      formatter: '机动\n60%+',
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: '#ffa502',
+      lineHeight: 24
+    },
+    data: [
+      { value: 14, name: '大消费', itemStyle: { color: '#00d4aa' } },
+      { value: 9, name: '医药/脑机', itemStyle: { color: '#764ba2' } },
+      { value: 8, name: '财税软件', itemStyle: { color: '#667eea' } },
+      { value: 3, name: '银行/红利(底仓)', itemStyle: { color: '#ffa502' } },
+      { value: 66, name: '现金观望', itemStyle: { color: '#2d2d44' } }
+    ]
+  }]
+});
+
+// ===== Radar Chart =====
+var radarChart = echarts.init(document.getElementById('radarChart'));
+radarChart.setOption({
+  backgroundColor: 'transparent',
+  tooltip: {},
+  radar: {
+    indicator: [
+      { name: '技术指标', max: 100 },
+      { name: '新闻情绪', max: 100 },
+      { name: '基本面', max: 100 },
+      { name: '市场环境', max: 100 }
+    ],
+    center: ['50%', '55%'],
+    radius: '65%',
+    splitArea: { areaStyle: { color: ['rgba(102,126,234,0.03)', 'rgba(102,126,234,0.06)'] } },
+    axisLine: { lineStyle: { color: '#2d2d44' } },
+    splitLine: { lineStyle: { color: '#2d2d44' } },
+    axisName: { color: '#94a3b8', fontSize: 13 }
+  },
+  series: [{
+    type: 'radar',
+    data: [
+      {
+        value: [70, 85, 88, 78],
+        name: '大消费',
+        areaStyle: { color: 'rgba(0,212,170,0.2)' },
+        lineStyle: { color: '#00d4aa', width: 2 },
+        itemStyle: { color: '#00d4aa' }
+      },
+      {
+        value: [68, 82, 80, 75],
+        name: '医药/脑机',
+        areaStyle: { color: 'rgba(118,75,162,0.18)' },
+        lineStyle: { color: '#764ba2', width: 2 },
+        itemStyle: { color: '#764ba2' }
+      },
+      {
+        value: [60, 75, 65, 72],
+        name: '财税软件',
+        areaStyle: { color: 'rgba(102,126,234,0.2)' },
+        lineStyle: { color: '#667eea', width: 2 },
+        itemStyle: { color: '#667eea' }
+      },
+      {
+        value: [15, 30, 40, 20],
+        name: '退潮(科技)',
+        areaStyle: { color: 'rgba(255,71,87,0.12)' },
+        lineStyle: { color: '#ff4757', width: 2 },
+        itemStyle: { color: '#ff4757' }
+      }
+    ]
+  }],
+  legend: {
+    bottom: 0,
+    textStyle: { color: '#94a3b8', fontSize: 12 },
+    data: ['大消费', '医药/脑机', '财税软件', '退潮(科技)']
+  }
+});
+
+window.addEventListener('resize', function() {
+  posChart.resize();
+  radarChart.resize();
+});
+</script>
+</body>
+</html>
