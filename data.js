@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-07-28 07:45:38",
-  "total": 61,
+  "generatedAt": "2026-07-28 08:46:06",
+  "total": 62,
   "categories": [
     {
       "key": "panqian",
@@ -458,9 +458,16 @@ window.SITE_DATA = {
       "time": "08:00",
       "icon": "🌐",
       "color": "#7c5cff",
-      "count": 3,
-      "latest": "20260727",
+      "count": 4,
+      "latest": "20260728",
       "reports": [
+        {
+          "date": "20260728",
+          "dateLabel": "2026-07-28（周二）",
+          "file": "reports/global/global_20260728.html",
+          "title": "全球资本市场十大热点（7月27日美股交易时段 — 7月28日早8点）",
+          "size": 12111
+        },
         {
           "date": "20260727",
           "dateLabel": "2026-07-27（周一）",
