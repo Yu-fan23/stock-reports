@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-07-29 16:45:51",
-  "total": 70,
+  "generatedAt": "2026-07-30 07:45:39",
+  "total": 71,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 15,
-      "latest": "20260729",
+      "count": 16,
+      "latest": "20260730",
       "reports": [
+        {
+          "date": "20260730",
+          "dateLabel": "2026-07-30（周四）",
+          "file": "reports/panqian/panqian_20260730.html",
+          "title": "盘前交易计划 | 2026年7月30日（周四）· v20.0 · FOMC偏鹰+美股暴跌，主线重排为「大消费 + AI应用软件/端侧AI + 电网设备/电力」，科技硬件退潮、油气贵金属对冲升温",
+          "size": 59885
+        },
         {
           "date": "20260729",
           "dateLabel": "2026-07-29（周三）",
