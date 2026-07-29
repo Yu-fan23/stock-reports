@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-07-29 15:45:49",
-  "total": 69,
+  "generatedAt": "2026-07-29 16:45:51",
+  "total": 70,
   "categories": [
     {
       "key": "panqian",
@@ -391,9 +391,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 14,
-      "latest": "20260728",
+      "count": 15,
+      "latest": "20260729",
       "reports": [
+        {
+          "date": "20260729",
+          "dateLabel": "2026-07-29（周三）",
+          "file": "reports/limitup/limitup_20260729.html",
+          "title": "涨停梯队复盘 · 2026-07-29（周三）· 探底回升·消费爆发·科技分化",
+          "size": 48840
+        },
         {
           "date": "20260728",
           "dateLabel": "2026-07-28（周二）",
