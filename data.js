@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-07-30 07:45:39",
-  "total": 71,
+  "generatedAt": "2026-07-30 08:40:19",
+  "total": 72,
   "categories": [
     {
       "key": "panqian",
@@ -514,9 +514,16 @@ window.SITE_DATA = {
       "time": "08:00",
       "icon": "🌐",
       "color": "#7c5cff",
-      "count": 5,
-      "latest": "20260729",
+      "count": 6,
+      "latest": "20260730",
       "reports": [
+        {
+          "date": "20260730",
+          "dateLabel": "2026-07-30（周四）",
+          "file": "reports/global/global_20260730.html",
+          "title": "全球资本市场十大热点（7月29日全天/美股交易时段+FOMC → 7月30日早8点）",
+          "size": 13864
+        },
         {
           "date": "20260729",
           "dateLabel": "2026-07-29（周三）",
