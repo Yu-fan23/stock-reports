@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-07-30 16:45:34",
-  "total": 74,
+  "generatedAt": "2026-07-31 07:45:37",
+  "total": 75,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 16,
-      "latest": "20260730",
+      "count": 17,
+      "latest": "20260731",
       "reports": [
+        {
+          "date": "20260731",
+          "dateLabel": "2026-07-31（周五）",
+          "file": "reports/panqian/panqian_20260731.html",
+          "title": "盘前交易计划 | 2026年7月31日（周五）· v21.0 · 隔夜美股科技暴力反弹(美光+18%/纳指+2.78%)+存储短缺叙事+回购潮，主线重排为「大消费 + 科技修复(半导体/存储/CPO超跌反弹) + AI应用软件」，科技硬件从退潮升为超跌修复、大消费连续3日最强",
+          "size": 59435
+        },
         {
           "date": "20260730",
           "dateLabel": "2026-07-30（周四）",
