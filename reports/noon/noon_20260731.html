@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股午间复盘 · 2026-07-31（周五）</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --accent1:#667eea; --accent2:#764ba2; --txt:#e2e8f0; --txt2:#94a3b8; --border:#2d2d44;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.55;padding:24px 16px 60px}
+  .wrap{max-width:1180px;margin:0 auto}
+  .glass{background:linear-gradient(135deg,rgba(102,126,234,.08),rgba(118,75,162,.06));border:1px solid var(--border);border-radius:16px}
+  header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:22px 26px;margin-bottom:20px}
+  header h1{font-size:24px;font-weight:700;letter-spacing:.5px}
+  header .sub{color:var(--txt2);font-size:13px;margin-top:4px}
+  .badge{font-size:15px;font-weight:800;padding:10px 18px;border-radius:12px;letter-spacing:1px;max-width:480px;text-align:center}
+  .badge.danger{background:linear-gradient(135deg,#ff4757,#c0392b);color:#fff;box-shadow:0 6px 20px rgba(255,71,87,.4)}
+  .badge.warn{background:linear-gradient(135deg,#ffa502,#e67e22);color:#1a1a2e;box-shadow:0 6px 20px rgba(255,165,2,.35)}
+  .badge.rev{background:linear-gradient(135deg,#00d4aa,#00b894);color:#1a1a2e;box-shadow:0 6px 20px rgba(0,212,170,.4)}
+  .grid{display:grid;gap:18px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:880px){.g3,.g2{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.g3,.g2{grid-template-columns:1fr}}
+  section{margin:20px 0}
+  .sec-title{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;margin:6px 4px 14px}
+  .sec-title::before{content:"";width:5px;height:18px;border-radius:3px;background:linear-gradient(var(--accent1),var(--accent2))}
+  .card{padding:18px 20px}
+  .idx-head{display:flex;justify-content:space-between;align-items:baseline}
+  .idx-name{font-size:15px;font-weight:600}
+  .idx-code{font-size:11px;color:var(--txt2)}
+  .idx-price{font-size:22px;font-weight:800;margin:6px 0 2px}
+  .idx-chg{font-size:14px;font-weight:700}
+  .idx-wk{font-size:11px;color:var(--txt2);margin-top:2px}
+  .spark{height:50px;margin-top:8px}
+  .stat-row{display:flex;justify-content:space-around;text-align:center;padding:14px 0;flex-wrap:wrap;gap:8px}
+  .stat-row .v{font-size:26px;font-weight:800}
+  .stat-row .l{font-size:12px;color:var(--txt2);margin-top:2px}
+  .chart{height:340px}
+  .chart-sm{height:260px}
+  .alert{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:12px;margin:10px 0}
+  .alert.risk{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.35)}
+  .alert.pos{background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.35)}
+  .alert .ico{font-size:20px;line-height:1}
+  .alert .tt{font-weight:700;margin-bottom:3px}
+  .alert .bd{font-size:13px;color:var(--txt2)}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:680px){.kpis{grid-template-columns:1fr 1fr}}
+  .kpi{padding:14px;text-align:center}
+  .kpi .v{font-size:22px;font-weight:800}
+  .kpi .l{font-size:11px;color:var(--txt2);margin-top:3px}
+  .li{display:flex;gap:10px;padding:7px 0;font-size:13px;border-bottom:1px dashed rgba(45,45,68,.7)}
+  .li:last-child{border-bottom:none}
+  .li .dot{margin-top:6px;width:7px;height:7px;border-radius:50%;flex:0 0 auto}
+  .d-red{background:var(--sell)} .d-green{background:var(--buy)} .d-amber{background:var(--hold)}
+  .foot{font-size:11px;color:var(--txt2);text-align:center;margin-top:26px;line-height:1.8}
+  .meta-pill{display:inline-block;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;margin:4px 6px 0 0}
+  .summary-line{font-size:15px;font-weight:600;padding:14px 18px;border-left:4px solid var(--buy);background:rgba(0,212,170,.07);border-radius:0 10px 10px 0;margin:6px 0 14px}
+  .compare{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .chip{font-size:11px;padding:4px 10px;border-radius:8px;background:rgba(45,45,68,.5);border:1px solid var(--border);color:var(--txt2)}
+  .chip.now{border-color:var(--buy);color:var(--buy)}
+  .chip.up{border-color:var(--buy);color:var(--buy)}
+  .chip.dn{border-color:var(--sell);color:var(--sell)}
+  .cat-card{padding:14px 16px;border-radius:12px;border:1px solid var(--border);background:rgba(26,26,46,.6)}
+  .cat-card .t{font-weight:700;font-size:14px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .cat-card .d{font-size:12px;color:var(--txt2);line-height:1.5}
+  .temp-wrap{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  .gauge{width:180px;height:160px}
+  .temp-side{flex:1;min-width:240px}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+  th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--txt2);font-weight:600;font-size:12px}
+  td.buy{color:var(--buy);font-weight:700}
+  td.sell{color:var(--sell);font-weight:700}
+  td.hold{color:var(--hold);font-weight:700}
+  .plan-card{font-size:15px;font-weight:700;margin:0 0 10px;color:var(--accent1)}
+  .meter{height:8px;border-radius:6px;background:rgba(45,45,68,.7);overflow:hidden;margin:6px 0}
+  .meter>span{display:block;height:100%;border-radius:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="glass">
+    <div>
+      <h1>📊 A股午间复盘 · 2026-07-31（周五）</h1>
+      <div class="sub">隔夜韩股/存储暴力修复·AI科技主线全面爆发·放量普涨·昨日破位失效条件被证伪（指数强反·个股普涨·赚钱效应爆表）· 数据：证券时报/新华财经/央广/每经/腾讯 午评（WebSearch）</div>
+    </div>
+    <div class="badge rev">科技暴力反弹 · 放量普涨 · 修复确认</div>
+  </header>
+
+  <!-- 核心摘要 -->
+  <section>
+    <div class="summary-line">
+      今日 A股 在隔夜<b>韩股/存储芯片暴力反弹</b>（三星电子 Q2 业绩炸裂：营收+130%、营业利润+1814%、净利润71万亿韩元；SK海力士+28%、韩股Kospi指数单日+16%）带动下强势反转——三大指数集体大涨：沪指 <b>+0.76%</b>（3833.65）、深成指 <b>+3.16%</b>（13705.42）、创业板指 <b>+5.04%</b>（3408.15，收复3200并突破3400）；<b>科创50 反弹 +5.91%（≈1665），从昨日破位1572强力修复</b>。盘面呈"<b>AI科技主线全面爆发 + 红利银行补跌</b>"的极端反转：全市场 <b>4517 涨 / 903 跌（广度≈83%）、涨停 88 / 跌停 0 家</b>，赚钱效应爆表（7/30 广度35%、跌停48家 → 今日83%、跌停0）。<b>AI应用端（中文在线/蓝色光标/易点天下20cm涨停、约20股涨停）、算力硬件（美利云/云赛智联/宏景科技/利通电子封板）、半导体产业链（盛景微/盛剑科技/太极实业涨停、科创芯片ETF+7.08%）、CPO（源杰科技/天孚通信涨超11%）、人形机器人（中大力德/锋龙股份）集体爆发</b>；而<b>银行（农行-4%、工行/中行-3%+）、煤炭、白酒、油气、保险等前期防御/红利板块补跌</b>。<b>半日成交 1.79 万亿（放量3323亿）</b>，主力净流入 <b>芯片 +489.8亿、华为 +386.7亿、中报预增 +329.1亿、数据中心AIDC +311.8亿、5G +260.6亿</b>。核心驱动：<b>①三星重申"生成式AI推动存储短缺持续至2028年"、全球科技估值修复；②美联储中信建投称"宽松希望未完全熄灭、纳指距前高回撤10%或进入调整后期"；③央行2.1万亿月末流动性护航延续</b>。综合研判：<b>7/30 触发的"高位补跌/科创50破位"失效条件已被单日暴力修复证伪</b>，进入<b>修复确认</b>阶段，总仓建议 <b>50–60%、现金 40–50%</b>，进攻仓半导体/CPO/算力/AI应用/机器人（等回踩不追长阳）、保留银行/公用/高股息底仓，待沪指站稳3850–3870+科创50重回1700+成交维持1.8万亿+再加仓至60–70%。
+    </div>
+    <div class="compare">
+      <span class="chip">7/20 弱反弹（情绪58）</span>
+      <span class="chip up">7/21 深V爆发（情绪76）</span>
+      <span class="chip">7/22 指数红·个股绿（情绪64）</span>
+      <span class="chip">7/23 指数绿·个股红（情绪63）</span>
+      <span class="chip dn">7/24 全线调整（情绪32）</span>
+      <span class="chip up">7/27 普涨反弹（情绪74）</span>
+      <span class="chip dn">7/28 权重踩踏（情绪41）</span>
+      <span class="chip">7/29 消费接力（情绪55）</span>
+      <span class="chip dn">7/30 高位补跌（情绪34）</span>
+      <span class="chip now">7/31 科技反弹（情绪80）</span>
+    </div>
+  </section>
+
+  <!-- 主要指数 -->
+  <section>
+    <div class="sec-title">📈 主要指数 · 午间表现（2026-07-31 11:30 收盘）</div>
+    <div class="grid g3" id="idxCards"></div>
+  </section>
+
+  <!-- 赚钱效应 -->
+  <section>
+    <div class="sec-title">🌡️ 赚钱效应总结 · 情绪温度轨迹 / 每日广度</div>
+    <div class="grid g2">
+      <div class="card glass"><div class="chart" id="moodLine"></div></div>
+      <div class="card glass">
+        <div class="stat-row">
+          <div><div class="v buy">≈80</div><div class="l">今日情绪温度</div></div>
+          <div><div class="v buy">≈83%</div><div class="l">今日广度赚钱效应</div></div>
+          <div><div class="v buy">0家</div><div class="l">跌停（7/30为48）</div></div>
+          <div><div class="v buy">+489.8亿</div><div class="l">芯片概念净流入</div></div>
+        </div>
+        <div class="li"><span class="dot d-green"></span><span><b>情绪暴力反转</b>：7/30（34）→ <b>今日 80</b>，飙升 46 点，回到 7/21 深V爆发（76）、7/27 普涨（74）之上的全年高位区；主因<b>科创50 +5.91% 修复破位 + 创业板 +5.04% 收复3200 + 跌停归零 + 放量3323亿</b>。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>广度爆表</b>：4517 涨 / 903 跌（广度≈83%），较 7/30（35%）回升约 48pct；<b>88 涨停 / 0 跌停</b>——典型普涨格局，亏钱效应几乎消失。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>"高低切"彻底逆转</b>：昨日最惨的硬科技（半导体/CPO/算力/科创50）今日成最强主线，昨日抗跌的银行/红利/消费今日补跌——风格当日反转，追涨杀跌风险高。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>需确认非一日游</b>：这是 7/30 破位后的<b>首日强反</b>，趋势反转需午后/明日延续确认；且银行红利补跌显示资金仍在剧烈腾挪，<b>不宜满仓追长阳</b>，等回踩不迟。</span></div>
+      </div>
+    </div>
+    <div class="card glass" style="margin-top:18px"><div class="chart-sm" id="breadthBar"></div></div>
+  </section>
+
+  <!-- 资金流向 -->
+  <section>
+    <div class="sec-title">🔥 资金流向分析 · 主力净流入490亿级 / 科技全面回流·红利兑现</div>
+    <div class="grid g2">
+      <div class="card glass">
+        <h3 class="plan-card" style="color:var(--buy)">今日资金结构</h3>
+        <div class="li"><span class="dot d-green"></span><span><b>主力净流入集中硬科技</b>：芯片概念净流入 <b>+489.8亿</b>（21股涨停、872股上涨）、华为概念 +386.7亿（25股涨停）、2026中报预增 +329.1亿、数据中心AIDC +311.8亿、5G +260.6亿——与 7/30 电子净流出252亿形成<b>天壤之别的剪刀差</b>。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>资金从红利切向成长</b>：半导体/算力/AI应用获巨额净流入，而昨日抱团的<b>银行/煤炭/白酒/油气/保险集体净流出</b>（农行-4%、工行/中行-3%+），"弃低就高、弃防御就进攻"明确。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>ETF 活跃放量</b>：全市场 ETF 半日成交 <b>3901.6亿</b>（放量923.4亿），<b>超1200只ETF上涨</b>；科创芯片ETF(588290)+7.08%、机器人ETF(159039)+5.91%。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>北向（陆股通）</b>午盘分项未单独披露；两融与央行流动性（2.1万亿月末预案）延续护航，整体为<b>增量回流 + 存量腾挪</b>共振。</span></div>
+      </div>
+      <div class="card glass">
+        <h3 class="plan-card" style="color:#a5b4fc">主力净流入（正贡献）概念 TOP5（亿元 · 实值口径）</h3>
+        <div class="chart-sm" id="flowChart"></div>
+        <div style="font-size:11px;color:var(--txt2);margin-top:6px">★ 今日为<b>净流入日</b>：科技成长全面吸金，净流入量级达 260–490 亿，与 7/30（净流出日）形成镜像——资金"弃低就高"明确。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 板块表现 -->
+  <section>
+    <div class="sec-title">🏆 板块表现 · 领涨 TOP / 领跌 TOP</div>
+    <div class="grid g2">
+      <div class="card glass">
+        <h3 class="plan-card" style="color:var(--buy)">✅ 逆势领涨（AI科技主线全面爆发）</h3>
+        <div class="li"><span class="dot d-green"></span><span><b>AI应用端</b>：中文在线、荣信文化、蓝色光标、易点天下 20cm 涨停，昆仑万维、中文在线等约20股涨停——多模态/物理AI/AI视频爆发。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>半导体产业链</b>：盛景微、盛剑科技、太极实业涨停；科创芯片ETF(588290)+7.08%；受三星Q2炸裂+存储短缺预期至2028提振。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>算力硬件/CPO/算力租赁</b>：宝鼎科技、江南新材涨停；美利云、云赛智联、宏景科技、利通电子封板；源杰科技、天孚通信涨超11%。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>人形机器人</b>：中大力德、锋龙股份涨停，机器人ETF(159039)+5.91%；电子(+7.29%)、通信(+6.35%)、计算机(+5.30%)申万涨幅居前。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>华为概念/中报预增/5G/数据中心AIDC</b>：主力净流入分列 386.7/329.1/260.6/311.8 亿，事件+业绩双驱动。</span></div>
+      </div>
+      <div class="card glass">
+        <h3 class="plan-card" style="color:var(--sell)">⛔ 系统性领跌（红利/防御补跌）</h3>
+        <div class="li"><span class="dot d-red"></span><span><b>银行</b>：农业银行 -4%，工商银行、中国银行 -3%+，昨日历史新高后获利回吐，红利抱团松动。</span></div>
+        <div class="li"><span class="dot d-red"></span><span><b>煤炭 / 油气 / 石油石化</b>：前期避险板块随风险偏好回升补跌；油价回落亦压制。</span></div>
+        <div class="li"><span class="dot d-red"></span><span><b>白酒 / 食品 / 消费</b>：昨日强势的消费今日补跌，印证轮动极快、不可追高。</span></div>
+        <div class="li"><span class="dot d-red"></span><span><b>保险 / 港口 / 高速 / 机场 / 化肥 / 大豆 / 煤化工</b>：防御与顺周期低位板块集体走弱。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 情报面 -->
+  <section>
+    <div class="sec-title">⚡ 情报面 · 风险警报 / 积极催化</div>
+    <div class="grid g2">
+      <div class="cat-card" style="border-color:rgba(255,71,87,.35);background:rgba(255,71,87,.07)">
+        <div class="t"><span class="d-red">●</span>风险警报</div>
+        <div class="d">
+          ① <b>"破位后首日反"需确认</b>：昨日(7/30)科创50破位1572、创业板破3200，今日仅首日强反，<b>趋势反转需午后/明日延续</b>，警惕冲高回落"一日游"；② <b>银行红利抱团松动</b>：工行/建行昨日历史新高、今日农行-4%，若红利持续出货或拖累沪指；③ <b>美联储仍偏鹰未解</b>：7/29 三委员主张加息25bp(2016年来首现)，美债30年收益率破5.2%高位、降息预期仅36bp，宽松未实质落地；④ <b>海外科技波动</b>：纳指距前高回撤10%"或入调整后期"但非反转，韩股+16%为情绪极端值、不可线性外推；⑤ <b>追高风险</b>：科创芯片ETF+7.08%/机器人ETF+5.91%等单日涨幅过大，追长阳易被套；⑥ 中报预告期业绩"爆雷"风险仍存（7/30 德明利等已证伪）；⑦ 沪指仍<b>未站稳3850–3870</b>（午收3833），上方套牢盘待消化。
+        </div>
+      </div>
+      <div class="cat-card" style="border-color:rgba(0,212,170,.35);background:rgba(0,212,170,.07)">
+        <div class="t"><span class="d-green">●</span>积极催化</div>
+        <div class="d">
+          ① <b>三星电子Q2炸裂</b>：营收171.5万亿韩元(+130%)、营业利润89.49万亿韩元(+1814%)、净利71.27万亿韩元；重申"生成式AI推动存储短缺持续至2028年"，计划长期协议销售占比提至60-70%——<b>直接引爆A股半导体/存储/算力估值修复</b>；② <b>韩股/美股存储暴力反弹</b>：Kospi +16%、SK海力士 +28%、三星电子 +24%；③ <b>美联储"宽松希望未熄"</b>：中信建投称纳指回撤10%或进入调整后期，波动近阶段底部；④ <b>央行2.1万亿流动性护航</b>延续（昨日净投放665亿）；⑤ <b>AI应用景气</b>：多模态/物理AI/AI视频密集催化，约20股涨停；⑥ <b>ETF增量</b>：半日3901.6亿、超1200只上涨，增量资金回流；⑦ 机构共识：东吴"AI产业趋势未证伪、上游硬件分化修复"、国君"前瞻看多、左侧做多"。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 仓位管理 -->
+  <section>
+    <div class="sec-title">🎯 仓位管理推荐 · 修复确认 · 控仓 50–60%</div>
+    <div class="grid g2">
+      <div class="card glass">
+        <div class="temp-wrap">
+          <div class="gauge" id="tempGauge"></div>
+          <div class="temp-side">
+            <div style="font-size:15px;font-weight:700;margin-bottom:6px">情绪温度 <span style="color:var(--buy)">≈80 / 100</span> · 强反弹·修复</div>
+            <div class="meter"><span style="width:80%;background:linear-gradient(90deg,#00d4aa,#00b894)"></span></div>
+            <div style="font-size:12px;color:var(--txt2);margin-top:8px">较 7/30（34）飙升 46 点，因 <b>科创50 +5.91% 修复破位 + 创业板 +5.04% 收复3200 + 跌停归零 + 放量3323亿 + 广度83%</b>。回到全年高位区；<b>控仓 50–60%、保留 40–50% 现金</b>，等午后/明日确认趋势再加仓。</div>
+          </div>
+        </div>
+      </div>
+      <div class="card glass">
+        <h3 class="plan-card">仓位配置建议</h3>
+        <table>
+          <tr><th>项目</th><th>建议</th><th>说明</th></tr>
+          <tr><td>总仓位</td><td class="buy">50–60%</td><td>较 7/30（35–45%）上调，破位失效条件被证伪→修复</td></tr>
+          <tr><td>现金</td><td class="buy">40–50%</td><td>保留弹药，等午后/明日趋势确认再加仓</td></tr>
+          <tr><td>进攻仓</td><td class="buy">半导体/CPO/算力/AI应用/机器人</td><td>回踩5日线分批低吸，严禁追今日长阳</td></tr>
+          <tr><td>防御仓</td><td class="hold">银行/公用事业/高股息</td><td>底仓暂持，等红利回踩企稳再补（今日补跌）</td></tr>
+          <tr><td>规避</td><td class="sell">追高高开长阳/一日游题材/业绩爆雷股</td><td>轮动极快，不追涨、重回踩</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:18px">
+      <div class="card glass">
+        <h3 class="plan-card" style="color:var(--buy)">✅ 加仓触发条件（满足多数可加至 60–70%）</h3>
+        <div class="li"><span class="dot d-green"></span><span>沪指站稳 <b>3850–3870</b> 且三大指数午后/全天收红（今日午收3833，差约17点）</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>科创50 重回 1700 上方</b>、半导体/CPO 不再创新低（今日1665为修复第一步）</span></div>
+        <div class="li"><span class="dot d-green"></span><span>跌停保持 < <b>10 家</b>、广度维持 < <b>60%+</b>（今日83%/0跌停，达标）</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>海外科技延续企稳</b>：费半/英伟达/SK海力士不反杀、美债收益率回落（30年<5.2%）</span></div>
+        <div class="li"><span class="dot d-green"></span><span>半日成交维持 <b>1.8 万亿+</b>、主力净流入延续（今日1.79万亿/净流入490亿级，接近达标）</span></div>
+      </div>
+      <div class="card glass">
+        <h3 class="plan-card" style="color:var(--sell)">⛔ 失效 / 回落降仓条件（降至 35–45%、现金 55%+）</h3>
+        <div class="li"><span class="dot d-red"></span><span>沪指回落破 <b>3780</b>（今日最低3822，尚远但需盯）</span></div>
+        <div class="li"><span class="dot d-red"></span><span><b>科创50 再破 1600</b> 或 创业板破 <b>3200</b>（今日反弹失效→重回破位）</span></div>
+        <div class="li"><span class="dot d-red"></span><span>跌停 < <b>30 家</b> 或 广度回落至 < <b>45%</b>（一日游兑现/冲高回落）</span></div>
+        <div class="li"><span class="dot d-red"></span><span>海外科技再杀（费半/韩股反包下跌）+ 美联储鹰派延续</span></div>
+        <div class="li"><span class="dot d-red"></span><span>触发任一即回到防御仓位（总仓 35–45%）</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 机构观点 -->
+  <section>
+    <div class="sec-title">🔭 机构观点汇总 · 科技修复 / 破位失效 / 重业绩轻追高</div>
+    <div class="grid g2">
+      <div class="card glass">
+        <h3 class="plan-card" style="color:var(--buy)">修复 / 结构性机会派</h3>
+        <div class="li"><span class="dot d-green"></span><span><b>中信建投</b>：海外市场加息定价高但联储仍有不确定性，只要CPI压力不足够大、美债收益率不足够低，沃什会等待工作组结论；<b>"波动还将延续，但可能接近阶段性底部"，纳指距前高回撤已有10%，可能正进入调整后期</b>，宽松希望未完全熄灭。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>东吴证券</b>：AI产业趋势并未证伪，上游硬件有望分化修复（延续 7/30 观点），今日半导体/算力反弹验证。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>国君/国君海通</b>：保持前瞻性看多，把握恐慌出清带来的左侧做多机会，宜分批、以时间换空间。</span></div>
+      </div>
+      <div class="card glass">
+        <h3 class="plan-card" style="color:var(--hold)">谨慎 / 防御派</h3>
+        <div class="li"><span class="dot d-amber"></span><span><b>财信证券</b>：海外科技资产尚未完全企稳、波动加大是短线常态；短期"震荡磨底"、<b>控制仓位、均衡配置、把握轮动节奏</b>为主，静待放量或领涨方向再加仓。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>共识</b>：科技反弹但属"破位首日反"、需确认；资金从红利切向成长，<b>重业绩（中报预增+329亿净流入）、轻追高</b>；重视回踩5日线低吸而非长阳追涨。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>风险提示</b>：美联储鹰派（3票反对加息）+ 海外科技财报 + 中报业绩验证为本周关键变量，<b>仓位宜控、留足现金、不追长阳</b>。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span class="meta-pill">生成时间 2026-07-31 12:00 (自动化任务)</span>
+    <span class="meta-pill">市场状态 交易日 · 午间</span>
+    <span class="meta-pill">数据来源 证券时报/新华财经/央广财经/每经/腾讯财经 午评 (WebSearch)</span>
+    <span class="meta-pill">连接器 westock/neodata MCP 仍 disconnected</span>
+    <br>⚠️ 免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论均基于历史数据与技术模型，不保证未来表现。
+  </div>
+
+</div>
+
+<script>
+// ===== 指数卡片 =====
+const idx = [
+  {n:'上证指数',c:'000001',p:'3833.65',w:0.76,sub:'成交8263亿·未站稳3850',spark:[3825,3847.09,3830,3822.37,3835,3833.65]},
+  {n:'深证成指',c:'399001',p:'13705.42',w:3.16,sub:'成交9591亿',spark:[13650,13841.96,13700,13623.52,13720,13705.42]},
+  {n:'创业板指',c:'399006',p:'3408.15',w:5.04,sub:'收复3200·突破3400',spark:[3411.61,3464.90,3400,3376.62,3415,3408.15]},
+  {n:'科创50',c:'000688',p:'1665.20',w:5.91,sub:'修复破位1572',spark:[1572,1620,1665,1640,1670,1665.20]},
+  {n:'北证50',c:'899050',p:'+3.4%',w:3.4,sub:'小微盘同步走强',spark:[1057,1070,1090,1080,1095,1097]}
+];
+const idxCards = document.getElementById('idxCards');
+idx.forEach(x=>{
+  const col = x.w>=0 ? 'var(--buy)':'var(--sell)';
+  const sign = x.w>=0?'+':'';
+  idxCards.insertAdjacentHTML('beforeend',`
+    <div class="card glass">
+      <div class="idx-head"><span class="idx-name">${x.n}</span><span class="idx-code">${x.c}</span></div>
+      <div class="idx-price">${x.p}</div>
+      <div class="idx-chg" style="color:${col}">${sign}${x.w.toFixed(2)}% <span style="font-size:11px;color:var(--txt2)">午涨跌</span></div>
+      <div class="idx-wk">${x.sub}</div>
+      <div class="spark" id="sp_${x.c}"></div>
+    </div>`);
+});
+idx.forEach(x=>{
+  const ch = echarts.init(document.getElementById('sp_'+x.c));
+  ch.setOption({grid:{left:2,right:2,top:4,bottom:2},xAxis:{type:'category',show:false,data:x.spark.map((_,i)=>i)},yAxis:{type:'value',show:false,scale:true},
+    series:[{type:'line',data:x.spark,smooth:true,symbol:'none',lineStyle:{width:2,color:x.w>=0?'#00d4aa':'#ff4757'},areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:x.w>=0?'rgba(0,212,170,.35)':'rgba(255,71,87,.35)'},{offset:1,color:'rgba(0,0,0,0)'}])}}]});
+});
+
+// ===== 情绪温度轨迹 =====
+const moodChart = echarts.init(document.getElementById('moodLine'));
+moodChart.setOption({
+  title:{text:'情绪温度轨迹（7/20 → 今日）',left:'center',textStyle:{color:'#e2e8f0',fontSize:14}},
+  tooltip:{trigger:'axis'},
+  grid:{left:40,right:20,top:50,bottom:30},
+  xAxis:{type:'category',data:['7/20一','7/21二','7/22三','7/23四','7/24五','7/27一','7/28二','7/29三','7/30四','今日五'],axisLine:{lineStyle:{color:'#2d2d44'}},axisLabel:{color:'#94a3b8',fontSize:11}},
+  yAxis:{type:'value',min:0,max:100,axisLine:{lineStyle:{color:'#2d2d44'}},axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'rgba(45,45,68,.5)'}}},
+  series:[{type:'line',data:[58,76,64,63,32,74,41,55,34,80],smooth:true,symbol:'circle',symbolSize:9,lineStyle:{width:3,color:'#00d4aa'},
+    itemStyle:{color:'#00d4aa'},
+    areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(0,212,170,.35)'},{offset:1,color:'rgba(0,212,170,0)'}])},
+    markPoint:{data:[{type:'max',name:'峰值'}]}}]
+});
+
+// ===== 广度柱状 =====
+const breadthChart = echarts.init(document.getElementById('breadthBar'));
+breadthChart.setOption({
+  title:{text:'每日广度赚钱效应（%）',left:'center',textStyle:{color:'#e2e8f0',fontSize:14}},
+  tooltip:{trigger:'axis'},
+  grid:{left:40,right:20,top:50,bottom:30},
+  xAxis:{type:'category',data:['7/24五','7/27一','7/28二','7/29三','7/30四','今日五'],axisLine:{lineStyle:{color:'#2d2d44'}},axisLabel:{color:'#94a3b8',fontSize:11}},
+  yAxis:{type:'value',min:0,max:100,axisLine:{lineStyle:{color:'#2d2d44'}},axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'rgba(45,45,68,.5)'}}},
+  series:[{type:'bar',data:[10,90,52.94,63,35,83],barWidth:'45%',itemStyle:{color:function(p){return p.value>=45?'#00d4aa':(p.value>=30?'#ffa502':'#ff4757');}},
+    label:{show:true,position:'top',color:'#e2e8f0',formatter:'{c}%'}}]
+});
+
+// ===== 主力净流入概念 TOP5（今日净流入日，科技全面吸金）=====
+const flowChart = echarts.init(document.getElementById('flowChart'));
+const inData=[['芯片概念',489.8],['华为概念',386.7],['2026中报预增',329.1],['数据中心AIDC',311.8],['5G',260.6]];
+flowChart.setOption({
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:'{b} : {c} 亿'},
+  grid:{left:110,right:60,top:20,bottom:20},
+  xAxis:{type:'value',axisLine:{lineStyle:{color:'#2d2d44'}},axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'rgba(45,45,68,.5)'}}},
+  yAxis:{type:'category',data:inData.map(d=>d[0]).reverse(),axisLine:{lineStyle:{color:'#2d2d44'}},axisLabel:{color:'#94a3b8'}},
+  series:[{type:'bar',data:inData.map(d=>d[1]).reverse(),barWidth:'55%',
+    itemStyle:{color:function(p){return '#00d4aa';}},
+    label:{show:true,position:'right',color:'#e2e8f0',formatter:'{c}亿'}}]
+});
+
+// ===== 情绪温度仪表盘 =====
+const tempGauge = echarts.init(document.getElementById('tempGauge'));
+tempGauge.setOption({
+  series:[{type:'gauge',startAngle:200,endAngle:-20,min:0,max:100,radius:'100%',center:['50%','60%'],
+    progress:{show:true,width:14,itemStyle:{color:'#00d4aa'}},
+    axisLine:{lineStyle:{width:14,color:[[0.35,'#ff4757'],[0.6,'#ffa502'],[1,'#00d4aa']]}},
+    pointer:{width:5,length:'60%',itemStyle:{color:'#00d4aa'}},
+    axisTick:{show:false},splitLine:{length:10,lineStyle:{color:'#2d2d44'}},axisLabel:{color:'#94a3b8',fontSize:9,distance:14},
+    detail:{valueAnimation:true,fontSize:26,fontWeight:'bold',color:'#00d4aa',offsetCenter:[0,'35%'],formatter:'{value}'},
+    title:{offsetCenter:[0,'70%'],color:'#94a3b8',fontSize:11},
+    data:[{value:80,name:'情绪温度'}]}]
+});
+
+window.addEventListener('resize',()=>{moodChart.resize();breadthChart.resize();flowChart.resize();tempGauge.resize();idx.forEach(x=>echarts.getInstanceByDom(document.getElementById('sp_'+x.c))?.resize());});
+</script>
+</body>
+</html>
