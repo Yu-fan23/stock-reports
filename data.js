@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-07-31 16:45:43",
-  "total": 79,
+  "generatedAt": "2026-08-01 07:45:51",
+  "total": 80,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 17,
-      "latest": "20260731",
+      "count": 18,
+      "latest": "20260801",
       "reports": [
+        {
+          "date": "20260801",
+          "dateLabel": "2026-08-01（周六）",
+          "file": "reports/panqian/panqian_20260801.html",
+          "title": "盘前交易计划 | 2026年8月3日（周一）· v22.0 · 7/31科技全面反攻+周末史诗政策(政治局逆周期+六张网/算力网4万亿+国常会核准4核电+宇树机器人IPO+亚马逊云超预期)，主线重排为「AI科技(算力/半导体/机器人/应用) + 新型基建电力 + 资源油气」，大消费被证伪降级、科技由修复升为绝对主线",
+          "size": 61767
+        },
         {
           "date": "20260731",
           "dateLabel": "2026-07-31（周五）",
