@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-07-31 15:45:44",
-  "total": 78,
+  "generatedAt": "2026-07-31 16:45:43",
+  "total": 79,
   "categories": [
     {
       "key": "panqian",
@@ -433,9 +433,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 15,
-      "latest": "20260729",
+      "count": 16,
+      "latest": "20260731",
       "reports": [
+        {
+          "date": "20260731",
+          "dateLabel": "2026-07-31（周五）",
+          "file": "reports/limitup/limitup_20260731.html",
+          "title": "涨停梯队复盘 · 2026-07-31（周五）· AI应用爆发 · 科技反攻 · 月线收官",
+          "size": 50350
+        },
         {
           "date": "20260729",
           "dateLabel": "2026-07-29（周三）",
