@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-01 16:45:44",
-  "total": 83,
+  "generatedAt": "2026-08-02 07:45:42",
+  "total": 84,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 18,
-      "latest": "20260801",
+      "count": 19,
+      "latest": "20260802",
       "reports": [
+        {
+          "date": "20260802",
+          "dateLabel": "2026-08-02（周日）",
+          "file": "reports/panqian/panqian_20260802.html",
+          "title": "盘前交易计划 | 2026年8月3日（周一）· v23.0 · 8/1美股延续反弹+周末史诗政策升级(六张网超14万亿/2万亿财政/电池税免征固态钠电/医药四重新政落地/特朗普袭伊/量化平权)，主线重排为「AI科技 + 新型基建电力新能源 + 医药创新药」，资源油气降为地缘对冲支线",
+          "size": 65249
+        },
         {
           "date": "20260801",
           "dateLabel": "2026-08-01（周六）",
