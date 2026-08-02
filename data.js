@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-02 16:45:43",
-  "total": 88,
+  "generatedAt": "2026-08-03 07:45:46",
+  "total": 89,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 19,
-      "latest": "20260802",
+      "count": 20,
+      "latest": "20260803",
       "reports": [
+        {
+          "date": "20260803",
+          "dateLabel": "2026-08-03（周一）",
+          "file": "reports/panqian/panqian_20260803.html",
+          "title": "盘前交易计划 | 2026年8月3日（周一）· v24.0 · 周末伊朗去风险化(油价崩·布油-7.3%至81.5)+央行适度宽松+十大券商看多8月修复，主线维持「AI科技 + 新型基建电力核电新能源 + 医药创新药」，油气/黄金对冲失效转利空、新增非银金融修复支线",
+          "size": 69206
+        },
         {
           "date": "20260802",
           "dateLabel": "2026-08-02（周日）",
