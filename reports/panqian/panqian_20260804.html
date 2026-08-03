@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盘前交易计划 | 2026年8月4日（周二）· v25.0 · 8/3真实收盘（核电逆势涨停潮·科创-5.08%·缩量5488亿）+8/3深夜美股云厂商暴涨（谷歌/Meta/微软/亚马逊+5~6%），主线重排「核电新型基建电力 + AI应用算力(变现) + 光伏新能源(反内卷)」，半导体存储退潮、医药一日游观察</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0f0f23; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; line-height: 1.7; padding: 20px; max-width: 1200px; margin: 0 auto; }
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 28px 32px; margin-bottom: 24px; border: 1px solid #2d2d44; }
+  .header h1 { font-size: 24px; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; }
+  .header .subtitle { color: #94a3b8; font-size: 14px; margin-bottom: 12px; }
+  .header .meta { color: #94a3b8; font-size: 13px; display: flex; gap: 20px; flex-wrap: wrap; }
+  .header .meta .tag { background: rgba(0,212,170,0.2); color: #00d4aa; padding: 2px 10px; border-radius: 10px; font-size: 12px; }
+  .header .meta .tag.warn { background: rgba(255,165,2,0.2); color: #ffa502; }
+  .header .meta .tag.green { background: rgba(0,212,170,0.2); color: #00d4aa; }
+  .header .meta .tag.red { background: rgba(255,71,87,0.2); color: #ff4757; }
+  .summary-bar { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 24px 28px; margin-bottom: 24px; border: 1px solid #00d4aa; border-left: 4px solid #00d4aa; }
+  .summary-bar .verdict { font-size: 20px; font-weight: 800; color: #00d4aa; margin-bottom: 8px; }
+  .summary-bar .verdict-desc { color: #cbd5e1; font-size: 14px; }
+  .q3-box { border-radius: 14px; padding: 20px 24px; margin-bottom: 24px; background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%); border: 1px solid #667eea; }
+  .q3-box h2 { font-size: 18px; color: #a78bfa; margin-bottom: 14px; }
+  .q3-item { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid rgba(45,45,68,0.5); }
+  .q3-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .q3-item .ql { font-size: 15px; font-weight: 700; color: #e2e8f0; margin-bottom: 6px; }
+  .q3-item .qa { font-size: 14px; color: #cbd5e1; }
+  .q3-item .qa b { color: #00d4aa; }
+  .q3-item .qa .r { color: #ffa502; }
+  .q3-item .qa .bad { color: #ff4757; }
+  .verify-box { border-radius: 10px; padding: 12px 16px; margin-bottom: 12px; font-size: 13px; }
+  .verify-bull { background: rgba(0,212,170,0.08); border-left: 3px solid #00d4aa; }
+  .verify-warn { background: rgba(255,165,2,0.08); border-left: 3px solid #ffa502; }
+  .verify-danger { background: rgba(255,71,87,0.08); border-left: 3px solid #ff4757; }
+  .index-cards { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 24px; }
+  .index-card { background: #1a1a2e; border-radius: 12px; padding: 16px; border: 1px solid #2d2d44; text-align: center; }
+  .index-card .name { font-size: 12px; color: #94a3b8; margin-bottom: 6px; }
+  .index-card .price { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .index-card .change { font-size: 13px; font-weight: 600; }
+  .index-card .change.green { color: #00d4aa; }
+  .index-card .change.red { color: #ff4757; }
+  .index-card .sub { font-size: 10px; color: #64748b; margin-top: 4px; }
+  .section { background: #1a1a2e; border-radius: 16px; padding: 24px 28px; margin-bottom: 20px; border: 1px solid #2d2d44; }
+  .section-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .section-title .num { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .theme-card { background: #16213e; border-radius: 14px; padding: 22px; margin-bottom: 16px; border: 1px solid #2d2d44; transition: border-color 0.3s; }
+  .theme-card:hover { border-color: #667eea; }
+  .theme-card.buy { border-left: 4px solid #00d4aa; }
+  .theme-card.watch { border-left: 4px solid #ffa502; }
+  .theme-card.avoid { border-left: 4px solid #ff4757; }
+  .theme-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+  .theme-name { font-size: 17px; font-weight: 700; }
+  .theme-signal { padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; }
+  .theme-signal.buy { background: rgba(0,212,170,0.15); color: #00d4aa; }
+  .theme-signal.watch { background: rgba(255,165,2,0.15); color: #ffa502; }
+  .theme-signal.avoid { background: rgba(255,71,87,0.15); color: #ff4757; }
+  .theme-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .theme-row .label { color: #64748b; font-size: 13px; margin-bottom: 4px; }
+  .theme-row .value { color: #e2e8f0; font-size: 14px; }
+  .theme-stocks { background: rgba(0,0,0,0.2); border-radius: 8px; padding: 12px 14px; margin-top: 8px; }
+  .theme-stocks .label { color: #64748b; font-size: 12px; margin-bottom: 6px; }
+  .stock-tag { display: inline-block; background: rgba(102,126,234,0.15); color: #a78bfa; padding: 3px 10px; border-radius: 6px; font-size: 12px; margin: 2px 4px 2px 0; }
+  .stock-tag.hl { background: rgba(0,212,170,0.15); color: #00d4aa; }
+  .stock-tag.gold { background: rgba(255,165,2,0.15); color: #ffa502; }
+  .catalyst-list { margin-top: 8px; }
+  .catalyst-list li { list-style: none; padding: 4px 0; font-size: 13px; color: #cbd5e1; padding-left: 18px; position: relative; }
+  .catalyst-list li::before { content: '▸'; position: absolute; left: 0; color: #667eea; }
+  .catalyst-list li.neg::before { color: #ff4757; }
+  .catalyst-list li.pos::before { color: #00d4aa; }
+  .stage-bar { background: rgba(0,0,0,0.3); border-radius: 8px; height: 32px; display: flex; align-items: center; position: relative; margin: 10px 0; overflow: hidden; }
+  .stage-segment { flex: 1; text-align: center; font-size: 11px; color: #64748b; border-right: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 1; }
+  .stage-segment:last-child { border-right: none; }
+  .stage-marker { position: absolute; top: 0; height: 100%; border-radius: 8px; z-index: 0; }
+  .stage-marker.buy { background: linear-gradient(90deg, rgba(0,212,170,0.3), rgba(0,212,170,0.5)); }
+  .stage-marker.warm { background: linear-gradient(90deg, rgba(255,165,2,0.3), rgba(255,165,2,0.5)); }
+  .plan-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .plan-table th { background: rgba(102,126,234,0.1); color: #a78bfa; padding: 10px 12px; text-align: left; font-weight: 600; border-bottom: 1px solid #2d2d44; }
+  .plan-table td { padding: 10px 12px; border-bottom: 1px solid rgba(45,45,68,0.5); color: #cbd5e1; }
+  .plan-table tr:hover td { background: rgba(102,126,234,0.05); }
+  .plan-table .action-buy { color: #00d4aa; font-weight: 600; }
+  .plan-table .action-sell { color: #ff4757; font-weight: 600; }
+  .plan-table .action-hold { color: #ffa502; font-weight: 600; }
+  .position-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center; }
+  .position-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #16213e; border-radius: 8px; margin-bottom: 8px; border: 1px solid #2d2d44; }
+  .position-item .name { font-size: 14px; }
+  .position-item .pct { font-weight: 700; }
+  .position-item .pct.green { color: #00d4aa; }
+  .position-item .pct.orange { color: #ffa502; }
+  .position-item .pct.gray { color: #64748b; }
+  .alert-box { border-radius: 10px; padding: 14px 18px; margin-bottom: 12px; font-size: 14px; }
+  .alert-box.danger { background: rgba(255,71,87,0.08); border: 1px solid rgba(255,71,87,0.3); color: #ff6b7a; }
+  .alert-box.success { background: rgba(0,212,170,0.08); border: 1px solid rgba(0,212,170,0.3); color: #3dd9b0; }
+  .alert-box.warning { background: rgba(255,165,2,0.08); border: 1px solid rgba(255,165,2,0.3); color: #ffb84d; }
+  .alert-box .title { font-weight: 700; margin-bottom: 4px; }
+  .checklist { list-style: none; }
+  .checklist li { padding: 8px 0 8px 28px; position: relative; font-size: 14px; color: #cbd5e1; border-bottom: 1px solid rgba(45,45,68,0.3); }
+  .checklist li::before { content: '☐'; position: absolute; left: 0; font-size: 18px; color: #667eea; }
+  .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .scenario-card { background: #16213e; border-radius: 12px; padding: 16px; border: 1px solid #2d2d44; }
+  .scenario-card .prob { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+  .scenario-card .prob.neutral { color: #ffa502; }
+  .scenario-card .prob.bear { color: #ff4757; }
+  .scenario-card .prob.bull { color: #00d4aa; }
+  .scenario-card .desc { font-size: 13px; color: #94a3b8; }
+  .chart-container { width: 100%; height: 320px; margin: 10px 0; }
+  .level-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 16px; }
+  .level-card { background: #16213e; border-radius: 10px; padding: 14px; border: 1px solid #2d2d44; text-align: center; }
+  .level-card .label { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+  .level-card .value { font-size: 20px; font-weight: 700; }
+  .level-card .value.red { color: #ff4757; }
+  .level-card .value.green { color: #00d4aa; }
+  .level-card .value.orange { color: #ffa502; }
+  .level-card .note { font-size: 11px; color: #64748b; margin-top: 2px; }
+  .footer { text-align: center; color: #475569; font-size: 12px; padding: 20px 0; border-top: 1px solid #2d2d44; margin-top: 24px; }
+  .footer .disclaimer { background: rgba(255,71,87,0.05); border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; color: #94a3b8; font-size: 12px; text-align: left; }
+  @media (max-width: 768px) {
+    .index-cards { grid-template-columns: repeat(2, 1fr); }
+    .theme-row { grid-template-columns: 1fr; }
+    .position-grid { grid-template-columns: 1fr; }
+    .scenario-grid { grid-template-columns: 1fr; }
+    .level-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+  <h1>盘前交易计划 | 2026年8月4日（周二）· v25.0 · 8/3真实收盘（核电逆势涨停潮·科创-5.08%·缩量5488亿）+8/3深夜美股云厂商暴涨（谷歌/Meta/微软/亚马逊+5~6%），主线重排「核电新型基建电力 + AI应用算力(变现) + 光伏新能源(反内卷)」</h1>
+  <div class="subtitle">⚠️ <b style="color:#00d4aa">v24.0(8/3 06:55)被8/3真实收盘全面验证并重排</b>：<b>核电"日内最强催化"命中并升#1</b>（8/3核电10余股涨停潮·久盛电气/瑞迪智驱20cm·中国核建/江苏神通/百利电气涨停）；<b>医药"新政一日游"命中</b>（药明平盘·创新药ETF-1.6%·医药生物-0.52%）；<b>"两极分化/缩量不追高"命中</b>（成交2.01万亿缩量5488亿·超4000股涨但科创-5.08%）；<b>半导体/存储"退潮"命中</b>（兆易跌停·寒武纪-7%·半导体-5.84%）；<b>AI科技"主升早期"被分化</b>——硬件算力(存储/设备)暴跌，但<b>AI应用(传智6板)+算力租赁/CPO(天孚+10亿净流入)</b>活跃胜出。8/3深夜美股云厂商暴涨(谷歌/Meta/微软/亚马逊+5~6%)→8/4 <b>AI应用/算力"变现逻辑"最强映射</b>。主线重排=「<b>核电新型基建电力 + AI应用算力(变现) + 光伏新能源(反内卷)</b>」，半导体存储退潮、医药一日游观察。</div>
+  <div class="meta">
+    <span>📊 数据截至：2026-08-03 A股全天收盘（上证3809.66 -0.59%、深成-0.96%、创业板-1.24%、科创50 -5.08%；成交2.01万亿缩量5488亿；4004涨/1466跌、主力净流出369亿、电子净流出266亿居首、电力设备净流入23亿第一）+ 2026-08-03 深夜美股（纳指+2%、谷歌+5%、Meta+6%、微软+5%、亚马逊+5%·云厂商AI变现）+ 2026-08-04 盘前机构观点</span>
+    <span>🔥 情绪评级：<span class="tag green">存量博弈·缩量横盘第5天·资金大迁徙(高位科技→低位政策基建+AI应用)·美股云厂商暴涨提振风险偏好</span></span>
+    <span>⏰ 生成时间：2026-08-04 06:55</span>
+  </div>
+</div>
+
+<!-- ===== SUMMARY BAR ===== -->
+<div class="summary-bar">
+  <div class="verdict">🟢 核心判断：总仓位 <b>45-55%</b>（8/3缩量5488亿至2.01万亿、存量博弈、3800点保卫战→攻守兼备但偏谨慎），三大主流重排=「<b>核电新型基建电力(政策史诗·8/3逆势绝对主线) 20% + AI应用算力(变现·美股云共振) 14-18% + 光伏新能源(反内卷+电池税) 8-12%</b>」+ 医药观察0-3% + 半导体存储0%(退潮不抄底) + 现金51%+；<b>破3800降至40%、破3760极端30%</b>。</div>
+  <div class="verdict-desc">
+    <b style="color:#00d4aa">8/3真实收盘决定性信号（重排依据）</b>：① <b>核电=逆势绝对主线</b>：核电概念+2.80%，久盛电气/瑞迪智驱20cm、中国核建/江苏神通/百利电气/融发核电/深南电A/利欧股份/盈峰环境/长城电工/汇金通/咸亨国际等10余股涨停——国常会核准8台核电机组(4项目·超1700亿·十五五首批)引爆"设备商-工程商-运营商"全产业链挖掘，资金共识度最高；② <b>AI应用活跃·算力变现分支胜出</b>：传智教育6连板、天娱数科/恒银科技2板、吉宏股份涨停；算力租赁+1.54%、华为算力+1.32%；<b>资金净流入前十=天孚通信(超10亿·CPO)/华电辽能/绿的谐波/三环集团/通威/罗博特科/风华高科/宏景科技/光库科技/协创数据</b>——硬件算力(存储/设备)暴跌但算力租赁/CPO/MLCC资金逆势抢筹；③ <b>光伏反弹</b>：通威/福莱特/国晟科技涨停（市场监管总局光伏价格合规指导·反内卷）；④ <b>半导体/存储退潮确认</b>：半导体-5.84%、电子-4.18%、兆易创新跌停、寒武纪-7.05%、中芯-6.04%、科创50 -5.08%（极端超卖）；⑤ <b>医药一日游</b>：药明康德平盘、创新药ETF-1.6%、医药生物-0.52%（v24.0"防一日游"命中）；⑥ <b>缩量5488亿至2.01万亿</b>：存量博弈、无增量、权重拖累但个股活跃(超4000涨)。<br>
+    <b style="color:#ffa502">8/3深夜美股（8/4最强催化）</b>：纳指+2%、道指+1%、标普+1.3%；<b>谷歌+5%(AI超苹果回第二)、Meta+6%、微软+5%(Copilot付费破3000万)、亚马逊+5%(AWS云增速18季度新高)</b>——云厂商"AI变现"行情。映射到A股=<b>AI应用/算力(变现逻辑)8/4最强高开催化</b>，与机构"投入侧→产出侧(云/模型/应用)"重估共振。<br>
+    <b style="color:#ff4757">风险面</b>：8/3缩量5488亿→存量博弈本质未变；美股"云厂商涨"与A股"政策托底"逻辑不同频(头条/搜狐早评)；高开大概率但高开低走也大概率；半导体/科创50-5.08%极端超卖但止跌未确认；3800点整数关口保卫战；本周51只解禁242.95亿抽水；半导体ETF 20日-30%趋势破位。<br>
+    <b style="color:#00d4aa">盘前策略：核电去弱留强(前排换手+中军趋势)；AI应用算力受美股催化高开不追、回踩低吸前排(天孚/传智/宏景/协创)；光伏新能源分歧低吸(通威/协鑫/宁德)；半导体存储退潮不抄底(仅设备/先进封装中长期看好·超跌观察)；医药一日游后观察；现金51%+守回踩。3800不破则主线+政策中军低吸，破则降防。</b>
+  </div>
+</div>
+
+<!-- ===== 三大问题速答 ===== -->
+<div class="q3-box">
+  <h2>📌 三个核心问题速答（8/4 周二盘前版 · v25.0）</h2>
+  <div class="q3-item">
+    <div class="ql">Q1 · 当下的主流题材是什么？（至多3个）</div>
+    <div class="qa">
+      ① <b>核电 + 新型基建/电力/电网/特高压（政策史诗主线）</b> —— <b>8/3逆势绝对主线</b>。国常会核准8台核电机组(4项目·超1700亿·十五五首批开闸)，核电概念+2.80%、10余股涨停潮；叠加六张网超14万亿(电网5万亿+算力4万亿)+迎峰度夏电力。资金共识度全市场最高。<br>
+      ② <b>AI应用 + 算力（变现逻辑）</b> —— <b>8/3活跃+美股云厂商暴涨共振</b>。传智教育6连板、天娱/恒银2板、吉宏涨停；算力租赁+1.54%；资金净流入前十含天孚通信(超10亿·CPO)/宏景/协创(算力租赁)/三环(MLCC)/光库/罗博特科；8/3深夜美股谷歌/Meta/微软/亚马逊+5~6%(云AI变现)→8/4最强映射。机构"投入侧→产出侧"重估。<br>
+      ③ <b>光伏/新能源（反内卷 + 电池税免征）</b> —— <b>8/3反弹启动</b>。通威/福莱特/国晟科技涨停（市场监管总局光伏价格合规指导·反内卷·拼质量）；固态/钠电/钙钛矿电池消费税免征(9/1)→新能源弹性。政策驱动修复。<br>
+      <span class="bad">（半导体/存储：8/3 -5.84%/科创-5.08%·兆易跌停→退潮AVOID；医药：新政首日"一日游"(药明平盘/创新药ETF-1.6%)→观察；油气/黄金：油价崩利空回避；钢铁/环保/轻工：政策支线）</span>
+    </div>
+  </div>
+  <div class="q3-item">
+    <div class="ql">Q2 · 主流题材的核心是谁？</div>
+    <div class="qa">
+      ① 核电/新型基建电力：<b>久盛电气(20cm龙头)/瑞迪智驱(20cm)/中国核建(工程总包涨停)/江苏神通/融发核电/百利电气(设备阀门涨停)、东方电气/上海电气(设备中军)、中国广核(运营+0.73%)/国电南瑞(+2.96%电网中军)/中国西电/平高(特高压)、深南电A/华电辽能(电力涨停)/新能股份(2板)</b>。<br>
+      ② AI应用/算力(变现)：<b>传智教育(6板·AI教育)/天娱数科/恒银科技(2板)/吉宏股份(涨停·AI营销)/蓝色光标/昆仑万维(应用)；天孚通信(资金净流入第一·CPO)/宏景科技/协创数据/利通电子/美利云(算力租赁·资金流入前十)/三环集团(MLCC)/光库科技/罗博特科(光模块设备)</b>。<br>
+      ③ 光伏/新能源：<b>通威股份/福莱特(光伏玻璃·反内卷涨停)/协鑫集成(钙钛矿)/阳光电源(算力供电)/宁德时代(钠电·电池税免征)/赣锋锂业(固态)/上海洗霸/金龙羽(固态)</b>。<br>
+      <span class="r">半导体设备/先进封装(中长期超级周期·雪球)：中微/北方华创(设备)、通富/华天(先进封装)——但8/3随板块-5%+、仅超跌观察不抄底；零部件>设备>材料节奏。</span>
+    </div>
+  </div>
+  <div class="q3-item">
+    <div class="ql">Q3 · 走到哪个阶段？能不能买？盘前交易计划？</div>
+    <div class="qa">
+      ① 核电/新型基建电力 = <b>主升启动/爆发（8/3涨停潮·政策刚落地）</b>，<span class="r">能买：前排换手(久盛/中国核建/江苏神通)+中军趋势(东方电气/国电南瑞/中国广核)，去弱留强不追缩量加速；仓位20%</span>；<br>
+      ② AI应用/算力(变现) = <b>发酵/分化（应用强·硬件算力分化·美股云共振）</b>，<span class="r">能买：美股催化高开不追、回踩低吸前排(传智/天孚/宏景/协创/三环)，机构"投入→产出"重估；仓位14-18%</span>；<br>
+      ③ 光伏/新能源 = <b>政策修复启动（反内卷+电池税）</b>，<span class="r">能买：分歧低吸(通威/协鑫/宁德/赣锋)，防追高；仓位8-12%</span>。<br>
+      <b>总计划：总仓45-55%，核电基建20% + AI应用算力14-18% + 光伏新能源8-12% + 医药观察0-3% + 半导体存储0%(退潮) + 现金51%+；美股催化高开不追(存量博弈+缩量)，守3800上方低吸前排业绩+政策中军，破3800降至40%、破3760极端30%；弃纯高位存储/半导体、做核电前排+AI应用算力变现+光伏反内卷+政策中军。</b>
+    </div>
+  </div>
+</div>
+
+<!-- ===== v24.0 → v25.0 变化 ===== -->
+<div class="verify-box verify-danger">
+  <strong style="color:#ff4757">🔁 v24.0（8/3 06:55·基于7/31收盘+8/1美股+8/3盘前油价崩/央行宽松/券商看多） → v25.0（8/4 06:55·基于8/3真实收盘+8/3深夜美股云厂商暴涨+8/4盘前，主线重排）哪些被验证 / 哪些被反转</strong><br>
+  <b style="color:#00d4aa">✅ v24.0"新型基建/核电#2·核电日内最强催化"被8/3<b>彻底验证并升#1</b></strong>：核电概念+2.80%、久盛电气/瑞迪智驱20cm、中国核建/江苏神通/百利电气等10余股涨停——国常会核准8台机组(超1700亿)引爆全产业链，逆势绝对主线。<br>
+  <b style="color:#00d4aa">✅ v24.0"医药#3·新政修复·防一日游"被<b>一日游命中</b></strong>：药明康德平盘、创新药ETF-1.6%、医药生物-0.52%——新政首日高开低走，验证"买分歧不买加速"，医药降级观察。<br>
+  <b style="color:#00d4aa">✅ v24.0"不追高开/两极分化/缩量"被<b>完美命中</b></strong>：成交2.01万亿缩量5488亿、超4000股涨但科创-5.08%、权重拖累个股活跃——存量博弈本质确认。<br>
+  <b style="color:#ff4757">⚠️ v24.0"AI科技#1·主升早期·前排业绩龙头回踩低吸"被<b>分化反转</b></strong>：硬件算力(半导体-5.84%/存储兆易跌停/寒武纪-7%)暴跌退潮，但<b>AI应用(传智6板)+算力租赁/CPO(天孚+10亿净流入)活跃胜出</b>→主线细分为"AI应用/算力(变现)"，硬件存储单独降退潮。<br>
+  <b style="color:#ff4757">⚠️ v24.0"半导体设备/存储前排回踩低吸"被<b>证伪(退潮)</b></strong>：8/3半导体-5.84%、科创-5.08%、半导体ETF 20日-30%、兆易跌停→存储/高位半导体短期回避，仅设备/先进封装(雪球"超级周期")中长期看好、超跌观察。<br>
+  <b style="color:#ffa502">⚠️ 全新变量=8/3深夜美股云厂商暴涨(谷歌/Meta/微软/亚马逊+5~6%)</b>→8/4 "AI应用/算力变现"最强高开催化，与机构"投入侧→产出侧"重估共振；光伏反内卷(价格合规指导)新增为第三主线。<br>
+  <b style="color:#ffa502">⚠️ 主线从「AI科技+新型基建电力核电新能源+医药创新药」重排为「核电新型基建电力 + AI应用算力(变现) + 光伏新能源(反内卷)」，半导体存储退潮、医药观察。</b>
+</div>
+<div class="verify-box verify-bull">
+  <strong style="color:#00d4aa">🔁 8/4 周二必须盯的落地事件</strong><br>
+  <b>① 核电持续性</b>：8/3涨停潮(10余股)后，前排(久盛/中国核建/江苏神通)能否换手晋级、中军(东方电气/国电南瑞/中国广核)趋势延续，还是"一日游"兑现(板块已涨、需去弱留强)。<br>
+  <b>② 美股云厂商→A股映射</b>：谷歌/Meta/微软/亚马逊+5~6%→AI应用(传智/蓝色光标/昆仑)/算力租赁(天孚/宏景/协创)/CPO高开强度；但存量博弈下"高开不追、看量能"。<br>
+  <b>③ 半导体/科创50能否止跌</b>：8/3科创-5.08%极端超卖，技术反弹 or 继续破位决定全市场风险偏好；半导体ETF 20日-30%趋势弱。<br>
+  <b>④ 成交能否回2.3万亿+</b>：8/3仅2.01万亿缩量5488亿，缩量只能支撑个股行情、冲关必须放量；3800点保卫战量能是关键。<br>
+  <b>⑤ 光伏反内卷持续性</b>：通威/福莱特涨停后，价格合规指导(反内卷)能否扩散至全产业链、电池税免征(固态/钠电/钙钛矿)是否接力。<br>
+  <b>⑥ 医药能否修复</b>：新政首日一日游后，药明康德/昭衍/原料药(华海/普洛)是否二次启动，还是继续退潮。<br>
+  <b>⑦ 指数变盘</b>：8/3收3809.66守住3800、最低3797.64；3800整数关口为8/4第一观察线，破则防守、放量收回3832(7/31收)则反弹延续。
+</div>
+
+<!-- ===== INDEX CARDS ===== -->
+<div class="index-cards">
+  <div class="index-card">
+    <div class="name">上证(8/3收盘)</div>
+    <div class="price" style="color:#ff4757;">3809.66</div>
+    <div class="change red">-0.59%</div>
+    <div class="sub">3800点保卫战</div>
+  </div>
+  <div class="index-card">
+    <div class="name">创业板指</div>
+    <div class="price" style="color:#ff4757;">-1.24%</div>
+    <div class="change red">缩量</div>
+    <div class="sub">权重拖累</div>
+  </div>
+  <div class="index-card">
+    <div class="name">科创50</div>
+    <div class="price" style="color:#ff4757;">-5.08%</div>
+    <div class="change red">极端超卖</div>
+    <div class="sub">半导体暴跌</div>
+  </div>
+  <div class="index-card">
+    <div class="name">两市成交</div>
+    <div class="price" style="color:#ffa502;">2.01万亿</div>
+    <div class="change red">缩量5488亿</div>
+    <div class="sub">超4000股上涨</div>
+  </div>
+  <div class="index-card">
+    <div class="name">纳指(8/3夜)</div>
+    <div class="price" style="color:#00d4aa;">+2%</div>
+    <div class="change green">云厂商暴涨</div>
+    <div class="sub">谷歌/Meta+5~6%</div>
+  </div>
+  <div class="index-card">
+    <div class="name">核电概念</div>
+    <div class="price" style="color:#00d4aa;">+2.80%</div>
+    <div class="change green">10余股涨停</div>
+    <div class="sub">逆势绝对主线</div>
+  </div>
+</div>
+
+<!-- ===== Q1: 主流题材 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">1</span>当下主流题材（至多3个 + 支线，基于8/3真实收盘 + 8/3深夜美股云厂商暴涨 + 8/4盘前重排，主线=「核电新型基建电力 + AI应用算力(变现) + 光伏新能源(反内卷)」）</div>
+
+  <!-- Theme 1: 核电/新型基建电力 -->
+  <div class="theme-card buy">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🟢 核电 + 新型基建/电力/电网/特高压 — 政策史诗主线·8/3逆势绝对主线·涨停潮（#1）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">8/3核电概念+2.80%、久盛电气/瑞迪智驱20cm、中国核建/江苏神通/百利电气/融发核电/深南电A/利欧股份/盈峰环境/长城电工/汇金通/咸亨国际等10余股涨停；国常会(7/31)核准8台核电机组(浙江金七门二期/广东太平岭三期/辽宁庄河一期/山东莱阳一期·投资超1700亿·十五五首批)→"设备商-工程商-运营商"全产业链挖掘；六张网超14万亿(电网5万亿+算力4万亿)+迎峰度夏电力+公用事业净流入15.54亿；银河测算8台机组带动产业链总产出约5000亿</div>
+      </div>
+      <div class="theme-signal buy">BUY · 前排换手+中军趋势</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的（核电 + 电网 + 电力）</div>
+        <div class="value">
+          <span class="stock-tag hl">久盛电气 301082 / 瑞迪智驱 301596 (20cm龙头) / 中国核建 601611 / 江苏神通 002438 / 融发核电 002366 / 百利电气 600468 (设备阀门·涨停)</span>
+          <span class="stock-tag hl">东方电气 600875 / 上海电气 601727 (设备总包中军)</span>
+          <span class="stock-tag hl">中国广核 003816 (+0.73%·运营商) / 国电南瑞 600406 (+2.96%·电网中军) / 中国西电 601179 / 平高电气 600312 (特高压)</span>
+          <span class="stock-tag hl">深南电A 000037 / 华电辽能 600396 (涨停) / 新能股份 000595 (2板) (电力)</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金/强度信号</div>
+        <div class="value" style="color:#00d4aa;">8/3核电涨停潮(10余股)全市场共识度最高；中国银河"8台机组投资超1700亿、带动产业链总产出约5000亿"；连续4年每年核准10台+·十五五常态化；设备交付周期长、在手订单充裕；资金沿"设备-工程-运营"充分挖掘</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          逻辑：政策确定性最强(非纯题材)·核电审批开闸=新增长极；但8/3已涨停潮→8/4"去弱留强"、前排换手+中军趋势，不追缩量加速一字板
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">国常会(7/31)：核准8台核电机组(4项目·超1700亿·十五五首批开闸)→核电规模化/常态化建设趋势确认；不排除下半年继续批复</li>
+        <li class="pos">六张网超14万亿：新型电网超5万亿+算力网约4万亿；迎峰度夏电力负荷新高+容量电价；公用事业8/3净流入15.54亿(第二)</li>
+        <li class="pos">核聚变新进展+华龙一号2.0示范(金七门/太平岭)→技术迭代；2030年前在运装机跃居世界第一、2040年达200GW目标</li>
+        <li class="neg">⚠️ 8/3涨停潮后"一日游"兑现风险(尤其后排一字板)；板块已涨、需去弱留强；与科技(算力网)重叠→资金分流；追缩量加速易被闷</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker warm" style="left:25%;width:28%;"></div>
+        <div class="stage-segment">退潮</div>
+        <div class="stage-segment" style="color:#ffa502;font-weight:700;">↑ 主升启动/爆发</div>
+        <div class="stage-segment">加速</div>
+        <div class="stage-segment">高潮</div>
+      </div>
+      <div style="font-size:13px;color:#00d4aa;margin-top:4px;">
+        ✅ 主升启动/爆发·<b>能买：前排换手(久盛/中国核建/江苏神通)+中军趋势(东方电气/国电南瑞/中国广核)，去弱留强不追缩量加速；仓位20%，核电为8/4第一主线</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme 2: AI应用/算力(变现) -->
+  <div class="theme-card buy">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🟢 AI应用 + 算力（变现逻辑）— 发酵/分化·8/3活跃 + 8/3深夜美股云厂商暴涨共振（#2）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">8/3 AI应用端活跃：传智教育6连板、天娱数科/恒银科技2板、吉宏股份涨停；算力租赁+1.54%、华为算力+1.32%、东数西算+1.18%；<b>资金净流入前十=天孚通信(超10亿·CPO)/宏景科技/协创数据(算力租赁)/三环集团(MLCC)/光库科技/罗博特科</b>；8/3深夜美股云厂商暴涨(谷歌+5%/Meta+6%/微软+5%/亚马逊+5%·AWS云增速18季度新高)→"投入侧→产出侧(云/模型/应用)"重估，A股AI应用/算力变现最强映射</div>
+      </div>
+      <div class="theme-signal buy">BUY · 高开不追·回踩低吸</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的（AI应用 + 算力租赁/CPO）</div>
+        <div class="value">
+          <span class="stock-tag hl">传智教育 003032 (6连板·AI教育) / 天娱数科 002354 / 恒银科技 603106 (2板) / 吉宏股份 (涨停·AI营销) / 蓝色光标 300058 / 昆仑万维 300418 (AI应用)</span>
+          <span class="stock-tag hl">天孚通信 300394 (资金净流入第一·超10亿·CPO) / 宏景科技 301396 / 协创数据 300857 / 利通电子 603629 / 美利云 600640 (算力租赁·资金流入前十)</span>
+          <span class="stock-tag hl">三环集团 (MLCC·资金流入) / 光库科技 / 罗博特科 (光模块设备·资金流入)</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金/强度信号</div>
+        <div class="value" style="color:#00d4aa;">8/3资金净流入前十占6席(天孚/宏景/协创/三环/光库/罗博特科)→硬件算力(存储/设备暴跌)但算力租赁/CPO/MLCC逆势抢筹；传智6板领衔AI应用连板高度；美股云厂商+5~6%→8/4最强高开催化；机构"算力逻辑从谁投资谁涨→谁的算力赚钱谁涨(投资向变现转换)"</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          逻辑：AI叙事上半场(投资)结束、下半场(变现)开启——云/算力租赁/AI应用是胜出分支；但8/4受美股催化或高开，存量博弈下"高开不追、回踩低吸前排"
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">8/3深夜美股云厂商暴涨：谷歌+5%(AI超苹果回第二)、Meta+6%、微软+5%(Copilot付费破3000万)、亚马逊+5%(AWS云增速18季度新高)→AI变现逻辑实锤</li>
+        <li class="pos">机构重估：中信证券"定价重心由投入侧转产出侧(云/模型/应用)"、雪球"算力从投资向变现转换、广告/短剧等变现方向开始表现"、国常会4万亿算力网(国产化)</li>
+        <li class="pos">8/3资金用脚投票：天孚通信(CPO)净流入超10亿居全市场第一、宏景/协创(算力租赁)/三环(MLCC)/光库/罗博特科逆势净流入→变现分支获资金抢筹</li>
+        <li class="neg">⚠️ 美股"云厂商涨"与A股"政策托底"逻辑不同频(头条/搜狐早评)；存量博弈下高开大概率但高开低走也大概率；纯概念小票(无订单)仍凉；半导体硬件(存储/设备)暴跌拖累板块情绪</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker buy" style="left:30%;width:25%;"></div>
+        <div class="stage-segment">退潮</div>
+        <div class="stage-segment">启动</div>
+        <div class="stage-segment" style="color:#00d4aa;font-weight:700;">↑ 发酵/分化</div>
+        <div class="stage-segment">主升</div>
+      </div>
+      <div style="font-size:13px;color:#00d4aa;margin-top:4px;">
+        ✅ 发酵/分化·<b>能买：美股催化高开不追、回踩5/10日线低吸前排(传智/天孚/宏景/协创/三环)，侧重"变现"分支(应用/算力租赁/CPO/MLCC)；仓位14-18%</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme 3: 光伏/新能源 -->
+  <div class="theme-card buy">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🟢 光伏/新能源（反内卷 + 电池税免征）— 政策修复启动·8/3反弹（#3）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">8/3光伏概念反弹：通威股份/福莱特/国晟科技涨停、协鑫集成/亚玛顿/东方日升跟涨；催化=市场监管总局在盐城对光伏行业开展价格合规指导(深入整治"内卷式"竞争·从拼价格转向拼质量)；叠加<b>电池消费税调整(9/1)：固态/钠电/钙钛矿/燃料电池免征</b>→新能源弹性打开；《国家应对气候变化十五五规划》发布(2030年碳排较2025降17%)</div>
+      </div>
+      <div class="theme-signal buy">BUY · 分歧低吸</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的（光伏 + 新能源）</div>
+        <div class="value">
+          <span class="stock-tag hl">通威股份 600438 / 福莱特 601865 (光伏玻璃·反内卷涨停) / 协鑫集成 (钙钛矿) / 阳光电源 (算力供电·800V直流SST)</span>
+          <span class="stock-tag hl">宁德时代 300750 (钠电·电池税免征) / 赣锋锂业 (固态) / 上海洗霸 / 金龙羽 / 当升科技 (固态/新能源)</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金/强度信号</div>
+        <div class="value" style="color:#00d4aa;">8/3光伏龙头涨停(通威/福莱特)获资金认可；反内卷政策(价格合规指导)加速供给侧出清、利好龙头估值修复；电池税免征固态/钠电/钙钛矿→成本端利好；新能源从"退潮"重新获政策催化</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          逻辑：光伏"反内卷"+"新能源电池税免征"双政策催化→修复启动；但光伏此前深套、反弹需量能确认，侧重龙头(通威/福莱特)+固态/钠电/钙钛矿弹性(宁德/赣锋/协鑫)
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">市场监管总局光伏价格合规指导(盐城)：整治"内卷式"竞争、从拼价格转向拼质量→供给侧出清加速、龙头估值修复(通威/福莱特涨停响应)</li>
+        <li class="pos">电池消费税(9/1起)：固态/钠电/钙钛矿/燃料电池免征→宁德(钠电)/赣锋(固态)/协鑫(钙钛矿)直接受益</li>
+        <li class="pos">《国家应对气候变化十五五规划》发布：2030年单位GDP碳排较2025降17%、形成3000万吨CO2减排能力→新能源长期需求支撑</li>
+        <li class="neg">⚠️ 光伏此前深度套牢(硅料/组件价格战)、反弹持续性待量能确认；新能源(固态/钠电)部分标的提前反应防追高；与核电/电网资金分流</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker warm" style="left:22%;width:25%;"></div>
+        <div class="stage-segment">退潮</div>
+        <div class="stage-segment" style="color:#ffa502;font-weight:700;">↑ 政策修复启动</div>
+        <div class="stage-segment">主升</div>
+        <div class="stage-segment">加速</div>
+      </div>
+      <div style="font-size:13px;color:#00d4aa;margin-top:4px;">
+        ✅ 政策修复启动·<b>能买：分歧低吸龙头(通威/福莱特)+固态/钠电/钙钛矿弹性(宁德/赣锋/协鑫/阳光电源)，防追高；仓位8-12%</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- 半导体/存储 退潮 -->
+  <div class="theme-card avoid">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name" style="color:#ff6b7a;">🔴 半导体/存储（硬件算力）— 退潮(AVOID·8/3暴跌·科创-5.08%)</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">8/3半导体-5.84%、电子-4.18%、科创50-5.08%、半导体ETF 20日-30%；兆易创新跌停、普冉-10%+、德明利/香农芯创下挫、中芯-6.04%、寒武纪-7.05%；长鑫+1.89%相对抗跌。雪球"存储到趋势中后期(涨价有顶)、半导体设备/先进封装才刚进入超级周期(零部件>设备>材料)"——中长期看好但短期退潮不抄底</div>
+      </div>
+      <div class="theme-signal avoid">AVOID · 退潮不抄底</div>
+    </div>
+    <div style="font-size:13px;color:#cbd5e1;margin-top:8px;">
+      8/3硬件算力(存储/设备)全面退潮，仅算力租赁/CPO(变现分支)逆势净流入。短期<b>不抄底存储/高位半导体</b>；仅半导体设备/先进封装(中微/北方/通富/华天)因"超级周期"中长期关注、超跌观察等待止跌信号(科创50止跌+半导体ETF缩量企稳)。
+    </div>
+  </div>
+
+  <!-- 医药 观察 -->
+  <div class="theme-card watch">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name" style="color:#ffb84d;">🟠 医药/创新药 — 观察(WATCH·新政首日"一日游")</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">8/3药明康德平盘(+0.05%)、创新药ETF-1.6%、医药生物-0.52%——v24.0"新政一日游"命中。8/1四重新政(原料药优先审评+基药扩容+医保豁免集采+集采利空出尽)中长期利好，但首日高开低走、资金未接力</div>
+      </div>
+      <div class="theme-signal watch">WATCH · 观察等二次启动</div>
+    </div>
+    <div style="font-size:13px;color:#cbd5e1;margin-top:8px;">
+      核心：药明康德/昭衍/凯莱英/迪哲、华海/普洛(原料药)、片仔癀/珍宝岛(基药)。政策底在、估值消化，但需等待二次启动信号(放量站上5日线/龙头率先反包)再低吸，当前仅0-3%观察仓。
+    </div>
+  </div>
+</div>
+
+<!-- ===== Q2: 核心标的全览 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">2</span>主流题材核心标的全览（8/4 周二盘前版 · v25.0）</div>
+  <table class="plan-table">
+    <thead>
+      <tr>
+        <th>题材</th>
+        <th>核心标的</th>
+        <th>角色定位</th>
+        <th>逻辑/信号（8/3收盘+8/3深夜美股）</th>
+        <th>操作方向</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="4" style="color:#00d4aa;font-weight:700;">核电/新型基建电力</td>
+        <td><b>久盛电气 301082 / 瑞迪智驱 301596 / 中国核建 601611 / 江苏神通 002438 / 融发核电 002366 / 百利电气 600468</b></td>
+        <td>核电前排(设备/工程·涨停)</td>
+        <td style="color:#00d4aa;">8/3涨停潮(10余股)；国常会核准8台机组超1700亿</td>
+        <td class="action-buy">前排换手</td>
+      </tr>
+      <tr>
+        <td><b>东方电气 600875 / 上海电气 601727</b></td>
+        <td>核电设备总包中军</td>
+        <td style="color:#00d4aa;">华龙一号2.0示范·在手订单充裕·产业链总产出约5000亿</td>
+        <td class="action-buy">中军趋势</td>
+      </tr>
+      <tr>
+        <td><b>中国广核 003816 / 国电南瑞 600406 (+2.96%) / 中国西电 601179 / 平高电气 600312</b></td>
+        <td>运营商/电网特高压中军</td>
+        <td style="color:#00d4aa;">六张网14万亿+迎峰度夏；国电南瑞资金强势</td>
+        <td class="action-buy">中军低吸</td>
+      </tr>
+      <tr>
+        <td><b>深南电A 000037 / 华电辽能 600396(涨停) / 新能股份 000595(2板)</b></td>
+        <td>电力连板/资金流入</td>
+        <td style="color:#00d4aa;">公用事业净流入15.54亿；华电辽能资金净流入第二</td>
+        <td class="action-buy">前排换手</td>
+      </tr>
+      <tr>
+        <td rowspan="3" style="color:#00d4aa;font-weight:700;">AI应用/算力(变现)</td>
+        <td><b>传智教育 003032(6板) / 天娱数科 002354 / 恒银科技 603106(2板) / 吉宏股份 / 蓝色光标 300058 / 昆仑万维 300418</b></td>
+        <td>AI应用(连板/营销)</td>
+        <td style="color:#00d4aa;">传智6板领衔；美股云厂商+5~6%→应用映射</td>
+        <td class="action-buy">前排回踩低吸</td>
+      </tr>
+      <tr>
+        <td><b>天孚通信 300394(净流入第一·超10亿) / 宏景科技 301396 / 协创数据 300857 / 利通电子 603629 / 美利云 600640</b></td>
+        <td>算力租赁/CPO(变现)</td>
+        <td style="color:#00d4aa;">8/3资金净流入前十占6席；天孚+10亿居首</td>
+        <td class="action-buy">回踩低吸·不追高开</td>
+      </tr>
+      <tr>
+        <td><b>三环集团(MLCC) / 光库科技 / 罗博特科(光模块设备)</b></td>
+        <td>算力上游(资金流入)</td>
+        <td style="color:#00d4aa;">逆势净流入；算力国产化(4万亿算力网)</td>
+        <td class="action-buy">分歧低吸</td>
+      </tr>
+      <tr>
+        <td rowspan="2" style="color:#00d4aa;font-weight:700;">光伏/新能源</td>
+        <td><b>通威股份 600438 / 福莱特 601865 / 协鑫集成 / 阳光电源</b></td>
+        <td>光伏(反内卷)/钙钛矿/算力供电</td>
+        <td style="color:#00d4aa;">8/3通威/福莱特涨停(价格合规指导)；阳光电源算力供电</td>
+        <td class="action-buy">龙头分歧低吸</td>
+      </tr>
+      <tr>
+        <td><b>宁德时代 300750(钠电) / 赣锋锂业(固态) / 上海洗霸 / 金龙羽 / 当升科技</b></td>
+        <td>新能源(电池税免征)</td>
+        <td style="color:#00d4aa;">固态/钠电/钙钛矿免征电池消费税(9/1)</td>
+        <td class="action-buy">弹性低吸</td>
+      </tr>
+      <tr>
+        <td style="color:#ff6b7a;font-weight:700;">退潮回避</td>
+        <td><b>兆易创新/德明利/普冉(存储)·中芯/寒武纪(半导体)·中际(天量)</b></td>
+        <td>硬件算力(退潮)</td>
+        <td style="color:#ff6b7a;">8/3半导体-5.84%/科创-5.08%/兆易跌停/寒武纪-7%</td>
+        <td class="action-sell">不抄底·等止跌</td>
+      </tr>
+      <tr>
+        <td style="color:#ffa502;font-weight:700;">观察</td>
+        <td><b>药明康德/昭衍/凯莱英(中军)·华海/普洛(原料药)·片仔癀/珍宝岛(基药)</b></td>
+        <td>医药(一日游后)</td>
+        <td style="color:#ffa502;">药明平盘/创新药ETF-1.6%·新政一日游</td>
+        <td class="action-hold">观察等二次启动</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== Q3: 阶段判断 + 交易计划 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">3</span>阶段判断与 8/4 周二盘前交易计划（8/3真实收盘+8/3深夜美股云厂商暴涨+8/4盘前机构观点 · 主线=核电新型基建电力 + AI应用算力(变现) + 光伏新能源(反内卷)）</div>
+
+  <!-- Key Levels -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📐 上证指数关键点位（8/4 盘前 · 8/3收3809.66守住3800、最低3797.64、3800整数关口第一观察线；美股云厂商暴涨提振但缩量存量博弈、防高开低走）</div>
+    <div class="level-grid">
+      <div class="level-card">
+        <div class="label">极端支撑</div>
+        <div class="value red">3740</div>
+        <div class="note">7/20新低·破则30%防御</div>
+      </div>
+      <div class="level-card">
+        <div class="label">强支撑(守住)</div>
+        <div class="value orange">3760-3797</div>
+        <div class="note">8/3最低3797.64</div>
+      </div>
+      <div class="level-card">
+        <div class="label">当前位/整数关</div>
+        <div class="value orange">3809.66 / 3800</div>
+        <div class="note">8/3收·3800保卫战</div>
+      </div>
+      <div class="level-card">
+        <div class="label">反弹压力</div>
+        <div class="value orange">3832</div>
+        <div class="note">7/31收·需放量收回</div>
+      </div>
+      <div class="level-card">
+        <div class="label">反转确认</div>
+        <div class="value green">3900-4000</div>
+        <div class="note">放量站稳=主升延续</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 能不能买 速览 -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">✅ 三大主线「能不能买」速览</div>
+    <div class="level-grid">
+      <div class="level-card">
+        <div class="label">核电/新型基建电力</div>
+        <div class="value green">能买·前排+中军</div>
+        <div class="note">主升启动·去弱留强</div>
+      </div>
+      <div class="level-card">
+        <div class="label">AI应用/算力(变现)</div>
+        <div class="value green">能买·回踩低吸</div>
+        <div class="note">美股催化·不追高开</div>
+      </div>
+      <div class="level-card">
+        <div class="label">光伏/新能源</div>
+        <div class="value green">能买·分歧低吸</div>
+        <div class="note">政策修复·防追高</div>
+      </div>
+      <div class="level-card">
+        <div class="label">半导体/存储</div>
+        <div class="value red">不买·退潮</div>
+        <div class="note">科创-5.08%·等止跌</div>
+      </div>
+      <div class="level-card">
+        <div class="label">医药</div>
+        <div class="value orange">观察</div>
+        <div class="note">一日游后等启动</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scenario -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">🎲 8/4 情景推演（8/3深夜美股云厂商暴涨+核电涨停潮+缩量存量博弈+3800保卫战 · 主线共振但高开低走风险）</div>
+    <div class="scenario-grid">
+      <div class="scenario-card" style="border-color:rgba(0,212,170,0.3);">
+        <div class="prob bull">45%</div>
+        <div style="font-weight:600;margin-bottom:4px;">乐观：美股催化+核电延续·AI应用算力映射·放量收回3832</div>
+        <div class="desc">谷歌/Meta/微软/亚马逊+5~6%→AI应用(传智/蓝色光标)/算力租赁(天孚/宏景/协创)/CPO高开换手走强；核电前排(久盛/中国核建/江苏神通)换手晋级、中军(东方电气/国电南瑞/中国广核)趋势延续；光伏(通威/福莱特)反内卷扩散；成交回升至2.3万亿+→沪指放量收回3832、3800有效守住；半导体/科创50超卖技术反弹；风险偏好显著回升</div>
+      </div>
+      <div class="scenario-card" style="border-color:rgba(255,165,2,0.3);">
+        <div class="prob neutral">35%</div>
+        <div style="font-weight:600;margin-bottom:4px;">中性：高开分化·轻指数重个股·3800拉锯</div>
+        <div class="desc">美股催化高开但"利好兑现"部分回落(尤其核电后排一字板/AI应用纯概念)；存量博弈、缩量(2万亿附近)→赚指数不赚钱；核电中军+AI应用前排(传智/天孚)+光伏龙头(通威)承接、后排掉队；半导体续弱拖累科创；沪指3800-3832窄幅震荡；不重仓押方向、守前排业绩+政策中军</div>
+      </div>
+      <div class="scenario-card" style="border-color:rgba(255,71,87,0.3);">
+        <div class="prob bear">20%</div>
+        <div style="font-weight:600;margin-bottom:4px;">悲观：高开低走·破3800·半导体续跌</div>
+        <div class="desc">美股催化仅管开盘半小时、内资不配合→高开低走；半导体/科创50-5.08%极端超卖后继续破位、科技情绪崩；核电/光伏"一日游"兑现；沪指破3800(3797.64)、向3760/3740寻支撑；需降至40%防御、破3740极端30%；本周51只解禁242.95亿抽水+7月PMI 49.2%偏弱</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Position Allocation -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">💰 仓位配置建议（总仓位 45-55%·8/3缩量5488亿+存量博弈+3800保卫战→偏谨慎攻守兼备·现金守回踩低吸）</div>
+    <div class="position-grid">
+      <div id="positionChart" class="chart-container" style="height:280px;"></div>
+      <div class="position-list">
+        <div class="position-item">
+          <span class="name">🟢 核电/新型基建电力</span>
+          <span class="pct green">20%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🟢 AI应用/算力(变现)</span>
+          <span class="pct green">14-18%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🟢 光伏/新能源</span>
+          <span class="pct green">8-12%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🟠 医药(观察)</span>
+          <span class="pct orange">0-3%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🔴 半导体/存储(退潮)</span>
+          <span class="pct gray">0%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">💵 现金（守回踩低吸）</span>
+          <span class="pct gray">51%+</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trading Plan Table -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📋 分批交易计划（8/4 周二盘前 · v25.0 · 基于8/3真实收盘+8/3深夜美股云厂商暴涨+8/4盘前）</div>
+    <table class="plan-table">
+      <thead>
+        <tr>
+          <th>方向</th>
+          <th>触发条件</th>
+          <th>操作</th>
+          <th>仓位</th>
+          <th>止损/风控</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:#00d4aa;font-weight:700;">核电/新型基建电力</td>
+          <td>前排(久盛/中国核建/江苏神通)换手放量不炸板、中军(东方电气/国电南瑞/中国广核)回踩5/10日线趋势低吸；不追缩量一字加速</td>
+          <td class="action-buy">前排换手+中军趋势</td>
+          <td>20%</td>
+          <td>⚠️ 8/3涨停潮后"一日游"兑现风险→去弱留强、只做前排换手+中军；后排一字板炸板即撤；破3740降至8%</td>
+        </tr>
+        <tr>
+          <td style="color:#00d4aa;font-weight:700;">AI应用/算力(变现)</td>
+          <td>美股催化高开不追(存量博弈)；传智/天孚/宏景/协创/三环回踩5/10日线缩量企稳、换手确认；侧重"变现"分支(应用/算力租赁/CPO/MLCC)</td>
+          <td class="action-buy">回踩低吸前排</td>
+          <td>14-18%</td>
+          <td>⚠️ 美股"云厂商涨"与A股"政策托底"逻辑不同频→高开大概率高开低走也大概率；纯概念小票(无订单)仍凉；半导体硬件暴跌拖累板块情绪；破3740降至5%</td>
+        </tr>
+        <tr>
+          <td style="color:#00d4aa;font-weight:700;">光伏/新能源</td>
+          <td>通威/福莱特龙头分歧低吸；宁德/赣锋/协鑫(固态/钠电/钙钛矿·电池税免征)弹性前排回踩；反内卷政策不"一日游"</td>
+          <td class="action-buy">分歧低吸</td>
+          <td>8-12%</td>
+          <td>光伏此前深套、反弹需量能确认；新能源部分标的提前反应防追高；与核电/电网资金分流；破3740降至3%</td>
+        </tr>
+        <tr>
+          <td style="color:#ff6b7a;font-weight:700;">半导体/存储</td>
+          <td>科创50止跌+半导体ETF缩量企稳+兆易/寒武纪止跌；仅设备/先进封装(中微/北方/通富/华天)超跌观察</td>
+          <td class="action-sell">退潮·不抄底</td>
+          <td>0%</td>
+          <td>8/3半导体-5.84%/科创-5.08%/兆易跌停/寒武纪-7%/半导体ETF 20日-30%；雪球"存储到趋势中后期"→等待止跌信号再评估；设备/先进封装(超级周期)中长期关注</td>
+        </tr>
+        <tr>
+          <td style="color:#ffa502;font-weight:700;">医药(观察)</td>
+          <td>药明康德/昭衍放量站上5日线、龙头率先反包→二次启动信号</td>
+          <td class="action-hold">观察等启动</td>
+          <td>0-3%</td>
+          <td>新政首日一日游(药明平盘/创新药ETF-1.6%)→不急；政策底在但需资金接力确认；破3740降至0</td>
+        </tr>
+        <tr>
+          <td style="color:#94a3b8;font-weight:700;">现金</td>
+          <td colspan="2">守到高开回落后的低吸机会、核电前排换手、AI应用算力回踩、光伏龙头分歧、3800上方主线+政策中军</td>
+          <td>51%+</td>
+          <td>保留机动应对破3800/高开低走/半导体续跌/解禁抽水/美股映射不及预期</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Alerts -->
+  <div style="margin-bottom:16px;">
+    <div class="alert-box danger">
+      <div class="title">🚨 风险警报（8/4 盘前关键变量 · 缩量存量博弈+半导体退潮+3800保卫战+高开低走风险+解禁抽水）</div>
+      <div>① <b>缩量存量博弈</b> —— 8/3成交2.01万亿缩量5488亿、超4000股涨但权重拖累；无增量资金、缩量只能支撑个股行情、冲关需回2.3万亿</div>
+      <div>② <b>高开低走风险</b> —— 美股云厂商+5~6%催化高开，但头条/搜狐早评"高开大概率、高开低走也大概率"；美股炒AI变现、A股炒政策托底、逻辑不同频</div>
+      <div>③ <b>半导体/科创50退潮未止</b> —— 8/3科创-5.08%极端超卖、半导体-5.84%、半导体ETF 20日-30%；止跌未确认、反弹or破位决定全市场风险偏好</div>
+      <div>④ <b>3800点整数关口保卫战</b> —— 8/3收3809.66、最低3797.64；破3800→防守、破3760极端30%；放量收回3832(7/31收)才反弹延续</div>
+      <div>⑤ <b>解禁抽水</b> —— 本周51只限售股解禁242.95亿(浙江荣泰95亿居首/麦格米特32亿/中贝通信18.6亿)</div>
+      <div>⑥ <b>核电/光伏"一日游"兑现</b> —— 8/3涨停潮后，后排一字板炸板风险；政策首日易高开低走</div>
+      <div>⑦ <b>7月PMI 49.2%</b> —— 荣枯线下偏弱；医药新政首日一日游(药明平盘/创新药ETF-1.6%)说明资金接力谨慎</div>
+    </div>
+    <div class="alert-box success">
+      <div class="title">✅ 积极催化（8/3真实收盘 + 8/3深夜美股云厂商暴涨 + 8/4盘前）</div>
+      <div>① <b>核电逆势绝对主线</b> —— 8/3核电10余股涨停潮、国常会核准8台机组超1700亿、银河测算带动产业链总产出约5000亿；资金共识度最高</div>
+      <div>② <b>美股云厂商暴涨</b> —— 纳指+2%、谷歌+5%(AI超苹果回第二)、Meta+6%、微软+5%(Copilot付费破3000万)、亚马逊+5%(AWS云增速18季度新高)→AI应用/算力变现最强映射</div>
+      <div>③ <b>AI变现分支获资金抢筹</b> —— 8/3资金净流入前十占6席(天孚通信超10亿/宏景/协创/三环/光库/罗博特科)；传智教育6连板领衔AI应用</div>
+      <div>④ <b>光伏反内卷+电池税免征</b> —— 通威/福莱特涨停(价格合规指导)；固态/钠电/钙钛矿电池税免征(9/1)→新能源弹性</div>
+      <div>⑤ <b>机构"投入侧→产出侧"重估</b> —— 中信证券/雪球"算力从投资向变现转换、AI下半场变现阶段(云/算力租赁/应用)"；国常会4万亿算力网(国产化)</div>
+      <div>⑥ <b>市场无系统性恐慌</b> —— 8/3超4000股上涨、权重拖累非系统性抛售；电力设备/公用事业净流入居前；政策底(央行适度宽松+六张网)托底</div>
+    </div>
+  </div>
+
+  <!-- Checklist -->
+  <div style="margin-bottom:16px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">✅ 8/4 盘前检查清单（基于8/3真实收盘+8/3深夜美股云厂商暴涨+8/4盘前重排）</div>
+    <ul class="checklist">
+      <li>✅ 主线重排：核电新型基建电力(#1·8/3逆势绝对主线·涨停潮)、AI应用算力(变现·#2·美股云共振)、光伏新能源(反内卷·#3)；半导体存储退潮、医药一日游观察；总仓45-55%(缩量+3800保卫战偏谨慎)</li>
+      <li>⚠️ 开盘纪律：美股云厂商暴涨→AI应用/算力高开；<b>高开不追(存量博弈+缩量+逻辑不同频)，等回踩/前排业绩龙头(核电前排+中军/传智/天孚/宏景/协创/通威)低吸</b></li>
+      <li>🔍 开盘观察：① 核电前排(久盛/中国核建/江苏神通)换手晋级 or 一日游兑现 ② AI应用(传智/天娱/恒银)受美股催化强度、天孚/宏景/协创(算力租赁/CPO)是否延续净流入 ③ 半导体/科创50(-5.08%)能否止跌 ④ 光伏(通威/福莱特)反内卷扩散 ⑤ 成交能否回2.3万亿 ⑥ 沪指3800保卫战(最低3797.64) ⑦ 医药(药明)是否二次启动</li>
+      <li>🛡️ 核电/基建：前排换手(久盛/中国核建/江苏神通)+中军趋势(东方电气/国电南瑞/中国广核)+电力(深南电A/华电辽能/新能股份)，去弱留强不追缩量加速；仓位20%</li>
+      <li>🛡️ AI应用/算力：美股催化高开不追、回踩5/10日线低吸前排(传智/天孚/宏景/协创/三环/光库/罗博特科)，侧重"变现"分支(应用/算力租赁/CPO/MLCC)；仓位14-18%</li>
+      <li>🛡️ 光伏/新能源：通威/福莱特龙头分歧低吸+固态/钠电/钙钛矿弹性(宁德/赣锋/协鑫/阳光电源)，防追高；仓位8-12%</li>
+      <li>🚫 半导体/存储：8/3 -5.84%/科创-5.08%/兆易跌停→退潮不抄底；仅设备/先进封装(中微/北方/通富/华天·雪球"超级周期")超跌观察等止跌；医药一日游后0-3%观察等二次启动</li>
+      <li>📊 盘中决策：守3800上方(3797.64不破)→总仓45-55%主线+政策中军低吸；破3800降至40%、破3760极端30%；成交回2.3万亿上方反弹才有持续性</li>
+      <li>全天纪律：<b>核电去弱留强、AI应用算力不追高开、光伏分歧低吸、半导体不抄底、医药观察、现金51%+守回踩</b>；存量博弈下偏重基本面/前排业绩+政策中军，不接飞刀、不博纯题材连板</li>
+      <li>盘后跟踪：美股科技能否延续(纳指/云厂商)、半导体止跌信号、核电持续性、光伏反内卷扩散、医药二次启动、成交放量→决定下一日(8/5周三)方向</li>
+    </ul>
+  </div>
+
+  <!-- Signal Attribution -->
+  <div style="margin-bottom:16px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📊 信号归因（四维雷达）</div>
+    <div id="radarChart" class="chart-container" style="height:320px;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+      <div class="alert-box success" style="margin:0;">
+        <div class="title">最强看多信号</div>
+        <div><b>核电逆势绝对主线</b>(8/3 10余股涨停潮·国常会核准8台机组超1700亿·银河测算带动产业链5000亿)+ <b>8/3深夜美股云厂商暴涨</b>(谷歌/Meta/微软/亚马逊+5~6%·AWS云增速18季度新高)→AI应用/算力变现最强映射+ <b>AI变现分支获资金抢筹</b>(天孚通信超10亿净流入居首/传智6板)+ <b>光伏反内卷+电池税免征</b>(通威/福莱特涨停)+ <b>机构"投入侧→产出侧"重估</b>+ <b>市场无系统性恐慌</b>(超4000股上涨·政策底托底)。主线清晰、政策催化密集。</div>
+      </div>
+      <div class="alert-box danger" style="margin:0;">
+        <div class="title">最强看空信号</div>
+        <div><b>缩量5488亿至2.01万亿</b>(存量博弈·无增量)+ <b>半导体/科创50退潮</b>(8/3 -5.84%/-5.08%·兆易跌停/寒武纪-7%)+ <b>高开低走风险</b>(美股逻辑不同频/早评"高开低走也大概率")+ <b>3800保卫战</b>(8/3最低3797.64)+ <b>医药一日游</b>(药明平盘/创新药ETF-1.6%)+ <b>本周51只解禁242.95亿抽水</b>+ <b>7月PMI 49.2%</b>。整体结构性机会但缩量高开需谨慎，仅前排业绩+政策中军可参与。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+  <div class="disclaimer">
+    ⚠️ 免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论均基于 2026-08-03 A股全天收盘（上证3809.66 -0.59%、深成指-0.96%、创业板指-1.24%、科创50 -5.08%/科创综指-3.39%；成交约2.01万亿大幅缩量5488亿；4004股上涨/1466跌、主力净流出369.14亿、电子净流出265.85亿居首、电力设备净流入23.25亿第一、公用事业净流入15.54亿；核电概念+2.80%逆势涨停潮10余股、AI应用传智教育6连板、光伏通威/福莱特涨停、半导体-5.84%/兆易创新跌停、医药生物-0.52%/药明康德平盘）+ 2026-08-03 深夜美股（纳指+2%、道指+1%、标普+1.3%、谷歌+5%、Meta+6%、微软+5%、亚马逊+5%·云厂商AI变现）+ 2026-08-04 盘前机构观点（高开大概率但高开低走也大概率、3800点第一观察线、半导体/科创50能否止跌、成交能否回2.3万亿、核电1700亿/六张网/光伏反内卷政策节奏）+ 公开信息，不保证未来表现。<br>
+    数据来源：上证/深证/创业板/科创行情、证券时报、央广网、新浪财经、腾讯财经、搜狐财经、雪球、头条号等公开信息 | 生成时间：2026-08-04 06:55
+  </div>
+  <div>盘前计划 v25.0（8/4 周二 · 基于8/3真实收盘+8/3深夜美股云厂商暴涨+8/4盘前，主线重排=「核电新型基建电力 + AI应用算力(变现) + 光伏新能源(反内卷)」，半导体存储退潮、医药一日游观察）| automation-1783645264539 | Powered by 星辰智能分析</div>
+</div>
+
+<script>
+// ===== Position Pie Chart =====
+var posChart = echarts.init(document.getElementById('positionChart'));
+posChart.setOption({
+  backgroundColor: 'transparent',
+  tooltip: { trigger: 'item', formatter: '{b}: {c}%' },
+  legend: { bottom: 0, textStyle: { color: '#94a3b8', fontSize: 12 } },
+  series: [{
+    type: 'pie',
+    radius: ['45%', '70%'],
+    center: ['50%', '42%'],
+    avoidLabelOverlap: false,
+    itemStyle: { borderColor: '#0f0f23', borderWidth: 2 },
+    label: {
+      show: true,
+      position: 'center',
+      formatter: '机动\n51%+',
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: '#ffa502',
+      lineHeight: 24
+    },
+    data: [
+      { value: 20, name: '核电/新型基建电力', itemStyle: { color: '#00d4aa' } },
+      { value: 16, name: 'AI应用/算力(变现)', itemStyle: { color: '#764ba2' } },
+      { value: 10, name: '光伏/新能源', itemStyle: { color: '#00b894' } },
+      { value: 2, name: '医药(观察)', itemStyle: { color: '#667eea' } },
+      { value: 0, name: '半导体/存储(退潮)', itemStyle: { color: '#ff4757' } },
+      { value: 52, name: '现金观望', itemStyle: { color: '#2d2d44' } }
+    ]
+  }]
+});
+
+// ===== Radar Chart =====
+var radarChart = echarts.init(document.getElementById('radarChart'));
+radarChart.setOption({
+  backgroundColor: 'transparent',
+  tooltip: {},
+  radar: {
+    indicator: [
+      { name: '技术指标', max: 100 },
+      { name: '新闻情绪', max: 100 },
+      { name: '基本面', max: 100 },
+      { name: '市场环境', max: 100 }
+    ],
+    center: ['50%', '55%'],
+    radius: '65%',
+    splitArea: { areaStyle: { color: ['rgba(102,126,234,0.03)', 'rgba(102,126,234,0.06)'] } },
+    axisLine: { lineStyle: { color: '#2d2d44' } },
+    splitLine: { lineStyle: { color: '#2d2d44' } },
+    axisName: { color: '#94a3b8', fontSize: 13 }
+  },
+  series: [{
+    type: 'radar',
+    data: [
+      {
+        value: [85, 95, 82, 80],
+        name: '核电/新型基建电力',
+        areaStyle: { color: 'rgba(0,212,170,0.2)' },
+        lineStyle: { color: '#00d4aa', width: 2 },
+        itemStyle: { color: '#00d4aa' }
+      },
+      {
+        value: [72, 92, 78, 75],
+        name: 'AI应用/算力(变现)',
+        areaStyle: { color: 'rgba(118,75,162,0.18)' },
+        lineStyle: { color: '#764ba2', width: 2 },
+        itemStyle: { color: '#764ba2' }
+      },
+      {
+        value: [68, 85, 75, 70],
+        name: '光伏/新能源',
+        areaStyle: { color: 'rgba(0,184,148,0.15)' },
+        lineStyle: { color: '#00b894', width: 2 },
+        itemStyle: { color: '#00b894' }
+      },
+      {
+        value: [25, 30, 45, 25],
+        name: '半导体/存储(退潮)',
+        areaStyle: { color: 'rgba(255,71,87,0.12)' },
+        lineStyle: { color: '#ff4757', width: 2 },
+        itemStyle: { color: '#ff4757' }
+      }
+    ]
+  }],
+  legend: {
+    bottom: 0,
+    textStyle: { color: '#94a3b8', fontSize: 12 },
+    data: ['核电/新型基建电力', 'AI应用/算力(变现)', '光伏/新能源', '半导体/存储(退潮)']
+  }
+});
+
+window.addEventListener('resize', function() {
+  posChart.resize();
+  radarChart.resize();
+});
+</script>
+</body>
+</html>

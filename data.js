@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-03 16:45:46",
-  "total": 92,
+  "generatedAt": "2026-08-04 07:45:19",
+  "total": 94,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 20,
-      "latest": "20260803",
+      "count": 21,
+      "latest": "20260804",
       "reports": [
+        {
+          "date": "20260804",
+          "dateLabel": "2026-08-04（周二）",
+          "file": "reports/panqian/panqian_20260804.html",
+          "title": "盘前交易计划 | 2026年8月4日（周二）· v25.0 · 8/3真实收盘（核电逆势涨停潮·科创-5.08%·缩量5488亿）+8/3深夜美股云厂商暴涨（谷歌/Meta/微软/亚马逊+5~6%），主线重排「核电新型基建电力 + AI应用算力(变现) + 光伏新能源(反内卷)」，半导体存储退潮、医药一日游观察",
+          "size": 67311
+        },
         {
           "date": "20260803",
           "dateLabel": "2026-08-03（周一）",
@@ -496,9 +503,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 17,
-      "latest": "20260802",
+      "count": 18,
+      "latest": "20260803",
       "reports": [
+        {
+          "date": "20260803",
+          "dateLabel": "2026-08-03（周一）",
+          "file": "reports/limitup/limitup_20260803.html",
+          "title": "涨停梯队复盘 · 2026-08-03（周一 · 真实交易日）· 核电/光伏逆势爆发 · 存储芯片重挫",
+          "size": 53867
+        },
         {
           "date": "20260802",
           "dateLabel": "2026-08-02（周日）",
