@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-03 08:01:07",
-  "total": 90,
+  "generatedAt": "2026-08-03 12:45:55",
+  "total": 91,
   "categories": [
     {
       "key": "panqian",
@@ -159,9 +159,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 19,
-      "latest": "20260802",
+      "count": 20,
+      "latest": "20260803",
       "reports": [
+        {
+          "date": "20260803",
+          "dateLabel": "2026-08-03（周一）",
+          "file": "reports/noon/noon_20260803.html",
+          "title": "A股午间复盘 · 2026-08-03（周一）· 缩量分化·核电领涨·半导体出清·美伊缓和",
+          "size": 30259
+        },
         {
           "date": "20260802",
           "dateLabel": "2026-08-02（周日）",
