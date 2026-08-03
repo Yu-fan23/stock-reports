@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-03 12:45:55",
-  "total": 91,
+  "generatedAt": "2026-08-03 15:45:46",
+  "total": 92,
   "categories": [
     {
       "key": "panqian",
@@ -310,9 +310,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 24,
-      "latest": "20260802",
+      "count": 25,
+      "latest": "20260803",
       "reports": [
+        {
+          "date": "20260803",
+          "dateLabel": "2026-08-03（周一）",
+          "file": "reports/close/close_20260803.html",
+          "title": "A股行情复盘 · 收盘版（2026-08-03 周一 · 指数弱个股强·极致分化）",
+          "size": 27587
+        },
         {
           "date": "20260802",
           "dateLabel": "2026-08-02（周日）",
