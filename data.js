@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-04 12:45:22",
-  "total": 96,
+  "generatedAt": "2026-08-04 15:45:20",
+  "total": 97,
   "categories": [
     {
       "key": "panqian",
@@ -324,9 +324,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 25,
-      "latest": "20260803",
+      "count": 26,
+      "latest": "20260804",
       "reports": [
+        {
+          "date": "20260804",
+          "dateLabel": "2026-08-04（周二）",
+          "file": "reports/close/close_20260804.html",
+          "title": "A股行情复盘 · 收盘版（2026-08-04 周二 · 科技反包·放量普涨·3800稳守）",
+          "size": 28523
+        },
         {
           "date": "20260803",
           "dateLabel": "2026-08-03（周一）",
