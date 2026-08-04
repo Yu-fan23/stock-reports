@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-04 08:02:31",
-  "total": 95,
+  "generatedAt": "2026-08-04 12:45:22",
+  "total": 96,
   "categories": [
     {
       "key": "panqian",
@@ -166,9 +166,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 20,
-      "latest": "20260803",
+      "count": 21,
+      "latest": "20260804",
       "reports": [
+        {
+          "date": "20260804",
+          "dateLabel": "2026-08-04（周二）",
+          "file": "reports/noon/noon_20260804.html",
+          "title": "A股午间复盘 · 2026-08-04（周二）· 科技爆发·普涨修复·银行补跌·控仓不追",
+          "size": 30855
+        },
         {
           "date": "20260803",
           "dateLabel": "2026-08-03（周一）",
