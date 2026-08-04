@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>涨停梯队复盘 · 2026-08-04（周二 · 真实交易日）· 科技大反攻 · CPO/PCB掀涨停潮</title>
+<style>
+  :root{
+    --bg:#0a0e1a; --card:#121829; --card2:#0f1424; --bd:#1f2940;
+    --txt:#e6ecf5; --sub:#8a97b0; --dim:#5b667e;
+    --red:#ff3b5c; --redbg:rgba(255,59,92,.14); --redbd:rgba(255,59,92,.55);
+    --yel:#ffcc33; --yelbg:rgba(255,204,51,.12); --yelbd:rgba(255,204,51,.5);
+    --grn:#22c98a; --blue:#4f9dff; --pur:#9b7bff;
+    --mut:#6b7689;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    background:radial-gradient(1200px 700px at 80% -10%,#15203a 0%,var(--bg) 55%);color:var(--txt);
+    line-height:1.55;padding:22px 14px 60px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1200px;margin:0 auto}
+  header{margin-bottom:18px}
+  .ttl{font-size:26px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .ttl .dot{width:11px;height:11px;border-radius:50%;background:var(--red);box-shadow:0 0 14px var(--red)}
+  .meta{color:var(--sub);font-size:13px;margin-top:6px}
+  .flag{display:inline-block;background:rgba(34,201,138,.13);color:#3ee0a3;border:1px solid rgba(34,201,138,.5);
+    border-radius:6px;padding:2px 9px;font-size:12px;font-weight:600;margin-left:6px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px;margin:16px 0}
+  .stat{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px 14px}
+  .stat .k{font-size:12px;color:var(--sub)}
+  .stat .v{font-size:21px;font-weight:800;margin-top:3px}
+  .stat .s{font-size:12px;color:var(--dim);margin-top:1px}
+  .down{color:var(--red)} .up{color:var(--grn)}
+  .mood{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .mood .lab{font-weight:700;font-size:14px;white-space:nowrap}
+  .thermo{flex:1;min-width:220px;height:14px;border-radius:8px;background:linear-gradient(90deg,#ff3b5c,#ff8a3b,#ffcc33,#22c98a);position:relative;opacity:.9}
+  .thermo i{position:absolute;top:-5px;width:4px;height:24px;background:#fff;border-radius:3px;box-shadow:0 0 8px #fff}
+  .mood .txt{font-size:13px;color:var(--sub)}
+  .ladder{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px 18px;margin-bottom:18px}
+  .ladder h2,.sec h2{font-size:16px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .ladder h2:before,.sec h2:before{content:"";width:4px;height:16px;background:var(--blue);border-radius:3px}
+  .rung{display:flex;align-items:center;gap:12px;padding:7px 0;border-bottom:1px dashed var(--bd);flex-wrap:wrap}
+  .rung:last-child{border-bottom:none}
+  .lv{font-weight:800;font-size:14px;min-width:104px;color:var(--yel)}
+  .names{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{background:var(--card2);border:1px solid var(--bd);border-radius:20px;padding:3px 11px;font-size:13px}
+  .chip.boom{background:var(--redbg);border-color:var(--redbd);color:#ffb3c0}
+  .chip.lead{background:var(--yelbg);border-color:var(--yelbd);color:var(--yel)}
+  .sec{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px 18px;margin-bottom:16px}
+  .sechead{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .b-red{background:var(--redbg);color:#ff6b85;border:1px solid var(--redbd);border-radius:6px;padding:2px 9px;font-size:12px;font-weight:700}
+  .b-yel{background:var(--yelbg);color:var(--yel);border:1px solid var(--yelbd);border-radius:6px;padding:2px 9px;font-size:12px;font-weight:700}
+  .cnt{color:var(--sub);font-size:13px}
+  .tbl{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}
+  .tbl th{position:sticky;top:0;background:#0d1322;color:var(--sub);font-weight:600;text-align:left;
+    padding:8px 9px;border-bottom:1px solid var(--bd);font-size:12px;white-space:nowrap}
+  .tbl td{padding:9px 9px;border-bottom:1px solid #161d30;vertical-align:top}
+  .tbl tr:hover td{background:rgba(79,157,255,.05)}
+  .stk{font-weight:700;color:var(--txt)}
+  .code{color:var(--dim);font-size:11px}
+  .lb{font-weight:800;font-size:12px}
+  .lb.b8{color:var(--red)} .lb.b7{color:var(--red)} .lb.b5{color:var(--red)} .lb.b4{color:var(--red)} .lb.b3{color:var(--red)} .lb.b2{color:var(--yel)} .lb.f{color:var(--blue)} .lb.zb{color:var(--mut)} .lb.sp{color:var(--pur)}
+  .mk{display:inline-block;font-size:10px;font-weight:800;border-radius:4px;padding:1px 6px;margin-left:5px;vertical-align:middle}
+  .mk.red{background:var(--red);color:#fff}
+  .mk.yel{background:var(--yel);color:1a1a1a;color:#1a1a1a}
+  .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tlimit{color:var(--sub);font-size:12px;white-space:nowrap}
+  .logic{color:var(--sub);font-size:12px;line-height:1.5}
+  .est{color:var(--dim);font-size:11px}
+  .note{font-size:12px;color:var(--dim);margin-top:6px}
+  .warn{background:rgba(255,59,92,.08);border:1px solid var(--redbd);border-radius:12px;padding:14px 16px;margin-bottom:16px}
+  .warn h2{color:#ff8095;font-size:15px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .warn ul{margin:4px 0 0 18px;font-size:13px;color:#ffc2cd}
+  .warn li{margin:3px 0}
+  .special{background:linear-gradient(90deg,rgba(34,201,138,.16),rgba(79,157,255,.10));border:1px solid rgba(34,201,138,.5);
+    border-radius:12px;padding:14px 18px;margin-bottom:16px}
+  .special h2{color:#5be0a8;font-size:15px;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  .special .bd{font-size:13px;color:var(--txt);line-height:1.6}
+  .special .bd b{color:#7df0bd}
+  footer{color:var(--dim);font-size:11.5px;margin-top:22px;border-top:1px solid var(--bd);padding-top:14px;line-height:1.7}
+  .src{color:var(--sub)}
+  @media(max-width:640px){.tbl{font-size:11px}.tbl th,.tbl td{padding:6px 4px}.ttl{font-size:21px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="ttl"><span class="dot"></span>涨停梯队复盘</div>
+  <div class="meta">报告生成日 <b>2026-08-04（周二 · 真实交易日）</b> · 数据基准 <b>2026-08-04 收盘</b> ·
+    <span class="flag">科技大反攻 · CPO/PCB掀涨停潮 · 创业板+5.64% · 银行逆势</span></div>
+  <div class="meta src">数据来源：财联社《8月4日涨停分析/连板股分析》（138涨停·19连板·封板率90%）、界面新闻/网易《今日涨跌停股分析》（140涨停·1跌停·连板清单）、同花顺/21财经/中新经纬《8月4日A股收评》、证券时报·数据宝、东方财富/新浪行情指标结构化快照（逐支总市值·成交额，08-04收盘）。口径：沪深京A股（标*ST/ST为风险警示股，单独标注）；"涨停时间"除标注精确/一字(09:25)/T字外多为早盘/盘中（依午报"早盘83家涨停"及板块启动推断，已注"推断"）；市值·成交额单位亿元。排序规则：<b>连板梯队"几天几板"优先于当日涨停时间</b>；板块情绪龙头标红、中军标黄。</div>
+</header>
+
+<!-- 大盘情绪概览 -->
+<div class="grid">
+  <div class="stat"><div class="k">上证指数</div><div class="v up">+0.33%</div><div class="s">3822.28点</div></div>
+  <div class="stat"><div class="k">深成指</div><div class="v up">+3.25%</div><div class="s">13885.71点</div></div>
+  <div class="stat"><div class="k">创业板指</div><div class="v up">+5.64%</div><div class="s">3688.97点</div></div>
+  <div class="stat"><div class="k">科创50</div><div class="v up">+4.09%</div><div class="s">科技权重领涨</div></div>
+  <div class="stat"><div class="k">全天成交额</div><div class="v">2.21万亿</div><div class="s">较上日放量2162亿</div></div>
+  <div class="stat"><div class="k">涨停 / 跌停</div><div class="v"><span class="up">138~140</span> / <span class="down">1</span></div><div class="s">财联社138·界面140/封板率90%</div></div>
+  <div class="stat"><div class="k">连板高度</div><div class="v up">7板</div><div class="s">传智教育·摘帽AI教育</div></div>
+  <div class="stat"><div class="k">涨跌家数</div><div class="v up">3642涨/1747跌</div><div class="s">67.6%个股上涨·黄白线分化</div></div>
+</div>
+
+<!-- 情绪温度计 -->
+<div class="mood">
+  <span class="lab">短线情绪</span>
+  <div class="thermo"><i style="left:82%"></i></div>
+  <span class="txt"><b style="color:#22c98a">科技大反攻·强修复·百股涨停·算力硬件产业链集中爆发</b>　8月4日A股集体收涨：沪指<b>+0.33%</b>(3822.28)/深成<b>+3.25%</b>(13885.71)/创业板指<b>+5.64%</b>(3688.97)/科创50<b>+4.09%</b>。成交<b>2.21万亿</b>较上日<b>放量2162亿</b>，全市场<b>3642股上涨/1747股下跌</b>（黄白线分化，科技成长强于银行权重）。涨停<b>138~140只、跌停仅1只(ST交昂)、封板率90%、连板19只、晋级率47.05%</b>——连板高度<b>传智教育7板（摘帽+AI教育）</b>。盘面为<b>前期调整较深的算力硬件/半导体/医药集中反弹</b>：CPO（光迅科技/剑桥科技/光库科技等十余股涨停）、PCB（东山精密/沪电/深南电路等二十余股涨停）掀涨停潮，"易中天"放量大涨、成交额合计956亿；算力租赁、半导体设备、电子化学品、CRO、AI应用多点开花。情绪温度计<b>82%</b>，定性为"强修复·科技爆发日"（封板率极高、百股涨停，但银行/白酒/电力逆势、黄白线分化，科技为超跌反弹首日，追高容错率中等）。</span>
+</div>
+
+<!-- 焦点事件 -->
+<div class="special">
+  <h2>★ 今日焦点 · 英伟达CPO量产 + 电子布年内最大单月涨幅 + 美股AI云/应用业绩超预期 + 药明中报高增</h2>
+  <div class="bd">① <b>CPO步入量产</b>：英伟达资深副总裁宣告共封装光学(CPO)步入量产，光模块/CPO方向爆发，光迅科技、剑桥科技、光库科技等十余股涨停，"易中天"(中际旭创/新易盛/天孚通信)涨超13%~17%、三者成交合计956亿。② <b>电子布涨价</b>：花旗研报称8月电子布价格现年内最大单月涨幅，1080/2116/7628系列均价上涨17%~18%(13.1/12.7/10.1元/米)，年内累计上涨118%~165%，直接驱动PCB/覆铜板涨停潮。③ <b>美股AI映射</b>：隔夜谷歌/微软/亚马逊/Meta等云厂商均涨超4%、亚马逊市值首破3万亿美元；AI应用股Palantir/Snap业绩超预期盘后大涨，算力租赁与AI应用端联动爆发。④ <b>算力供需缺口</b>：中国信通院数据，2026Q1国内AI算力需求同比+417%、有效供给+128%，高端算力供不应求。⑤ <b>CRO反转</b>：药明康德中报净利110.8亿(+29.43%)并上调全年指引，带动凯莱英/百花医药等涨停。⑥ <b>芯片主力净流入</b>：同花顺数据芯片概念获主力净流入547.95亿(板块内45股涨停)，数据中心(AIDC)403.81亿、CPO 401.15亿。</div>
+</div>
+
+<!-- 连板梯队总览 -->
+<div class="ladder">
+  <h2>连板梯队总览（几天几板 · 高度由高到低 · 财联社19只连续连板口径）</h2>
+  <div class="rung"><span class="lv">7板</span><span class="names"><span class="chip boom">传智教育</span><span class="chip">摘帽+AI教育+具身智能+业绩扭亏·T字换手</span></span></div>
+  <div class="rung"><span class="lv">4板</span><span class="names"><span class="chip boom">神雾节能</span><span class="chip">摘帽+节能环保·高换手(32%)</span></span></div>
+  <div class="rung"><span class="lv">3板</span><span class="names"><span class="chip boom">天娱数科</span><span class="chip boom">美利云</span><span class="chip boom">恒银科技</span><span class="chip boom">德龙汇能</span><span class="chip boom">新能股份</span><span class="chip boom">豪尔赛</span><span class="chip">美利云12天7板·新能10天6板(反包)</span></span></div>
+  <div class="rung"><span class="lv">5天3板</span><span class="names"><span class="chip boom">中国科传</span><span class="chip boom">欢瑞世纪</span><span class="chip boom">返利科技</span><span class="chip">AI应用/传媒</span></span></div>
+  <div class="rung"><span class="lv">2板</span><span class="names"><span class="chip boom">顺钠股份</span><span class="chip boom">达实智能</span><span class="chip boom">魅视科技</span><span class="chip boom">通宇通讯</span><span class="chip boom">欣天科技</span><span class="chip boom">风范股份</span><span class="chip boom">济民健康</span><span class="chip boom">利柏特</span><span class="chip boom">胜通能源</span><span class="chip boom">神剑股份</span><span class="chip">顺钠9天6板(反包)·其余连续2板</span></span></div>
+  <div class="rung"><span class="lv">3天2板</span><span class="names"><span class="chip boom">凯文教育</span><span class="chip boom">德才股份</span><span class="chip boom">风语筑</span><span class="chip boom">利通电子</span><span class="chip boom">润建股份</span><span class="chip boom">宏景科技</span><span class="chip boom">东阳光</span><span class="chip boom">宝鼎科技</span><span class="chip">反包结构</span></span></div>
+  <div class="rung"><span class="lv">7天5板 / 4天2板</span><span class="names"><span class="chip boom">明新旭腾</span><span class="chip boom">南宁百货</span><span class="chip">反包结构</span></span></div>
+  <div class="note">注：财联社收盘口径<b>连续连板共19只</b>（连板晋级率47.05%、三连板及以上8只）；本报列示连续连板+反包结构(N天M板)合计约29只。<b>高争民爆</b>：同花顺口径"5连板"、财联社称"断板"(盘中开板)，8/4收+10.01%仍涨停，本报告按"断板/同花顺5板"双标注、列入民爆代表。<b>一鸣食品(前5板)、高争民爆</b>在财联社连板分析中均被点名"断板"——连板梯队于7板(传智)后断层，最高换手连板实为神雾节能4板。<b>一字/缩量板</b>：欣天科技(20cm复牌一字)、利柏特、德龙汇能、恒银科技(成交极低)；传智教育T字换手。</div>
+</div>
+
+<!-- 1. CPO/光通信 -->
+<div class="sec">
+  <div class="sechead">
+    <div><h2>① CPO · 光通信（共封装光学 · 英伟达量产催化 · 全天最强主线之一）</h2>
+      <div class="cnt">板块成分：十余股涨停 · 主力净流入401亿(全市场前列) · "易中天"成交956亿</div></div>
+    <div class="badges"><span class="b-red">情绪龙头：联讯仪器 / 光库科技 / 通宇通讯</span><span class="b-yel">中军：光迅科技 / 永鼎股份 / 剑桥科技</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>个股</th><th>连板</th><th>涨停时间</th><th>总市值(亿)</th><th>成交额(亿)</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td><span class="stk">联讯仪器</span> <span class="code">688808</span><span class="mk red">龙头</span><span class="mk yel">中军</span></td><td><span class="lb f">20cm首板</span></td><td class="tlimit">早盘</td><td class="num">2000.77</td><td class="num">41.27</td><td class="logic">光通信测试设备+CPO+光模块检测，20cm涨停，市值突破2000亿，板块容量标杆与强度风向标。</td></tr>
+      <tr><td><span class="stk">光库科技</span> <span class="code">300620</span><span class="mk red">龙头</span><span class="mk red">20cm</span></td><td><span class="lb f">20cm首板</span></td><td class="tlimit">早盘</td><td class="num">633.74</td><td class="num">42.95</td><td class="logic">CPO/铌酸锂调制器+光模块，20cm涨停，光通信核心弹性标的。</td></tr>
+      <tr><td><span class="stk">光迅科技</span> <span class="code">002281</span><span class="mk yel">中军</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">1426.55</td><td class="num">65.87</td><td class="logic">光模块/CPO龙头，千亿级中军，英伟达CPO量产直接催化，成交66亿。</td></tr>
+      <tr><td><span class="stk">剑桥科技</span> <span class="code">603083</span><span class="mk yel">中军</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">547.55</td><td class="num">37.28</td><td class="logic">CPO/光模块+高速光器件，547亿容量中军。</td></tr>
+      <tr><td><span class="stk">永鼎股份</span> <span class="code">600105</span><span class="mk yel">中军</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">501.32</td><td class="num">70.11</td><td class="logic">光通信/铜缆+CPO，501亿中军，成交70亿居板块前列。</td></tr>
+      <tr><td><span class="stk">通宇通讯</span> <span class="code">002792</span><span class="mk red">龙头</span></td><td><span class="lb b2">2板</span></td><td class="tlimit">早盘</td><td class="num">待补充</td><td class="num">待补充</td><td class="logic">通信设备+商业航天+卫星通信，2连板，CPO/通信连板核心（交叉见⑪）。</td></tr>
+      <tr><td><span class="stk">汇绿生态</span> <span class="code">001267</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">251.75</td><td class="num">7.53</td><td class="logic">园林+光通信重组预期，CPO概念涨停。</td></tr>
+      <tr><td><span class="stk">世嘉科技</span> <span class="code">002796</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">67.66</td><td class="num">1.29</td><td class="logic">通信设备+5G滤波器+射频，CPO/通信分支。</td></tr>
+      <tr><td><span class="stk">华懋科技</span> <span class="code">603306</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">202.08</td><td class="num">7.42</td><td class="logic">光刻胶(控股徐州博康)+CPO材料，半导体材料属性。</td></tr>
+      <tr><td><span class="stk">红板科技</span> <span class="code">603459</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">660.59</td><td class="num">14.21</td><td class="logic">PCB/CPO硬板，660亿容量标的。</td></tr>
+      <tr><td><span class="stk">快克智能</span> <span class="code">603203</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">128.87</td><td class="num">3.72</td><td class="logic">半导体焊接/光模块设备+自动化，CPO设备分支。</td></tr>
+      <tr><td><span class="stk">华盛昌</span> <span class="code">002980</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘(推断)</td><td class="num">待补充</td><td class="num">待补充</td><td class="logic">仪器仪表+CPO概念，午报列为CPO涨停成分。</td></tr>
+    </tbody>
+  </table>
+  <div class="note">催化：英伟达宣告CPO步入量产。板块十余股涨停，"易中天"(中际旭创/新易盛/天孚通信)涨超13%~17%(涨超10未封，不列入涨停名单)、三者成交合计956亿。注：源杰科技(+14.65%)、鼎通科技(+18.5%)、仕佳光子(+17.5%)、天孚通信(+17.45%)等涨超10%未封板，已剔除涨停名单（见风险专区）。涨停时间除板块早盘集中爆发(午报早盘83家涨停)外依资讯推断。</div>
+</div>
+
+<!-- 2. PCB/电路板 -->
+<div class="sec">
+  <div class="sechead">
+    <div><h2>② PCB · 电路板（AI服务器升级 · 电子布涨价 · 二十余股涨停）</h2>
+      <div class="cnt">板块成分：二十余股涨停 · 东山精密市值超3200亿 · 生益/沪电/深南/鹏鼎千亿级中军云集</div></div>
+    <div class="badges"><span class="b-red">情绪龙头：东山精密 / 宝鼎科技</span><span class="b-yel">中军：沪电股份 / 深南电路 / 鹏鼎控股 / 东山精密</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>个股</th><th>连板</th><th>涨停时间</th><th>总市值(亿)</th><th>成交额(亿)</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td><span class="stk">东山精密</span> <span class="code">002384</span><span class="mk red">龙头</span><span class="mk yel">中军</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">3280.23</td><td class="num">153.29</td><td class="logic">全球前三PCB厂+光模块+AI服务器+新能源汽车，3200亿绝对容量龙头，封单近10万手，板块定海神针。</td></tr>
+      <tr><td><span class="stk">深南电路</span> <span class="code">002916</span><span class="mk yel">中军</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">2265.15</td><td class="num">34.22</td><td class="logic">PCB/IC载板龙头，2265亿中军。</td></tr>
+      <tr><td><span class="stk">沪电股份</span> <span class="code">002463</span><span class="mk yel">中军</span></td><td><span class="lb f">首板</span></td><td class="tlimit">午后</td><td class="num">2150.86</td><td class="num">73.22</td><td class="logic">高速PCB+AI服务器，2150亿中军，午后涨停封单超5万手，中报净利预增68%~78%。</td></tr>
+      <tr><td><span class="stk">鹏鼎控股</span> <span class="code">002938</span><span class="mk yel">中军</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">2062.61</td><td class="num">24.90</td><td class="logic">PCB龙头(鸿海系)+AI服务器+IC载板，2062亿中军。</td></tr>
+      <tr><td><span class="stk">宝鼎科技</span> <span class="code">002552</span><span class="mk red">龙头</span></td><td><span class="lb b2">3天2板</span></td><td class="tlimit">早盘</td><td class="num">138.74</td><td class="num">4.89</td><td class="logic">覆铜板/电子铜箔+风电铸件，3天2板连板核心，PCB材料弹性标的。</td></tr>
+      <tr><td><span class="stk">天通股份</span> <span class="code">600330</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">223.5</td><td class="num">14.53</td><td class="logic">压电晶体+CMP抛光材料+半导体设备（交叉见④）。</td></tr>
+      <tr><td><span class="stk">宏英智能</span> <span class="code">001266</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">34.5</td><td class="num">1.00</td><td class="logic">智能电控(工程机械/设备)，PCB设备分支。</td></tr>
+      <tr><td><span class="stk">信通电子</span> <span class="code">001388</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">52.41</td><td class="num">1.30</td><td class="logic">通信/PCB测试设备（交叉见⑪）。</td></tr>
+      <tr><td><span class="stk">博杰股份</span> <span class="code">002975</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">160.09</td><td class="num">5.15</td><td class="logic">半导体测试/光耦合设备+MLCC设备（交叉见④）。</td></tr>
+    </tbody>
+  </table>
+  <div class="note">催化：花旗研报8月电子布价格年内最大单月涨幅(1080/2116/7628系列+17%~18%，年内累计+118%~165%)，AI算力硬件代际升级驱动PCB向高密度高性能发展。注：中富电路(+13.27%)、南亚新材(+14.59%)、方邦股份(+12.31%)、威尔高(+9.77%)、欧科亿(+9.01%)、大族数控(+10.85%)、鼎泰高科(+12.15%)、光莆股份(+10.06%)等涨超9%但未封板，已剔除涨停名单。涨停时间除沪电(午后)外多为早盘推断。</div>
+</div>
+
+<!-- 3. 算力租赁/国资云/AIDC -->
+<div class="sec">
+  <div class="sechead">
+    <div><h2>③ 算力租赁 · 国资云 · AIDC（数据中心 · 美股云厂商大涨映射）</h2>
+      <div class="cnt">板块成分：约14只涨停(含20cm/30cm) · 美利云3连板 · 数据中心主力净流入403亿</div></div>
+    <div class="badges"><span class="b-red">情绪龙头：美利云 / 宏景科技 / 利通电子</span><span class="b-yel">中军：行云科技 / 莲花控股 / 青云科技</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>个股</th><th>连板</th><th>涨停时间</th><th>总市值(亿)</th><th>成交额(亿)</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td><span class="stk">美利云</span> <span class="code">000815</span><span class="mk red">龙头</span></td><td><span class="lb b3">3板</span></td><td class="tlimit">盘中</td><td class="num">127.72</td><td class="num">6.70</td><td class="logic">算力网+数据中心+东数西算+摘帽，3连板(12天7板)，算力租赁核心连板标的。</td></tr>
+      <tr><td><span class="stk">宏景科技</span> <span class="code">301396</span><span class="mk red">龙头</span><span class="mk red">20cm</span></td><td><span class="lb b2">3天2板</span></td><td class="tlimit">早盘</td><td class="num">379.66</td><td class="num">35.58</td><td class="logic">算力租赁+AI服务器，20cm，3天2板，379亿容量弹性。</td></tr>
+      <tr><td><span class="stk">行云科技</span> <span class="code">300209</span><span class="mk yel">中军</span><span class="mk red">20cm</span></td><td><span class="lb f">20cm首板</span></td><td class="tlimit">早盘</td><td class="num">312.39</td><td class="num">55.06</td><td class="logic">算力租赁+云计算，20cm，312亿容量中军，成交55亿。</td></tr>
+      <tr><td><span class="stk">莲花控股</span> <span class="code">600186</span><span class="mk yel">中军</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">164.93</td><td class="num">16.81</td><td class="logic">味精转型算力/智算中心，164亿容量标的。</td></tr>
+      <tr><td><span class="stk">青云科技</span> <span class="code">688316</span><span class="mk yel">中军</span><span class="mk red">20cm</span></td><td><span class="lb f">20cm首板</span></td><td class="tlimit">早盘</td><td class="num">26.62</td><td class="num">1.51</td><td class="logic">云计算/算力租赁，20cm涨停。</td></tr>
+      <tr><td><span class="stk">中青宝</span> <span class="code">300052</span><span class="mk red">20cm</span></td><td><span class="lb f">20cm首板</span></td><td class="tlimit">早盘</td><td class="num">31.55</td><td class="num">5.82</td><td class="logic">算力租赁+游戏(元宇宙)，20cm（交叉见⑫）。</td></tr>
+      <tr><td><span class="stk">汉鑫科技</span> <span class="code">920092</span><span class="mk red">30cm</span></td><td><span class="lb f">30cm首板</span></td><td class="tlimit">早盘</td><td class="num">18.89</td><td class="num">1.97</td><td class="logic">北交所算力+AI，30cm涨停。</td></tr>
+      <tr><td><span class="stk">华胜天成</span> <span class="code">600410</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">171.27</td><td class="num">7.91</td><td class="logic">算力/信创(华为)+AI服务器。</td></tr>
+      <tr><td><span class="stk">利通电子</span> <span class="code">603629</span><span class="mk red">龙头</span></td><td><span class="lb b2">3天2板</span></td><td class="tlimit">早盘(推断)</td><td class="num">待补充</td><td class="num">待补充</td><td class="logic">算力租赁+AI服务器液冷，3天2板。</td></tr>
+      <tr><td><span class="stk">润建股份</span> <span class="code">002929</span></td><td><span class="lb b2">3天2板</span></td><td class="tlimit">早盘(推断)</td><td class="num">待补充</td><td class="num">待补充</td><td class="logic">算力租赁+智算中心，3天2板。</td></tr>
+      <tr><td><span class="stk">东阳光</span> <span class="code">600673</span></td><td><span class="lb b2">3天2板</span></td><td class="tlimit">早盘(推断)</td><td class="num">待补充</td><td class="num">待补充</td><td class="logic">算力+电池/铝加工，3天2板。</td></tr>
+      <tr><td><span class="stk">高乐股份</span> <span class="code">002348</span></td><td><span class="lb f">首板</span></td><td class="tlimit">一字(09:25)</td><td class="num">待补充</td><td class="num">待补充</td><td class="logic">31亿算力大单砸出一字板，玩具转型算力。</td></tr>
+    </tbody>
+  </table>
+  <div class="note">催化：中国信通院Q1 AI算力需求+417%/供给+128%缺口；隔夜谷歌/微软/亚马逊/Meta涨超4%、亚马逊市值破3万亿、CoreWeave/nebius大涨，AI从"卖铲人"切"用铲人"。注：利通电子/润建股份/东阳光/高乐股份市值·成交额数据源未逐支返回(标待补充)；高乐股份为一字缩量。涨停时间除一字(高乐)/精确外多为早盘推断。</div>
+</div>
+
+<!-- 4. 半导体设备/先进封装/芯片 -->
+<div class="sec">
+  <div class="sechead">
+    <div><h2>④ 半导体设备 · 先进封装 · 芯片（国产替代 · 设备招标回暖）</h2>
+      <div class="cnt">板块成分：约12只涨停 · 芯片概念主力净流入548亿(全市场第一) · 板块内45股涨停</div></div>
+    <div class="badges"><span class="b-red">情绪龙头：金海通 / 和林微纳 / 光智科技</span><span class="b-yel">中军：云南锗业 / 江海股份 / 鹏鼎控股</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>个股</th><th>连板</th><th>涨停时间</th><th>总市值(亿)</th><th>成交额(亿)</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td><span class="stk">金海通</span> <span class="code">603061</span><span class="mk red">龙头</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">231.63</td><td class="num">7.59</td><td class="logic">半导体分选机/测试设备，板块设备先锋，收评明确涨停。</td></tr>
+      <tr><td><span class="stk">和林微纳</span> <span class="code">688661</span><span class="mk red">龙头</span><span class="mk red">20cm</span></td><td><span class="lb f">20cm首板</span></td><td class="tlimit">早盘</td><td class="num">142.46</td><td class="num">5.97</td><td class="logic">芯片测试探针/微机电(MEMS)，20cm涨停。</td></tr>
+      <tr><td><span class="stk">光智科技</span> <span class="code">300489</span><span class="mk red">龙头</span><span class="mk red">20cm</span></td><td><span class="lb f">20cm首板</span></td><td class="tlimit">早盘</td><td class="num">235.46</td><td class="num">22.84</td><td class="logic">半导体材料(锑化物)+光电，20cm涨停。</td></tr>
+      <tr><td><span class="stk">云南锗业</span> <span class="code">002428</span><span class="mk yel">中军</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">491.08</td><td class="num">28.91</td><td class="logic">半导体材料(锗)+光伏，491亿容量中军（交叉见⑩）。</td></tr>
+      <tr><td><span class="stk">江海股份</span> <span class="code">002484</span><span class="mk yel">中军</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">504.45</td><td class="num">24.65</td><td class="logic">MLPC电容(AI服务器)+半导体，504亿容量中军。</td></tr>
+      <tr><td><span class="stk">东方钽业</span> <span class="code">000962</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">247.59</td><td class="num">9.27</td><td class="logic">钽(半导体靶材)+有色，247亿（交叉见⑩）。</td></tr>
+      <tr><td><span class="stk">江钨装备</span> <span class="code">600397</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">138.1</td><td class="num">10.63</td><td class="logic">钨(硬质合金/半导体)，138亿（交叉见⑩）。</td></tr>
+      <tr><td><span class="stk">旭光电子</span> <span class="code">600353</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">191.95</td><td class="num">7.27</td><td class="logic">半导体(光刻机真空器件)+电子管，191亿。</td></tr>
+      <tr><td><span class="stk">鹏鼎控股</span> <span class="code">002938</span><span class="mk yel">中军</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">2062.61</td><td class="num">24.90</td><td class="logic">IC载板/先进封装，2062亿（交叉见②）。</td></tr>
+      <tr><td><span class="stk">联讯仪器</span> <span class="code">688808</span><span class="mk yel">中军</span></td><td><span class="lb f">20cm首板</span></td><td class="tlimit">早盘</td><td class="num">2000.77</td><td class="num">41.27</td><td class="logic">光通信测试设备（交叉见①）。</td></tr>
+      <tr><td><span class="stk">博杰股份</span> <span class="code">002975</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">160.09</td><td class="num">5.15</td><td class="logic">半导体测试/光耦合设备（交叉见②）。</td></tr>
+    </tbody>
+  </table>
+  <div class="note">催化：半导体设备国产替代+晶圆厂扩产；芯片概念主力净流入548亿居全市场第一。注：华峰测控(+4.26%中途)、中科飞测、北方华创(4985亿)等收评称"上涨"但未封板，未列入涨停名单；源杰科技(+14.65%)、协创数据(+17.68%)涨超10%未封，亦未列入。涨停时间多为早盘推断。</div>
+</div>
+
+<!-- 5. 电子化学品/覆铜板/铜箔 -->
+<div class="sec">
+  <div class="sechead">
+    <div><h2>⑤ 电子化学品 · 覆铜板 · 铜箔（湿电子化学品 + 覆铜板涨价）</h2>
+      <div class="cnt">板块成分：约9只涨停 · 生益科技2726亿覆铜板绝对龙头 · 电子布涨价直接受益</div></div>
+    <div class="badges"><span class="b-red">情绪龙头：格林达 / 生益科技</span><span class="b-yel">中军：生益科技 / 昊华科技 / 东材科技</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>个股</th><th>连板</th><th>涨停时间</th><th>总市值(亿)</th><th>成交额(亿)</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td><span class="stk">生益科技</span> <span class="code">600183</span><span class="mk red">龙头</span><span class="mk yel">中军</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">2726.07</td><td class="num">66.95</td><td class="logic">覆铜板全球龙头，2726亿绝对中军，电子布涨价直接受益，成交67亿。</td></tr>
+      <tr><td><span class="stk">昊华科技</span> <span class="code">600378</span><span class="mk yel">中军</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">534.96</td><td class="num">18.27</td><td class="logic">氟材料/电子化学品+PCB，534亿中军。</td></tr>
+      <tr><td><span class="stk">东材科技</span> <span class="code">601208</span></td><td><span class="lb f">首板</span></td><td class="tlimit">午后</td><td class="num">361.14</td><td class="num">19.81</td><td class="logic">覆铜板基膜(电工聚丙烯薄膜)+电子材料，361亿。</td></tr>
+      <tr><td><span class="stk">华正新材</span> <span class="code">603186</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">170.05</td><td class="num">12.36</td><td class="logic">覆铜板/高频高速材料。</td></tr>
+      <tr><td><span class="stk">格林达</span> <span class="code">603931</span><span class="mk red">龙头</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">64.32</td><td class="num">2.46</td><td class="logic">显影液(TMAH)湿电子化学品龙头，电子化学品先锋。</td></tr>
+      <tr><td><span class="stk">三孚股份</span> <span class="code">603938</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">143.06</td><td class="num">5.08</td><td class="logic">硅烷/电子特气+半导体材料。</td></tr>
+      <tr><td><span class="stk">江南新材</span> <span class="code">603124</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">160.58</td><td class="num">4.59</td><td class="logic">铜基材料(铜球/铜箔)PCB上游。</td></tr>
+      <tr><td><span class="stk">海星股份</span> <span class="code">603115</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘(推断)</td><td class="num">待补充</td><td class="num">待补充</td><td class="logic">电极箔(铝电解电容)，电子化学品分支。</td></tr>
+      <tr><td><span class="stk">嘉德利</span> <span class="code">001269</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘(推断)</td><td class="num">待补充</td><td class="num">待补充</td><td class="logic">电子化学品(光刻胶/湿化学品)，收评列名涨停。</td></tr>
+    </tbody>
+  </table>
+  <div class="note">催化：电子布年内最大单月涨幅(花旗)，覆铜板/铜箔直接受益；湿电子化学品国产替代。注：海星股份/嘉德利/唯特偶/天承科技等市值·成交额数据源未逐支返回(标待补充)。生益科技为覆铜板龙头(亦归入PCB产业链)。涨停时间除东材(午后)外多为早盘推断。</div>
+</div>
+
+<!-- 6. CRO/创新药/医疗服务 -->
+<div class="sec">
+  <div class="sechead">
+    <div><h2>⑥ CRO · 创新药 · 医疗服务（药明中报高增 · 板块反转）</h2>
+      <div class="cnt">板块成分：约8只涨停 · CXO龙头净利高增上调指引</div></div>
+    <div class="badges"><span class="b-red">情绪龙头：药明康德</span><span class="b-yel">中军：药明康德 / 凯莱英</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>个股</th><th>连板</th><th>涨停时间</th><th>总市值(亿)</th><th>成交额(亿)</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td><span class="stk">药明康德</span> <span class="code">603259</span><span class="mk red">龙头</span><span class="mk yel">中军</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">4217.54</td><td class="num">105.03</td><td class="logic">CXO龙头，中报净利110.8亿(+29.43%)并全面上调2026全年指引，4217亿中军/龙头，成交105亿居CRO首位。</td></tr>
+      <tr><td><span class="stk">凯莱英</span> <span class="code">002821</span><span class="mk yel">中军</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">583.06</td><td class="num">9.10</td><td class="logic">CXO/CDMO龙头，583亿中军。</td></tr>
+      <tr><td><span class="stk">义翘神州</span> <span class="code">301047</span><span class="mk red">20cm</span></td><td><span class="lb f">20cm首板</span></td><td class="tlimit">早盘</td><td class="num">101.66</td><td class="num">8.23</td><td class="logic">CRO/重组蛋白，20cm涨停。</td></tr>
+      <tr><td><span class="stk">百花医药</span> <span class="code">600721</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘(推断)</td><td class="num">待补充</td><td class="num">待补充</td><td class="logic">CRO(临床前)，收评列名涨停。</td></tr>
+      <tr><td><span class="stk">罗欣药业</span> <span class="code">002793</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">55.68</td><td class="num">2.41</td><td class="logic">医药(消化/创新药)，CRO/医药分支。</td></tr>
+      <tr><td><span class="stk">珍宝岛</span> <span class="code">603567</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">62.71</td><td class="num">4.37</td><td class="logic">中药/创新药。</td></tr>
+      <tr><td><span class="stk">哈三联</span> <span class="code">002900</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">39.23</td><td class="num">1.51</td><td class="logic">医药(仿制/医美)。</td></tr>
+      <tr><td><span class="stk">双成药业</span> <span class="code">002693</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">40.1</td><td class="num">2.81</td><td class="logic">海南+医药+重组预期（交叉见⑧）。</td></tr>
+    </tbody>
+  </table>
+  <div class="note">催化：药明康德中报净利高增+上调指引带动CXO估值修复，博腾股份(+13%)等跟涨(涨超10未封不列入)。注：百花医药市值·成交额未返回(标待补充)。涨停时间多为早盘推断。</div>
+</div>
+
+<!-- 7. AI应用/传媒教育 -->
+<div class="sec">
+  <div class="sechead">
+    <div><h2>⑦ AI应用 · 传媒教育 · 多模态（Palantir/Snap业绩超预期映射）</h2>
+      <div class="cnt">板块成分：约13只涨停(含20cm) · 全市场最高板传智教育7板所在</div></div>
+    <div class="badges"><span class="b-red">情绪龙头：传智教育 / 中国科传 / 欢瑞世纪</span><span class="b-yel">中军：天娱数科</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>个股</th><th>连板</th><th>涨停时间</th><th>总市值(亿)</th><th>成交额(亿)</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td><span class="stk">传智教育</span> <span class="code">003032</span><span class="mk red">龙头</span></td><td><span class="lb b8">7板</span></td><td class="tlimit">T字</td><td class="num">42.9</td><td class="num">3.15</td><td class="logic">全市场最高板(7连板)·摘帽+AI教育+具身智能+业绩扭亏，T字换手晋级。</td></tr>
+      <tr><td><span class="stk">中国科传</span> <span class="code">601858</span><span class="mk red">龙头</span></td><td><span class="lb b3">5天3板</span></td><td class="tlimit">早盘</td><td class="num">189.25</td><td class="num">5.12</td><td class="logic">传媒+AI数据/出版，5天3板(反包)。</td></tr>
+      <tr><td><span class="stk">欢瑞世纪</span> <span class="code">000892</span><span class="mk red">龙头</span></td><td><span class="lb b3">5天3板</span></td><td class="tlimit">早盘</td><td class="num">40.91</td><td class="num">5.73</td><td class="logic">影视+AI应用+重组，5天3板（交叉见⑫）。</td></tr>
+      <tr><td><span class="stk">返利科技</span> <span class="code">600228</span></td><td><span class="lb b3">5天3板</span></td><td class="tlimit">早盘(推断)</td><td class="num">待补充</td><td class="num">待补充</td><td class="logic">AI导购/电商，5天3板。</td></tr>
+      <tr><td><span class="stk">天娱数科</span> <span class="code">002354</span><span class="mk yel">中军</span></td><td><span class="lb b3">3板</span></td><td class="tlimit">盘中</td><td class="num">130.38</td><td class="num">37.37</td><td class="logic">AI营销+人形机器人+具身智能+AI应用，3连板，成交37亿人气核心。</td></tr>
+      <tr><td><span class="stk">达实智能</span> <span class="code">002421</span></td><td><span class="lb b2">2板</span></td><td class="tlimit">早盘</td><td class="num">73.8</td><td class="num">11.19</td><td class="logic">AI智慧建筑/物联网+信创，2连板。</td></tr>
+      <tr><td><span class="stk">魅视科技</span> <span class="code">001229</span></td><td><span class="lb b2">2板</span></td><td class="tlimit">早盘</td><td class="num">55.19</td><td class="num">3.25</td><td class="logic">AI应用+边缘计算+商业航天，2连板。</td></tr>
+      <tr><td><span class="stk">德才股份</span> <span class="code">605287</span></td><td><span class="lb b2">3天2板</span></td><td class="tlimit">早盘</td><td class="num">52.92</td><td class="num">2.88</td><td class="logic">建筑装饰+AI(元宇宙)，3天2板。</td></tr>
+      <tr><td><span class="stk">凯文教育</span> <span class="code">002659</span></td><td><span class="lb b2">3天2板</span></td><td class="tlimit">早盘(推断)</td><td class="num">待补充</td><td class="num">待补充</td><td class="logic">教育+AI，3天2板。</td></tr>
+      <tr><td><span class="stk">风语筑</span> <span class="code">603466</span></td><td><span class="lb b2">3天2板</span></td><td class="tlimit">早盘(推断)</td><td class="num">待补充</td><td class="num">待补充</td><td class="logic">数字展示/元宇宙，3天2板。</td></tr>
+      <tr><td><span class="stk">华凯易佰</span> <span class="code">300592</span><span class="mk red">20cm</span></td><td><span class="lb f">20cm首板</span></td><td class="tlimit">早盘</td><td class="num">59.47</td><td class="num">4.63</td><td class="logic">跨境电商+AI（交叉见⑫）。</td></tr>
+      <tr><td><span class="stk">汉仪股份</span> <span class="code">301270</span><span class="mk red">20cm</span></td><td><span class="lb f">20cm首板</span></td><td class="tlimit">早盘</td><td class="num">35.26</td><td class="num">5.06</td><td class="logic">字体/文创+AI字体。</td></tr>
+    </tbody>
+  </table>
+  <div class="note">催化：美股AI应用股Palantir/Snap业绩超预期盘后大涨，A股AI应用端持续走强。注：返利科技/凯文教育/风语筑市值·成交额未返回(标待补充)。传智教育为全市场最高板(7板T字)；中国科传/欢瑞世纪/返利科技为5天3板反包结构。涨停时间除传智(T字)/天娱(盘中)外多为早盘推断。</div>
+</div>
+
+<!-- 8. 并购重组/控制权变更/摘帽 -->
+<div class="sec">
+  <div class="sechead">
+    <div><h2>⑧ 并购重组 · 控制权变更 · 摘帽（连板高度聚集地）</h2>
+      <div class="cnt">板块成分：约7只涨停 · 神雾节能4板/欣天科技20cm2板</div></div>
+    <div class="badges"><span class="b-red">情绪龙头：神雾节能 / 欣天科技</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>个股</th><th>连板</th><th>涨停时间</th><th>总市值(亿)</th><th>成交额(亿)</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td><span class="stk">神雾节能</span> <span class="code">000820</span><span class="mk red">龙头</span></td><td><span class="lb b4">4板</span></td><td class="tlimit">早盘(换手)</td><td class="num">27.54</td><td class="num">3.77</td><td class="logic">摘帽+节能环保+债权确认，4连板，换手率32%显示分歧。</td></tr>
+      <tr><td><span class="stk">欣天科技</span> <span class="code">300615</span><span class="mk red">龙头</span><span class="mk red">20cm</span></td><td><span class="lb b2">20cm 2板</span></td><td class="tlimit">一字(09:25·复牌)</td><td class="num">24.16</td><td class="num">0.11</td><td class="logic">通信设备+控制权变更+复牌，20cm一字2板，成交极低（交叉见⑪）。</td></tr>
+      <tr><td><span class="stk">双成药业</span> <span class="code">002693</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">40.1</td><td class="num">2.81</td><td class="logic">海南+医药+重组预期（交叉见⑥）。</td></tr>
+      <tr><td><span class="stk">宇顺电子</span> <span class="code">002289</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">87.78</td><td class="num">1.96</td><td class="logic">面板+重组。</td></tr>
+      <tr><td><span class="stk">艾艾精工</span> <span class="code">603580</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">70.29</td><td class="num">5.50</td><td class="logic">前高标(股权/独立)，反抽涨停。</td></tr>
+      <tr><td><span class="stk">济民健康</span> <span class="code">603222</span></td><td><span class="lb b2">2板</span></td><td class="tlimit">早盘</td><td class="num">45.53</td><td class="num">1.58</td><td class="logic">医疗+集成电路/AI芯片+收购，2连板（交叉见⑬）。</td></tr>
+      <tr><td><span class="stk">胜通能源</span> <span class="code">001331</span></td><td><span class="lb b2">2板</span></td><td class="tlimit">早盘(推断)</td><td class="num">待补充</td><td class="num">待补充</td><td class="logic">燃气+控制权变更+防爆巡检机器人。</td></tr>
+      <tr><td><span class="stk">南宁百货</span> <span class="code">600712</span></td><td><span class="lb b2">4天2板</span></td><td class="tlimit">早盘(推断)</td><td class="num">待补充</td><td class="num">待补充</td><td class="logic">并购重组/免税预期，4天2板（交叉见⑫）。</td></tr>
+    </tbody>
+  </table>
+  <div class="note">注：神雾节能(摘帽4板)高换手32%显示分歧；欣天科技为控制权变更复牌20cm一字2板(成交0.11亿)；胜通能源/南宁百货市值·成交额未返回(标待补充)。高争民爆(民爆)8/4收+10.01%涨停但财联社称"断板"、同花顺称"5连板"，争议详见风险专区及民爆代表处。</div>
+</div>
+
+<!-- 9. 电力/电网设备 -->
+<div class="sec">
+  <div class="sechead">
+    <div><h2>⑨ 电力 · 电网设备（用电负荷新高 · 算力电源 · 逆势抗跌分支）</h2>
+      <div class="cnt">板块成分：约5只涨停 · 新能股份10天6板/顺钠股份9天6板(反包)</div></div>
+    <div class="badges"><span class="b-red">情绪龙头：新能股份 / 顺钠股份</span><span class="b-yel">中军：中恒电气</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>个股</th><th>连板</th><th>涨停时间</th><th>总市值(亿)</th><th>成交额(亿)</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td><span class="stk">新能股份</span> <span class="code">000595</span><span class="mk red">龙头</span></td><td><span class="lb b3">10天6板</span></td><td class="tlimit">早盘</td><td class="num">74.7</td><td class="num">3.23</td><td class="logic">电力+用电负荷创新高+风光储转型+宁夏国资，10天6板(反包结构，连续3板)。</td></tr>
+      <tr><td><span class="stk">顺钠股份</span> <span class="code">000533</span><span class="mk red">龙头</span></td><td><span class="lb b2">9天6板</span></td><td class="tlimit">早盘</td><td class="num">87.04</td><td class="num">16.74</td><td class="logic">电网设备+算力电源，9天6板(反包)，成交16.7亿换手续航。</td></tr>
+      <tr><td><span class="stk">风范股份</span> <span class="code">601700</span></td><td><span class="lb b2">2板</span></td><td class="tlimit">早盘</td><td class="num">67.41</td><td class="num">3.51</td><td class="logic">电网设备+特高压，2连板。</td></tr>
+      <tr><td><span class="stk">中恒电气</span> <span class="code">002364</span><span class="mk yel">中军</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">211.73</td><td class="num">15.17</td><td class="logic">数据中心HVDC电源+充电桩，211亿容量中军。</td></tr>
+      <tr><td><span class="stk">海鸥股份</span> <span class="code">603269</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">53.17</td><td class="num">3.22</td><td class="logic">冷却塔(核电/数据中心液冷)。</td></tr>
+    </tbody>
+  </table>
+  <div class="note">注：电力板块整体今日偏弱(权重拖累)，但新能股份/顺钠股份凭借反包结构维持连板高度。涨停时间多为早盘推断。</div>
+</div>
+
+<!-- 10. 工业金属/有色/锗 -->
+<div class="sec">
+  <div class="sechead">
+    <div><h2>⑩ 工业金属 · 有色 · 锗/钽/钨（半导体材料 + 资源属性）</h2>
+      <div class="cnt">板块成分：约4只涨停 · 云南锗业491亿领涨</div></div>
+    <div class="badges"><span class="b-red">情绪龙头：云南锗业 / 东方钽业</span><span class="b-yel">中军：云南锗业</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>个股</th><th>连板</th><th>涨停时间</th><th>总市值(亿)</th><th>成交额(亿)</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td><span class="stk">云南锗业</span> <span class="code">002428</span><span class="mk red">龙头</span><span class="mk yel">中军</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">491.08</td><td class="num">28.91</td><td class="logic">半导体材料(锗)+光伏，491亿容量中军（交叉见④）。</td></tr>
+      <tr><td><span class="stk">东方钽业</span> <span class="code">000962</span><span class="mk red">龙头</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">247.59</td><td class="num">9.27</td><td class="logic">钽(半导体靶材)+有色，247亿（交叉见④）。</td></tr>
+      <tr><td><span class="stk">江钨装备</span> <span class="code">600397</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">138.1</td><td class="num">10.63</td><td class="logic">钨(硬质合金/半导体)，138亿（交叉见④）。</td></tr>
+      <tr><td><span class="stk">永鼎股份</span> <span class="code">600105</span><span class="mk yel">中军</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">501.32</td><td class="num">70.11</td><td class="logic">铜(光通信/铜缆)，501亿（交叉见①）。</td></tr>
+    </tbody>
+  </table>
+  <div class="note">催化：半导体材料国产替代+资源品价格。云南锗业(491亿)/永鼎股份(501亿)为板块容量中军。涨停时间多为早盘推断。</div>
+</div>
+
+<!-- 11. 通信/商业航天 -->
+<div class="sec">
+  <div class="sechead">
+    <div><h2>⑪ 通信 · 商业航天（卫星 / 北斗 / 5G · 与CPO/算力共振）</h2>
+      <div class="cnt">板块成分：约6只涨停(含20cm)</div></div>
+    <div class="badges"><span class="b-red">情绪龙头：通宇通讯 / 神剑股份 / 欣天科技</span><span class="b-yel">中军：神剑股份</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>个股</th><th>连板</th><th>涨停时间</th><th>总市值(亿)</th><th>成交额(亿)</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td><span class="stk">神剑股份</span> <span class="code">002361</span><span class="mk red">龙头</span><span class="mk yel">中军</span></td><td><span class="lb b2">2板</span></td><td class="tlimit">早盘</td><td class="num">105.56</td><td class="num">24.92</td><td class="logic">商业航天+北斗导航+卫星天线+芜湖国资，105亿容量中军，2连板。</td></tr>
+      <tr><td><span class="stk">通宇通讯</span> <span class="code">002792</span><span class="mk red">龙头</span></td><td><span class="lb b2">2板</span></td><td class="tlimit">早盘</td><td class="num">待补充</td><td class="num">待补充</td><td class="logic">通信设备+商业航天+卫星通信，2连板（交叉见①）。</td></tr>
+      <tr><td><span class="stk">欣天科技</span> <span class="code">300615</span><span class="mk red">龙头</span><span class="mk red">20cm</span></td><td><span class="lb b2">20cm 2板</span></td><td class="tlimit">一字(09:25·复牌)</td><td class="num">24.16</td><td class="num">0.11</td><td class="logic">通信设备+控制权变更+复牌，20cm一字2板（交叉见⑧）。</td></tr>
+      <tr><td><span class="stk">中威电子</span> <span class="code">300270</span><span class="mk red">20cm</span></td><td><span class="lb f">20cm首板</span></td><td class="tlimit">早盘</td><td class="num">38.15</td><td class="num">3.78</td><td class="logic">通信(安防视频)，20cm涨停。</td></tr>
+      <tr><td><span class="stk">中通国脉</span> <span class="code">603559</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">36.92</td><td class="num">1.48</td><td class="logic">通信(5G/算力)。</td></tr>
+      <tr><td><span class="stk">世嘉科技</span> <span class="code">002796</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">67.66</td><td class="num">1.29</td><td class="logic">通信设备+5G滤波器（交叉见①）。</td></tr>
+    </tbody>
+  </table>
+  <div class="note">注：通宇通讯市值·成交额未逐支返回(标待补充)。涨停时间除欣天科技(一字复牌)外多为早盘推断。</div>
+</div>
+
+<!-- 12. 大消费/影视/游戏 -->
+<div class="sec">
+  <div class="sechead">
+    <div><h2>⑫ 大消费 · 影视 · 游戏（扩大内需 + 情绪修复分支）</h2>
+      <div class="cnt">板块成分：约5只涨停(含20cm)</div></div>
+    <div class="badges"><span class="b-red">情绪龙头：欢瑞世纪 / 凯撒文化</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>个股</th><th>连板</th><th>涨停时间</th><th>总市值(亿)</th><th>成交额(亿)</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td><span class="stk">欢瑞世纪</span> <span class="code">000892</span><span class="mk red">龙头</span></td><td><span class="lb b3">5天3板</span></td><td class="tlimit">早盘</td><td class="num">40.91</td><td class="num">5.73</td><td class="logic">影视+AI应用+重组，5天3板（交叉见⑦）。</td></tr>
+      <tr><td><span class="stk">凯撒文化</span> <span class="code">002425</span><span class="mk red">龙头</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">30.13</td><td class="num">1.39</td><td class="logic">游戏。</td></tr>
+      <tr><td><span class="stk">南宁百货</span> <span class="code">600712</span></td><td><span class="lb b2">4天2板</span></td><td class="tlimit">早盘(推断)</td><td class="num">待补充</td><td class="num">待补充</td><td class="logic">零售/免税预期，4天2板（交叉见⑧）。</td></tr>
+      <tr><td><span class="stk">中青宝</span> <span class="code">300052</span><span class="mk red">20cm</span></td><td><span class="lb f">20cm首板</span></td><td class="tlimit">早盘</td><td class="num">31.55</td><td class="num">5.82</td><td class="logic">游戏+元宇宙+算力（交叉见③）。</td></tr>
+      <tr><td><span class="stk">华凯易佰</span> <span class="code">300592</span><span class="mk red">20cm</span></td><td><span class="lb f">20cm首板</span></td><td class="tlimit">早盘</td><td class="num">59.47</td><td class="num">4.63</td><td class="logic">跨境电商+AI（交叉见⑦）。</td></tr>
+    </tbody>
+  </table>
+  <div class="note">注：南宁百货市值·成交额未返回(标待补充)。大消费整体非今日主线(白酒逆势下跌)，仅影视/游戏/零售分支个别涨停。涨停时间多为早盘推断。</div>
+</div>
+
+<!-- 13. 其他独立 -->
+<div class="sec">
+  <div class="sechead">
+    <div><h2>⑬ 其他独立（机械/自动化/汽车/家居/包装/建材/ST等分散首板）</h2>
+      <div class="cnt">板块成分：约15只涨停（含ST）</div></div>
+    <div class="badges"><span class="b-red">情绪龙头：海川智能 / 飞龙股份</span></div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>个股</th><th>连板</th><th>涨停时间</th><th>总市值(亿)</th><th>成交额(亿)</th><th>涨停逻辑</th></tr></thead>
+    <tbody>
+      <tr><td><span class="stk">海川智能</span> <span class="code">300720</span><span class="mk red">龙头</span><span class="mk red">20cm</span></td><td><span class="lb f">20cm首板</span></td><td class="tlimit">早盘</td><td class="num">116.44</td><td class="num">7.94</td><td class="logic">智能设备/自动化，20cm涨停。</td></tr>
+      <tr><td><span class="stk">飞龙股份</span> <span class="code">002536</span><span class="mk red">龙头</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">199.51</td><td class="num">12.18</td><td class="logic">汽车热管理+服务器液冷泵，算力液冷分支。</td></tr>
+      <tr><td><span class="stk">华达科技</span> <span class="code">603358</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">186.07</td><td class="num">5.20</td><td class="logic">汽车零部件(一体化压铸)。</td></tr>
+      <tr><td><span class="stk">兴业科技</span> <span class="code">002674</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">72.35</td><td class="num">8.22</td><td class="logic">皮革/汽车内饰。</td></tr>
+      <tr><td><span class="stk">大元泵业</span> <span class="code">603757</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">103.94</td><td class="num">5.19</td><td class="logic">水泵/液冷。</td></tr>
+      <tr><td><span class="stk">共达电声</span> <span class="code">002655</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">89.72</td><td class="num">7.76</td><td class="logic">消费电子/声学。</td></tr>
+      <tr><td><span class="stk">美盈森</span> <span class="code">002303</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">75.19</td><td class="num">4.28</td><td class="logic">包装印刷。</td></tr>
+      <tr><td><span class="stk">园林股份</span> <span class="code">605303</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">33.99</td><td class="num">0.76</td><td class="logic">园林。</td></tr>
+      <tr><td><span class="stk">森鹰窗业</span> <span class="code">301227</span><span class="mk red">20cm</span></td><td><span class="lb f">20cm首板</span></td><td class="tlimit">早盘</td><td class="num">28.21</td><td class="num">1.35</td><td class="logic">建材(门窗)。</td></tr>
+      <tr><td><span class="stk">联域股份</span> <span class="code">001326</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">37.82</td><td class="num">0.69</td><td class="logic">LED照明。</td></tr>
+      <tr><td><span class="stk">宏英智能</span> <span class="code">001266</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">34.5</td><td class="num">1.00</td><td class="logic">智能电控（交叉见②）。</td></tr>
+      <tr><td><span class="stk">信通电子</span> <span class="code">001388</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">52.41</td><td class="num">1.30</td><td class="logic">通信测试（交叉见⑪）。</td></tr>
+      <tr><td><span class="stk">中威电子</span> <span class="code">300270</span><span class="mk red">20cm</span></td><td><span class="lb f">20cm首板</span></td><td class="tlimit">早盘</td><td class="num">38.15</td><td class="num">3.78</td><td class="logic">通信（交叉见⑪）。</td></tr>
+      <tr><td><span class="stk">中通国脉</span> <span class="code">603559</span></td><td><span class="lb f">首板</span></td><td class="tlimit">早盘</td><td class="num">36.92</td><td class="num">1.48</td><td class="logic">通信（交叉见⑪）。</td></tr>
+      <tr><td><span class="stk">*ST利源</span> <span class="code">002501</span></td><td><span class="lb f">首板</span></td><td class="tlimit">ST</td><td class="num">48.99</td><td class="num">0.88</td><td class="logic">ST风险警示，分散题材。</td></tr>
+      <tr><td><span class="stk">*ST中迪</span> <span class="code">000609</span></td><td><span class="lb f">首板</span></td><td class="tlimit">ST</td><td class="num">29.84</td><td class="num">0.58</td><td class="logic">ST风险警示，分散题材。</td></tr>
+    </tbody>
+  </table>
+  <div class="note">注：本板块为分散首板(机械/汽车/消费电子/包装/建材/ST等)，多数市值·成交额已补全；ST/*ST风险警示股(仅*ST利源/*ST中迪确认涨停)已标注，建议规避。全市场140只涨停中，另有约40只中小盘/细分首板未逐一罗列，以板块强度描述(CPO十余股、PCB二十余股、芯片45股、算力十余股等)为准。</div>
+</div>
+
+<!-- 风险专区 -->
+<div class="warn">
+  <h2>⚠ 风险专区 · 银行逆势拖累黄白线 · 高标断板 · 科技超跌反弹首日 · 涨超10%未封</h2>
+  <ul>
+    <li><b>黄白线分化·权重逆势</b>：银行/保险/白酒/电力/航空/汽车整车/公路铁路逆势，工商银行/农业银行/中国银行/建设银行均跌超3%；指数收涨但超1700股下跌，赚钱效应集中于科技主线，容错率一般。</li>
+    <li><b>高标断板风险</b>：一鸣食品(前5板)、高争民爆(前4板/同花顺口径5板)均被财联社点名"断板"——连板梯队于7板(传智)后断层，最高换手连板实为神雾节能4板；高位抱团分歧加大，断板即可能引发剧烈回撤。</li>
+    <li><b>科技超跌反弹首日</b>：CPO/PCB/半导体为前期深度调整(科创50此前重挫)后的集中反抽，单日涨幅巨大(创业板+5.64%、科创50+4.09%)，获利盘丰厚，警惕一日游与次日分化。</li>
+    <li><b>涨超10%未封·虚高预警</b>：源杰科技(+14.65%)、鼎通科技(+18.5%)、仕佳光子(+17.5%)、天孚通信(+17.45%)、中际旭创(+13.24%)、新易盛(+13.68%)、协创数据(+17.68%)、南亚新材(+14.59%)、方邦股份(+12.31%)、中富电路(+13.27%)等大幅冲高但未封板，已剔除涨停名单，追高回落风险大。</li>
+    <li><b>一字/缩量板分歧</b>：欣天科技(20cm复牌一字)、利柏特、德龙汇能、恒银科技、高乐股份为一字/缩量，次日放量分歧概率大；传智教育7板T字为市场高度标杆，警惕监管异动与补跌。</li>
+    <li><b>ST/*ST警示</b>：ST交昂跌停(全市场唯一跌停)，*ST利源/*ST中迪涨停但风险警示股流动性差、退市风险高，建议规避。</li>
+  </ul>
+</div>
+
+<footer>
+  <div><b>盘面定性</b>：<b>2026-08-04（周二 · 真实交易日）</b> 为<b>科技大反攻·强修复·百股涨停·算力硬件产业链集中爆发</b>日。三大指数集体收涨，沪指+0.33%(3822.28)/深成+3.25%(13885.71)/创业板指+5.64%(3688.97)/科创50+4.09%；成交2.21万亿（放量2162亿）；3642涨/1747跌；涨停138~140只（财联社138/界面140）、跌停1只(ST交昂)、封板率90%、连板19只、晋级率47.05%。最强=CPO/光通信(英伟达CPO量产·光迅科技/剑桥科技/光库科技等十余股涨停·"易中天"成交956亿)、PCB(电子布涨价·东山精密3200亿/沪电/深南电路/生益科技等二十余股涨停)、算力租赁(美利云3板/宏景科技/行云科技20cm)、半导体设备/芯片(主力净流入548亿居首)、电子化学品(覆铜板/铜箔)、CRO(药明康德中报高增)、AI应用(传智教育7板)；连板高度=传智教育7板(摘帽AI教育)，剔除断板后实际换手高度神雾节能4板。最弱=银行/保险/白酒/电力/航空/汽车整车/公路铁路(权重逆势·工农中建跌超3%)。</div>
+  <div class="src" style="margin-top:8px">数据来源：财联社《8月4日涨停分析/连板股分析》（138涨停·19连板·封板率90%）、界面新闻/网易《今日涨跌停股分析》（140涨停·1跌停·连板清单）、同花顺/21财经/中新经纬《8月4日A股收评》、证券时报·数据宝（封板率/主力净流入）、东方财富/新浪行情指标结构化快照（08-04收盘总市值·成交额，已逐支补全连板+中军+代表首板）。涨停时间除精确标注(欣天科技一字复牌/高乐一字/传智T字/沪电午后)外多为早盘/盘中推断（午报：早盘83家涨停，科技线早盘集中爆发）；市值·成交额单位亿元；通宇通讯/返利科技/凯文教育/风语筑/利通电子/润建股份/东阳光/高乐股份/胜通能源/南宁百货/百花医药/海星股份/嘉德利/华盛昌 等市值·成交额数据源未逐支返回（标待补充）。排序规则：连板梯队"几天几板"优先于当日涨停时间；板块情绪龙头标红、中军标黄。</div>
+  <div style="margin-top:8px">⚠ <b>免责声明</b>：本报告基于公开行情数据整理，仅供研究与学习参考，不构成任何投资建议。股市有风险，投资需谨慎。涨停个股存在次日大幅波动风险，尤其一字板/高位连板标的，请独立判断。</div>
+</footer>
+
+</div>
+</body>
+</html>

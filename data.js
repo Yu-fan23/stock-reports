@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-04 16:45:21",
-  "total": 97,
+  "generatedAt": "2026-08-05 07:45:21",
+  "total": 99,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 21,
-      "latest": "20260804",
+      "count": 22,
+      "latest": "20260805",
       "reports": [
+        {
+          "date": "20260805",
+          "dateLabel": "2026-08-05（周三）",
+          "file": "reports/panqian/panqian_20260805.html",
+          "title": "盘前交易计划 | 2026年8月5日（周三）· v26.0 · 8/4真实收盘（科技全面反扑·创业板+5.64%·科创+4.09%·放量2174亿）+8/4深夜美股费半+6.6%/光通信存储暴涨+Palantir+16%(AI商业化)+央行5000亿净投放，主线重排「科技/AI算力(CPO半导体PCB) + CRO医药创新药 + AI应用/机器人」，核电降支线、半导体由退潮升为主攻",
+          "size": 68341
+        },
         {
           "date": "20260804",
           "dateLabel": "2026-08-04（周二）",
@@ -517,9 +524,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 18,
-      "latest": "20260803",
+      "count": 19,
+      "latest": "20260804",
       "reports": [
+        {
+          "date": "20260804",
+          "dateLabel": "2026-08-04（周二）",
+          "file": "reports/limitup/limitup_20260804.html",
+          "title": "涨停梯队复盘 · 2026-08-04（周二 · 真实交易日）· 科技大反攻 · CPO/PCB掀涨停潮",
+          "size": 68559
+        },
         {
           "date": "20260803",
           "dateLabel": "2026-08-03（周一）",
