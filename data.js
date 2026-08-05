@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-05 08:01:19",
-  "total": 100,
+  "generatedAt": "2026-08-05 12:45:23",
+  "total": 101,
   "categories": [
     {
       "key": "panqian",
@@ -173,9 +173,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 21,
-      "latest": "20260804",
+      "count": 22,
+      "latest": "20260805",
       "reports": [
+        {
+          "date": "20260805",
+          "dateLabel": "2026-08-05（周三）",
+          "file": "reports/noon/noon_20260805.html",
+          "title": "A股午间复盘 · 2026-08-05（周三）· 放量普涨·科创突破1700·科技主线强化·控仓待确认",
+          "size": 32936
+        },
         {
           "date": "20260804",
           "dateLabel": "2026-08-04（周二）",
