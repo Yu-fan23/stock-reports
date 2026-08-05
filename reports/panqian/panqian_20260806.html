@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盘前交易计划 | 2026年8月6日（周四）· v27.0 · 8/5真实收盘（科创+4.78%·半导体近50股涨停潮·成交2.68万亿天量·站上20日线一阳穿三线）+8/5美股分化（道指五连涨创新高/纳指-0.83%/英伟达+3.43%重夺股王/存储光通信回踩）+8/6盘前（央行净投放/集成电路条例修订/基药目录新政），主线重排「半导体硬科技 + 贵金属有色小金属 + CRO医药创新药」</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0f0f23; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; line-height: 1.7; padding: 20px; max-width: 1200px; margin: 0 auto; }
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 28px 32px; margin-bottom: 24px; border: 1px solid #2d2d44; }
+  .header h1 { font-size: 24px; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; }
+  .header .subtitle { color: #94a3b8; font-size: 14px; margin-bottom: 12px; }
+  .header .meta { color: #94a3b8; font-size: 13px; display: flex; gap: 20px; flex-wrap: wrap; }
+  .header .meta .tag { background: rgba(0,212,170,0.2); color: #00d4aa; padding: 2px 10px; border-radius: 10px; font-size: 12px; }
+  .header .meta .tag.warn { background: rgba(255,165,2,0.2); color: #ffa502; }
+  .header .meta .tag.green { background: rgba(0,212,170,0.2); color: #00d4aa; }
+  .header .meta .tag.red { background: rgba(255,71,87,0.2); color: #ff4757; }
+  .summary-bar { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 24px 28px; margin-bottom: 24px; border: 1px solid #00d4aa; border-left: 4px solid #00d4aa; }
+  .summary-bar .verdict { font-size: 20px; font-weight: 800; color: #00d4aa; margin-bottom: 8px; }
+  .summary-bar .verdict-desc { color: #cbd5e1; font-size: 14px; }
+  .q3-box { border-radius: 14px; padding: 20px 24px; margin-bottom: 24px; background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%); border: 1px solid #667eea; }
+  .q3-box h2 { font-size: 18px; color: #a78bfa; margin-bottom: 14px; }
+  .q3-item { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid rgba(45,45,68,0.5); }
+  .q3-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .q3-item .ql { font-size: 15px; font-weight: 700; color: #e2e8f0; margin-bottom: 6px; }
+  .q3-item .qa { font-size: 14px; color: #cbd5e1; }
+  .q3-item .qa b { color: #00d4aa; }
+  .q3-item .qa .r { color: #ffa502; }
+  .q3-item .qa .bad { color: #ff4757; }
+  .verify-box { border-radius: 10px; padding: 12px 16px; margin-bottom: 12px; font-size: 13px; }
+  .verify-bull { background: rgba(0,212,170,0.08); border-left: 3px solid #00d4aa; }
+  .verify-warn { background: rgba(255,165,2,0.08); border-left: 3px solid #ffa502; }
+  .verify-danger { background: rgba(255,71,87,0.08); border-left: 3px solid #ff4757; }
+  .index-cards { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 24px; }
+  .index-card { background: #1a1a2e; border-radius: 12px; padding: 16px; border: 1px solid #2d2d44; text-align: center; }
+  .index-card .name { font-size: 12px; color: #94a3b8; margin-bottom: 6px; }
+  .index-card .price { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .index-card .change { font-size: 13px; font-weight: 600; }
+  .index-card .change.green { color: #00d4aa; }
+  .index-card .change.red { color: #ff4757; }
+  .index-card .sub { font-size: 10px; color: #64748b; margin-top: 4px; }
+  .section { background: #1a1a2e; border-radius: 16px; padding: 24px 28px; margin-bottom: 20px; border: 1px solid #2d2d44; }
+  .section-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .section-title .num { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .theme-card { background: #16213e; border-radius: 14px; padding: 22px; margin-bottom: 16px; border: 1px solid #2d2d44; transition: border-color 0.3s; }
+  .theme-card:hover { border-color: #667eea; }
+  .theme-card.buy { border-left: 4px solid #00d4aa; }
+  .theme-card.watch { border-left: 4px solid #ffa502; }
+  .theme-card.avoid { border-left: 4px solid #ff4757; }
+  .theme-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+  .theme-name { font-size: 17px; font-weight: 700; }
+  .theme-signal { padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; }
+  .theme-signal.buy { background: rgba(0,212,170,0.15); color: #00d4aa; }
+  .theme-signal.watch { background: rgba(255,165,2,0.15); color: #ffa502; }
+  .theme-signal.avoid { background: rgba(255,71,87,0.15); color: #ff4757; }
+  .theme-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .theme-row .label { color: #64748b; font-size: 13px; margin-bottom: 4px; }
+  .theme-row .value { color: #e2e8f0; font-size: 14px; }
+  .theme-stocks { background: rgba(0,0,0,0.2); border-radius: 8px; padding: 12px 14px; margin-top: 8px; }
+  .theme-stocks .label { color: #64748b; font-size: 12px; margin-bottom: 6px; }
+  .stock-tag { display: inline-block; background: rgba(102,126,234,0.15); color: #a78bfa; padding: 3px 10px; border-radius: 6px; font-size: 12px; margin: 2px 4px 2px 0; }
+  .stock-tag.hl { background: rgba(0,212,170,0.15); color: #00d4aa; }
+  .stock-tag.gold { background: rgba(255,165,2,0.15); color: #ffa502; }
+  .catalyst-list { margin-top: 8px; }
+  .catalyst-list li { list-style: none; padding: 4px 0; font-size: 13px; color: #cbd5e1; padding-left: 18px; position: relative; }
+  .catalyst-list li::before { content: '▸'; position: absolute; left: 0; color: #667eea; }
+  .catalyst-list li.neg::before { color: #ff4757; }
+  .catalyst-list li.pos::before { color: #00d4aa; }
+  .stage-bar { background: rgba(0,0,0,0.3); border-radius: 8px; height: 32px; display: flex; align-items: center; position: relative; margin: 10px 0; overflow: hidden; }
+  .stage-segment { flex: 1; text-align: center; font-size: 11px; color: #64748b; border-right: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 1; }
+  .stage-segment:last-child { border-right: none; }
+  .stage-marker { position: absolute; top: 0; height: 100%; border-radius: 8px; z-index: 0; }
+  .stage-marker.buy { background: linear-gradient(90deg, rgba(0,212,170,0.3), rgba(0,212,170,0.5)); }
+  .stage-marker.warm { background: linear-gradient(90deg, rgba(255,165,2,0.3), rgba(255,165,2,0.5)); }
+  .plan-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .plan-table th { background: rgba(102,126,234,0.1); color: #a78bfa; padding: 10px 12px; text-align: left; font-weight: 600; border-bottom: 1px solid #2d2d44; }
+  .plan-table td { padding: 10px 12px; border-bottom: 1px solid rgba(45,45,68,0.5); color: #cbd5e1; }
+  .plan-table tr:hover td { background: rgba(102,126,234,0.05); }
+  .plan-table .action-buy { color: #00d4aa; font-weight: 600; }
+  .plan-table .action-sell { color: #ff4757; font-weight: 600; }
+  .plan-table .action-hold { color: #ffa502; font-weight: 600; }
+  .position-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center; }
+  .position-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #16213e; border-radius: 8px; margin-bottom: 8px; border: 1px solid #2d2d44; }
+  .position-item .name { font-size: 14px; }
+  .position-item .pct { font-weight: 700; }
+  .position-item .pct.green { color: #00d4aa; }
+  .position-item .pct.orange { color: #ffa502; }
+  .position-item .pct.gray { color: #64748b; }
+  .alert-box { border-radius: 10px; padding: 14px 18px; margin-bottom: 12px; font-size: 14px; }
+  .alert-box.danger { background: rgba(255,71,87,0.08); border: 1px solid rgba(255,71,87,0.3); color: #ff6b7a; }
+  .alert-box.success { background: rgba(0,212,170,0.08); border: 1px solid rgba(0,212,170,0.3); color: #3dd9b0; }
+  .alert-box.warning { background: rgba(255,165,2,0.08); border: 1px solid rgba(255,165,2,0.3); color: #ffb84d; }
+  .alert-box .title { font-weight: 700; margin-bottom: 4px; }
+  .checklist { list-style: none; }
+  .checklist li { padding: 8px 0 8px 28px; position: relative; font-size: 14px; color: #cbd5e1; border-bottom: 1px solid rgba(45,45,68,0.3); }
+  .checklist li::before { content: '☐'; position: absolute; left: 0; font-size: 18px; color: #667eea; }
+  .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .scenario-card { background: #16213e; border-radius: 12px; padding: 16px; border: 1px solid #2d2d44; }
+  .scenario-card .prob { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+  .scenario-card .prob.neutral { color: #ffa502; }
+  .scenario-card .prob.bear { color: #ff4757; }
+  .scenario-card .prob.bull { color: #00d4aa; }
+  .scenario-card .desc { font-size: 13px; color: #94a3b8; }
+  .chart-container { width: 100%; height: 320px; margin: 10px 0; }
+  .level-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 16px; }
+  .level-card { background: #16213e; border-radius: 10px; padding: 14px; border: 1px solid #2d2d44; text-align: center; }
+  .level-card .label { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+  .level-card .value { font-size: 20px; font-weight: 700; }
+  .level-card .value.red { color: #ff4757; }
+  .level-card .value.green { color: #00d4aa; }
+  .level-card .value.orange { color: #ffa502; }
+  .level-card .note { font-size: 11px; color: #64748b; margin-top: 2px; }
+  .footer { text-align: center; color: #475569; font-size: 12px; padding: 20px 0; border-top: 1px solid #2d2d44; margin-top: 24px; }
+  .footer .disclaimer { background: rgba(255,71,87,0.05); border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; color: #94a3b8; font-size: 12px; text-align: left; }
+  @media (max-width: 768px) {
+    .index-cards { grid-template-columns: repeat(2, 1fr); }
+    .theme-row { grid-template-columns: 1fr; }
+    .position-grid { grid-template-columns: 1fr; }
+    .scenario-grid { grid-template-columns: 1fr; }
+    .level-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+  <h1>盘前交易计划 | 2026年8月6日（周四）· v27.0 · 8/5真实收盘（科创+4.78%·半导体近50股涨停潮·成交2.68万亿天量·站上20日线一阳穿三线）+8/5美股分化（道指五连涨创新高/纳指-0.83%/英伟达+3.43%重夺股王/存储光通信回踩）+8/6盘前（央行净投放/集成电路条例修订/基药目录新政），主线重排「半导体硬科技 + 贵金属有色小金属 + CRO医药创新药」</h1>
+  <div class="subtitle">⚠️ <b style="color:#00d4aa">v26.0(8/5 06:55)被8/5真实收盘全面验证并强化/重排</b>：<b>科技"超跌反弹"被升为"反转确认"</b>（科创50 +4.78%/半导体近50股涨停/成交2.68万亿天量/站上20日线一阳穿三线）；<b>但科技内部高低切</b>——半导体/PCB/存储狂飙、CPO高位逆势跌(中际-6%/新易盛-5%)；<b>贵金属+7.87%领涨全市</b>→ v26.0"油气黄金利空回避"中黄金被反转重评（现货黄金破4100/白银+3%）；<b>医药8/5被科技吸血(医药商业跌)</b>但8/6基药目录新政(16种创新药含4种国产一类新药)重新催化；央行千亿净投放+集成电路布图保护条例20余年首次修订落地。主线重排=「<b>半导体硬科技(设备/材料/存储/PCB/先进封装/科创50) + 贵金属·有色·小金属 + CRO医药创新药</b>」，CPO降高位分歧、AI应用/机器人降支线、油气(油价三连跌美油75)利空回避。</div>
+  <div class="meta">
+    <span>📊 数据截至：2026-08-05 A股全天收盘（上证3878.43 +1.47%、深成+1.86%、创业板3535.14 +1.32%、科创50 1693.67 +4.78%、成交2.68万亿放量4500亿+；3725涨/1615跌/106涨停/1跌停、贵金属+7.87%领涨、半导体近50股涨停、CPO领跌中际-6%/新易盛-5%）+ 2026-08-05 美股（道指+0.49%五连涨创新高/纳指-0.83%/标普-0.17%/英伟达+3.43%重夺股王/闪迪-5.4%/AMD-7%/SpaceX-13%解禁/中概-1.09%/黄金白银+3%/油价三连跌美油75）+ 2026-08-06 盘前（央行5000亿买断式逆回购净投放/集成电路布图保护条例修订/2026版基药目录/台积电CoWoS外包/中美摩擦反制）</span>
+    <span>🔥 情绪评级：<span class="tag green">天量反转信号·科创领涨·增量资金回流·政策组合拳(流动性+半导体新政+基药新政)·但科技内部分化+隔夜纳指-0.83%+中报雷·控仓分歧低吸</span></span>
+    <span>⏰ 生成时间：2026-08-06 06:55</span>
+  </div>
+</div>
+
+<!-- ===== SUMMARY BAR ===== -->
+<div class="summary-bar">
+  <div class="verdict">🟢 核心判断：总仓位 <b>50-60%</b>（8/5天量反转+站上20日线一阳穿三线+央行净投放+半导体新政+基药新政提振，但8/6隔夜纳指-0.83%/中概-1.09%/CPO高位分歧+中报雷→维持"不追高、分歧低吸"），三大主流重排=「<b>半导体硬科技(设备/材料/存储/PCB/先进封装) 20-26% + 贵金属·有色·小金属 8-12% + CRO医药创新药 8-12%</b>」+ AI应用/机器人支线5-8% + 核电/光伏支线3-5% + 现金35-45%；<b>破3855降至40%、破3800极端30%</b>。</div>
+  <div class="verdict-desc">
+    <b style="color:#00d4aa">8/5真实收盘决定性信号（重排依据）</b>：① <b>科技反转确认</b>：科创50 +4.78%(1693.67)、沪指3878.43(+1.47%)、深成+1.86%、创业板+1.32%；成交<b>2.68万亿天量(放量4500亿+)</b>、3725涨/106涨停/1跌停；<b>半导体近50股涨停或涨超10%</b>(中巨芯20.01%科创板涨停、中微/有研硅/兴福电子/富创精密等近20股、正帆科技20%存储)；站上20日线、一阳穿三线(5/10/20日线)突破低位盘整平台→机构"反转信号、科创有望成反弹领涨方向"。② <b>贵金属+7.87%领涨全市</b>：四川黄金/盛达资源涨停、现货黄金破4100美元/白银+3%、有色领涨两市(浩通/有研粉材/锌业/云南锗业等超10股涨停)。③ <b>科技内部分化(高低切)</b>：半导体/PCB/存储狂飙，但CPO/光模块<b>领跌</b>(中际旭创-6%/新易盛-5%/联特/光迅/太辰光跌)→资金从高位CPO切向低位半导体/PCB/先进封装/存储。④ <b>医药8/5被科技吸血</b>：医药商业/食品饮料/酿酒/油气开采/银行跌幅居前→医药非8/5主线。⑤ <b>多模态AI/智能驾驶/固态电池/机器人/商业航天活跃</b>(支线发酵)。<br>
+    <b style="color:#00d4aa">8/5美股（8/6盘前变量·分化）</b>：道指+0.49%五连涨创新高(54349)、标普-0.17%、<b>纳指-0.83%</b>(26363)；英伟达+3.43%(219.22·5.31万亿重夺股王)；但<b>存储/光通信回踩整固</b>(闪迪-5.40%/AMD-7%)、SpaceX-13%(9.12亿股解禁)；中概金龙-1.09%/中概股指-1.15%；<b>黄金白银+3%</b>、油价三连跌(美油75附近)。日韩大涨(韩国触发上涨熔断/SK海力士+6.28%/三星+4.17%)。映射=硬科技产业逻辑独立(不跟美股估值杀)、但高位CPO/光通信受美股回踩压制。<br>
+    <b style="color:#ff4757">风险面</b>：8/5天量+科创暴涨→8/6防"天量见天价/高开低走分化"；纳指-0.83%+中概-1.09%开盘情绪扰动；CPO高位逆势跌(中际-6%)印证资金高低切、纯高位科技追涨风险；中报密集披露(业绩雷)；沪指3878.43逼近3900整数压力、能否放量站稳是关键；中美摩擦(中方5项反制·美方起草禁止进口中国产光模块)双刃。<br>
+    <b style="color:#00d4aa">盘前策略：科技去弱留强(前排半导体设备/材料/PCB/存储回踩低吸，CPO高位不追)；贵金属前排小仓换手(四川黄金/盛达/紫金/云南锗业)，不追加速；医药等基药新政分歧低吸(药明/凯莱英/CXO、进目录创新药)；AI应用/机器人支线；现金35-45%守分歧低吸。3855不破则主线+业绩中军低吸，破则降防。</b>
+  </div>
+</div>
+
+<!-- ===== 三大问题速答 ===== -->
+<div class="q3-box">
+  <h2>📌 三个核心问题速答（8/6 周四盘前版 · v27.0）</h2>
+  <div class="q3-item">
+    <div class="ql">Q1 · 当下的主流题材是什么？（至多3个）</div>
+    <div class="qa">
+      ① <b>半导体/硬科技（设备/材料/存储/PCB/先进封装/科创50）</b> —— <b>8/5绝对主线·反转确认</b>。科创50 +4.78%领涨、半导体近50股涨停潮(中巨芯20.01%/中微/有研硅/兴福电子/富创精密/正帆科技20%存储)、成交2.68万亿天量、站上20日线一阳穿三线；叠加8/6盘前央行净投放+《集成电路布图设计保护条例》20余年首次修订(10月实施)+台积电CoWoS外包日月光(先进封装景气)+4万亿算力网。<br>
+      ② <b>贵金属 · 有色 · 小金属</b> —— <b>8/5领涨全市·趋势上行+事件驱动</b>。贵金属+7.87%居全市场第一(四川黄金/盛达资源涨停)、现货黄金破4100美元/白银+3%、有色领涨两市(浩通/有研粉材/锌业/云南锗业等超10股涨停)；逻辑=避险+美联储9月加息概率降至56.9%(降息预期)+地缘未完全解除+工业金属景气。<br>
+      ③ <b>CRO/医药创新药</b> —— <b>8/6政策催化启动</b>。2026版基药目录正式发布、首次纳入创新药(共16种含4种国产一类新药·公立医院强制配备)、直接利好国产创新药+CXO；8/5医药被科技吸血(医药商业跌)、8/6新政催化回流。<br>
+      <span class="bad">（AI应用/机器人：8/5多模态AI/智能驾驶/机器人活跃→降支线发酵；核电/光伏：8/5偏弱→降支线；油气：油价三连跌美油75→利空回避；CPO/光模块：8/5高位逆势跌→降高位分歧）</span>
+    </div>
+  </div>
+  <div class="q3-item">
+    <div class="ql">Q2 · 主流题材的核心是谁？</div>
+    <div class="qa">
+      ① 半导体/硬科技：<b>中巨芯(688549·20.01%科创板涨停·电子化学品)/中微公司(688012)/有研硅(688432)/兴福电子(688545)/富创精密(688409)/拓荆科技(688072)/芯朋微(688508)/欧莱新材(688530)(设备材料涨停潮)；正帆科技(688596·20%·存储)/兆易创新(603986·存储回购)/太极实业(600667·存储+先进封装+SK海力士)；东山精密/生益科技/深南电路/中京电子(002579·PCB·年线突破)/有研新材(600206·半导体靶材)；通富微电/华天科技(封测)；长鑫科技(688825·55·市值3.68万亿)；沃格光电(603773·2连板·光刻机)</b>。<br>
+      ② 贵金属/有色/小金属：<b>四川黄金/盛达资源(000603·白银龙头·涨停)/紫金矿业/赤峰黄金/山东黄金(黄金)；云南锗业(002428·锗业龙头·重大合同)/有研粉材/浩通科技(301026)/锌业股份(000751)(小金属/有色)；洛阳钼业/中国铝业(工业金属)</b>。<br>
+      ③ CRO/医药：<b>药明康德(603259)/凯莱英(002821)/昭衍新药/泰格医药/康龙化成(CXO中军)；恒瑞医药/迪哲医药/贝达药业(创新药·进目录预期)；珍宝岛(603567·基药)/华海药业/普洛药业(原料药)；哈三联/创新医疗(002173·脑机)</b>。<br>
+      <span class="r">AI应用/机器人支线：传智教育(003032·7连板)/天娱数科/蓝色光标(应用)；中大力德/卧龙电驱/绿的谐波(宇树链)/德赛西威(自动驾驶)；核电：中国核建/光智科技；光伏：通威/协鑫。</span>
+    </div>
+  </div>
+  <div class="q3-item">
+    <div class="ql">Q3 · 走到哪个阶段？能不能买？盘前交易计划？</div>
+    <div class="qa">
+      ① 半导体/硬科技 = <b>超跌反弹→反转确认/主升启动（8/5天量+科创+4.78%+站上20日线一阳穿三线）</b>，<span class="r">能买：前排业绩(半导体设备/材料/PCB/存储/封测)回踩5/10日线低吸，CPO高位(中际/新易盛)谨慎不追；仓位20-26%</span>；<br>
+      ② 贵金属/有色/小金属 = <b>趋势上行+事件驱动（8/5领涨+7.87%+现货黄金破4100）</b>，<span class="r">能买：前排小仓换手(四川黄金/盛达/紫金/云南锗业)，不追加速(盛达已连板)；仓位8-12%</span>；<br>
+      ③ CRO/医药 = <b>政策催化启动（2026版基药目录·16种创新药）</b>，<span class="r">能买：分歧低吸中军(药明/凯莱英/CXO)+进目录创新药，防一日游(参考v24医药新政首日)；仓位8-12%</span>。<br>
+      <b>总计划：总仓50-60%，半导体硬科技20-26% + 贵金属有色8-12% + CRO医药8-12% + AI应用机器人支线5-8% + 核电光伏支线3-5% + 现金35-45%；8/5天量反转+央行净投放+半导体新政+基药新政→偏进攻但守"分歧低吸/不追天量高开"纪律；破3855降至40%、破3800极端30%。</b>
+    </div>
+  </div>
+</div>
+
+<!-- ===== v26.0 → v27.0 变化 ===== -->
+<div class="verify-box verify-danger">
+  <strong style="color:#ff4757">🔁 v26.0（8/5 06:55·基于8/4收盘+8/4深夜美股费半+6.6%+8/5盘前，主线=科技/AI算力+CRO医药+AI应用机器人） → v27.0（8/6 06:55·基于8/5真实收盘+8/5美股分化+8/6盘前，主线重排）哪些被验证 / 哪些被反转</strong><br>
+  <b style="color:#00d4aa">✅ v26.0"科技#1超跌反弹·能买"被<b>验证并升为反转确认</b></strong>：8/5科创50+4.78%/半导体近50股涨停/成交2.68万亿天量/站上20日线一阳穿三线→反转信号强化，仓位20-26%维持主攻。<br>
+  <b style="color:#ff4757">⚠️ v26.0"科技内部CPO强(中际/新易盛前排)"被<b>反转</b></strong>：8/5 CPO逆势领跌(中际-6%/新易盛-5%/光迅/太辰光跌)→资金高低切、从高位CPO转向低位半导体/PCB/存储/先进封装；CPO降为"高位分歧谨慎"而非前排主攻。<br>
+  <b style="color:#ff4757">⚠️ v26.0"油气黄金利空回避(0%)"中<b>黄金被反转重评</b></strong>：8/5贵金属+7.87%领涨全市(四川黄金/盛达涨停·现货黄金破4100/白银+3%)→黄金从"利空回避"升为"趋势主线#2"(避险+降息预期+地缘)；油气仍利空(油价三连跌美油75)维持回避。<br>
+  <b style="color:#ffa502">⚠️ v26.0"CRO医药#2(12-16%)"8/5被<b>证伪(科技吸血)</b></strong>：8/5医药商业/食品饮料/酿酒跌幅居前→医药非8/5主线；但8/6盘前"2026版基药目录(16种创新药含4种国产一类新药)"王炸新政→重新催化，仓位8-12%维持但定性为"政策催化启动"而非"二次启动延续"。<br>
+  <b style="color:#ffa502">⚠️ v26.0"AI应用/机器人#3(10-14%)"降为<b>支线(5-8%)</b></strong>：8/5多模态AI/智能驾驶/机器人活跃但非领涨，主线被半导体/贵金属/医药抢占；保留事件驱动发酵属性。<br>
+  <b style="color:#00d4aa">✅ 全新变量=央行5000亿买断式逆回购(千亿净投放)+《集成电路布图设计保护条例》20余年首次修订(10月实施·半导体知识产权)+2026版基药目录(创新药进目录)+台积电CoWoS外包日月光(先进封装)+中美摩擦(中方5项反制/美方起草禁进口中国光模块)+日韩大涨(韩国熔断)</b>→8/6半导体/贵金属/医药三重共振+流动性宽松，主线从「科技/AI算力+CRO医药+AI应用机器人」重排为「半导体硬科技 + 贵金属·有色·小金属 + CRO医药创新药」。<br>
+</div>
+<div class="verify-box verify-bull">
+  <strong style="color:#00d4aa">🔁 8/6 周四必须盯的落地事件</strong><br>
+  <b>① 科技持续性·能否站稳3900并放量延续</b>：8/5收3878.43(最高3884.40)、站上20日线一阳穿三线；8/6目标冲击3900整数关，需成交维持2.5万亿+且不出现"天量见天价"高开低走；重点看半导体设备/材料/PCB/存储前排能否连板/晋级(中巨芯/正帆/中微/东山/生益)。<br>
+  <b>② 科技高低切·CPO能否止跌</b>：中际旭创/新易盛8/5逆势跌(-6%/-5%)，隔夜美股光通信/存储回踩(闪迪-5.4%/AMD-7%)→CPO/高位科技开盘仍承压，资金是否继续切向低位半导体/PCB/封测。<br>
+  <b>③ 贵金属/有色延续性</b>：现货黄金破4100/白银+3%→A股贵金属8/5领涨后，8/6能否接力(四川黄金/盛达/紫金/云南锗业) or 冲高回落(盛达已连板)。<br>
+  <b>④ 医药基药目录新政发酵</b>：2026版基药目录(16种创新药)→药明/凯莱英/CXO+进目录创新药(恒瑞/迪哲/贝达)分歧低吸强度，防v24"新政首日一日游"。<br>
+  <b>⑤ 央行净投放+半导体新政+中美摩擦</b>：5000亿逆回购(千亿净投放)流动性宽松；集成电路条例修订利好半导体；中美反制(光模块禁进口)双刃(利好国产替代/利空出口链)。<br>
+  <b>⑥ 中报密集披露</b>：8月业绩雷窗口，优选中报预增/有真实订单的硬科技与贵金属，远离纯题材高位小票。<br>
+</div>
+
+<!-- ===== INDEX CARDS ===== -->
+<div class="index-cards">
+  <div class="index-card">
+    <div class="name">上证(8/5收盘)</div>
+    <div class="price" style="color:#00d4aa;">3878.43</div>
+    <div class="change green">+1.47%</div>
+    <div class="sub">站上20日线·一阳穿三线</div>
+  </div>
+  <div class="index-card">
+    <div class="name">创业板指</div>
+    <div class="price" style="color:#00d4aa;">3535.14</div>
+    <div class="change green">+1.32%</div>
+    <div class="sub">权重拖累·科技弹性</div>
+  </div>
+  <div class="index-card">
+    <div class="name">科创50</div>
+    <div class="price" style="color:#00d4aa;">1693.67</div>
+    <div class="change green">+4.78%</div>
+    <div class="sub">领涨·反转信号</div>
+  </div>
+  <div class="index-card">
+    <div class="name">两市成交</div>
+    <div class="price" style="color:#00d4aa;">2.68万亿</div>
+    <div class="change green">放量4500亿+</div>
+    <div class="sub">天量·增量回流</div>
+  </div>
+  <div class="index-card">
+    <div class="name">贵金属(8/5)</div>
+    <div class="price" style="color:#ffa502;">+7.87%</div>
+    <div class="change green">领涨全市</div>
+    <div class="sub">黄金破4100</div>
+  </div>
+  <div class="index-card">
+    <div class="name">纳指(8/5夜)</div>
+    <div class="price" style="color:#ff4757;">-0.83%</div>
+    <div class="change red">分化</div>
+    <div class="sub">英伟达+3.43%股王</div>
+  </div>
+</div>
+
+<!-- ===== Q1: 主流题材 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">1</span>当下主流题材（至多3个 + 支线，基于8/5真实收盘 + 8/5美股分化 + 8/6盘前新政重排，主线=「半导体硬科技 + 贵金属·有色·小金属 + CRO医药创新药」）</div>
+
+  <!-- Theme 1: 半导体硬科技 -->
+  <div class="theme-card buy">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🟢 半导体/硬科技（设备/材料/存储/PCB/先进封装/科创50）— 超跌反弹→反转确认·8/5绝对主线（#1）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">8/5科技全面爆发：科创50 +4.78%(1693.67)领涨；半导体<b>近50股涨停或涨超10%</b>(中巨芯20.01%科创板涨停、中微/有研硅/兴福电子/富创精密/拓荆科技/芯朋微/欧莱新材等近20股、正帆科技20%存储)；PCB(东山/生益/深南电路/中京电子/有研新材)、电子化学品(中巨芯/兴福/华融化学)；沃格光电2连板(光刻机)；成交2.68万亿天量、站上20日线一阳穿三线突破低位平台。叠加8/6盘前央行5000亿净投放+《集成电路布图设计保护条例》20余年首次修订(10月实施)+台积电CoWoS外包日月光+4万亿算力网</div>
+      </div>
+      <div class="theme-signal buy">BUY · 前排业绩回踩低吸</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的（设备/材料/存储/PCB/封装）</div>
+        <div class="value">
+          <span class="stock-tag hl">中巨芯 688549 (20.01%·电子化学品) / 中微公司 688012 / 有研硅 688432 / 兴福电子 688545 / 富创精密 688409 / 拓荆科技 688072 / 芯朋微 688508 / 欧莱新材 688530 (设备材料涨停)</span>
+          <span class="stock-tag hl">正帆科技 688596 (20%·存储) / 兆易创新 603986 (存储·回购) / 太极实业 600667 (存储+封测+SK海力士) / 长鑫科技 688825 (55·3.68万亿)</span>
+          <span class="stock-tag hl">东山精密 002384 / 生益科技 600183 / 深南电路 002916 / 中京电子 002579 (PCB·年线) / 有研新材 600206 (半导体靶材) / 沃格光电 603773 (2连板·光刻机)</span>
+          <span class="stock-tag hl">通富微电 002156 / 华天科技 002185 (封测)</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金/强度信号</div>
+        <div class="value" style="color:#00d4aa;">8/5半导体掀涨停潮、电子主力净流入居前(板块全天强势)；科创50 +4.78%领涨全市场；成交天量2.68万亿增量回流；机构"科创有望成反弹领涨方向"；日韩半导体大涨(韩国熔断/SK海力士+6.28%)共振；央行+半导体新政(条例修订)双加持</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          逻辑：从"超跌反弹"升级为"反转确认/主升启动"(一阳穿三线+站上20日线+天量)；但<b>内部高低切</b>——CPO高位逆势跌、资金切向低位半导体设备/材料/PCB/存储/封测；8/5已大涨+天量→8/6不追高开、回踩5/10日线低吸前排业绩
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">8/5真实收盘科技反转：科创50+4.78%/半导体近50股涨停/成交2.68万亿天量/站上20日线一阳穿三线→机构"反转信号、科创领涨"</li>
+        <li class="pos">8/6盘前央行5000亿买断式逆回购(千亿净投放)→流动性宽松；新版《集成电路布图设计保护条例》20余年首次全面修订(10月实施·强化芯片知识产权/国产替代)</li>
+        <li class="pos">台积电CoWoS封装产能缺口约20%、外包日月光(先进封装收入预计翻倍)→封测/先进封装景气验证；4万亿算力网投资(十五五)长期硬逻辑</li>
+        <li class="pos">日韩半导体大涨(韩国触发上涨熔断/SK海力士+6.28%/三星+4.17%)→全球半导体风险偏好共振；三大存储2027产能售罄/HBM短缺</li>
+        <li class="neg">⚠️ 8/5天量+科创暴涨→防"天量见天价/高开低走分化"；科技内部高低切(CPO中际-6%/新易盛-5%逆势跌)→纯高位科技追涨风险；隔夜纳指-0.83%/光通信回踩(闪迪-5.4%/AMD-7%)；中报雷；中美摩擦(美方起草禁进口中国光模块)双刃</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker buy" style="left:25%;width:30%;"></div>
+        <div class="stage-segment">退潮</div>
+        <div class="stage-segment">超跌反弹</div>
+        <div class="stage-segment" style="color:#00d4aa;font-weight:700;">↑ 反转确认/主升启动</div>
+        <div class="stage-segment">加速</div>
+      </div>
+      <div style="font-size:13px;color:#00d4aa;margin-top:4px;">
+        ✅ 超跌反弹→反转确认/主升启动·<b>能买：前排业绩(半导体设备/材料/PCB/存储/封测)回踩5/10日线低吸，CPO高位(中际/新易盛)谨慎不追；仓位20-26%，科技为8/6第一主线</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme 2: 贵金属/有色/小金属 -->
+  <div class="theme-card buy">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🟢 贵金属 · 有色 · 小金属 — 趋势上行+事件驱动·8/5领涨全市（+7.87%·现货黄金破4100）（#2）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">8/5贵金属+7.87%居全市场第一(四川黄金/盛达资源涨停、金价破4100/白银+3%)；有色金属领涨两市(浩通科技/有研粉材/锌业股份/盛达资源/云南锗业/福达合金等超10股涨停或涨超10%)；小金属/稀土同步走强。逻辑=避险(地缘未完全解除)+美联储9月加息概率降至56.9%(降息预期升温)+工业金属景气(AI数据中心/新能源需求)+隔夜黄金白银+3%共振。v26.0"油气黄金利空回避"中黄金被8/5事实反转重评</div>
+      </div>
+      <div class="theme-signal buy">BUY · 前排小仓换手</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的（黄金/白银/小金属/有色）</div>
+        <div class="value">
+          <span class="stock-tag gold">四川黄金 / 盛达资源 000603 (白银龙头·涨停) / 紫金矿业 601899 / 赤峰黄金 600988 / 山东黄金 600547 (黄金)</span>
+          <span class="stock-tag gold">云南锗业 002428 (锗业龙头·重大合同) / 有研粉材 688456 / 浩通科技 301026 / 锌业股份 000751 / 福达合金 603045 (小金属/有色)</span>
+          <span class="stock-tag gold">洛阳钼业 603993 / 中国铝业 601600 (工业金属)</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金/强度信号</div>
+        <div class="value" style="color:#00d4aa;">8/5贵金属+7.87%领涨全市、有色领涨两市(超10股涨停)；现货黄金破4100美元/白银+3%(隔夜延续)；美联储9月加息概率降至56.9%(油价跌+就业数据)→降息预期利好贵金属；地缘(霍尔木兹谈判拉锯·未完全解除)支撑避险</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          逻辑：趋势上行+事件驱动；但8/5已大涨、盛达资源等连板→位置偏高、防冲高回落；油价三连跌(美油75)压制资源整体情绪但黄金独立(避险+降息)；以"前排小仓换手"为主、不追加速
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">8/5贵金属+7.87%领涨全市(四川黄金/盛达资源涨停)、现货黄金破4100美元/白银+3%→资金避险+配置需求</li>
+        <li class="pos">美联储9月加息概率从67.2%降至56.9%(油价跌+职位空缺降)→降息预期升温、实际利率下行利好黄金</li>
+        <li class="pos">地缘未完全解除(霍尔木兹谈判拉锯·美伊协议未敲定)→避险溢价维持；工业金属受AI数据中心/新能源需求支撑</li>
+        <li class="neg">⚠️ 8/5已大涨、盛达资源等连板→位置偏高、防"一日游"冲高回落；油价三连跌(美油75)压制资源股整体情绪；若美伊协议达成→避险溢价消退；中报兑现压力</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker warm" style="left:30%;width:28%;"></div>
+        <div class="stage-segment">退潮</div>
+        <div class="stage-segment">启动</div>
+        <div class="stage-segment" style="color:#ffa502;font-weight:700;">↑ 趋势上行/事件驱动</div>
+        <div class="stage-segment">高潮</div>
+      </div>
+      <div style="font-size:13px;color:#00d4aa;margin-top:4px;">
+        ✅ 趋势上行+事件驱动·<b>能买：前排小仓换手(四川黄金/盛达/紫金/云南锗业)，不追加速；仓位8-12%，黄金升#2主流(重评v26利空回避)</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme 3: CRO/医药创新药 -->
+  <div class="theme-card buy">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🟢 CRO/医药创新药 — 政策催化启动·8/6基药目录新政（#3）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">8/5医药被科技吸血(医药商业/食品饮料/酿酒跌幅居前)→非8/5主线；但8/6盘前"2026版基药目录"正式发布、<b>首次将创新药纳入(共16种含4种国产一类新药)</b>、公立医院强制配备(基层≥90%/三级≥60%)→直接利好国产创新药+CXO(销量预期上台阶)。催化=基药目录新政+8/1四重新政(原料药优先审评+医保豁免集采+集采利空出尽)持续发酵+药明康德中报+29.43%业绩标杆</div>
+      </div>
+      <div class="theme-signal buy">BUY · 分歧低吸中军</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的（CXO中军 + 创新药 + 原料药/基药）</div>
+        <div class="value">
+          <span class="stock-tag hl">药明康德 603259 (中军·中报+29.43%) / 凯莱英 002821 / 昭衍新药 / 泰格医药 / 康龙化成 (CXO)</span>
+          <span class="stock-tag hl">恒瑞医药 600276 / 迪哲医药 688192 / 贝达药业 300558 (创新药·进目录预期)</span>
+          <span class="stock-tag hl">珍宝岛 603567 (基药) / 华海药业 600521 / 普洛药业 000739 (原料药) / 哈三联 002900 / 创新医疗 002173 (脑机)</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金/强度信号</div>
+        <div class="value" style="color:#00d4aa;">2026版基药目录"王炸级"长期利好(创新药进公立医院入场券)；药明康德中报超预期(净利+29%/Q2环比+38%)→业绩兑现标杆；8/1四重新政中期利好；港股CRO此前共振</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          逻辑：8/5被科技吸血→8/6新政催化回流；但需防重演v24"新政首日一日游"→买分歧不买加速、低吸中军(药明/凯莱英/CXO)而非追涨停；进目录创新药(恒瑞/迪哲/贝达)事件驱动
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">2026版基药目录发布、首次纳入创新药(16种含4种国产一类新药)→公立医院强制配备、销量预期上台阶，直接利好国产创新药+CXO</li>
+        <li class="pos">药明康德中报净利110.8亿+29.43%(Q2环比+38%)→CRO/创新药业绩兑现标杆；8/1四重新政(原料药优先审评+医保豁免集采+集采利空出尽)持续发酵</li>
+        <li class="pos">中报季"验真金"——有真实研发能力/产品进目录/业绩兑现的公司受益，机构"优先选中报预增有真实订单"</li>
+        <li class="neg">⚠️ v24.0医药"新政首日一日游"前车之鉴→8/6涨停潮后防高开低走；8/5医药被科技吸血(医药商业跌)→资金争夺激烈；追涨停风险大、以分歧低吸中军为主；破3740降至0</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker buy" style="left:28%;width:25%;"></div>
+        <div class="stage-segment">退潮</div>
+        <div class="stage-segment">启动</div>
+        <div class="stage-segment" style="color:#00d4aa;font-weight:700;">↑ 政策催化启动</div>
+        <div class="stage-segment">主升</div>
+      </div>
+      <div style="font-size:13px;color:#00d4aa;margin-top:4px;">
+        ✅ 政策催化启动·<b>能买：分歧低吸中军(药明/凯莱英/CXO)+进目录创新药(恒瑞/迪哲/贝达)，不追涨停；仓位8-12%，医药升#3主流(新政催化)</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI应用/机器人 支线 -->
+  <div class="theme-card watch">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name" style="color:#ffb84d;">🟠 AI应用/机器人（含自动驾驶） — 支线(WATCH·8/5活跃发酵·非领涨)</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">8/5多模态AI/智能驾驶/工业金属/固态电池/机器人/商业航天题材活跃(支线发酵)；传智教育7连板(连板高度)、天娱数科/返利活跃；宇树链(中大力德/卧龙/绿的谐波)、自动驾驶(德赛西威)。但8/5主线被半导体/贵金属/医药抢占、AI应用降支线；隔夜美股AI软件Palantir此前+29%映射仍在</div>
+      </div>
+      <div class="theme-signal watch">WATCH · 支线前排换手</div>
+    </div>
+    <div style="font-size:13px;color:#cbd5e1;margin-top:8px;">
+      核心：传智教育(003032·7连板)/天娱数科/蓝色光标(应用)；中大力德/卧龙电驱/绿的谐波(宇树链)；德赛西威(自动驾驶)。事件驱动发酵、与科技(C题材重叠)资金分流；仅前排小仓换手、不追加速；仓位5-8%支线。
+    </div>
+  </div>
+
+  <!-- 油气 利空回避 -->
+  <div class="theme-card avoid">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name" style="color:#ff6b7a;">🔴 油气 — 利空回避(AVOID·油价三连跌·美油75附近)</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">国际油价三连跌：WTI原油跌至75美元/桶附近(近一个月最低)、布油跌破80；美伊霍尔木兹谈判取得进展(协议未敲定)→油价承压；8/5 A股油气开采及服务板块跌幅居前。直接利空石油石化/油气开采/油服；黄金因避险+降息独立走强(已升#2)，但油气维持回避。反受益方向(航空/化工下游)仅小仓观察</div>
+      </div>
+      <div class="theme-signal avoid">AVOID · 油价三连跌利空</div>
+    </div>
+    <div style="font-size:13px;color:#cbd5e1;margin-top:8px;">
+      油价三连跌(美油75/布油破80)利好航空/化工下游(成本端改善)、压低通胀预期利好成长股，但直接利空油气开采/油服。8/5油气板块已跌、维持回避；核电/光伏8/5偏弱降支线(3-5%)。
+    </div>
+  </div>
+</div>
+
+<!-- ===== Q2: 核心标的全览 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">2</span>主流题材核心标的全览（8/6 周四盘前版 · v27.0）</div>
+  <table class="plan-table">
+    <thead>
+      <tr>
+        <th>题材</th>
+        <th>核心标的</th>
+        <th>角色定位</th>
+        <th>逻辑/信号（8/5收盘+8/5美股+8/6盘前）</th>
+        <th>操作方向</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="4" style="color:#00d4aa;font-weight:700;">半导体硬科技</td>
+        <td><b>中巨芯 688549(20.01%·电子化学品) / 中微公司 688012 / 有研硅 688432 / 兴福电子 688545 / 富创精密 688409 / 拓荆科技 688072 / 芯朋微 688508 / 欧莱新材 688530(设备材料涨停潮)</b></td>
+        <td>半导体设备/材料(前排)</td>
+        <td style="color:#00d4aa;">8/5近50股涨停；集成电路条例修订+央行净投放</td>
+        <td class="action-buy">前排回踩低吸</td>
+      </tr>
+      <tr>
+        <td><b>正帆科技 688596(20%·存储) / 兆易创新 603986(存储·回购) / 太极实业 600667(存储+封测+SK海力士) / 长鑫科技 688825(55·3.68万亿)</b></td>
+        <td>存储/封测(前排)</td>
+        <td style="color:#00d4aa;">存储景气(2027产能售罄)；台积电CoWoS外包</td>
+        <td class="action-buy">回踩低吸·不追高</td>
+      </tr>
+      <tr>
+        <td><b>东山精密 002384 / 生益科技 600183 / 深南电路 002916 / 中京电子 002579(PCB·年线) / 有研新材 600206(靶材) / 沃格光电 603773(2连板·光刻机)</b></td>
+        <td>PCB/光刻机(前排)</td>
+        <td style="color:#00d4aa;">PCB涨停潮；高阶HDI/AI服务器需求</td>
+        <td class="action-buy">分歧低吸</td>
+      </tr>
+      <tr>
+        <td><b>通富微电 002156 / 华天科技 002185(封测) / 中际旭创 300308 / 新易盛 300502(CPO·高位分歧)</b></td>
+        <td>封测/CPO(分化)</td>
+        <td style="color:#ffa502;">CPO逆势跌(中际-6%/新易盛-5%)·美股光通信回踩</td>
+        <td class="action-hold">CPO谨慎·封测低吸</td>
+      </tr>
+      <tr>
+        <td rowspan="3" style="color:#ffa502;font-weight:700;">贵金属/有色</td>
+        <td><b>四川黄金 / 盛达资源 000603(白银龙头·涨停) / 紫金矿业 601899 / 赤峰黄金 600988 / 山东黄金 600547</b></td>
+        <td>黄金/白银(前排)</td>
+        <td style="color:#00d4aa;">8/5贵金属+7.87%领涨；现货黄金破4100/白银+3%</td>
+        <td class="action-buy">前排小仓换手</td>
+      </tr>
+      <tr>
+        <td><b>云南锗业 002428(锗业龙头·重大合同) / 有研粉材 688456 / 浩通科技 301026 / 锌业股份 000751 / 福达合金 603045</b></td>
+        <td>小金属/有色(前排)</td>
+        <td style="color:#00d4aa;">有色领涨两市·超10股涨停；工业金属景气</td>
+        <td class="action-buy">前排换手</td>
+      </tr>
+      <tr>
+        <td><b>洛阳钼业 603993 / 中国铝业 601600</b></td>
+        <td>工业金属(中军)</td>
+        <td style="color:#00d4aa;">AI数据中心/新能源需求支撑</td>
+        <td class="action-buy">低吸</td>
+      </tr>
+      <tr>
+        <td rowspan="3" style="color:#00d4aa;font-weight:700;">CRO/医药</td>
+        <td><b>药明康德 603259(中军·中报+29.43%) / 凯莱英 002821 / 昭衍新药 / 泰格医药 / 康龙化成</b></td>
+        <td>CXO中军(领涨)</td>
+        <td style="color:#00d4aa;">基药目录新政；药明业绩标杆</td>
+        <td class="action-buy">分歧低吸中军</td>
+      </tr>
+      <tr>
+        <td><b>恒瑞医药 600276 / 迪哲医药 688192 / 贝达药业 300558</b></td>
+        <td>创新药(进目录预期)</td>
+        <td style="color:#00d4aa;">2026版基药目录首次纳入创新药(16种)</td>
+        <td class="action-buy">事件驱动低吸</td>
+      </tr>
+      <tr>
+        <td><b>珍宝岛 603567(基药) / 华海药业 600521 / 普洛药业 000739 / 哈三联 002900 / 创新医疗 002173(脑机)</b></td>
+        <td>原料药/基药/脑机</td>
+        <td style="color:#00d4aa;">四重新政+基药目录</td>
+        <td class="action-buy">低吸</td>
+      </tr>
+      <tr>
+        <td style="color:#ffb84d;font-weight:700;">支线</td>
+        <td><b>传智教育/天娱数科/蓝色光标(AI应用)；中大力德/卧龙/绿的谐波(宇树链)；德赛西威(自动驾驶)；中国核建/光智(核电)；通威/协鑫(光伏)</b></td>
+        <td>AI应用/机器人/核电/光伏</td>
+        <td style="color:#ffb84d;">8/5活跃但非领涨；事件驱动发酵</td>
+        <td class="action-hold">支线去弱留强</td>
+      </tr>
+      <tr>
+        <td style="color:#ff6b7a;font-weight:700;">利空回避</td>
+        <td><b>中石油/中海油/中石化(油气)·油服</b></td>
+        <td>油气开采/油服</td>
+        <td style="color:#ff6b7a;">油价三连跌美油75·8/5油气跌幅居前</td>
+        <td class="action-sell">回避·利好航空化工</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== Q3: 阶段判断 + 交易计划 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">3</span>阶段判断与 8/6 周四盘前交易计划（8/5真实收盘+8/5美股分化+8/6盘前央行/半导体新政/基药目录 · 主线=半导体硬科技 + 贵金属·有色·小金属 + CRO医药创新药）</div>
+
+  <!-- Key Levels -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📐 上证指数关键点位（8/6 盘前 · 8/5收3878.43站上20日线一阳穿三线、最高3884.40；央行净投放+半导体新政+基药新政提振、防天量高开低走）</div>
+    <div class="level-grid">
+      <div class="level-card">
+        <div class="label">极端支撑</div>
+        <div class="value red">3740</div>
+        <div class="note">7/20新低·破则30%防御</div>
+      </div>
+      <div class="level-card">
+        <div class="label">强支撑(早评)</div>
+        <div class="value orange">3855</div>
+        <div class="note">8/6技术支撑位</div>
+      </div>
+      <div class="level-card">
+        <div class="label">当前位/整数关</div>
+        <div class="value orange">3878.43 / 3900</div>
+        <div class="note">8/5收·冲击3900</div>
+      </div>
+      <div class="level-card">
+        <div class="label">反弹压力</div>
+        <div class="value orange">3900</div>
+        <div class="note">整数关·需放量站稳</div>
+      </div>
+      <div class="level-card">
+        <div class="label">反转确认</div>
+        <div class="value green">4000</div>
+        <div class="note">放量站稳=主升延续</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 能不能买 速览 -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">✅ 三大主线「能不能买」速览</div>
+    <div class="level-grid">
+      <div class="level-card">
+        <div class="label">半导体硬科技</div>
+        <div class="value green">能买·回踩低吸</div>
+        <div class="note">反转确认·CPO高位谨慎</div>
+      </div>
+      <div class="level-card">
+        <div class="label">贵金属/有色</div>
+        <div class="value green">能买·前排换手</div>
+        <div class="note">领涨·不追加速</div>
+      </div>
+      <div class="level-card">
+        <div class="label">CRO/医药</div>
+        <div class="value green">能买·分歧低吸</div>
+        <div class="note">基药新政·防一日游</div>
+      </div>
+      <div class="level-card">
+        <div class="label">AI应用/机器人</div>
+        <div class="value orange">支线·前排换手</div>
+        <div class="note">事件驱动·小仓</div>
+      </div>
+      <div class="level-card">
+        <div class="label">油气</div>
+        <div class="value red">不买·利空</div>
+        <div class="note">油价三连跌美油75</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scenario -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">🎲 8/6 情景推演（8/5天量反转+站上20日线+央行净投放+半导体新政+基药新政 · 但隔夜纳指-0.83%/中概-1.09%/CPO分歧+中报雷·控仓分歧低吸）</div>
+    <div class="scenario-grid">
+      <div class="scenario-card" style="border-color:rgba(0,212,170,0.3);">
+        <div class="prob bull">45%</div>
+        <div style="font-weight:600;margin-bottom:4px;">乐观：天量反转延续·放量站稳3900·半导体/贵金属/医药三主线共振</div>
+        <div class="desc">8/5天量反转+站上20日线一阳穿三线→8/6增量延续；央行千亿净投放+集成电路条例修订+基药目录新政三重催化；半导体设备/材料/PCB/存储前排连板晋级(中巨芯/正帆/中微/东山/生益)、贵金属接力(四川黄金/盛达/紫金/云南锗业)、医药基药新政发酵(药明/凯莱英/CXO+进目录创新药)；日韩半导体大涨+英伟达+3.43%共振；沪指放量站稳3900、成交维持2.5万亿+；风险偏好显著回升，科技由"反转确认"转向"主升"</div>
+      </div>
+      <div class="scenario-card" style="border-color:rgba(255,165,2,0.3);">
+        <div class="prob neutral">35%</div>
+        <div style="font-weight:600;margin-bottom:4px;">中性：高开分化·轻指数重个股·3855-3900拉锯</div>
+        <div class="desc">天量后"分歧分化"：半导体前排(设备/材料/PCB)承接、CPO(中际/新易盛)续弱拖累；贵金属/医药前排换手、后排掉队；隔夜纳指-0.83%/中概-1.09%部分压制开盘情绪；沪指3855-3900窄幅震荡(冲击3900未站稳)；不重仓押方向、守前排业绩+贵金属/医药中军+"分歧低吸"纪律；中报雷开始释放、板块内部分化加剧</div>
+      </div>
+      <div class="scenario-card" style="border-color:rgba(255,71,87,0.3);">
+        <div class="prob bear">20%</div>
+        <div style="font-weight:600;margin-bottom:4px;">悲观：天量见天价·高开低走·破3855·科技反抽一日游</div>
+        <div class="desc">8/5天量+科创暴涨→"天量见天价"；隔夜纳指-0.83%/光通信回踩(闪迪-5.4%/AMD-7%)/SpaceX-13%解禁/中概-1.09%→开盘情绪扰动；科技内部分化(CPO领跌)演变为全面回落；医药基药新政"一日游"(v24前车之鉴)；沪指破3855(早评支撑)、向3800寻支撑；需降至40%防御、破3800极端30%；中报雷+中美摩擦(光模块禁进口)外溢</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Position Allocation -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">💰 仓位配置建议（总仓位 50-60%·8/5天量反转+央行净投放+半导体新政+基药新政→风险偏好上修但"天量后分化"未确认续涨·现金守分歧低吸）</div>
+    <div class="position-grid">
+      <div id="positionChart" class="chart-container" style="height:280px;"></div>
+      <div class="position-list">
+        <div class="position-item">
+          <span class="name">🟢 半导体硬科技(设备/材料/PCB/存储)</span>
+          <span class="pct green">20-26%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🟡 贵金属/有色/小金属</span>
+          <span class="pct green">8-12%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🟢 CRO/医药创新药</span>
+          <span class="pct green">8-12%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🟠 AI应用/机器人(支线)</span>
+          <span class="pct orange">5-8%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🟠 核电/光伏(支线)</span>
+          <span class="pct orange">3-5%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🔴 油气(利空)</span>
+          <span class="pct gray">0%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">💵 现金（守分歧低吸）</span>
+          <span class="pct gray">35-45%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trading Plan Table -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📋 分批交易计划（8/6 周四盘前 · v27.0 · 基于8/5真实收盘+8/5美股分化+8/6盘前央行/半导体新政/基药目录）</div>
+    <table class="plan-table">
+      <thead>
+        <tr>
+          <th>方向</th>
+          <th>触发条件</th>
+          <th>操作</th>
+          <th>仓位</th>
+          <th>止损/风控</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:#00d4aa;font-weight:700;">半导体硬科技</td>
+          <td>前排业绩(半导体设备/材料/PCB/存储/封测)回踩5/10日线缩量企稳、换手确认；侧重中巨芯/中微/正帆/东山/生益/兆易/通富；CPO(中际/新易盛)高位谨慎不追</td>
+          <td class="action-buy">回踩低吸前排</td>
+          <td>20-26%</td>
+          <td>⚠️ 8/5天量+科创+4.78%→防"天量见天价/高开低走"；科技内部高低切(CPO逆势跌)；隔夜纳指-0.83%/光通信回踩(闪迪-5.4%/AMD-7%)；中报雷；中美摩擦(光模块禁进口)双刃；破3740降至8%</td>
+        </tr>
+        <tr>
+          <td style="color:#ffa502;font-weight:700;">贵金属/有色</td>
+          <td>前排(四川黄金/盛达/紫金/云南锗业/有研粉材)小仓换手、回踩不破5日线；不追连板加速(盛达已连板)</td>
+          <td class="action-buy">前排小仓换手</td>
+          <td>8-12%</td>
+          <td>⚠️ 8/5已大涨位置偏高、防冲高回落；油价三连跌(美油75)压制资源情绪；若美伊协议达成→避险溢价消退；破3740降至0</td>
+        </tr>
+        <tr>
+          <td style="color:#00d4aa;font-weight:700;">CRO/医药</td>
+          <td>药明康德/凯莱英分歧低吸(不追涨停)、进目录创新药(恒瑞/迪哲/贝达)事件驱动、珍宝岛/华海/普洛前排换手；防v24"一日游"</td>
+          <td class="action-buy">分歧低吸中军</td>
+          <td>8-12%</td>
+          <td>⚠️ 医药"新政首日一日游"前车之鉴→买分歧不买加速；8/5被科技吸血、资金争夺激烈；追涨停风险大；破3740降至0</td>
+        </tr>
+        <tr>
+          <td style="color:#ffb84d;font-weight:700;">AI应用/机器人</td>
+          <td>传智/天娱前排小仓换手(7板处高位不追加速)；宇树链(中大力德/卧龙/绿的谐波)/自动驾驶(德赛西威)事件催化回踩；仅支线</td>
+          <td class="action-hold">支线前排换手</td>
+          <td>5-8%</td>
+          <td>8/5活跃但非领涨、与科技资金分流；传智7板高位、纯概念小票仍凉；机器人/自动驾驶事件驱动"一日游"风险；破3740降至3%</td>
+        </tr>
+        <tr>
+          <td style="color:#ffb84d;font-weight:700;">核电/光伏</td>
+          <td>核电前排(中国核建/光智)换手、光伏(通威/协鑫)分歧低吸；仅支线参与</td>
+          <td class="action-hold">支线去弱留强</td>
+          <td>3-5%</td>
+          <td>8/5偏弱、资金被半导体/贵金属/医药吸走；破3740降至0</td>
+        </tr>
+        <tr>
+          <td style="color:#ff6b7a;font-weight:700;">油气</td>
+          <td>油价三连跌(美油75/布油破80)→直接利空；反受益(航空/化工下游)仅小仓观察</td>
+          <td class="action-sell">回避</td>
+          <td>0%</td>
+          <td>WTI三连跌至75附近、8/5油气跌幅居前；利好航空化工下游但非主线</td>
+        </tr>
+        <tr>
+          <td style="color:#94a3b8;font-weight:700;">现金</td>
+          <td colspan="2">守到高开回落后的低吸机会、半导体前排业绩回踩、贵金属/医药中军分歧、3900上方主线+业绩中军</td>
+          <td>35-45%</td>
+          <td>保留机动应对破3855/天量高开低走/科技反抽一日游/医药一日游/中报雷/中美摩擦</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Alerts -->
+  <div style="margin-bottom:16px;">
+    <div class="alert-box danger">
+      <div class="title">🚨 风险警报（8/6 盘前关键变量 · 天量后分化+纳指-0.83%+CPO分歧+中报雷+中美摩擦+3900压力）</div>
+      <div>① <b>"天量见天价"风险</b> —— 8/5成交2.68万亿天量+科创+4.78%，单日暴涨后8/6防高开低走/分化；机构"底部突破初期仍会伴随震荡反复、成交能否持续维持高位是关键"</div>
+      <div>② <b>科技内部高低切</b> —— CPO/光模块8/5逆势领跌(中际-6%/新易盛-5%)，隔夜美股光通信/存储回踩(闪迪-5.4%/AMD-7%)→高位科技追涨风险，资金切向低位半导体/PCB/封测</div>
+      <div>③ <b>隔夜外围分化</b> —— 纳指-0.83%/中概金龙-1.09%/中概股指-1.15%、SpaceX-13%(9.12亿股解禁)→开盘情绪扰动；道指虽五连涨创新高但科技股分化</div>
+      <div>④ <b>3900整数压力</b> —— 8/5收3878.43(最高3884.40)，冲击3900需放量站稳，否则3855-3900拉锯；早评技术支撑3855、破则降防</div>
+      <div>⑤ <b>中报密集披露(业绩雷)</b> —— 8月半年报窗口，高位无业绩纯题材小票易筹码兑现；优选中报预增/有真实订单的硬科技与贵金属</div>
+      <div>⑥ <b>中美摩擦双刃</b> —— 中方5项反制(暂停对美认证机构工厂检查/对进口打印复印设备国安立案)、美方起草禁止进口中国产光模块→利好国产替代但利空出口链/光模块</div>
+      <div>⑦ <b>医药"一日游"前车之鉴</b> —— v24.0医药新政首日高开低走，8/6基药目录催化后需防重演；贵金属8/5已大涨、连板(盛达)防冲高回落</div>
+    </div>
+    <div class="alert-box success">
+      <div class="title">✅ 积极催化（8/5真实收盘 + 8/6盘前新政）</div>
+      <div>① <b>科技反转确认</b> —— 8/5科创50+4.78%/半导体近50股涨停/成交2.68万亿天量/站上20日线一阳穿三线；机构"科创有望成反弹领涨方向"</div>
+      <div>② <b>央行千亿净投放</b> —— 8/5开展5000亿3个月期买断式逆回购、净投放千亿级→流动性宽松、货币政策稳中偏松</div>
+      <div>③ <b>集成电路布图保护条例20余年首次修订</b> —— 10月实施·强化芯片知识产权/国产替代→半导体(设计/设备/材料/封测)长期政策加码</div>
+      <div>④ <b>2026版基药目录(创新药进目录)</b> —— 首次纳入创新药(16种含4种国产一类新药)·公立医院强制配备→国产创新药+CXO王炸级长期利好</div>
+      <div>⑤ <b>全球半导体共振</b> —— 日韩大涨(韩国触发上涨熔断/SK海力士+6.28%/三星+4.17%)、英伟达+3.43%重夺股王(5.31万亿)、台积电CoWoS外包日月光(先进封装景气)</div>
+      <div>⑥ <b>贵金属强势</b> —— 8/5贵金属+7.87%领涨、现货黄金破4100/白银+3%、美联储9月加息概率降至56.9%(降息预期)→避险+配置需求</div>
+    </div>
+  </div>
+
+  <!-- Checklist -->
+  <div style="margin-bottom:16px;">
+    <div class="alert-box warning">
+      <div class="title">✅ 8/6 盘前检查清单（基于8/5真实收盘+8/5美股分化+8/6盘前新政重排）</div>
+      <ul class="checklist">
+        <li>✅ 主线重排：半导体硬科技(#1·反转确认·8/5天量+科创+4.78%+近50股涨停)、贵金属·有色·小金属(#2·8/5领涨+7.87%+现货黄金破4100)、CRO医药(#3·8/6基药目录新政)；AI应用/机器人降支线、油气因油价三连跌利空回避；总仓50-60%(风险偏好上修但"天量后分化"未确认续涨)</li>
+        <li>⚠️ 开盘纪律：8/5天量+科创暴涨→<b>防高开低走/天量见天价，不追天量高开；等回踩/前排业绩(中巨芯/中微/正帆/东山/生益/兆易/通富)低吸</b>；CPO(中际/新易盛)高位谨慎</li>
+        <li>🔍 开盘观察：① 半导体前排(中巨芯/正帆/中微/东山)能否连板晋级/延续 ② CPO(中际/新易盛)能否止跌 or 继续拖累 ③ 贵金属(四川黄金/盛达/紫金/云南锗业)接力强度 ④ 医药基药目录发酵(药明/凯莱英/CXO+进目录创新药) ⑤ 大盘能否放量站稳3900(8/5收3878.43) ⑥ 成交能否维持2.5万亿+ ⑦ 沪指3855支撑(早评) ⑧ 核电/光伏/AI应用支线持续性</li>
+        <li>🛡️ 半导体硬科技：前排业绩回踩低吸(设备/材料/PCB/存储/封测)、侧重国产替代+先进封装；CPO高位不追；仓位20-26%</li>
+        <li>🛡️ 贵金属/有色：前排小仓换手(四川黄金/盛达/紫金/云南锗业/有研粉材)，不追连板加速；仓位8-12%</li>
+        <li>🛡️ CRO/医药：药明/凯莱英分歧低吸中军、进目录创新药(恒瑞/迪哲/贝达)事件驱动、珍宝岛/华海/普洛前排换手，防一日游不追涨停；仓位8-12%</li>
+        <li>🚫 AI应用/机器人：仅支线前排小仓(传智/天娱/宇树链/德赛西威)；核电/光伏支线去弱留强；油气(油价三连跌美油75)回避；反受益航空化工仅小仓观察</li>
+        <li>📊 盘中决策：守3855上方(不破)→总仓50-60%主线+业绩中军低吸；破3855降至40%、破3800极端30%；放量站稳3900则反弹延续、否则3855-3900拉锯</li>
+        <li>全天纪律：<b>科技去弱留强回踩低吸(CPO谨慎)、贵金属前排换手、医药分歧低吸中军、AI应用机器人支线、油气回避、现金35-45%守回踩</b>；"天量后分化"下偏重基本面/前排业绩，不接飞刀、不博纯题材连板、防中报雷</li>
+        <li>盘后跟踪：美股科技能否延续(纳指/英伟达/光通信)、半导体止跌确认、贵金属/医药延续性、基药目录细则、成交放量→决定下一日(8/7周五)方向</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Signal Attribution -->
+  <div style="margin-bottom:16px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📊 信号归因（四维雷达）</div>
+    <div id="radarChart" class="chart-container" style="height:320px;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+      <div class="alert-box success" style="margin:0;">
+        <div class="title">最强看多信号</div>
+        <div><b>科技反转确认</b>(8/5科创+4.78%/半导体近50股涨停/成交2.68万亿天量/站上20日线一阳穿三线)+ <b>央行千亿净投放</b>+ <b>集成电路条例20余年首次修订</b>+ <b>2026版基药目录(创新药进目录)</b>+ <b>贵金属+7.87%领涨/现货黄金破4100</b>+ <b>日韩半导体大涨(韩国熔断)/英伟达+3.43%股王</b>+ <b>台积电CoWoS外包</b>+ <b>4万亿算力网</b>。三主线(半导体/贵金属/医药)共振+流动性宽松+政策组合拳。</div>
+      </div>
+      <div class="alert-box danger" style="margin:0;">
+        <div class="title">最强看空信号</div>
+        <div><b>"天量见天价"风险</b>(8/5天量+科创暴涨→防高开低走)+ <b>科技内部高低切</b>(CPO中际-6%/新易盛-5%逆势跌)+ <b>隔夜纳指-0.83%/中概-1.09%/光通信回踩(闪迪-5.4%/AMD-7%)/SpaceX-13%解禁</b>+ <b>3900整数压力</b>(8/5收3878.43)+ <b>中报雷</b>+ <b>中美摩擦(光模块禁进口)双刃</b>+ <b>医药/贵金属一日游前车之鉴</b>。整体反转但"天量后分化"、控仓守纪律。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+  <div class="disclaimer">
+    ⚠️ 免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论均基于 2026-08-05 A股全天收盘（上证3878.43 +1.47%、深证成指14144.20 +1.86%、创业板指3535.14 +1.32%、科创50 1693.67 +4.78%；成交约2.68万亿放量4500亿+；3725股上涨/1615跌、106涨停/1跌停；贵金属+7.87%领涨、电子化学品+7.30%、小金属/半导体/元件/稀土居前、半导体近50股涨停(中巨芯20.01%/中微/有研硅/兴福电子/富创精密/正帆科技20%存储)、沃格光电2连板；CPO领跌中际旭创-6%/新易盛-5%；医药商业/食品饮料/酿酒/油气开采/银行跌幅居前；多模态AI/智能驾驶/固态电池/机器人/商业航天活跃）+ 2026-08-05 美股（道指+0.49%五连涨创新高54349/纳指-0.83%26363/标普-0.17%7723·英伟达+3.43%重夺股王219.22·闪迪-5.4%/AMD-7%/SpaceX-13%解禁·中概金龙-1.09%·黄金白银+3%·油价三连跌美油75·日韩大涨韩国熔断SK海力士+6.28%）+ 2026-08-06 盘前（央行5000亿买断式逆回购净投放/集成电路布图保护条例修订/2026版基药目录16种创新药/台积电CoWoS外包/4万亿算力网/中美摩擦反制）+ 公开信息，不保证未来表现。<br>
+    数据来源：上证/深证/创业板/科创行情、证券时报、澎湃新闻、财联社、中新经纬、腾讯财经、新浪财经、网易、雪球、头条号、东方财富等公开信息 | 生成时间：2026-08-06 06:55
+  </div>
+  <div>盘前计划 v27.0（8/6 周四 · 基于8/5真实收盘+8/5美股分化+8/6盘前新政，主线重排=「半导体硬科技(设备/材料/存储/PCB/先进封装/科创50) + 贵金属·有色·小金属 + CRO医药创新药」，CPO降高位分歧、AI应用机器人降支线、油气因油价三连跌利空回避）| automation-1783645264539 | Powered by 星辰智能分析</div>
+</div>
+
+<script>
+// ===== Position Pie Chart =====
+var posChart = echarts.init(document.getElementById('positionChart'));
+posChart.setOption({
+  backgroundColor: 'transparent',
+  tooltip: { trigger: 'item', formatter: '{b}: {c}%' },
+  legend: { bottom: 0, textStyle: { color: '#94a3b8', fontSize: 12 } },
+  series: [{
+    type: 'pie',
+    radius: ['45%', '70%'],
+    center: ['50%', '42%'],
+    avoidLabelOverlap: false,
+    itemStyle: { borderColor: '#0f0f23', borderWidth: 2 },
+    label: {
+      show: true,
+      position: 'center',
+      formatter: '机动\n35-45%',
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: '#ffa502',
+      lineHeight: 24
+    },
+    data: [
+      { value: 23, name: '半导体硬科技', itemStyle: { color: '#00d4aa' } },
+      { value: 10, name: '贵金属/有色', itemStyle: { color: '#ffa502' } },
+      { value: 10, name: 'CRO/医药', itemStyle: { color: '#764ba2' } },
+      { value: 6, name: 'AI应用/机器人(支线)', itemStyle: { color: '#00b894' } },
+      { value: 4, name: '核电/光伏(支线)', itemStyle: { color: '#667eea' } },
+      { value: 0, name: '油气(利空)', itemStyle: { color: '#ff4757' } },
+      { value: 47, name: '现金观望', itemStyle: { color: '#2d2d44' } }
+    ]
+  }]
+});
+
+// ===== Radar Chart =====
+var radarChart = echarts.init(document.getElementById('radarChart'));
+radarChart.setOption({
+  backgroundColor: 'transparent',
+  tooltip: {},
+  radar: {
+    indicator: [
+      { name: '技术指标', max: 100 },
+      { name: '新闻情绪', max: 100 },
+      { name: '基本面', max: 100 },
+      { name: '市场环境', max: 100 }
+    ],
+    center: ['50%', '55%'],
+    radius: '65%',
+    splitArea: { areaStyle: { color: ['rgba(102,126,234,0.03)', 'rgba(102,126,234,0.06)'] } },
+    axisLine: { lineStyle: { color: '#2d2d44' } },
+    splitLine: { lineStyle: { color: '#2d2d44' } },
+    axisName: { color: '#94a3b8', fontSize: 13 }
+  },
+  series: [{
+    type: 'radar',
+    data: [
+      {
+        value: [88, 92, 85, 86],
+        name: '半导体硬科技',
+        areaStyle: { color: 'rgba(0,212,170,0.2)' },
+        lineStyle: { color: '#00d4aa', width: 2 },
+        itemStyle: { color: '#00d4aa' }
+      },
+      {
+        value: [80, 85, 78, 82],
+        name: '贵金属/有色',
+        areaStyle: { color: 'rgba(255,165,2,0.18)' },
+        lineStyle: { color: '#ffa502', width: 2 },
+        itemStyle: { color: '#ffa502' }
+      },
+      {
+        value: [72, 90, 88, 75],
+        name: 'CRO/医药',
+        areaStyle: { color: 'rgba(118,75,162,0.18)' },
+        lineStyle: { color: '#764ba2', width: 2 },
+        itemStyle: { color: '#764ba2' }
+      },
+      {
+        value: [40, 45, 55, 38],
+        name: '油气(利空)',
+        areaStyle: { color: 'rgba(255,71,87,0.12)' },
+        lineStyle: { color: '#ff4757', width: 2 },
+        itemStyle: { color: '#ff4757' }
+      }
+    ]
+  }],
+  legend: {
+    bottom: 0,
+    textStyle: { color: '#94a3b8', fontSize: 12 },
+    data: ['半导体硬科技', '贵金属/有色', 'CRO/医药', '油气(利空)']
+  }
+});
+
+window.addEventListener('resize', function() {
+  posChart.resize();
+  radarChart.resize();
+});
+</script>
+</body>
+</html>
