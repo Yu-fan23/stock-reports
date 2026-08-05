@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-05 15:45:37",
-  "total": 101,
+  "generatedAt": "2026-08-05 16:45:34",
+  "total": 103,
   "categories": [
     {
       "key": "panqian",
@@ -338,9 +338,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 26,
-      "latest": "20260804",
+      "count": 27,
+      "latest": "20260805",
       "reports": [
+        {
+          "date": "20260805",
+          "dateLabel": "2026-08-05（周三）",
+          "file": "reports/close/close_20260805.html",
+          "title": "A股行情复盘 · 收盘版（2026-08-05 周三 · 科技延续·放量普涨·剑指3900·两融转升确认去杠杆尾声）",
+          "size": 30769
+        },
         {
           "date": "20260804",
           "dateLabel": "2026-08-04（周二）",
@@ -531,9 +538,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 19,
-      "latest": "20260804",
+      "count": 20,
+      "latest": "20260805",
       "reports": [
+        {
+          "date": "20260805",
+          "dateLabel": "2026-08-05（周三）",
+          "file": "reports/limitup/limitup_20260805.html",
+          "title": "涨停梯队复盘 · 2026-08-05（周三 · 真实交易日）· 半导体/有色爆发 · 智能驾驶起爆 · 百股涨停",
+          "size": 66645
+        },
         {
           "date": "20260804",
           "dateLabel": "2026-08-04（周二）",
