@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盘前交易计划 | 2026年8月7日（周五）· v28.0 · 8/6真实收盘（沪指+0.57%站稳3900·成交2.53万亿缩量1308亿·煤炭涨停潮+电子化学品+贵金属连板+6G/数字货币，医药基药一日游/AI应用退潮）+8/6美股（道指-0.85%终结五连涨/纳指-0.06%/中概+0.27%/原油+4%/黄金破4300/存储暴雷SK海力士-10%）+8/7盘前（央行适度宽松/大基金三期/DeepSeek涨价/刚果禁铜钴/宇树申购），主线重排「半导体硬科技(纯化) + 周期资源(煤炭+贵金属·有色) + 新质生产力(数字货币/6G/机器人)」</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0f0f23; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; line-height: 1.7; padding: 20px; max-width: 1200px; margin: 0 auto; }
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 28px 32px; margin-bottom: 24px; border: 1px solid #2d2d44; }
+  .header h1 { font-size: 22px; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; line-height:1.5; }
+  .header .subtitle { color: #94a3b8; font-size: 14px; margin-bottom: 12px; }
+  .header .meta { color: #94a3b8; font-size: 13px; display: flex; gap: 20px; flex-wrap: wrap; }
+  .header .meta .tag { background: rgba(0,212,170,0.2); color: #00d4aa; padding: 2px 10px; border-radius: 10px; font-size: 12px; }
+  .header .meta .tag.warn { background: rgba(255,165,2,0.2); color: #ffa502; }
+  .header .meta .tag.green { background: rgba(0,212,170,0.2); color: #00d4aa; }
+  .header .meta .tag.red { background: rgba(255,71,87,0.2); color: #ff4757; }
+  .summary-bar { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 24px 28px; margin-bottom: 24px; border: 1px solid #00d4aa; border-left: 4px solid #00d4aa; }
+  .summary-bar .verdict { font-size: 19px; font-weight: 800; color: #00d4aa; margin-bottom: 8px; }
+  .summary-bar .verdict-desc { color: #cbd5e1; font-size: 14px; }
+  .q3-box { border-radius: 14px; padding: 20px 24px; margin-bottom: 24px; background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%); border: 1px solid #667eea; }
+  .q3-box h2 { font-size: 18px; color: #a78bfa; margin-bottom: 14px; }
+  .q3-item { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid rgba(45,45,68,0.5); }
+  .q3-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .q3-item .ql { font-size: 15px; font-weight: 700; color: #e2e8f0; margin-bottom: 6px; }
+  .q3-item .qa { font-size: 14px; color: #cbd5e1; }
+  .q3-item .qa b { color: #00d4aa; }
+  .q3-item .qa .r { color: #ffa502; }
+  .q3-item .qa .bad { color: #ff4757; }
+  .verify-box { border-radius: 10px; padding: 12px 16px; margin-bottom: 12px; font-size: 13px; }
+  .verify-bull { background: rgba(0,212,170,0.08); border-left: 3px solid #00d4aa; }
+  .verify-warn { background: rgba(255,165,2,0.08); border-left: 3px solid #ffa502; }
+  .verify-danger { background: rgba(255,71,87,0.08); border-left: 3px solid #ff4757; }
+  .index-cards { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 24px; }
+  .index-card { background: #1a1a2e; border-radius: 12px; padding: 16px; border: 1px solid #2d2d44; text-align: center; }
+  .index-card .name { font-size: 12px; color: #94a3b8; margin-bottom: 6px; }
+  .index-card .price { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .index-card .change { font-size: 13px; font-weight: 600; }
+  .index-card .change.green { color: #00d4aa; }
+  .index-card .change.red { color: #ff4757; }
+  .index-card .sub { font-size: 10px; color: #64748b; margin-top: 4px; }
+  .section { background: #1a1a2e; border-radius: 16px; padding: 24px 28px; margin-bottom: 20px; border: 1px solid #2d2d44; }
+  .section-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .section-title .num { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .theme-card { background: #16213e; border-radius: 14px; padding: 22px; margin-bottom: 16px; border: 1px solid #2d2d44; transition: border-color 0.3s; }
+  .theme-card:hover { border-color: #667eea; }
+  .theme-card.buy { border-left: 4px solid #00d4aa; }
+  .theme-card.watch { border-left: 4px solid #ffa502; }
+  .theme-card.avoid { border-left: 4px solid #ff4757; }
+  .theme-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+  .theme-name { font-size: 17px; font-weight: 700; }
+  .theme-signal { padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; }
+  .theme-signal.buy { background: rgba(0,212,170,0.15); color: #00d4aa; }
+  .theme-signal.watch { background: rgba(255,165,2,0.15); color: #ffa502; }
+  .theme-signal.avoid { background: rgba(255,71,87,0.15); color: #ff4757; }
+  .theme-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .theme-row .label { color: #64748b; font-size: 13px; margin-bottom: 4px; }
+  .theme-row .value { color: #e2e8f0; font-size: 14px; }
+  .theme-stocks { background: rgba(0,0,0,0.2); border-radius: 8px; padding: 12px 14px; margin-top: 8px; }
+  .theme-stocks .label { color: #64748b; font-size: 12px; margin-bottom: 6px; }
+  .stock-tag { display: inline-block; background: rgba(102,126,234,0.15); color: #a78bfa; padding: 3px 10px; border-radius: 6px; font-size: 12px; margin: 2px 4px 2px 0; }
+  .stock-tag.hl { background: rgba(0,212,170,0.15); color: #00d4aa; }
+  .stock-tag.gold { background: rgba(255,165,2,0.15); color: #ffa502; }
+  .catalyst-list { margin-top: 8px; }
+  .catalyst-list li { list-style: none; padding: 4px 0; font-size: 13px; color: #cbd5e1; padding-left: 18px; position: relative; }
+  .catalyst-list li::before { content: '▸'; position: absolute; left: 0; color: #667eea; }
+  .catalyst-list li.neg::before { color: #ff4757; }
+  .catalyst-list li.pos::before { color: #00d4aa; }
+  .stage-bar { background: rgba(0,0,0,0.3); border-radius: 8px; height: 32px; display: flex; align-items: center; position: relative; margin: 10px 0; overflow: hidden; }
+  .stage-segment { flex: 1; text-align: center; font-size: 11px; color: #64748b; border-right: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 1; }
+  .stage-segment:last-child { border-right: none; }
+  .stage-marker { position: absolute; top: 0; height: 100%; border-radius: 8px; z-index: 0; }
+  .stage-marker.buy { background: linear-gradient(90deg, rgba(0,212,170,0.3), rgba(0,212,170,0.5)); }
+  .stage-marker.warm { background: linear-gradient(90deg, rgba(255,165,2,0.3), rgba(255,165,2,0.5)); }
+  .plan-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .plan-table th { background: rgba(102,126,234,0.1); color: #a78bfa; padding: 10px 12px; text-align: left; font-weight: 600; border-bottom: 1px solid #2d2d44; }
+  .plan-table td { padding: 10px 12px; border-bottom: 1px solid rgba(45,45,68,0.5); color: #cbd5e1; }
+  .plan-table tr:hover td { background: rgba(102,126,234,0.05); }
+  .plan-table .action-buy { color: #00d4aa; font-weight: 600; }
+  .plan-table .action-sell { color: #ff4757; font-weight: 600; }
+  .plan-table .action-hold { color: #ffa502; font-weight: 600; }
+  .position-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center; }
+  .position-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #16213e; border-radius: 8px; margin-bottom: 8px; border: 1px solid #2d2d44; }
+  .position-item .name { font-size: 14px; }
+  .position-item .pct { font-weight: 700; }
+  .position-item .pct.green { color: #00d4aa; }
+  .position-item .pct.orange { color: #ffa502; }
+  .position-item .pct.gray { color: #64748b; }
+  .alert-box { border-radius: 10px; padding: 14px 18px; margin-bottom: 12px; font-size: 14px; }
+  .alert-box.danger { background: rgba(255,71,87,0.08); border: 1px solid rgba(255,71,87,0.3); color: #ff6b7a; }
+  .alert-box.success { background: rgba(0,212,170,0.08); border: 1px solid rgba(0,212,170,0.3); color: #3dd9b0; }
+  .alert-box.warning { background: rgba(255,165,2,0.08); border: 1px solid rgba(255,165,2,0.3); color: #ffb84d; }
+  .alert-box .title { font-weight: 700; margin-bottom: 4px; }
+  .checklist { list-style: none; }
+  .checklist li { padding: 8px 0 8px 28px; position: relative; font-size: 14px; color: #cbd5e1; border-bottom: 1px solid rgba(45,45,68,0.3); }
+  .checklist li::before { content: '☐'; position: absolute; left: 0; font-size: 18px; color: #667eea; }
+  .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .scenario-card { background: #16213e; border-radius: 12px; padding: 16px; border: 1px solid #2d2d44; }
+  .scenario-card .prob { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+  .scenario-card .prob.neutral { color: #ffa502; }
+  .scenario-card .prob.bear { color: #ff4757; }
+  .scenario-card .prob.bull { color: #00d4aa; }
+  .scenario-card .desc { font-size: 13px; color: #94a3b8; }
+  .chart-container { width: 100%; height: 320px; margin: 10px 0; }
+  .level-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 16px; }
+  .level-card { background: #16213e; border-radius: 10px; padding: 14px; border: 1px solid #2d2d44; text-align: center; }
+  .level-card .label { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+  .level-card .value { font-size: 20px; font-weight: 700; }
+  .level-card .value.red { color: #ff4757; }
+  .level-card .value.green { color: #00d4aa; }
+  .level-card .value.orange { color: #ffa502; }
+  .level-card .note { font-size: 11px; color: #64748b; margin-top: 2px; }
+  .footer { text-align: center; color: #475569; font-size: 12px; padding: 20px 0; border-top: 1px solid #2d2d44; margin-top: 24px; }
+  .footer .disclaimer { background: rgba(255,71,87,0.05); border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; color: #94a3b8; font-size: 12px; text-align: left; }
+  @media (max-width: 768px) {
+    .index-cards { grid-template-columns: repeat(2, 1fr); }
+    .theme-row { grid-template-columns: 1fr; }
+    .position-grid { grid-template-columns: 1fr; }
+    .scenario-grid { grid-template-columns: 1fr; }
+    .level-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+  <h1>盘前交易计划 | 2026年8月7日（周五）· v28.0 · 8/6真实收盘（沪指+0.57%站稳3900·2.53万亿缩量1308亿·煤炭涨停潮+电子化学品+贵金属连板+6G/数字货币，医药基药一日游/AI应用退潮）+8/6美股（道指-0.85%终结五连涨/纳指-0.06%/中概+0.27%/原油+4%/黄金破4300/存储暴雷SK海力士-10%）+8/7盘前（央行适度宽松/大基金三期/DeepSeek涨价/刚果禁铜钴/宇树申购），主线重排「半导体硬科技(纯化) + 周期资源(煤炭+贵金属·有色) + 新质生产力(数字货币/6G/机器人)」</h1>
+  <div class="subtitle">⚠️ <b style="color:#00d4aa">v27.0(8/6 06:55)被8/6真实收盘部分验证并修正</b>：<b>"沪指站稳3900"乐观兑现</b>(3900.35 +0.57%)，但<b>"科技三主线共振/天量续涨"被证伪</b>——成交缩量1308亿至2.53万亿、深市/创业板收跌、板块从科技全面转向<b>"周期+成长再平衡"</b>；<b>全新最强主线=周期资源</b>(煤炭近10股涨停+贵金属盛达两连板·黄金破4300+刚果禁铜钴"算力金属"飙升)、<b>半导体纯化</b>(电子化学品中巨芯20%涨停/先进封装强，但存储受美股闪迪西数暴雷+SK海力士-10%压制)；<b>医药基药目录"一日游"初步兑现</b>(哈药/太极-3%，仅CRO局部百花涨停)→医药降支线观察；<b>AI应用(教育/传媒)退潮</b>(传智走低)、<b>新质生产力(数字货币/6G)接棒活跃</b>。主线重排=「<b>半导体硬科技(设备/材料/电子化学品/先进封装·存储分化) + 周期资源(煤炭高股息+贵金属·有色·小金属) + 新质生产力(数字货币/6G/通信设备+人形机器人)</b>」，CRO医药降政策结构性支线、AI应用降回避、油气因油价+4%双刃维持观察。</div>
+  <div class="meta">
+    <span>📊 数据截至：2026-08-06 A股全天收盘（上证3900.35 +0.57%、深成14110.12 -0.24%、创业板3515.56 -0.55%、科创50 1701.29 +0.45%、成交2.53万亿缩量1308亿；2789涨/2590跌/83涨停/1跌停、煤炭涨停潮/电子化学品中巨芯20%涨停/贵金属盛达两连板/6G数字货币活跃、医药多数跌哈药-3%/教育传媒汽车券商弱）+ 2026-08-06 美股（道指-0.85%终结五连涨53885/纳指-0.06%/标普-0.18%/中概金龙+0.27%/原油+4%至78.23/黄金破4300/存储暴雷SK海力士-10%闪迪西数盘后-7~-10%）+ 2026-08-07 盘前（央行下半年适度宽松+定向硬科技/大基金三期布局上游/DeepSeek拟涨价/刚果禁铜钴/宇树8-10申购/张忆东"底部区域确认秋季行情"）</span>
+    <span>🔥 情绪评级：<span class="tag green">沪指站稳3900·结构再平衡·周期资源最强·半导体纯化延续·贵金属强势·但缩量+外围分化(道指-0.85%/存储暴雷)+央行净回笼2695亿·控仓分歧低吸</span></span>
+    <span>⏰ 生成时间：2026-08-07 06:55</span>
+  </div>
+</div>
+
+<!-- ===== SUMMARY BAR ===== -->
+<div class="summary-bar">
+  <div class="verdict">🟢 核心判断：总仓位 <b>50-60%</b>（8/6沪指站稳3900+央行宽松基调+大基金三期+黄金破4300+刚果禁铜钴支撑，但缩量1308亿+道指终结五连涨-0.85%+存储暴雷(SK海力士-10%)+央行8/6净回笼2695亿→维持"不追高、分歧低吸、轻指数重个股"），三大主流重排=「<b>周期资源(煤炭高股息+贵金属·有色·小金属) 20-26% + 半导体硬科技(设备/材料/电子化学品/先进封装·存储分化) 15-20% + 新质生产力(数字货币/6G/机器人) 8-12%</b>」+ CRO医药政策结构性支线3-5% + 现金40-45%；<b>破3870降至40%、破3800极端30%</b>。</div>
+  <div class="verdict-desc">
+    <b style="color:#00d4aa">8/6真实收盘决定性信号（重排依据）</b>：① <b>沪指站稳3900</b>：3900.35(+0.57%)、深成-0.24%、创业板-0.55%、科创50 +0.45%(1701.29)；成交<b>2.53万亿缩量1308亿</b>(从2.68万亿)、2789涨/2590跌/83涨停/1跌停→<b>"结构再平衡"非普涨</b>。② <b>周期资源成最强主线</b>：煤炭午后爆发——<b>潞安环能/淮北矿业/平煤股份/昊华能源/兖矿能源/大有能源等近10股涨停</b>(动力煤价格上调+旺季)；贵金属全天强——<b>盛达资源两连板、招金/中金/西部黄金/山金国际涨超5%</b>(Wind贵金属指数+1.83%、黄金破4300)；有色小金属——<b>云南锗业10%涨停、多氟多10%涨停(氟化工)</b>、刚果禁铜钴出口催化铜钴锡钽"算力金属"飙升(LME铜14369逼近历史高)。③ <b>半导体纯化延续</b>：电子化学品——<b>中巨芯-U 20%涨停、江化微/有研新材涨停</b>、有研硅/欧莱新材/锴威特强；先进封装/PCB/存储局部——<b>长电科技10%涨停(封测)、沃格光电连板(光刻机)、景旺电子/天通股份涨停</b>；但CPO/存储整体弱于前两日。④ <b>新质生产力活跃</b>：<b>数字货币(飞天诚信20%/恒宝股份/翠微股份/楚天龙涨停)、6G/通信设备(武汉凡谷/通宇通讯涨停、广哈通信20%)</b>。⑤ <b>医药基药"一日游"初步兑现</b>：医药多数下跌(哈药/太极-3%)，仅CRO局部(百花医药涨停)→v24/v27"新政首日一日游"风险显现。⑥ <b>AI应用/教育传媒退潮</b>(中公/凯文-7%、传智走低)、汽车整车(北汽蓝谷/江淮-5%)、券商/电新弱。<br>
+    <b style="color:#00d4aa">8/6美股（8/7盘前变量·分化走弱）</b>：<b>道指-0.85%报53885终结五连涨</b>、纳指-0.06%、标普-0.18%；<b>中概金龙逆势+0.27%</b>(亮点)；<b>原油+4%至78.23</b>(特朗普称霍尔木兹"尚未正式达成"+美海军封锁+水雷风险)→通胀/资源双刃；<b>黄金破4300</b>(COMEX 8/6 +3.67%至4245、8/7早一度4300)；<b>存储暴雷</b>——闪迪/西部数据财报超预期但指引平淡、盘后-7%~-10%，亚太铠侠/SK海力士-10%→压制A股存储/CPO(兆易/太极/中际/新易盛开盘承压)。<br>
+    <b style="color:#ff4757">风险面</b>：缩量1308亿(天量后量能衰减、反弹持续性待验)；道指终结五连涨+存储暴雷(外围科技弱)；央行8/6仅10亿逆回购净回笼2695亿(流动性边际收紧信号，虽DR001降至1.35%宽松未改)；沪指3900上方整数压力+8/7防冲高回落；中报雷；黄金/煤炭已连涨(盛达两连板)防分歧回落。<br>
+    <b style="color:#00d4aa">盘前策略：周期资源(煤炭前排换手/中军潞安淮北平煤、贵金属前排小仓西部黄金/招金/紫金不追盛达连板、有色算力金属云南锗业/多氟多)主攻；半导体纯化(电子化学品中巨芯/江化微/有研新材/富创/长电/沃格回踩低吸，存储谨慎受美股暴雷)；新质生产力(数字货币飞天/恒宝/翠微、6G武汉凡谷/通宇、机器人宇树催化前排)小仓；CRO医药等分歧(药明/凯莱英/百花)；现金40-45%守分歧低吸。3870不破则主线+前排业绩低吸，破则降防。</b>
+  </div>
+</div>
+
+<!-- ===== 三大问题速答 ===== -->
+<div class="q3-box">
+  <h2>📌 三个核心问题速答（8/7 周五盘前版 · v28.0）</h2>
+  <div class="q3-item">
+    <div class="ql">Q1 · 当下的主流题材是什么？（至多3个）</div>
+    <div class="qa">
+      ① <b>周期资源（煤炭高股息 + 贵金属·有色·小金属"算力金属"）</b> —— <b>8/6绝对最强主线·新晋</b>。煤炭近10股涨停(潞安/淮北/平煤/昊华/兖矿/大有能源·动力煤价格上调+旺季+高股息避险)；贵金属盛达资源两连板、招金/中金/西部黄金/山金国际涨超5%(Wind贵金属指数+1.83%、现货黄金破4300)；有色小金属——云南锗业/多氟多10%涨停、<b>刚果(金)禁止铜钴出口</b>催化铜钴锡钽"算力金属"飙升(LME铜14369逼近历史高)；叠加原油+4%地缘。<br>
+      ② <b>半导体/硬科技（设备/材料/电子化学品/先进封装/PCB·存储分化谨慎）</b> —— <b>主线一·纯化延续</b>。电子化学品中巨芯-U 20%涨停、江化微/有研新材涨停、有研硅/欧莱新材/锴威特强；先进封装/封测长电科技10%涨停、沃格光电连板(光刻机)、景旺电子/天通股份涨停；<b>大基金三期布局半导体上游(富创精密关联沈阳正芯)</b>+集成电路条例10月实施+DeepSeek拟涨价利好算力；但<b>存储受美股闪迪/西数暴雷+SK海力士-10%压制</b>→存储/CPO降谨慎。<br>
+      ③ <b>新质生产力（数字货币 / 6G·通信设备 / 人形机器人）</b> —— <b>主线三·题材发酵接棒</b>。8/6数字货币(飞天诚信20%/恒宝股份/翠微股份/楚天龙涨停)、6G/通信设备(武汉凡谷/通宇通讯涨停、广哈通信20%)活跃；<b>8/7盘前宇树科技(人形机器人第一股)发行价150.8元市值610亿、8/10申购</b>→机器人板块催化(中大力德/卧龙/绿的谐波)。<br>
+      <span class="bad">（CRO医药：8/6医药多数跌哈药-3%、仅CRO局部百花涨停→基药目录"一日游"初步兑现，降政策结构性支线3-5%观察；AI应用/教育传媒：8/6退潮(中公/凯文-7%·传智走低)→降回避；汽车/电新/券商：8/6偏弱→回避；油气：油价+4%但A股反应平淡→双刃观察）</span>
+    </div>
+  </div>
+  <div class="q3-item">
+    <div class="ql">Q2 · 主流题材的核心是谁？</div>
+    <div class="qa">
+      ① 周期资源：<b>煤炭：潞安环能(601699)/淮北矿业(600985)/平煤股份(601666)/昊华能源(601101)/兖矿能源(600188)/大有能源(高股息+旺季)</b>；<b>贵金属：盛达资源(000603·两连板·白银龙头)/西部黄金(601069·净利+200%+)/招金黄金/中金黄金/山金国际/赤峰黄金/山东黄金/紫金矿业</b>；<b>有色小金属"算力金属"：云南锗业(002428·10%涨停·锗)/多氟多(002407·10%涨停·氟化工)/洛阳钼业(铜钴)/铜锡钽相关(江西铜业/锡业股份/东方钽业)/湖南黄金(锑金)</b>。<br>
+      ② 半导体硬科技：<b>电子化学品/材料：中巨芯-U(688549·20%涨停)/江化微(603078)/有研新材(600206·靶材)/有研硅(688432)/欧莱新材(688530)/锴威特(688693)</b>；<b>设备/封测/光刻机：富创精密(688409·大基金三期)/长电科技(600584·10%涨停·封测)/沃格光电(603773·连板·光刻机)/拓荆科技(688072)</b>；<b>PCB/先进封装：景旺电子(603228)/天通股份(600330)/东山精密(002384)/生益科技(600183)</b>；<b>存储(谨慎)：兆易创新(603986)/太极实业(600667)受SK海力士-10%压制</b>。<br>
+      ③ 新质生产力：<b>数字货币：飞天诚信(300386·20%)/恒宝股份(002104)/翠微股份(603123)/楚天龙(003040)</b>；<b>6G/通信设备：武汉凡谷(002194)/通宇通讯(002792)/广哈通信(300711·20%)/硕贝德</b>；<b>人形机器人(宇树催化)：中大力德(002896)/卧龙电驱(600580)/绿的谐波(688017)/长盛轴承(300718)/鸣志电器</b>。<br>
+      <span class="r">CRO医药(观察)：药明康德(603259)/凯莱英(002821)/百花医药(600721·涨停)/昭衍新药；AI应用(回避)：传智教育(003032·走低)/天娱数科。</span>
+    </div>
+  </div>
+  <div class="q3-item">
+    <div class="ql">Q3 · 走到哪个阶段？能不能买？盘前交易计划？</div>
+    <div class="qa">
+      ① 周期资源 = <b>煤炭启动→加速(涨停潮)/贵金属趋势高潮(连板+黄金破4300)/有色事件驱动(刚果禁出口)</b>，<span class="r">能买：煤炭前排换手+中军(潞安/淮北/平煤)、贵金属前排小仓(西部黄金/招金/紫金·不追盛达两连板)、有色算力金属(云南锗业/多氟多/铜钴)；仓位20-26%；注意煤炭已高潮防分歧、贵金属连板后防回落</span>；<br>
+      ② 半导体硬科技 = <b>反转确认→主升分化(电子化学品/先进封装强，存储弱)</b>，<span class="r">能买：电子化学品/设备/封测前排回踩低吸(中巨芯/江化微/有研新材/富创/长电/沃格)，存储谨慎(美股暴雷)；仓位15-20%</span>；<br>
+      ③ 新质生产力 = <b>启动/题材发酵(数字货币/6G活跃+宇树申购催化机器人)</b>，<span class="r">能买：前排换手(飞天/恒宝/翠微·武汉凡谷/通宇·机器人前排)，控仓题材属性；仓位8-12%</span>。<br>
+      <b>总计划：总仓50-60%，周期资源20-26% + 半导体硬科技15-20% + 新质生产力8-12% + CRO医药观察3-5% + 现金40-45%；8/6沪指站稳3900+央行宽松基调+大基金三期+黄金破4300+刚果禁铜钴→偏结构进攻但守"分歧低吸/不追高潮连板"纪律；破3870降至40%、破3800极端30%。</b>
+    </div>
+  </div>
+</div>
+
+<!-- ===== v27.0 → v28.0 变化 ===== -->
+<div class="verify-box verify-danger">
+  <strong style="color:#ff4757">🔁 v27.0（8/6 06:55·基于8/5收盘+8/5美股+8/6盘前，主线=半导体/贵金属/CRO医药） → v28.0（8/7 06:55·基于8/6真实收盘+8/6美股分化+8/7盘前，主线重排）哪些被验证 / 哪些被反转</strong><br>
+  <b style="color:#00d4aa">✅ v27.0"沪指放量站稳3900"被<b>验证</b></strong>：8/6收3900.35(+0.57%)站稳3900整数关，但<b>缩量1308亿至2.53万亿</b>(非放量续涨)→"站稳"兑现、"天量续涨"未兑现。<br>
+  <b style="color:#ffa502">⚠️ v27.0"科技三主线共振·半导体反转确认主升"被<b>修正</b></strong>：8/6半导体<b>纯化延续</b>(电子化学品中巨芯20%涨停/先进封装强)，但整体"涨势弱于前两日"、深市/创业板跌、成交缩量→"主升共振"未全面确认，且<b>存储受8/6美股闪迪/西数暴雷+SK海力士-10%压制</b>→存储/CPO降谨慎。<br>
+  <b style="color:#00d4aa">✅ 全新主线=周期资源(煤炭+贵金属+有色)升为<b>第一主线</b></strong>：8/6煤炭近10股涨停(潞安/淮北/平煤/昊华/兖矿)、贵金属盛达两连板+黄金破4300、刚果禁铜钴→有色"算力金属"飙升→v27.0仅列贵金属#2、未列煤炭，现煤炭+贵金属+有色合并为最强主线。<br>
+  <b style="color:#ff4757">⚠️ v27.0"CRO医药#3(基药目录催化发酵)"被<b>证伪(一日游)</b></strong>：8/6医药多数下跌(哈药/太极-3%)，仅CRO局部(百花医药涨停)→v24/v27"新政首日一日游"风险初步兑现，医药降为"政策结构性支线3-5%观察"。<br>
+  <b style="color:#ff4757">⚠️ v27.0"AI应用/机器人支线活跃"被<b>证伪(部分)</b></strong>：8/6教育/传媒(AI应用)调整(中公/凯文-7%、传智走低)→AI应用退潮降回避；但<b>数字货币/6G接棒活跃</b>→新质生产力(数字货币/6G/机器人)升为#3主流。<br>
+  <b style="color:#00d4aa">✅ 全新变量=央行下半年工作会议"适度宽松+定向硬科技"、大基金三期布局半导体上游(富创精密关联)、DeepSeek拟涨价(利好算力存储)、刚果禁铜钴出口(有色"算力金属"飙升)、原油+4%(地缘)、宇树科技8/10申购(机器人催化)、张忆东"底部区域确认/秋季行情"、国家能源局《核电发展报告2026》</b>→8/7主线从「半导体+贵金属+CRO医药」重排为「周期资源(煤炭+贵金属·有色) + 半导体硬科技(纯化) + 新质生产力(数字货币/6G/机器人)」。<br>
+</div>
+<div class="verify-box verify-bull">
+  <strong style="color:#00d4aa">🔁 8/7 周五必须盯的落地事件</strong><br>
+  <b>① 周期资源持续性·煤炭高潮后分歧</b>：8/6煤炭近10股涨停→8/7能否接力 or 高潮分歧(潞安/淮北/平煤中军承接)；贵金属盛达两连板后能否延续(西部黄金/招金/紫金/赤峰)、黄金破4300持续性；有色"算力金属"(云南锗业/多氟多/铜钴)刚果禁出口催化强度。<br>
+  <b>② 半导体纯化·存储承压</b>：电子化学品(中巨芯/江化微/有研新材)能否连板/晋级；<b>美股存储暴雷(闪迪/西数盘后-7~-10%、SK海力士-10%)→8/7 A股存储(兆易/太极)/CPO(中际/新易盛)开盘承压</b>，富创(大基金三期)/长电(封测)/沃格(光刻机)能否独立走强。<br>
+  <b>③ 新质生产力·宇树催化+数字货币/6G</b>：宇树科技8/10申购→机器人前排(中大力德/卧龙/绿的谐波)发酵强度；数字货币(飞天/恒宝/翠微)换手、6G(武汉凡谷/通宇)延续性。<br>
+  <b>④ 医药基药"一日游"确认</b>：8/6医药多数跌→8/7 CRO(百花/药明/凯莱英)能否分歧回流 or 继续退潮，决定医药是否彻底降支线。<br>
+  <b>⑤ 外围+流动性</b>：道指终结五连涨-0.85%/纳指-0.06%/中概+0.27%；央行8/6净回笼2695亿(DR001降至1.35%宽松未改)→关注8/7逆回购力度；原油+4%(通胀双刃)；成交能否维持2.5万亿+。<br>
+  <b>⑥ 沪指3900上方压力</b>：8/6收3900.35，8/7防冲高回落/量能衰减后的分化；3870技术支撑(8/6最低3864)、破则降防。<br>
+</div>
+
+<!-- ===== INDEX CARDS ===== -->
+<div class="index-cards">
+  <div class="index-card">
+    <div class="name">上证(8/6收盘)</div>
+    <div class="price" style="color:#00d4aa;">3900.35</div>
+    <div class="change green">+0.57%</div>
+    <div class="sub">站稳3900·结构再平衡</div>
+  </div>
+  <div class="index-card">
+    <div class="name">创业板指</div>
+    <div class="price" style="color:#ff4757;">3515.56</div>
+    <div class="change red">-0.55%</div>
+    <div class="sub">成长回调·深市弱</div>
+  </div>
+  <div class="index-card">
+    <div class="name">科创50</div>
+    <div class="price" style="color:#00d4aa;">1701.29</div>
+    <div class="change green">+0.45%</div>
+    <div class="sub">连续三日涨·纯化</div>
+  </div>
+  <div class="index-card">
+    <div class="name">两市成交</div>
+    <div class="price" style="color:#ffa502;">2.53万亿</div>
+    <div class="change red">缩量1308亿</div>
+    <div class="sub">天量后衰减</div>
+  </div>
+  <div class="index-card">
+    <div class="name">贵金属/煤炭</div>
+    <div class="price" style="color:#ffa502;">连板潮</div>
+    <div class="change green">资源最强</div>
+    <div class="sub">黄金破4300</div>
+  </div>
+  <div class="index-card">
+    <div class="name">道指(8/6夜)</div>
+    <div class="price" style="color:#ff4757;">-0.85%</div>
+    <div class="change red">终结五连涨</div>
+    <div class="sub">纳指-0.06%中概+0.27%</div>
+  </div>
+</div>
+
+<!-- ===== Q1: 主流题材 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">1</span>当下主流题材（至多3个 + 支线，基于8/6真实收盘 + 8/6美股分化 + 8/7盘前新政重排，主线=「周期资源(煤炭+贵金属·有色) + 半导体硬科技(纯化) + 新质生产力(数字货币/6G/机器人)」）</div>
+
+  <!-- Theme 1: 周期资源 -->
+  <div class="theme-card buy">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🟢 周期资源（煤炭高股息 + 贵金属·有色·小金属"算力金属"）— 启动→加速/趋势高潮·8/6绝对最强主线（#1·新晋）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">8/6周期资源双线爆发领涨全市：<b>煤炭午后涨停潮</b>——潞安环能/淮北矿业/平煤股份/昊华能源/兖矿能源/大有能源等近10股涨停(动力煤价格指数全线上调+旺季需求+高股息避险)；<b>贵金属全天强</b>——盛达资源盘中两连板、招金黄金/中金黄金/西部黄金/山金国际涨超5%(Wind贵金属指数+1.83%、现货黄金破4300)；<b>有色小金属活跃</b>——云南锗业/多氟多10%涨停、刚果(金)禁止铜钴出口催化铜钴锡钽"算力金属"飙升(LME三个月铜14369.5美元/吨逼近历史高点)；叠加原油+4%地缘扰动。逻辑=高股息避险+旺季+供给侧扰动+AI算力金属稀缺+降息预期(黄金)</div>
+      </div>
+      <div class="theme-signal buy">BUY · 前排换手/中军低吸</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的（煤炭 / 贵金属 / 有色小金属）</div>
+        <div class="value">
+          <span class="stock-tag gold">潞安环能 601699 / 淮北矿业 600985 / 平煤股份 601666 / 昊华能源 601101 / 兖矿能源 600188 / 大有能源 (煤炭·高股息+旺季)</span>
+          <span class="stock-tag gold">盛达资源 000603 (两连板·白银龙头) / 西部黄金 601069 (净利+200%+) / 招金黄金 / 中金黄金 / 山金国际 / 赤峰黄金 600988 / 山东黄金 600547 / 紫金矿业 601899 (贵金属)</span>
+          <span class="stock-tag gold">云南锗业 002428 (10%·锗) / 多氟多 002407 (10%·氟化工) / 洛阳钼业 603993 (铜钴) / 江西铜业/锡业股份/东方钽业/湖南黄金 (算力金属)</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金/强度信号</div>
+        <div class="value" style="color:#00d4aa;">8/6煤炭近10股涨停、贵金属指数+1.83%(盛达两连板)、有色小金属涨停多；现货黄金破4300(COMEX 8/6 +3.67%至4245、8/7早4300)、刚果禁铜钴→铜钴锡钽稀缺溢价；美联储加息预期降温+美元走弱(8交易日跌1.7%)→黄金支撑；高股息避险+旺季(煤炭)共振</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          逻辑：煤炭启动→加速(涨停潮)、贵金属趋势高潮(连板+破4300)、有色事件驱动(刚果禁出口)；但<b>煤炭已高潮/盛达两连板→防分歧回落</b>；原油+4%双刃(通胀)；黄金破4300后追高性价比下降→以"前排换手/中军低吸"为主、不追加速连板
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">8/6煤炭涨停潮(潞安/淮北/平煤/昊华/兖矿/大有能源)：动力煤价格指数全线上调+迎峰度夏旺季+高股息避险抱团</li>
+        <li class="pos">贵金属破4300：COMEX黄金8/6 +3.67%至4245.80、8/7早一度4300；美元指数8交易日跌1.7%、美联储加息预期降温；央行Q2购金环比+400%；盛达资源半年报净利+456%</li>
+        <li class="pos">刚果(金)禁止铜精矿/钴精矿出口→LME铜14369.5逼近历史高、铜钴锡钽"算力金属"供不应求(2026上半年多品种涨30%-158%)→有色重估</li>
+        <li class="neg">⚠️ 煤炭已高潮(近10股涨停)→防分歧回落；盛达两连板/黄金破4300后追高性价比降；原油+4%(美油78.23)双刃(通胀压制成长)；若美伊霍尔木兹协议达成→资源溢价消退；中报兑现+追涨小票风险</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker warm" style="left:35%;width:30%;"></div>
+        <div class="stage-segment">退潮</div>
+        <div class="stage-segment">启动</div>
+        <div class="stage-segment" style="color:#ffa502;font-weight:700;">↑ 加速/趋势高潮</div>
+        <div class="stage-segment">高位分歧</div>
+      </div>
+      <div style="font-size:13px;color:#00d4aa;margin-top:4px;">
+        ✅ 启动→加速/趋势高潮·<b>能买：煤炭前排换手+中军(潞安/淮北/平煤)、贵金属前排小仓(西部黄金/招金/紫金·不追盛达两连板)、有色算力金属(云南锗业/多氟多/铜钴)；仓位20-26%，资源升#1主流(8/6最强)</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme 2: 半导体硬科技 -->
+  <div class="theme-card buy">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🟢 半导体/硬科技（设备/材料/电子化学品/先进封装/PCB·存储分化谨慎）— 反转确认→主升分化·纯化延续（#2）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">8/6半导体纯化延续、内部分化：<b>电子化学品最强</b>——中巨芯-U 20%涨停、江化微/有研新材涨停、有研硅/欧莱新材/锴威特强；<b>先进封装/封测/光刻机</b>——长电科技10%涨停(封测)、沃格光电连板(光刻机)、拓荆科技、景旺电子/天通股份涨停；<b>大基金三期布局半导体上游</b>(富创精密关联沈阳正芯·国投集新入股)；叠加集成电路条例10月实施+DeepSeek拟涨价利好算力。但<b>存储/CPO整体弱于前两日</b>，且<b>8/6美股存储暴雷</b>(闪迪/西数盘后-7~-10%、SK海力士-10%)→A股存储(兆易/太极)/CPO(中际/新易盛)开盘承压</div>
+      </div>
+      <div class="theme-signal buy">BUY · 前排业绩回踩低吸</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的（电子化学品/材料/设备/封测/光刻机）</div>
+        <div class="value">
+          <span class="stock-tag hl">中巨芯-U 688549 (20%·电子化学品) / 江化微 603078 / 有研新材 600206 (靶材) / 有研硅 688432 / 欧莱新材 688530 / 锴威特 688693 (材料)</span>
+          <span class="stock-tag hl">富创精密 688409 (大基金三期·设备) / 长电科技 600584 (10%·封测) / 沃格光电 603773 (连板·光刻机) / 拓荆科技 688072 (设备)</span>
+          <span class="stock-tag hl">景旺电子 603228 / 天通股份 600330 / 东山精密 002384 / 生益科技 600183 (PCB/先进封装)</span>
+          <span class="stock-tag" style="background:rgba(255,165,2,0.12);color:#ffb84d;">兆易创新 603986 / 太极实业 600667 (存储·谨慎·受SK海力士-10%压制)</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金/强度信号</div>
+        <div class="value" style="color:#00d4aa;">8/6电子化学品涨停潮(中巨芯20%/江化微/有研新材)、封测长电10%涨停、沃格连板；大基金三期发力上游(自主可控)、集成电路条例10月实施(知识产权)、DeepSeek涨价(算力)；科创50连续三日涨(1701.29 +0.45%)</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          逻辑：反转确认→主升分化(电子化学品/先进封装强，存储弱)；<b>存储受美股暴雷(闪迪/西数/SK海力士-10%)压制→降谨慎不追</b>；整体"涨势弱于前两日"、成交缩量→以"前排业绩回踩低吸"为主、不追加速
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">8/6电子化学品涨停潮(中巨芯20%/江化微/有研新材)、封测长电10%、沃格连板→半导体纯化延续；科创50连续三日涨</li>
+        <li class="pos">大基金三期布局半导体上游(富创精密关联沈阳正芯获国投集新入股)→设备/材料/核心零部件自主可控加码</li>
+        <li class="pos">集成电路布图设计保护条例10月实施(知识产权强化·国产替代)、DeepSeek拟大幅涨价(利好算力/存储/云计算)</li>
+        <li class="neg">⚠️ 8/6美股存储暴雷——闪迪/西部数据财报超预期但指引平淡、盘后-7%~-10%，亚太铠侠/SK海力士-10%→8/7 A股存储(兆易/太极)/CPO(中际/新易盛)开盘承压；成交缩量(2.53万亿)→科技续涨需量能确认；中报雷</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker buy" style="left:28%;width:28%;"></div>
+        <div class="stage-segment">退潮</div>
+        <div class="stage-segment">超跌反弹</div>
+        <div class="stage-segment" style="color:#00d4aa;font-weight:700;">↑ 反转确认/主升分化</div>
+        <div class="stage-segment">加速</div>
+      </div>
+      <div style="font-size:13px;color:#00d4aa;margin-top:4px;">
+        ✅ 反转确认→主升分化·<b>能买：电子化学品/设备/封测前排回踩低吸(中巨芯/江化微/有研新材/富创/长电/沃格)，存储谨慎(美股暴雷)；仓位15-20%，半导体纯化延续#2主流</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme 3: 新质生产力 -->
+  <div class="theme-card buy">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🟢 新质生产力（数字货币 / 6G·通信设备 / 人形机器人）— 启动/题材发酵·接棒活跃（#3·新晋）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">8/6新质生产力活跃、接棒AI应用退潮：<b>数字货币</b>——飞天诚信20%涨停、恒宝股份/翠微股份/楚天龙涨停(数字人民币+稳定币题材)；<b>6G/通信设备</b>——武汉凡谷/通宇通讯涨停、广哈通信20%(6G+卫星互联网)；<b>8/7盘前宇树科技(人形机器人第一股)发行价150.80元/市值约610亿、8/10申购</b>(DeepSeek/腾讯/国家级基金战配)→机器人板块催化(中大力德/卧龙电驱/绿的谐波/长盛轴承)。逻辑=政策新质生产力+事件催化+题材轮动，但纯题材属性、控仓</div>
+      </div>
+      <div class="theme-signal buy">BUY · 前排换手·控仓</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的（数字货币 / 6G / 机器人）</div>
+        <div class="value">
+          <span class="stock-tag hl">飞天诚信 300386 (20%·数字货币) / 恒宝股份 002104 / 翠微股份 603123 / 楚天龙 003040 (数字人民币/稳定币)</span>
+          <span class="stock-tag hl">武汉凡谷 002194 / 通宇通讯 002792 / 广哈通信 300711 (20%) / 硕贝德 (6G/通信设备)</span>
+          <span class="stock-tag hl">中大力德 002896 / 卧龙电驱 600580 / 绿的谐波 688017 / 长盛轴承 300718 / 鸣志电器 (人形机器人·宇树催化)</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金/强度信号</div>
+        <div class="value" style="color:#00d4aa;">8/6数字货币(飞天/恒宝/翠微/楚天龙)集中涨停、6G(武汉凡谷/通宇)涨停、广哈20%；宇树科技8/10申购(市值610亿·DeepSeek/腾讯/国家级基金战配)→机器人事件催化；新质生产力为政策长期主线</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          逻辑：启动/题材发酵、接棒AI应用退潮；但<b>纯题材属性、连板高度有限、易被兑现</b>→以"前排换手、控仓"为主，不追加速，与主线(资源/半导体)形成题材补充
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">8/6数字货币集中涨停(飞天20%/恒宝/翠微/楚天龙)、6G(武汉凡谷/通宇)涨停→新质生产力题材活跃</li>
+        <li class="pos">宇树科技(人形机器人第一股)发行价150.80元/市值约610亿、8/10申购、DeepSeek/腾讯/国家级基金战配→机器人板块8/7催化</li>
+        <li class="pos">政策新质生产力长期主线(数字人民币/6G/卫星互联网/机器人)→事件驱动发酵空间</li>
+        <li class="neg">⚠️ 纯题材属性、连板高度有限、易被获利兑现(参考AI应用退潮)；与主线资源/半导体资金分流；追涨风险大、以分歧换手为主；破3870降至5%</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker buy" style="left:20%;width:25%;"></div>
+        <div class="stage-segment">退潮</div>
+        <div class="stage-segment" style="color:#00d4aa;font-weight:700;">↑ 启动/题材发酵</div>
+        <div class="stage-segment">加速</div>
+        <div class="stage-segment">高潮</div>
+      </div>
+      <div style="font-size:13px;color:#00d4aa;margin-top:4px;">
+        ✅ 启动/题材发酵·<b>能买：前排换手(飞天/恒宝/翠微·武汉凡谷/通宇·机器人前排)，控仓；仓位8-12%，新质生产力升#3主流(接棒AI应用)</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- CRO医药 支线观察 -->
+  <div class="theme-card watch">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name" style="color:#ffb84d;">🟠 CRO/医药 — 政策结构性支线(WATCH·基药"一日游"初步兑现·降观察)</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">8/6医药多数下跌(哈药股份/太极集团等跌逾3%)→v24/v27"基药目录新政首日一日游"风险初步兑现；仅CRO局部活跃(百花医药涨停)、人民同泰/百花医药等前排。逻辑=2026版基药目录(16种创新药)长期利好仍在，但短期资金被周期/半导体吸走、新政催化未能延续→降为"政策结构性支线3-5%观察"，等分歧低吸中军(药明/凯莱英)而非追涨</div>
+      </div>
+      <div class="theme-signal watch">WATCH · 等分歧低吸中军</div>
+    </div>
+    <div style="font-size:13px;color:#cbd5e1;margin-top:8px;">
+      核心：药明康德(603259)/凯莱英(002821)/昭衍新药/泰格医药(CXO中军)；百花医药(600721·涨停·CRO前排)/人民同泰；恒瑞/迪哲/贝达(创新药·进目录)。仅支线观察、等医药分歧回流、不追涨停；仓位3-5%。
+    </div>
+  </div>
+
+  <!-- AI应用/教育传媒 退潮回避 -->
+  <div class="theme-card avoid">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name" style="color:#ff6b7a;">🔴 AI应用/教育传媒 — 退潮回避(AVOID·8/6调整·传智走低)</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">8/6教育/传媒(AI应用)展开调整：中公教育/凯文教育跌幅超7%、传智教育走低、证券/影视院线/短剧/AI语料偏弱。逻辑=v27.0"AI应用支线活跃"被证伪，资金从前期单边成长(AI应用)转向周期与半导体纯化；DeepSeek涨价虽利好算力但应用端短期兑现→维持回避，等待下一轮催化</div>
+      </div>
+      <div class="theme-signal avoid">AVOID · 退潮兑现</div>
+    </div>
+    <div style="font-size:13px;color:#cbd5e1;margin-top:8px;">
+      汽车整车(北汽蓝谷/江淮-5%)、电力设备、券商8/6亦偏弱→防御/弱周期方向暂避；油气因原油+4%双刃(通胀压制成长/利好资源)仅观察。
+    </div>
+  </div>
+</div>
+
+<!-- ===== Q2: 核心标的全览 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">2</span>主流题材核心标的全览（8/7 周五盘前版 · v28.0）</div>
+  <table class="plan-table">
+    <thead>
+      <tr>
+        <th>题材</th>
+        <th>核心标的</th>
+        <th>角色定位</th>
+        <th>逻辑/信号（8/6收盘+8/6美股+8/7盘前）</th>
+        <th>操作方向</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="3" style="color:#ffa502;font-weight:700;">周期资源</td>
+        <td><b>潞安环能 601699 / 淮北矿业 600985 / 平煤股份 601666 / 昊华能源 601101 / 兖矿能源 600188 / 大有能源</b></td>
+        <td>煤炭(前排/中军)</td>
+        <td style="color:#00d4aa;">8/6近10股涨停；动力煤价格上调+旺季+高股息</td>
+        <td class="action-buy">前排换手·中军低吸</td>
+      </tr>
+      <tr>
+        <td><b>盛达资源 000603(两连板·白银) / 西部黄金 601069(净利+200%+) / 招金黄金 / 中金黄金 / 山金国际 / 赤峰黄金 600988 / 山东黄金 600547 / 紫金矿业 601899</b></td>
+        <td>贵金属(前排)</td>
+        <td style="color:#00d4aa;">8/6盛达两连板；黄金破4300；央行Q2购金+400%</td>
+        <td class="action-buy">前排小仓·不追连板</td>
+      </tr>
+      <tr>
+        <td><b>云南锗业 002428(10%·锗) / 多氟多 002407(10%·氟化工) / 洛阳钼业 603993(铜钴) / 江西铜业/锡业股份/东方钽业/湖南黄金</b></td>
+        <td>有色小金属(算力金属)</td>
+        <td style="color:#00d4aa;">刚果禁铜钴出口→铜钴锡钽飙升(LME铜逼近历史高)</td>
+        <td class="action-buy">事件驱动·前排换手</td>
+      </tr>
+      <tr>
+        <td rowspan="3" style="color:#00d4aa;font-weight:700;">半导体硬科技</td>
+        <td><b>中巨芯-U 688549(20%·电子化学品) / 江化微 603078 / 有研新材 600206(靶材) / 有研硅 688432 / 欧莱新材 688530 / 锴威特 688693</b></td>
+        <td>电子化学品/材料(前排)</td>
+        <td style="color:#00d4aa;">8/6涨停潮；大基金三期+集成电路条例</td>
+        <td class="action-buy">前排回踩低吸</td>
+      </tr>
+      <tr>
+        <td><b>富创精密 688409(大基金三期) / 长电科技 600584(10%·封测) / 沃格光电 603773(连板·光刻机) / 拓荆科技 688072 / 景旺电子 603228 / 天通股份 600330 / 东山精密 002384 / 生益科技 600183</b></td>
+        <td>设备/封测/PCB/先进封装</td>
+        <td style="color:#00d4aa;">大基金三期布局上游；DeepSeek涨价利好算力</td>
+        <td class="action-buy">回踩低吸·不追高</td>
+      </tr>
+      <tr>
+        <td><b>兆易创新 603986 / 太极实业 600667(存储·谨慎)</b></td>
+        <td>存储(承压)</td>
+        <td style="color:#ffa502;">美股存储暴雷(SK海力士-10%/闪迪西数盘后-7~-10%)</td>
+        <td class="action-hold">谨慎·等企稳</td>
+      </tr>
+      <tr>
+        <td rowspan="3" style="color:#00d4aa;font-weight:700;">新质生产力</td>
+        <td><b>飞天诚信 300386(20%) / 恒宝股份 002104 / 翠微股份 603123 / 楚天龙 003040</b></td>
+        <td>数字货币(前排)</td>
+        <td style="color:#00d4aa;">8/6集中涨停；数字人民币/稳定币</td>
+        <td class="action-buy">前排换手</td>
+      </tr>
+      <tr>
+        <td><b>武汉凡谷 002194 / 通宇通讯 002792 / 广哈通信 300711(20%) / 硕贝德</b></td>
+        <td>6G/通信设备</td>
+        <td style="color:#00d4aa;">8/6涨停；6G+卫星互联网</td>
+        <td class="action-buy">前排换手</td>
+      </tr>
+      <tr>
+        <td><b>中大力德 002896 / 卧龙电驱 600580 / 绿的谐波 688017 / 长盛轴承 300718 / 鸣志电器</b></td>
+        <td>人形机器人(宇树催化)</td>
+        <td style="color:#00d4aa;">宇树8/10申购(市值610亿·DeepSeek/腾讯战配)</td>
+        <td class="action-buy">事件催化低吸</td>
+      </tr>
+      <tr>
+        <td style="color:#ffb84d;font-weight:700;">支线观察</td>
+        <td><b>药明康德/凯莱英/昭衍(CXO中军)；百花医药(600721·涨停)/人民同泰；恒瑞/迪哲/贝达</b></td>
+        <td>CRO/医药(政策结构性)</td>
+        <td style="color:#ffb84d;">基药"一日游"初步兑现·等分歧回流</td>
+        <td class="action-hold">观察·分歧低吸</td>
+      </tr>
+      <tr>
+        <td style="color:#ff6b7a;font-weight:700;">回避</td>
+        <td><b>中公/凯文/传智(教育AI应用)；北汽蓝谷/江淮(汽车)；券商/电新</b></td>
+        <td>AI应用/弱周期</td>
+        <td style="color:#ff6b7a;">8/6退潮调整·资金切向周期/半导体</td>
+        <td class="action-sell">回避·等催化</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== Q3: 阶段判断 + 交易计划 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">3</span>阶段判断与 8/7 周五盘前交易计划（8/6真实收盘+8/6美股分化+8/7盘前央行宽松/大基金三期/DeepSeek涨价/刚果禁铜钴/宇树申购 · 主线重排=周期资源 + 半导体硬科技(纯化) + 新质生产力）</div>
+
+  <!-- Key Levels -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📐 上证指数关键点位（8/7 盘前 · 8/6收3900.35站稳3900、最低3864.27；缩量+外围分化+央行净回笼→防冲高回落）</div>
+    <div class="level-grid">
+      <div class="level-card">
+        <div class="label">极端支撑</div>
+        <div class="value red">3800</div>
+        <div class="note">7/20新低·破则30%防御</div>
+      </div>
+      <div class="level-card">
+        <div class="label">强支撑</div>
+        <div class="value orange">3870</div>
+        <div class="note">8/6最低3864·破则降防</div>
+      </div>
+      <div class="level-card">
+        <div class="label">当前位/整数关</div>
+        <div class="value orange">3900.35 / 3900</div>
+        <div class="note">8/6收·站稳</div>
+      </div>
+      <div class="level-card">
+        <div class="label">反弹压力</div>
+        <div class="value orange">3930-3940</div>
+        <div class="note">前高·需放量突破</div>
+      </div>
+      <div class="level-card">
+        <div class="label">反转确认</div>
+        <div class="value green">4000</div>
+        <div class="note">放量站稳=主升延续</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 能不能买 速览 -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">✅ 三大主线「能不能买」速览</div>
+    <div class="level-grid">
+      <div class="level-card">
+        <div class="label">周期资源</div>
+        <div class="value green">能买·前排换手</div>
+        <div class="note">煤炭高潮/贵金属连板·防回落</div>
+      </div>
+      <div class="level-card">
+        <div class="label">半导体硬科技</div>
+        <div class="value green">能买·回踩低吸</div>
+        <div class="note">纯化·存储谨慎</div>
+      </div>
+      <div class="level-card">
+        <div class="label">新质生产力</div>
+        <div class="value green">能买·前排控仓</div>
+        <div class="note">题材发酵·宇树催化</div>
+      </div>
+      <div class="level-card">
+        <div class="label">CRO医药</div>
+        <div class="value orange">观察·分歧低吸</div>
+        <div class="note">基药一日游·等回流</div>
+      </div>
+      <div class="level-card">
+        <div class="label">AI应用/弱周期</div>
+        <div class="value red">不买·退潮</div>
+        <div class="note">教育传媒汽车券商弱</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scenario -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">🎲 8/7 情景推演（沪指站稳3900+央行宽松基调+大基金三期+黄金破4300+刚果禁铜钴 · 但缩量1308亿+道指-0.85%终结五连涨+存储暴雷+央行净回笼2695亿·控仓分歧低吸）</div>
+    <div class="scenario-grid">
+      <div class="scenario-card" style="border-color:rgba(0,212,170,0.3);">
+        <div class="prob bull">40%</div>
+        <div style="font-weight:600;margin-bottom:4px;">乐观：结构牛延续·周期+科技双轮·放量站稳3930</div>
+        <div class="desc">沪指3900上方稳步推升、成交维持2.5万亿+；周期资源(煤炭中军潞安/淮北承接、贵金属西部黄金/招金/紫金接力、有色算力金属云南锗业/多氟多延续)与半导体纯化(中巨芯/江化微/富创/长电/沃格)双轮驱动；新质生产力(数字货币/6G/机器人宇树催化)题材活跃；央行宽松基调+大基金三期+黄金破4300+刚果禁铜钴支撑风险偏好；中概逆势+0.27%映射；沪指冲击3930-3940前高</div>
+      </div>
+      <div class="scenario-card" style="border-color:rgba(255,165,2,0.3);">
+        <div class="prob neutral">35%</div>
+        <div style="font-weight:600;margin-bottom:4px;">中性：缩量轮动·轻指数重个股·3870-3930拉锯</div>
+        <div class="desc">天量后缩量(2.53万亿)、结构再平衡：周期前排(煤炭/贵金属/有色)承接但后排掉队、半导体纯化(电子化学品强/存储弱)、新质生产力题材轮动；道指终结五连涨-0.85%+存储暴雷(SK海力士-10%)部分压制开盘；央行8/6净回笼2695亿流动性边际收紧信号；沪指3870-3930窄幅震荡；不重仓押方向、守前排业绩+资源中军+"分歧低吸"纪律；中报雷开始释放</div>
+      </div>
+      <div class="scenario-card" style="border-color:rgba(255,71,87,0.3);">
+        <div class="prob bear">25%</div>
+        <div style="font-weight:600;margin-bottom:4px;">悲观：量能衰减·高开低走·破3870·周期分歧/科技回落</div>
+        <div class="desc">缩量1308亿后继续衰减→"缩量见顶"；煤炭高潮后分歧、盛达连板炸板、贵金属/有色冲高回落；存储暴雷(SK海力士-10%/闪迪西数)拖累半导体/CPO全面回落；道指终结五连涨+原油+4%通胀+央行净回笼→风险偏好回落；医药基药"一日游"延续、AI应用退潮扩散；沪指破3870(8/6最低3864)、向3800寻支撑；需降至40%防御、破3800极端30%；中报雷+地缘(霍尔木兹)外溢</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Position Allocation -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">💰 仓位配置建议（总仓位 50-60%·沪指站稳3900+央行宽松+大基金三期+黄金破4300+刚果禁铜钴→结构进攻但"缩量+外围分化+净回笼"未确认续涨·现金守分歧低吸）</div>
+    <div class="position-grid">
+      <div id="positionChart" class="chart-container" style="height:280px;"></div>
+      <div class="position-list">
+        <div class="position-item">
+          <span class="name">🟡 周期资源(煤炭+贵金属+有色)</span>
+          <span class="pct green">20-26%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🟢 半导体硬科技(设备/材料/封测)</span>
+          <span class="pct green">15-20%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🟢 新质生产力(数字货币/6G/机器人)</span>
+          <span class="pct green">8-12%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🟠 CRO医药(观察)</span>
+          <span class="pct orange">3-5%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🔴 AI应用/弱周期(回避)</span>
+          <span class="pct gray">0%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">💵 现金（守分歧低吸）</span>
+          <span class="pct gray">40-45%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trading Plan Table -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📋 分批交易计划（8/7 周五盘前 · v28.0 · 基于8/6真实收盘+8/6美股分化+8/7盘前央行宽松/大基金三期/DeepSeek涨价/刚果禁铜钴/宇树申购）</div>
+    <table class="plan-table">
+      <thead>
+        <tr>
+          <th>方向</th>
+          <th>触发条件</th>
+          <th>操作</th>
+          <th>仓位</th>
+          <th>止损/风控</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:#ffa502;font-weight:700;">周期资源</td>
+          <td>煤炭前排(潞安/淮北/平煤/昊华)换手不炸板、中军回踩5日线；贵金属前排(西部黄金/招金/紫金/赤峰)小仓、不追盛达两连板；有色算力金属(云南锗业/多氟多/洛阳钼业/铜钴锡钽)事件驱动</td>
+          <td class="action-buy">前排换手·中军低吸</td>
+          <td>20-26%</td>
+          <td>⚠️ 煤炭已高潮(近10股涨停)防分歧回落；盛达两连板/黄金破4300后追高性价比降；原油+4%双刃(通胀)；刚果禁出口若缓和→有色溢价消退；破3870降至15%</td>
+        </tr>
+        <tr>
+          <td style="color:#00d4aa;font-weight:700;">半导体硬科技</td>
+          <td>电子化学品/材料(中巨芯/江化微/有研新材/有研硅)、设备/封测(富创/长电/沃格/拓荆)、PCB(景旺/东山/生益)前排回踩5/10日线缩量企稳；存储(兆易/太极)谨慎等美股暴雷消化</td>
+          <td class="action-buy">前排回踩低吸</td>
+          <td>15-20%</td>
+          <td>⚠️ 美股存储暴雷(闪迪/西数盘后-7~-10%、SK海力士-10%)→8/7存储/CPO(中际/新易盛)开盘承压；成交缩量(2.53万亿)科技续涨需量能确认；中报雷；破3870降至10%</td>
+        </tr>
+        <tr>
+          <td style="color:#00d4aa;font-weight:700;">新质生产力</td>
+          <td>数字货币(飞天/恒宝/翠微)前排换手、6G(武汉凡谷/通宇/广哈)延续、机器人(中大力德/卧龙/绿的谐波/长盛)宇树催化低吸；纯题材控仓</td>
+          <td class="action-buy">前排换手·控仓</td>
+          <td>8-12%</td>
+          <td>⚠️ 纯题材属性、连板高度有限、易被兑现(参考AI应用退潮)；与资源/半导体资金分流；追涨风险大；破3870降至5%</td>
+        </tr>
+        <tr>
+          <td style="color:#ffb84d;font-weight:700;">CRO医药</td>
+          <td>药明康德/凯莱英分歧低吸(不追涨停)、百花医药/人民同泰前排换手；等基药"一日游"后回流；仅观察</td>
+          <td class="action-hold">观察·分歧低吸中军</td>
+          <td>3-5%</td>
+          <td>8/6医药多数跌(哈药/太极-3%)→基药目录"一日游"初步兑现；追涨停风险大；破3870降至0</td>
+        </tr>
+        <tr>
+          <td style="color:#ff6b7a;font-weight:700;">AI应用/弱周期</td>
+          <td>教育传媒(中公/凯文/传智)、汽车(北汽/江淮)、券商/电新8/6偏弱→回避；等下一轮催化</td>
+          <td class="action-sell">回避</td>
+          <td>0%</td>
+          <td>8/6退潮调整、资金切向周期/半导体；AI应用退潮、汽车/电新/券商弱；油气因油价+4%双刃仅观察</td>
+        </tr>
+        <tr>
+          <td style="color:#94a3b8;font-weight:700;">现金</td>
+          <td colspan="2">守到高开回落后的低吸机会、资源中军/半导体前排业绩回踩、新质生产力前排换手、3900上方主线+业绩中军</td>
+          <td>40-45%</td>
+          <td>保留机动应对破3870/缩量高开低走/周期分歧/存储暴雷/医药一日游/中报雷/地缘</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Alerts -->
+  <div style="margin-bottom:16px;">
+    <div class="alert-box danger">
+      <div class="title">🚨 风险警报（8/7 盘前关键变量 · 缩量1308亿+道指-0.85%终结五连涨+存储暴雷+央行净回笼2695亿+3900压力+中报雷）</div>
+      <div>① <b>缩量衰减风险</b> —— 8/6成交2.53万亿(较8/5缩量1308亿)，天量后量能回落→反弹持续性待验，防"缩量见顶/冲高回落"</div>
+      <div>② <b>外围科技走弱+存储暴雷</b> —— 道指-0.85%终结五连涨、纳指-0.06%；闪迪/西部数据盘后-7%~-10%、亚太SK海力士-10%→8/7 A股存储(兆易/太极)/CPO(中际/新易盛)开盘承压</div>
+      <div>③ <b>流动性边际收紧信号</b> —— 央行8/6仅10亿7天逆回购、单日净回笼2695亿(虽DR001降至1.35%宽松未改)；关注8/7逆回购力度，若持续净回笼→资金面预期转弱</div>
+      <div>④ <b>3900上方整数压力+结构再平衡</b> —— 8/6收3900.35(最低3864.27)，深市/创业板跌、板块从科技全面转向周期+成长；沪指3930-3940前高需放量突破，否则3870-3930拉锯；3870(8/6最低)破则降防</div>
+      <div>⑤ <b>高潮板块分歧风险</b> —— 煤炭近10股涨停、盛达两连板、黄金破4300→均已处相对高位，防"高潮后分歧/连板炸板"；追高性价比下降</div>
+      <div>⑥ <b>中报密集披露(业绩雷)</b> —— 8月半年报窗口，高位无业绩纯题材小票易筹码兑现；优选中报预增(贵金属11股净利+40%+)有真实订单的硬科技与资源</div>
+      <div>⑦ <b>地缘双刃</b> —— 霍尔木兹"尚未正式达成"+美海军封锁+水雷风险→原油+4%(通胀压制成长/利好资源)；若协议达成→资源溢价消退；中美摩擦(光模块禁进口)余波</div>
+    </div>
+    <div class="alert-box success">
+      <div class="title">✅ 积极催化（8/6真实收盘 + 8/7盘前新政）</div>
+      <div>① <b>沪指站稳3900</b> —— 3900.35(+0.57%)、科创50连续三日涨(1701.29 +0.45%)；结构再平衡中指数韧性显现</div>
+      <div>② <b>央行下半年适度宽松+定向硬科技</b> —— 8月初工作会议明确全年适度宽松不动摇、信贷倾斜科技创新/中小微/绿色/养老；ETF持续净流入、产业资本低位布局</div>
+      <div>③ <b>大基金三期布局半导体上游</b> —— 富创精密关联沈阳正芯获国投集新(大基金三期)入股→设备/材料/核心零部件自主可控加码</div>
+      <div>④ <b>DeepSeek拟大幅涨价</b> —— 利好算力/存储/云计算；同日集成电路条例10月实施(知识产权强化)</div>
+      <div>⑤ <b>刚果禁铜钴出口+黄金破4300</b> —— 铜钴锡钽"算力金属"飙升(LME铜逼近历史高)；COMEX黄金8/6 +3.67%至4245、8/7早破4300；央行Q2购金环比+400%</div>
+      <div>⑥ <b>宇树科技8/10申购(市值610亿)</b> —— DeepSeek/腾讯/国家级基金战配→人形机器人板块催化；张忆东"底部区域确认/8月开启秋季行情"</div>
+    </div>
+  </div>
+
+  <!-- Checklist -->
+  <div style="margin-bottom:16px;">
+    <div class="alert-box warning">
+      <div class="title">✅ 8/7 盘前检查清单（基于8/6真实收盘+8/6美股分化+8/7盘前新政重排）</div>
+      <ul class="checklist">
+        <li>✅ 主线重排：周期资源(#1·煤炭涨停潮+贵金属连板+刚果禁铜钴·8/6最强)、半导体硬科技(#2·纯化·电子化学品/先进封装强·存储谨慎)、新质生产力(#3·数字货币/6G/机器人宇树催化)；CRO医药降政策结构性支线观察、AI应用退潮回避、汽车电新券商弱；总仓50-60%(沪指站稳3900但缩量+外围分化+净回笼→守分歧低吸)</li>
+        <li>⚠️ 开盘纪律：8/6缩量1308亿+道指-0.85%终结五连涨+存储暴雷→<b>防高开低走/缩量冲高回落，不追高潮连板(盛达/煤炭)；等回踩/前排业绩(中巨芯/江化微/有研新材/富创/长电/沃格/潞安/淮北)低吸</b>；存储(兆易/太极)/CPO(中际/新易盛)谨慎开盘承压</li>
+        <li>🔍 开盘观察：① 煤炭前排(潞安/淮北/平煤)能否承接 or 高潮分歧 ② 贵金属(盛达两连板后/西部黄金/招金/紫金)接力强度 ③ 有色算力金属(云南锗业/多氟多/铜钴)刚果禁出口催化 ④ 半导体电子化学品(中巨芯/江化微/有研新材)连板晋级·存储受美股暴雷承压 ⑤ 新质生产力(飞天/恒宝/翠微·武汉凡谷/通宇·机器人宇树催化) ⑥ 医药基药"一日游"延续 or 分歧回流 ⑦ 大盘能否放量站稳3930(8/6收3900.35) ⑧ 成交能否维持2.5万亿+ ⑨ 沪指3870支撑(8/6最低3864) ⑩ 央行8/7逆回购力度(8/6净回笼2695亿)</li>
+        <li>🛡️ 周期资源：煤炭前排换手+中军(潞安/淮北/平煤)低吸、贵金属前排小仓(西部黄金/招金/紫金·不追盛达两连板)、有色算力金属(云南锗业/多氟多/洛阳钼业)事件驱动；仓位20-26%</li>
+        <li>🛡️ 半导体硬科技：电子化学品/设备/封测前排回踩低吸(中巨芯/江化微/有研新材/富创/长电/沃格)，PCB/先进封装(景旺/东山/生益)分歧低吸；存储(兆易/太极)谨慎受美股暴雷；仓位15-20%</li>
+        <li>🛡️ 新质生产力：数字货币(飞天/恒宝/翠微)前排换手、6G(武汉凡谷/通宇)延续、机器人(中大力德/卧龙/绿的谐波/长盛)宇树催化低吸；纯题材控仓；仓位8-12%</li>
+        <li>🚫 CRO医药：等分歧回流(药明/凯莱英/百花)，基药"一日游"未确认结束前不追；AI应用/教育传媒/汽车/电新/券商回避；油气因油价+4%双刃仅观察</li>
+        <li>📊 盘中决策：守3870上方(不破)→总仓50-60%主线+前排业绩低吸；破3870降至40%、破3800极端30%；放量站稳3930则结构牛延续、否则3870-3930拉锯</li>
+        <li>全天纪律：<b>周期资源主攻前排换手、半导体纯化回踩低吸(存储谨慎)、新质生产力控仓题材、CRO医药观察、AI应用回避、现金40-45%守回踩</b>；"缩量+外围分化"下偏重基本面/前排业绩，不接飞刀、不博纯题材连板、防中报雷+存储暴雷外溢</li>
+        <li>盘后跟踪：美股科技能否止跌(纳指/英伟达/存储SK海力士)、A股成交放量→决定下一日(8/10周一·宇树申购日)方向；央行逆回购力度、刚果禁出口后续、黄金/铜钴持续性</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Signal Attribution -->
+  <div style="margin-bottom:16px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📊 信号归因（四维雷达）</div>
+    <div id="radarChart" class="chart-container" style="height:320px;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+      <div class="alert-box success" style="margin:0;">
+        <div class="title">最强看多信号</div>
+        <div><b>沪指站稳3900</b>(3900.35 +0.57%·结构再平衡韧性)+ <b>周期资源爆发</b>(煤炭近10股涨停/贵金属盛达两连板/黄金破4300/刚果禁铜钴"算力金属"飙升)+ <b>央行适度宽松+定向硬科技</b>+ <b>大基金三期布局上游</b>+ <b>DeepSeek拟涨价</b>+ <b>宇树科技8/10申购</b>(机器人催化)+ <b>中概逆势+0.27%</b>+ <b>张忆东"底部区域确认/秋季行情"</b>。三主线(资源/半导体/新质生产力)结构轮动+流动性宽松+政策组合拳。</div>
+      </div>
+      <div class="alert-box danger" style="margin:0;">
+        <div class="title">最强看空信号</div>
+        <div><b>缩量1308亿</b>(2.53万亿·天量后衰减)+ <b>道指终结五连涨-0.85%</b>+ <b>存储暴雷</b>(闪迪/西数盘后-7~-10%/SK海力士-10%→压制A股存储/CPO)+ <b>央行8/6净回笼2695亿</b>(流动性边际收紧)+ <b>3900上方压力/结构再平衡</b>(深市创业板跌)+ <b>高潮板块分歧</b>(煤炭/盛达连板)+ <b>中报雷</b>+ <b>地缘双刃</b>(原油+4%)。整体站稳但"缩量+外围分化"、控仓守纪律。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+  <div class="disclaimer">
+    ⚠️ 免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论均基于 2026-08-06 A股全天收盘（上证3900.35 +0.57%、深证成指14110.12 -0.24%、创业板指3515.56 -0.55%、科创50 1701.29 +0.45%；成交约2.53万亿缩量1308亿；2789股上涨/2590跌、83涨停/1跌停；煤炭近10股涨停(潞安/淮北/平煤/昊华/兖矿/大有能源)、电子化学品中巨芯-U 20%涨停/江化微/有研新材涨停、贵金属盛达资源两连板/招金/中金/西部黄金涨超5%(Wind贵金属指数+1.83%)、有色云南锗业/多氟多10%涨停、数字货币飞天诚信20%/恒宝/翠微涨停、6G武汉凡谷/通宇涨停；医药多数跌哈药/太极-3%、教育传媒汽车券商弱）+ 2026-08-06 美股（道指-0.85%报53885终结五连涨/纳指-0.06%/标普-0.18%/中概金龙+0.27%/原油+4%至78.23/COMEX黄金破4300/闪迪西部数据盘后-7~-10%·SK海力士-10%）+ 2026-08-07 盘前（央行下半年适度宽松+定向硬科技/大基金三期布局半导体上游/DeepSeek拟涨价/刚果禁铜钴出口/宇树科技8-10申购·市值610亿/张忆东底部区域确认/国家能源局核电发展报告2026）+ 公开信息，不保证未来表现。<br>
+    数据来源：上证/深证/创业板/科创行情、大众证券报、第一财经、腾讯财经、财联社、中新经纬、网易财经、新浪财经、雪球、东方财富、证券时报等公开信息 | 生成时间：2026-08-07 06:55
+  </div>
+  <div>盘前计划 v28.0（8/7 周五 · 基于8/6真实收盘+8/6美股分化+8/7盘前新政，主线重排=「周期资源(煤炭高股息+贵金属·有色·小金属) + 半导体硬科技(设备/材料/电子化学品/先进封装·存储分化) + 新质生产力(数字货币/6G/通信设备+人形机器人)」，CRO医药降政策结构性支线观察、AI应用退潮回避）| automation-1783645264539 | Powered by 星辰智能分析</div>
+</div>
+
+<script>
+// ===== Position Pie Chart =====
+var posChart = echarts.init(document.getElementById('positionChart'));
+posChart.setOption({
+  backgroundColor: 'transparent',
+  tooltip: { trigger: 'item', formatter: '{b}: {c}%' },
+  legend: { bottom: 0, textStyle: { color: '#94a3b8', fontSize: 12 } },
+  series: [{
+    type: 'pie',
+    radius: ['45%', '70%'],
+    center: ['50%', '42%'],
+    avoidLabelOverlap: false,
+    itemStyle: { borderColor: '#0f0f23', borderWidth: 2 },
+    label: {
+      show: true,
+      position: 'center',
+      formatter: '机动\n40-45%',
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: '#ffa502',
+      lineHeight: 24
+    },
+    data: [
+      { value: 23, name: '周期资源', itemStyle: { color: '#ffa502' } },
+      { value: 17, name: '半导体硬科技', itemStyle: { color: '#00d4aa' } },
+      { value: 10, name: '新质生产力', itemStyle: { color: '#764ba2' } },
+      { value: 4, name: 'CRO医药(观察)', itemStyle: { color: '#00b894' } },
+      { value: 0, name: 'AI应用/弱周期(回避)', itemStyle: { color: '#ff4757' } },
+      { value: 46, name: '现金观望', itemStyle: { color: '#2d2d44' } }
+    ]
+  }]
+});
+
+// ===== Radar Chart =====
+var radarChart = echarts.init(document.getElementById('radarChart'));
+radarChart.setOption({
+  backgroundColor: 'transparent',
+  tooltip: {},
+  radar: {
+    indicator: [
+      { name: '技术指标', max: 100 },
+      { name: '新闻情绪', max: 100 },
+      { name: '基本面', max: 100 },
+      { name: '市场环境', max: 100 }
+    ],
+    center: ['50%', '55%'],
+    radius: '65%',
+    splitArea: { areaStyle: { color: ['rgba(102,126,234,0.03)', 'rgba(102,126,234,0.06)'] } },
+    axisLine: { lineStyle: { color: '#2d2d44' } },
+    splitLine: { lineStyle: { color: '#2d2d44' } },
+    axisName: { color: '#94a3b8', fontSize: 13 }
+  },
+  series: [{
+    type: 'radar',
+    data: [
+      {
+        value: [88, 90, 84, 88],
+        name: '周期资源',
+        areaStyle: { color: 'rgba(255,165,2,0.2)' },
+        lineStyle: { color: '#ffa502', width: 2 },
+        itemStyle: { color: '#ffa502' }
+      },
+      {
+        value: [85, 88, 86, 82],
+        name: '半导体硬科技',
+        areaStyle: { color: 'rgba(0,212,170,0.18)' },
+        lineStyle: { color: '#00d4aa', width: 2 },
+        itemStyle: { color: '#00d4aa' }
+      },
+      {
+        value: [70, 80, 60, 72],
+        name: '新质生产力',
+        areaStyle: { color: 'rgba(118,75,162,0.18)' },
+        lineStyle: { color: '#764ba2', width: 2 },
+        itemStyle: { color: '#764ba2' }
+      },
+      {
+        value: [50, 70, 80, 55],
+        name: 'CRO医药(观察)',
+        areaStyle: { color: 'rgba(0,184,148,0.12)' },
+        lineStyle: { color: '#00b894', width: 2 },
+        itemStyle: { color: '#00b894' }
+      }
+    ]
+  }],
+  legend: {
+    bottom: 0,
+    textStyle: { color: '#94a3b8', fontSize: 12 },
+    data: ['周期资源', '半导体硬科技', '新质生产力', 'CRO医药(观察)']
+  }
+});
+
+window.addEventListener('resize', function() {
+  posChart.resize();
+  radarChart.resize();
+});
+</script>
+</body>
+</html>
