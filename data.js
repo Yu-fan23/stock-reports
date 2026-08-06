@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-06 08:02:47",
-  "total": 105,
+  "generatedAt": "2026-08-06 12:45:39",
+  "total": 106,
   "categories": [
     {
       "key": "panqian",
@@ -180,9 +180,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 22,
-      "latest": "20260805",
+      "count": 23,
+      "latest": "20260806",
       "reports": [
+        {
+          "date": "20260806",
+          "dateLabel": "2026-08-06（周四）",
+          "file": "reports/noon/noon_20260806.html",
+          "title": "A股午间复盘 · 2026-08-06（周四）· 指数牛皮·个股普跌·热点杂乱·控仓待变",
+          "size": 33610
+        },
         {
           "date": "20260805",
           "dateLabel": "2026-08-05（周三）",
