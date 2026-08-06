@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-06 12:45:39",
-  "total": 106,
+  "generatedAt": "2026-08-06 15:45:23",
+  "total": 107,
   "categories": [
     {
       "key": "panqian",
@@ -352,9 +352,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 27,
-      "latest": "20260805",
+      "count": 28,
+      "latest": "20260806",
       "reports": [
+        {
+          "date": "20260806",
+          "dateLabel": "2026-08-06（周四）",
+          "file": "reports/close/close_20260806.html",
+          "title": "A股行情复盘 · 收盘版（2026-08-06 周四 · 站上3900·分化加剧·两融连升确认去杠杆终结）",
+          "size": 32331
+        },
         {
           "date": "20260805",
           "dateLabel": "2026-08-05（周三）",
