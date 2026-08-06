@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-06 15:45:23",
-  "total": 107,
+  "generatedAt": "2026-08-06 16:45:28",
+  "total": 108,
   "categories": [
     {
       "key": "panqian",
@@ -559,9 +559,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 20,
-      "latest": "20260805",
+      "count": 21,
+      "latest": "20260806",
       "reports": [
+        {
+          "date": "20260806",
+          "dateLabel": "2026-08-06（周四）",
+          "file": "reports/limitup/limitup_20260806.html",
+          "title": "涨停梯队复盘 · 2026-08-06（周四 · 真实交易日）· 电子特气/氟化工/煤炭多点开花 · 连板晋级率超四成",
+          "size": 55184
+        },
         {
           "date": "20260805",
           "dateLabel": "2026-08-05（周三）",
