@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-07 08:01:09",
-  "total": 110,
+  "generatedAt": "2026-08-07 12:45:27",
+  "total": 111,
   "categories": [
     {
       "key": "panqian",
@@ -187,9 +187,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 23,
-      "latest": "20260806",
+      "count": 24,
+      "latest": "20260807",
       "reports": [
+        {
+          "date": "20260807",
+          "dateLabel": "2026-08-07（周五）",
+          "file": "reports/noon/noon_20260807.html",
+          "title": "A股午间复盘 · 2026-08-07（周五）· 科技回归·PCB涨停潮·科创收复1700·结构分化",
+          "size": 34180
+        },
         {
           "date": "20260806",
           "dateLabel": "2026-08-06（周四）",
