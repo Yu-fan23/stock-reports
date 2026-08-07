@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-07 15:45:25",
-  "total": 112,
+  "generatedAt": "2026-08-07 16:45:41",
+  "total": 113,
   "categories": [
     {
       "key": "panqian",
@@ -580,9 +580,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 21,
-      "latest": "20260806",
+      "count": 22,
+      "latest": "20260807",
       "reports": [
+        {
+          "date": "20260807",
+          "dateLabel": "2026-08-07（周五）",
+          "file": "reports/limitup/limitup_20260807.html",
+          "title": "涨停梯队复盘 · 2026-08-07（周五 · 真实交易日）· PCB/CCL+创新药CRO双主线爆发 · 汇绿生态10天6板/宝鼎科技6天5板",
+          "size": 47088
+        },
         {
           "date": "20260806",
           "dateLabel": "2026-08-06（周四）",
