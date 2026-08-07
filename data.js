@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-07 12:45:27",
-  "total": 111,
+  "generatedAt": "2026-08-07 15:45:25",
+  "total": 112,
   "categories": [
     {
       "key": "panqian",
@@ -366,9 +366,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 28,
-      "latest": "20260806",
+      "count": 29,
+      "latest": "20260807",
       "reports": [
+        {
+          "date": "20260807",
+          "dateLabel": "2026-08-07（周五）",
+          "file": "reports/close/close_20260807.html",
+          "title": "A股行情复盘 · 收盘版（2026-08-07 周五 · 四指齐涨·上证逼近年线3970·医药新材料领跑）",
+          "size": 25603
+        },
         {
           "date": "20260806",
           "dateLabel": "2026-08-06（周四）",
