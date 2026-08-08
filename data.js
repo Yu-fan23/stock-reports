@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-08 08:01:53",
-  "total": 114,
+  "generatedAt": "2026-08-08 12:45:37",
+  "total": 115,
   "categories": [
     {
       "key": "panqian",
@@ -187,9 +187,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 24,
-      "latest": "20260807",
+      "count": 25,
+      "latest": "20260808",
       "reports": [
+        {
+          "date": "20260808",
+          "dateLabel": "2026-08-08（周六）",
+          "file": "reports/noon/noon_20260808.html",
+          "title": "A股周度复盘 · 2026-08-08（周六）· 本周(8/3-8/7)全线反弹四连阳 + 下周(8/10-8/14)作战预览",
+          "size": 35509
+        },
         {
           "date": "20260807",
           "dateLabel": "2026-08-07（周五）",
