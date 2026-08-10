@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-10 08:01:46",
-  "total": 123,
+  "generatedAt": "2026-08-10 12:45:38",
+  "total": 124,
   "categories": [
     {
       "key": "panqian",
@@ -194,9 +194,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 26,
-      "latest": "20260809",
+      "count": 27,
+      "latest": "20260810",
       "reports": [
+        {
+          "date": "20260810",
+          "dateLabel": "2026-08-10（周一）",
+          "file": "reports/noon/noon_20260810.html",
+          "title": "A股午间复盘 · 2026-08-10（周一）· 先扬后抑兑现·科技兑现·医药消费接棒·控仓待变",
+          "size": 34796
+        },
         {
           "date": "20260809",
           "dateLabel": "2026-08-09（周日）",
