@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-11 08:02:48",
-  "total": 126,
+  "generatedAt": "2026-08-11 12:45:38",
+  "total": 127,
   "categories": [
     {
       "key": "panqian",
@@ -201,9 +201,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 27,
-      "latest": "20260810",
+      "count": 28,
+      "latest": "20260811",
       "reports": [
+        {
+          "date": "20260811",
+          "dateLabel": "2026-08-11（周二）",
+          "file": "reports/noon/noon_20260811.html",
+          "title": "A股午间复盘 · 2026-08-11（周二）· 指数分化·MLCC爆发·医药延续·缩量个股弱",
+          "size": 36002
+        },
         {
           "date": "20260810",
           "dateLabel": "2026-08-10（周一）",

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股午间复盘 · 2026-08-11（周二）· 指数分化·MLCC爆发·医药延续·缩量个股弱</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --accent1:#667eea; --accent2:#764ba2; --txt:#e2e8f0; --txt2:#94a3b8; --border:#2d2d44;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.55;padding:24px 16px 60px}
+  .wrap{max-width:1180px;margin:0 auto}
+  .glass{background:linear-gradient(135deg,rgba(102,126,234,.08),rgba(118,75,162,.06));border:1px solid var(--border);border-radius:16px}
+  header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:22px 26px;margin-bottom:20px}
+  header h1{font-size:23px;font-weight:700;letter-spacing:.5px}
+  header .sub{color:var(--txt2);font-size:13px;margin-top:4px;max-width:720px}
+  .badge{font-size:14px;font-weight:800;padding:10px 18px;border-radius:12px;letter-spacing:1px;max-width:480px;text-align:center}
+  .badge.danger{background:linear-gradient(135deg,#ff4757,#c0392b);color:#fff;box-shadow:0 6px 20px rgba(255,71,87,.4)}
+  .badge.warn{background:linear-gradient(135deg,#ffa502,#e67e22);color:#1a1a2e;box-shadow:0 6px 20px rgba(255,165,2,.35)}
+  .badge.rev{background:linear-gradient(135deg,#00d4aa,#00b894);color:#1a1a2e;box-shadow:0 6px 20px rgba(0,212,170,.4)}
+  .grid{display:grid;gap:18px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:880px){.g3,.g2{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.g3,.g2{grid-template-columns:1fr}}
+  section{margin:20px 0}
+  .sec-title{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;margin:6px 4px 14px}
+  .sec-title::before{content:"";width:5px;height:18px;border-radius:3px;background:linear-gradient(var(--accent1),var(--accent2))}
+  .card{padding:18px 20px}
+  .idx-head{display:flex;justify-content:space-between;align-items:baseline}
+  .idx-name{font-size:14px;font-weight:600}
+  .idx-code{font-size:11px;color:var(--txt2)}
+  .idx-price{font-size:21px;font-weight:800;margin:6px 0 2px}
+  .idx-chg{font-size:14px;font-weight:700}
+  .idx-range{font-size:11px;color:var(--txt2);margin-top:4px;line-height:1.5}
+  .stat-row{display:flex;justify-content:space-around;text-align:center;padding:14px 0;flex-wrap:wrap;gap:8px}
+  .stat-row .v{font-size:26px;font-weight:800}
+  .stat-row .l{font-size:12px;color:var(--txt2);margin-top:2px}
+  .chart{height:340px}
+  .chart-sm{height:260px}
+  .alert{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:12px;margin:10px 0}
+  .alert.risk{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.35)}
+  .alert.pos{background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.35)}
+  .alert.warn{background:rgba(255,165,2,.1);border:1px solid rgba(255,165,2,.35)}
+  .alert .ico{font-size:20px;line-height:1}
+  .alert .tt{font-weight:700;margin-bottom:3px}
+  .alert .bd{font-size:13px;color:var(--txt2);line-height:1.6}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:680px){.kpis{grid-template-columns:1fr 1fr}}
+  .kpi{padding:14px;text-align:center}
+  .kpi .v{font-size:22px;font-weight:800}
+  .kpi .l{font-size:11px;color:var(--txt2);margin-top:3px}
+  .li{display:flex;gap:10px;padding:7px 0;font-size:13px;border-bottom:1px dashed rgba(45,45,68,.7)}
+  .li:last-child{border-bottom:none}
+  .li .dot{margin-top:6px;width:7px;height:7px;border-radius:50%;flex:0 0 auto}
+  .foot{font-size:11px;color:var(--txt2);text-align:center;margin-top:26px;line-height:1.8}
+  .meta-pill{display:inline-block;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;margin:4px 6px 0 0}
+  .summary-line{font-size:15px;font-weight:600;padding:14px 18px;border-left:4px solid var(--hold);background:rgba(255,165,2,.07);border-radius:0 10px 10px 0;margin:6px 0 14px}
+  .compare{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .chip{font-size:11px;padding:4px 10px;border-radius:8px;background:rgba(45,45,68,.5);border:1px solid var(--border);color:var(--txt2)}
+  .chip.now{border-color:var(--hold);color:var(--hold)}
+  .cat-card{padding:14px 16px;border-radius:12px;border:1px solid var(--border);background:rgba(26,26,46,.6)}
+  .cat-card .t{font-weight:700;font-size:14px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .cat-card .d{font-size:12px;color:var(--txt2);line-height:1.5}
+  .temp-wrap{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  .gauge{width:200px;height:180px;flex:0 0 auto}
+  .temp-side{flex:1;min-width:240px}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+  th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--txt2);font-weight:600;font-size:12px}
+  td.buy{color:var(--buy);font-weight:700}
+  td.sell{color:var(--sell);font-weight:700}
+  td.hold{color:var(--hold);font-weight:700}
+  .plan-card{font-size:15px;font-weight:700;margin:0 0 10px;color:var(--hold)}
+  .meter{height:8px;border-radius:6px;background:rgba(45,45,68,.7);overflow:hidden;margin:6px 0}
+  .meter>span{display:block;height:100%;border-radius:6px}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:720px){.twocol{grid-template-columns:1fr}}
+  .d-red{background:var(--sell)} .d-green{background:var(--buy)} .d-amber{background:var(--hold)}
+  .verify{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px}
+  @media(max-width:760px){.verify{grid-template-columns:1fr}}
+  .sc{flex:1;padding:16px;border-radius:12px;border:1px solid var(--border);background:rgba(26,26,46,.6)}
+  .sc .h{font-weight:800;font-size:14px;margin-bottom:4px}
+  .sc .x{font-size:12px;line-height:1.6;color:var(--txt2)}
+  .sc.ok{border-color:var(--buy)} .sc.part{border-color:var(--hold)} .sc.no{border-color:var(--sell)}
+  .hit{font-size:11px;padding:2px 8px;border-radius:6px;font-weight:700;margin-right:6px}
+  .hit.y{background:rgba(0,212,170,.18);color:var(--buy)}
+  .hit.n{background:rgba(255,71,87,.18);color:var(--sell)}
+  .hit.h{background:rgba(255,165,2,.18);color:var(--hold)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="glass">
+    <div>
+      <h1>📊 A股午间复盘 · 2026-08-11（周二 · 交易日）</h1>
+      <div class="sub">指数分化·MLCC爆发·医药延续·缩量个股弱 · 沪微绿深创红、黄白背离 · 广度骤降40%、跌停0 · 科创50盘中逼1700防线 · 控仓待变 · 数据截至 11:57 午间收盘 + 财联社/证券时报/新华财经/格隆汇/同花顺 午评（WebSearch）</div>
+    </div>
+    <div class="badge warn">指数分化·MLCC爆发·医药延续·缩量个股弱</div>
+  </header>
+
+  <!-- 核心摘要 -->
+  <section>
+    <div class="summary-line">
+      <b>今日（8/11）呈典型「指数分化、个股偏弱」黄白背离</b>——沪指微跌 <b>−0.05%（3964.79）</b> 围绕平盘窄幅震荡，深成指 <b>+0.65%、创业板指 +1.41%（盘中一度重回3600）</b> 低开高走收红，<b>科创50 +0.16%（1740.62），但盘中最低 1699.92 一度逼近1700防线后拉回</b>；半日成交约 <b>1.53万亿（较8/10缩量约2160亿）</b>。
+      <b>广度骤降</b>：全市场 <b>2141涨/3194跌（赚钱效应仅40.13%）、超3100股下跌</b>，但 <b>跌停0家、涨停50家</b>——风险极低、属存量博弈下的"指数强、个股弱"。
+      <b>结构新变化</b>：① <b>MLCC概念集体爆发</b>（达利凯普20cm/双星新材/洁美科技/国风新材涨停、风华高科+8%），催化=AI算力需求推升MLCC供需紧张、客户以2–3倍原价抢货、三星电机8/1起全线涨价30%、太阳诱电9/1跟进→资金从CPO/PCB龙头切向被动元件涨价链；② <b>创新药/CRO延续</b>（百花医药6连板、哈药3连板、开开实业4连板、万邦/甘李涨停）；③ 影视院线（北京文化2连板/华智数媒20cm）、算力租赁（杭钢/鸿博涨停）活跃。<b>逆风</b>：昨日强势的军工/商业航天（中国卫星−6.8%）、小金属/有色（寒锐钴业−4.8%/紫金矿业−3%）、贵金属/稀土、白酒今日集体补跌。
+      <b>仓位维持：总仓 50–60%、现金 40–50%；加仓触发未满足（广度40%&lt;55%、成交1.53万亿&lt;1.8万亿），控仓待变；科创50盘中逼1700为需盯紧的警戒线</b>。情绪温度≈ <b>53/100（中性偏谨慎·指数强个股弱·缩量分化）</b>。
+    </div>
+    <div class="compare">
+      <span class="chip">8/3 缩量分化·控仓（58）</span>
+      <span class="chip">8/4 科技爆发·银行补跌（76）</span>
+      <span class="chip">8/5 放量普涨·科创破1700（82）</span>
+      <span class="chip">8/6 指数牛皮·个股普跌（54）</span>
+      <span class="chip">8/7 科技回归·四连阳（62→≈68）</span>
+      <span class="chip">8/10 先扬后抑·科技兑现（≈64）</span>
+      <span class="chip now">8/11 指数分化·MLCC爆发·个股弱（≈53）</span>
+    </div>
+  </section>
+
+  <!-- 主要指数午间 -->
+  <section>
+    <div class="sec-title">📈 主要指数 · 8/11 午间收盘（指数分化·沪绿深创红·科创守1700）</div>
+    <div class="grid g3" id="idxCards"></div>
+    <div class="card glass" style="margin-top:14px">
+      <div id="idxBar" class="chart"></div>
+    </div>
+    <div class="card glass" style="margin-top:14px">
+      <div id="shLine" class="chart" style="height:300px"></div>
+    </div>
+    <div class="alert warn" style="margin-top:14px">
+      <span class="ico">⚠️</span>
+      <div><div class="tt">科创50盘中最低1699.92 逼近1700防线——连续两日"假破位"须高度警惕</div>
+      <div class="bd">科创50今日开1713.26→最低 <b>1699.92（一度跌破1700）</b>→最高1753.14→收1740.62（+0.16%）。这与8/10预警"最低1708.45逼近1700须警惕"完全呼应，<b>1700防线今日被盘中刺穿后拉回</b>，属典型"假破位"；若后续放量有效跌破，将触发8/10设定的降仓失效条件。<b>CPO龙头中际旭创（成交226亿居首、早盘+2.71%）下探后显著反弹</b>，科技硬件有止跌修复迹象，但整体仍分化。</div></div>
+    <div class="alert pos">
+      <span class="ico">✅</span>
+      <div><div class="tt">跌停0家+涨停50家：风险极低，非恐慌日</div>
+      <div class="bd">尽管<b>超3100股下跌、广度仅40.13%</b>（指数强、个股弱），但<b>跌停家数为0、涨停达50家</b>，说明是"调仓换股、弃高就低"而非系统性出逃——资金从昨日强势的军工/有色/贵金属切向MLCC涨价链/医药/影视。<b>无跌停</b>是今天最关键的低风险信号，封杀了向下踩踏空间。</div></div>
+  </section>
+
+  <!-- 板块 -->
+  <section>
+    <div class="sec-title">🔥 板块表现 · 领涨：MLCC·创新药/CRO·减肥药·影视院线·算力租赁；领跌：军工/商业航天·小金属/有色·贵金属/稀土</div>
+    <div class="twocol">
+      <div class="card glass"><div id="gainBar" class="chart-sm"></div></div>
+      <div class="card glass"><div id="lossBar" class="chart-sm"></div></div>
+    </div>
+    <div class="grid g2" style="margin-top:14px">
+      <div class="cat-card">
+        <div class="t"><span class="d-green">▲</span> 领涨主线（资金承接方向）</div>
+        <div class="d">• <b>MLCC/被动元件（最强新主线）</b>：达利凯普20cm、双星新材/洁美科技/国风新材涨停、风华高科+8%、昀冢科技+10%+；催化=<b>AI算力需求爆发→MLCC供需紧张、客户以2–3倍原价抢货、三星电机8/1起全线涨价30%、太阳诱电9/1跟进</b>→新一轮景气周期<br>
+        • <b>创新药/CRO/CMO（延续）</b>：百花医药 <b>6连板</b>、哈药3连板、开开实业4连板、万邦医药/甘李药业/哈药涨停；减肥药（博瑞+13%/百普赛斯+14%）、重组蛋白活跃<br>
+        • <b>影视院线</b>：北京文化2连板、华智数媒20cm涨停<br>
+        • <b>算力租赁</b>：杭钢股份/鸿博股份直线涨停（盘中异动）<br>
+        • <b>通信设备</b>：涨幅居前，CPO龙头中际旭创/新易盛下探后反弹</div>
+      </div>
+      <div class="cat-card">
+        <div class="t"><span class="d-red">▼</span> 领跌方向（昨日强势补跌）</div>
+        <div class="d">• <b>军工/商业航天/兵装重组</b>：中国卫星 <b>−6.81%</b>、航天环宇−6%+、斯瑞新材−9%+、东安动力−4.73%（昨日强势今日兑现）<br>
+        • <b>小金属/有色（钴/钛/钨/能源金属）</b>：寒锐钴业 <b>−4.81%</b>、紫金矿业−2.99%、盛和资源−3.62%——有色整体回落<br>
+        • <b>贵金属/稀土</b>：跌幅居前（避险链退潮）<br>
+        • <b>白酒/食品</b>：震荡走低（消费修复未延续）<br>
+        • <b>风电/发电设备</b>：调整</div>
+      </div>
+    </div>
+    <div class="alert warn" style="margin-top:14px">
+      <span class="ico">🔄</span>
+      <div><div class="tt">板块轮动镜像延续：8/10"科技兑现、医药消费接棒"→8/11"医药延续、MLCC接棒、军工有色补跌"</div>
+      <div class="bd">科技内部仍在"高低切"——资金从8/10兑现的 <b>CPO/PCB龙头</b> 转向今日爆发的 <b>MLCC/被动元件涨价链</b>（同属AI算力硬件但更低位、有涨价业绩支撑）；<b>医药主线不辍</b>（百花6连板）；而昨日强势的 <b>军工/有色/贵金属</b> 今日集体补跌，印证"<b>弃高就低、调仓换股</b>"的存量特征，非系统性杀跌（跌停0）。</div></div>
+  </section>
+
+  <!-- 赚钱效应 -->
+  <section>
+    <div class="sec-title">🌡️ 市场赚钱效应 · 情绪轨迹与广度（8/3→8/11）</div>
+    <div class="glass card">
+      <div class="temp-wrap">
+        <div id="gauge" class="gauge"></div>
+        <div class="temp-side">
+          <div style="font-size:14px;font-weight:700;margin-bottom:6px">午间情绪温度 ≈ <span style="color:var(--hold)">53 / 100</span>（中性偏谨慎·指数强个股弱·缩量分化）</div>
+          <div class="meter"><span style="width:53%;background:linear-gradient(90deg,#ffa502,#e67e22)"></span></div>
+          <div style="font-size:13px;color:var(--txt2);line-height:1.7;margin-top:8px">
+            日内情绪轨迹：<b>8/3(58)→8/4(76)→8/5(82)→8/6(54)→8/7(62)→8/10(64)→8/11(53)</b>。今日较8/10回落11点，主因<b>广度骤降至40.13%</b>（超3100股下跌）；但跌停0+涨停50+指数收红+科创守住1700，使情绪未跌破中性区下限。<br>
+            上涨广度%：<b>69%(一)→68%(二)→74%(三)→31.7%(四)→53%(五)→63.5%(一)→40.1%(二)</b>。今日广度回到8/6级别（个股弱），赚钱效应集中在<b>MLCC/医药/影视/算力租赁</b>等结构热点，多数个股随指数横盘或下跌。
+          </div>
+        </div>
+      </div>
+      <div id="emoLine" class="chart" style="height:300px;margin-top:10px"></div>
+    </div>
+  </section>
+
+  <!-- 资金流向 -->
+  <section>
+    <div class="sec-title">💰 资金流向 · 全市场主力净流出仅53.65亿；科技内部分化——数据中心/MLCC/5G/消费电子获净流入，有色/军工/贵金属净流出</div>
+    <div class="grid g2">
+      <div class="cat-card">
+        <div class="t"><span class="d-green">▲</span> 主力净流入方向（结构热点）</div>
+        <div class="d">• <b>数据中心</b>：<b>+73.69亿</b> 居首（算力基建）<br>
+        • <b>TMT/小米概念/5G</b>：+53.40亿 / +50.17亿 / +47.47亿（AI硬件扩散）<br>
+        • <b>被动元件/MLCC</b>：+39.39亿 / +35.99亿（今日最强主线，涨价逻辑）<br>
+        • <b>智能穿戴/消费电子/高价股</b>：+40.72亿 / +34.71亿 / +50.10亿（AI终端）<br>
+        • <b>创新药/CRO</b>：延续获资金承接（百花6连板、医药商业活跃）</div>
+      </div>
+      <div class="cat-card">
+        <div class="t"><span class="d-red">▼</span> 主力净流出方向（昨日强势兑现）</div>
+        <div class="d">• <b>小金属/有色（钴/钛/钨/能源金属）</b>：寒锐钴业−4.81%、紫金矿业−2.99%、盛和资源−3.62%（整体净流出）<br>
+        • <b>军工/商业航天/兵装重组</b>：中国卫星−6.81%、斯瑞新材−9%+<br>
+        • <b>贵金属/稀土</b>：避险链退潮，跌幅居前<br>
+        • <b>白酒/食品</b>：震荡走低<br>
+        • <b>风电/发电设备</b>：调整<br>
+        <span style="color:var(--txt2)">全市场主力净流出仅约53.65亿（幅度温和），属调仓而非出逃。</span></div>
+      </div>
+    </div>
+    <div class="glass card" style="margin-top:14px">
+      <div class="sec-title" style="font-size:14px;margin:2px 0 8px">📊 今日 主力净流入 结构 TOP（亿元·同花顺/财联社星矿数据）</div>
+      <table>
+        <thead><tr><th>方向</th><th>板块/概念</th><th>主力净流入</th><th>驱动</th></tr></thead>
+        <tbody>
+          <tr><td class="buy">流入1</td><td>数据中心</td><td class="buy">+73.69亿</td><td>算力基建·AI需求</td></tr>
+          <tr><td class="buy">流入2</td><td>TMT / 小米概念</td><td class="buy">+53.40 / +50.17亿</td><td>AI硬件扩散·终端</td></tr>
+          <tr><td class="buy">流入3</td><td>5G概念 / 高价股</td><td class="buy">+47.47 / +50.10亿</td><td>通信设备反弹·机构重仓</td></tr>
+          <tr><td class="buy">流入4</td><td>被动元件 / MLCC</td><td class="buy">+39.39 / +35.99亿</td><td>涨价周期·AI算力供需紧张</td></tr>
+          <tr><td class="buy">流入5</td><td>智能穿戴 / 消费电子</td><td class="buy">+40.72 / +34.71亿</td><td>AI终端·苹果链</td></tr>
+          <tr><td class="sell">流出</td><td>有色/小金属/军工/贵金属</td><td class="sell">净流出居前</td><td>昨日强势今日兑现·寒锐/紫金/中国卫星下挫</td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:12px;color:var(--txt2);margin-top:8px">北向资金午盘分项未披露；两融前序余额约2.64万亿；全市场主力净流出仅约53.65亿、幅度温和。<b>超纯应材上市首日飙涨超683%（报517元）</b>，与长鑫、宇树等形成"新股热度"情绪锚，但炒新风险高，监管对50万+客户有提示。整体呈"<b>科技内部分化、弃高就低、调仓换股</b>"特征。</div>
+    </div>
+  </section>
+
+  <!-- 8/10 → 8/11 结构连续性 -->
+  <section>
+    <div class="sec-title">🎯 8/10 → 8/11 结构连续性 · 昨日预判今日兑现对照</div>
+    <div class="alert warn" style="margin-top:0">
+      <span class="ico">📌</span>
+      <div><div class="tt">8/10 作战计划核心预判："科技兑现约1–2天后或迎低吸点；周二/三若科技缩量止跌是回踩分批窗口；加仓触发=广度>55%+成交1.8万亿++科创守1700+科技止跌"</div>
+      <div class="bd">今日走势部分验证——<b>科创50守住1700（虽盘中刺穿1699.92后拉回）、CPO龙头下探反弹、MLCC新主线崛起</b>，但<b>广度40%与成交1.53万亿双双未达加仓触发</b>，故维持控仓、不加仓。下表对照昨日锁定的配置/规避方向。</div></div>
+    <div class="verify">
+      <div class="sc ok">
+        <div class="h" style="color:var(--buy)">创新药/CRO　<span class="hit y">✓ 延续</span></div>
+        <div class="x">昨日"等分歧低吸"今日<b>最强延续</b>：百花医药<b>6连板</b>、哈药3连板、开开实业4连板、万邦/甘李涨停、减肥药（博瑞+13%/百普赛斯+14%）。医药主线不辍，但连板已高，仍宜等分歧而非追高。</div>
+      </div>
+      <div class="sc ok">
+        <div class="h" style="color:var(--buy)">MLCC/被动元件　<span class="hit y">✓ 新主线爆发</span></div>
+        <div class="x">昨日未单独点名，但属"科技细分回踩"范畴。今日<b>集体爆发</b>（达利凯普20cm/双星新材/洁美科技涨停），资金从CPO/PCB龙头切向<b>有涨价业绩支撑的被动元件</b>，完美契合"科技高低切、弃虚就实"逻辑。</div>
+      </div>
+      <div class="sc part">
+        <div class="h" style="color:var(--hold)">科技止跌·低吸　<span class="hit h">△ 部分</span></div>
+        <div class="x">CPO龙头中际旭创/新易盛<b>下探后显著反弹</b>、科创50守住1700，<b>止跌信号初现</b>；但<b>盘中刺穿1699.92</b>+广度仅40%说明企稳未确认，低吸窗口"待确认"而非"已开启"。</div>
+      </div>
+      <div class="sc ok">
+        <div class="h" style="color:var(--buy)">规避高位兑现　<span class="hit y">✓ 正确</span></div>
+        <div class="x">昨日警告"勿接飞刀"的方向——<b>军工/商业航天（中国卫星−6.8%）、小金属/有色（寒锐−4.8%）、贵金属/稀土</b>今日集体补跌，规避建议再次验证。</div>
+      </div>
+      <div class="sc no">
+        <div class="h" style="color:var(--sell)">广度/成交　<span class="hit n">✗ 未达触发</span></div>
+        <div class="x">加仓触发要求<b>广度>55%（今日40%）+成交1.8万亿（今日1.53万亿）</b>，两项均不满足，故<b>维持控仓、未加仓</b>，与"控仓待变"铁律一致。</div>
+      </div>
+      <div class="sc part">
+        <div class="h" style="color:var(--hold)">影视/算力租赁　<span class="hit h">△ 活跃</span></div>
+        <div class="x">影视院线（北京文化2连板/华智数媒20cm）、算力租赁（杭钢/鸿博涨停）盘中异动，属<b>低位题材补涨</b>，延续性待观察，不宜追高。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 仓位管理 -->
+  <section>
+    <div class="sec-title">🎯 本周(8/11–8/14)作战计划 · 仓位管理（维持 50–60% 控仓）</div>
+    <div class="glass card">
+      <div class="plan-card">总仓 50–60% · 现金 40–50%（中性偏谨慎·控仓待变；维持 8/10 仓位，因广度40%与成交1.53万亿未达加仓触发；科创50盘中逼1700为警戒线）</div>
+      <div class="kpis">
+        <div class="kpi"><div class="v" style="color:var(--hold)">50–60%</div><div class="l">建议总仓</div></div>
+        <div class="kpi"><div class="v" style="color:var(--accent1)">40–50%</div><div class="l">现金储备</div></div>
+        <div class="kpi"><div class="v" style="color:var(--hold)">≈53</div><div class="l">午间情绪</div></div>
+        <div class="kpi"><div class="v" style="color:var(--buy)">3964.8</div><div class="l">沪指午收</div></div>
+      </div>
+      <div class="twocol" style="margin-top:14px">
+        <div>
+          <div style="font-weight:700;color:var(--buy);margin-bottom:6px">🟢 配置方向（回踩分批·只低吸不追高）</div>
+          <div class="li"><span class="dot d-green"></span><div><b>MLCC/被动元件（新主线）</b>：今日爆发，但涨停潮后<b>等分歧低吸</b>；涨价周期（三星+30%/太阳诱电跟进）+AI算力供需紧张，业绩确定性高</div></div>
+          <div class="li"><span class="dot d-green"></span><div><b>创新药/CRO/CDMO</b>：百花6连板、医药商业活跃（开开4连板）；基药目录+License-out+中报盈喜三击，<b>等分歧不追高</b></div></div>
+          <div class="li"><span class="dot d-green"></span><div><b>影视院线/AI应用</b>：北京文化2连板、华智数媒20cm，低位题材补涨，短线活性</div></div>
+          <div class="li"><span class="dot d-green"></span><div><b>算力租赁/数据中心</b>：杭钢/鸿博涨停，+73.69亿净流入居首，AI基建长逻辑</div></div>
+          <div class="li"><span class="dot d-green"></span><div><b>消费电子/智能穿戴（回踩）</b>：AI终端+苹果链，+34~40亿净流入</div></div>
+        </div>
+        <div>
+          <div style="font-weight:700;color:var(--sell);margin-bottom:6px">🔴 规避 / 减仓</div>
+          <div class="li"><span class="dot d-red"></span><div>昨日强势今日补跌的 <b>军工/商业航天/兵装重组、小金属/有色（钴钨钛）、贵金属/稀土、白酒</b>——回避追高，等回调企稳</div></div>
+          <div class="li"><span class="dot d-red"></span><div>高位CPO/PCB连板龙头（光迅/中际旭创/新易盛）——<b>等缩量止跌确认</b>再考虑低吸，勿接飞刀</div></div>
+          <div class="li"><span class="dot d-red"></span><div>纯软件/计算机/AI应用无订单题材（中报证伪风险、资金出逃）</div></div>
+          <div class="li"><span class="dot d-red"></span><div>炒新高位（超纯应材+683%等）、ST股、8月中下旬密集披露的中报暴雷/业绩大幅下滑标的</div></div>
+        </div>
+      </div>
+      <div style="margin-top:16px;font-size:13px;line-height:1.8">
+        <div style="font-weight:700;color:var(--buy)">📈 加仓触发（升至 60–65%）：</div>
+        沪指 <b>站稳3950-3970并放量突破4000</b> + 成交重回 <b>1.8万亿+</b> + 广度回升 <b>&gt;55%</b> + 跌停 <b>&lt;15（今日已满足0）</b> + 科创50<b>有效守住1700（今日盘中刺穿1699.92后拉回，需确认不破）</b> + MLCC/医药/算力主线正反馈延续 + 高位科技（CPO/PCB）止跌企稳 + 北向净买 + 海外科技企稳。
+        <div style="font-weight:700;color:var(--sell);margin-top:10px">📉 失效条件（降至 40–50% 或更低）：</div>
+        科创50 <b>有效跌破1700（今日最低1699.92，仅差0.08，须高度警惕）</b> + 或 沪指 <b>冲高回落破3920</b> + 或 广度 <b>&lt;35%（今日40.1%，警戒线临近）</b> + 或 跌停 <b>&gt;30</b> + 高位科技负反馈扩散至医药/MLCC新主线（连板断板连锁）+ 私募84%高仓集中兑现引发踩踏 + 美伊协议反复/霍尔木兹再起波澜 + 美联储加息升温致美债飙升 + 中报密集暴雷。
+      </div>
+      <div class="alert warn" style="margin-top:14px">
+        <span class="ico">🏛️</span>
+        <div><div class="tt">周三/四关键窗口：科技止跌确认+广度修复，方为低吸点；总仓5–6成留余地</div>
+        <div class="bd">今日"指数强、个股弱"是存量博弈下的典型调仓日，<b>跌停0+科创守1700</b>封杀下行空间，但<b>广度40%逼近警戒线、缩量2160亿</b>说明增量资金未进场。策略上<b>维持控仓、不追MLCC/医药连板、等科技（CPO/PCB/半导体）缩量止跌+广度回升后的回踩5日线/1700防线分批低吸窗口</b>。<b>以涨价业绩确定性为矛（MLCC/医药/CRO）、低位题材为盾（影视/算力租赁/消费电子）</b>，弃虚就实、控仓待变。</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 元信息 -->
+  <section>
+    <div class="glass card" style="font-size:12px;color:var(--txt2);line-height:1.9">
+      <div style="font-weight:700;color:var(--txt);margin-bottom:6px">📌 元信息</div>
+      <span class="meta-pill">分析时间：2026-08-11（周二）12:00 GMT+8 · 交易日午间复盘</span>
+      <span class="meta-pill">覆盖周期：8/11 午间收盘（11:57）+ 承接 8/10 作战计划验证 + 8/11–8/14 仓位管理</span>
+      <span class="meta-pill">策略：午间复盘 / 赚钱效应 / 资金流向 / 仓位管理 / 结构连续性验证</span>
+      <span class="meta-pill">数据来源：财联社星矿/证券时报/新华财经/格隆汇/同花顺/新浪/网易/智通财经 午评（WebSearch）</span>
+      <span class="meta-pill">连接器状态：金融 MCP 全部 disconnected，数据经 WebSearch 获取</span>
+      <div style="margin-top:10px">
+        <b>免责声明</b>：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论基于历史数据与公开信息，不保证未来表现。今日"指数强、个股弱"为调仓特征、非系统性风险（跌停0），但科创50盘中最低1699.92逼近1700防线、广度骤降至40%逼近警戒线、缩量2160亿，走势可能随时变化，请以实盘为准。
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">
+    A股午间复盘 · 星辰智能分析师 · 自包含 HTML（ECharts CDN）· 生成于 2026-08-11<br>
+    8/11 午间：指数分化 · MLCC爆发 · 医药延续 · 缩量个股弱 · 赚钱效应 + 资金流向 + 仓位管理
+  </div>
+</div>
+
+<script>
+  const idx = [
+    {n:'上证指数',code:'000001.SH',p:'3964.79',chg:-0.05,range:'开3950.71 高3966.39 低3942.75'},
+    {n:'深证成指',code:'399001.SZ',p:'14410.34',chg:0.65,range:'开14266.44 高14447.10 低14201.29'},
+    {n:'创业板指',code:'399006.SZ',p:'3587.24',chg:1.41,range:'开3533.89 高3601.59(盘中重回3600) 低3517.57'},
+    {n:'科创50',code:'000688.SH',p:'1740.62',chg:0.16,range:'开1713.26 高1753.14 低1699.92(一度逼近1700防线)'},
+    {n:'北证50',code:'899050.BJ',p:'1121.76',chg:-0.10,range:'中小盘偏弱'},
+    {n:'半日成交',code:'AMT',p:'1.53万亿',chg:-12.4,range:'缩量约2160亿 · 2141涨/3194跌/50涨停/0跌停'},
+  ];
+  const ic = document.getElementById('idxCards');
+  idx.forEach(d=>{
+    const col = d.chg>=0 ? 'var(--buy)' : 'var(--sell)';
+    const sign = d.chg>=0 ? '+' : '';
+    const isAmt = d.code==='AMT';
+    ic.innerHTML += `<div class="card glass">
+      <div class="idx-head"><span class="idx-name">${d.n}</span><span class="idx-code">${d.code}</span></div>
+      <div class="idx-price">${d.p}</div>
+      <div class="idx-chg" style="color:${isAmt?'var(--accent1)':col}">${isAmt?'缩量 '+sign+d.chg.toFixed(1)+'%':sign+d.chg.toFixed(2)+'%'}</div>
+      <div class="idx-range">${d.range}</div>
+    </div>`;
+  });
+
+  const bar = echarts.init(document.getElementById('idxBar'));
+  bar.setOption({
+    backgroundColor:'transparent',
+    title:{text:'主要指数午间涨跌幅（8/11，%）',left:'center',textStyle:{color:'#e2e8f0',fontSize:13}},
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+    grid:{left:80,right:50,top:46,bottom:30},
+    xAxis:{type:'value',axisLabel:{color:'#94a3b8',formatter:'{value}%'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+    yAxis:{type:'category',data:['北证50','科创50','上证指数','深证成指','创业板指'],axisLabel:{color:'#e2e8f0'},axisLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'bar',data:[{value:-0.10,itemStyle:{color:'#ff4757'}},{value:0.16,itemStyle:{color:'#00d4aa'}},{value:-0.05,itemStyle:{color:'#ff4757'}},{value:0.65,itemStyle:{color:'#00d4aa'}},{value:1.41,itemStyle:{color:'#00d4aa'}}],
+      label:{show:true,position:'right',color:'#e2e8f0',formatter:p=>(p.value>=0?'+':'')+p.value.toFixed(2)+'%'},barWidth:'55%'}]
+  });
+
+  const sh = echarts.init(document.getElementById('shLine'));
+  sh.setOption({
+    backgroundColor:'transparent',
+    title:{text:'上证指数日路径（8/3–8/11，指数分化·午间）',left:'center',textStyle:{color:'#e2e8f0',fontSize:13}},
+    tooltip:{trigger:'axis'},
+    grid:{left:55,right:30,top:46,bottom:30},
+    xAxis:{type:'category',data:['8/3一','8/4二','8/5三','8/6四','8/7五','8/10一','8/11二'],axisLabel:{color:'#94a3b8'},axisLine:{lineStyle:{color:'#2d2d44'}}},
+    yAxis:{type:'value',scale:true,axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'line',smooth:true,data:[3809.65,3815.59,3873.56,3878.92,3940.04,3947.91,3964.79],
+      lineStyle:{width:3,color:'#667eea'},itemStyle:{color:'#667eea'},symbolSize:8,
+      areaStyle:{color:'rgba(102,126,234,.1)'},
+      markLine:{silent:true,symbol:'none',lineStyle:{color:'#ffa502',type:'dashed'},data:[{yAxis:4000,label:{formatter:'4000强阻力',color:'#ffa502',position:'insideEndTop'}}]},
+      markPoint:{data:[{type:'max',name:'周高'}],itemStyle:{color:'#764ba2'}},
+      label:{show:true,color:'#e2e8f0',fontSize:10,formatter:p=>p.value.toFixed(0)}}]
+  });
+
+  const g = echarts.init(document.getElementById('gauge'));
+  g.setOption({
+    backgroundColor:'transparent',
+    series:[{type:'gauge',startAngle:210,endAngle:-30,min:0,max:100,radius:'100%',center:['50%','60%'],
+      progress:{show:true,width:14,itemStyle:{color:'#ffa502'}},
+      axisLine:{lineStyle:{width:14,color:[[0.35,'#ff4757'],[0.6,'#ffa502'],[1,'#00d4aa']]}},
+      pointer:{width:5,length:'60%',itemStyle:{color:'#e2e8f0'}},
+      axisTick:{distance:-14,length:4,lineStyle:{color:'#94a3b8'}},
+      splitLine:{distance:-14,length:14,lineStyle:{color:'#94a3b8'}},
+      axisLabel:{distance:-2,color:'#94a3b8',fontSize:9},
+      detail:{valueAnimation:true,formatter:'{value}',color:'#ffa502',fontSize:26,offsetCenter:[0,'40%']},
+      title:{show:false},
+      data:[{value:53}]}]
+  });
+
+  const el = echarts.init(document.getElementById('emoLine'));
+  el.setOption({
+    backgroundColor:'transparent',
+    tooltip:{trigger:'axis'},
+    legend:{data:['情绪温度','上涨广度%'],textStyle:{color:'#e2e8f0'},top:0},
+    grid:{left:45,right:50,top:36,bottom:30},
+    xAxis:{type:'category',data:['8/3一','8/4二','8/5三','8/6四','8/7五','8/10一','8/11二'],axisLabel:{color:'#94a3b8'},axisLine:{lineStyle:{color:'#2d2d44'}}},
+    yAxis:[
+      {type:'value',min:0,max:100,axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+      {type:'value',min:0,max:100,axisLabel:{color:'#94a3b8',formatter:'{value}%'},splitLine:{show:false}}
+    ],
+    series:[
+      {name:'情绪温度',type:'line',smooth:true,data:[58,76,82,54,62,64,53],lineStyle:{width:3,color:'#667eea'},itemStyle:{color:'#667eea'},
+        markPoint:{data:[{type:'max',name:'峰值'},{type:'min',name:'谷'}],itemStyle:{color:'#764ba2'}}},
+      {name:'上涨广度%',type:'line',smooth:true,yAxisIndex:1,data:[69,68,74,31.7,53,63.5,40.13],lineStyle:{width:3,color:'#00d4aa'},itemStyle:{color:'#00d4aa'},areaStyle:{color:'rgba(0,212,170,.12)'}}
+    ]
+  });
+
+  const gb = echarts.init(document.getElementById('gainBar'));
+  gb.setOption({
+    backgroundColor:'transparent',
+    title:{text:'今日领涨方向（资金承接·定性强度）',left:'center',textStyle:{color:'#00d4aa',fontSize:13}},
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+    grid:{left:130,right:55,top:40,bottom:20},
+    xAxis:{type:'value',axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+    yAxis:{type:'category',data:['创新药/CRO','减肥药/重组蛋白','MLCC概念','影视院线','算力租赁','通信设备'].reverse(),axisLabel:{color:'#e2e8f0'}},
+    series:[{type:'bar',data:[90,82,95,70,65,60].reverse(),itemStyle:{color:'#00d4aa'},
+      label:{show:true,position:'right',color:'#e2e8f0',formatter:'强'},barWidth:'55%'}]
+  });
+
+  const lb = echarts.init(document.getElementById('lossBar'));
+  lb.setOption({
+    backgroundColor:'transparent',
+    title:{text:'今日领跌方向（昨日强势补跌）',left:'center',textStyle:{color:'#ff4757',fontSize:13}},
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+    grid:{left:130,right:55,top:40,bottom:20},
+    xAxis:{type:'value',axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+    yAxis:{type:'category',data:['贵金属/稀土','白酒/食品','风电/发电设备','小金属/有色','兵装重组','军工/商业航天'].reverse(),axisLabel:{color:'#e2e8f0'}},
+    series:[{type:'bar',data:[80,55,50,85,75,90].reverse(),itemStyle:{color:'#ff4757'},
+      label:{show:true,position:'right',color:'#e2e8f0',formatter:'弱'},barWidth:'55%'}]
+  });
+
+  window.addEventListener('resize',()=>{bar.resize();sh.resize();g.resize();el.resize();gb.resize();lb.resize();});
+</script>
+</body>
+</html>
