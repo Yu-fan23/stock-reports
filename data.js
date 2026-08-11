@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-11 15:45:53",
-  "total": 127,
+  "generatedAt": "2026-08-11 16:45:36",
+  "total": 128,
   "categories": [
     {
       "key": "panqian",
@@ -636,9 +636,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 24,
-      "latest": "20260809",
+      "count": 25,
+      "latest": "20260811",
       "reports": [
+        {
+          "date": "20260811",
+          "dateLabel": "2026-08-11（周二）",
+          "file": "reports/limitup/limitup_20260811.html",
+          "title": "涨停梯队复盘 · 2026-08-11（周二 · 真实交易日 · 缩量分化·窄幅抱团 · 百花医药6板/豪尔赛8天6板/创新药+机器人+MLCC+影视活跃）",
+          "size": 44164
+        },
         {
           "date": "20260809",
           "dateLabel": "2026-08-09（周日）",
