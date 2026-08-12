@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-12 09:14:52",
-  "total": 130,
+  "generatedAt": "2026-08-12 12:45:24",
+  "total": 131,
   "categories": [
     {
       "key": "panqian",
@@ -208,9 +208,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 28,
-      "latest": "20260811",
+      "count": 29,
+      "latest": "20260812",
       "reports": [
+        {
+          "date": "20260812",
+          "dateLabel": "2026-08-12（周三）",
+          "file": "reports/noon/noon_20260812.html",
+          "title": "A股午间复盘 · 2026-08-12（周三）· 科技反包·广度重回69%·科创收复1700·控仓待CPI",
+          "size": 38216
+        },
         {
           "date": "20260811",
           "dateLabel": "2026-08-11（周二）",
