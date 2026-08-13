@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盘前交易计划 | 2026年8月14日（周五）· v33.0 · 8/13冲高回落(沪指最高3968破年线后尾盘翻绿收3926.96 -0.50%破3940·4317跌·62涨停·量2.55万亿放量滞涨) + 8/13美股(标普收新高/存储闪迪+13.67%SK海力士+7.29%西部数据+7.31%/光通信分化Lumentum-5.58%Coherent-7.99%/纳指+0.81%) + 主线重排「创新药CRO医药(#1逆势最强) + AI硬件链算力+存储(#2分化·光通信弱) + 大消费地产(#3退潮)」(v32.0"AI硬件链#1/创新药#2/消费地产#3"被8/13反转·医药逆势升#1·算力存储强·半导体光通信/消费地产退潮)</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0f0f23; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; line-height: 1.7; padding: 20px; max-width: 1200px; margin: 0 auto; }
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 28px 32px; margin-bottom: 24px; border: 1px solid #2d2d44; }
+  .header h1 { font-size: 22px; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; line-height:1.5; }
+  .header .subtitle { color: #94a3b8; font-size: 14px; margin-bottom: 12px; }
+  .header .meta { color: #94a3b8; font-size: 13px; display: flex; gap: 20px; flex-wrap: wrap; }
+  .header .meta .tag { background: rgba(0,212,170,0.2); color: #00d4aa; padding: 2px 10px; border-radius: 10px; font-size: 12px; }
+  .header .meta .tag.warn { background: rgba(255,165,2,0.2); color: #ffa502; }
+  .header .meta .tag.green { background: rgba(0,212,170,0.2); color: #00d4aa; }
+  .header .meta .tag.red { background: rgba(255,71,87,0.2); color: #ff4757; }
+  .summary-bar { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 16px; padding: 24px 28px; margin-bottom: 24px; border: 1px solid #ff4757; border-left: 4px solid #ff4757; }
+  .summary-bar .verdict { font-size: 19px; font-weight: 800; color: #ff4757; margin-bottom: 8px; }
+  .summary-bar .verdict-desc { color: #cbd5e1; font-size: 14px; }
+  .q3-box { border-radius: 14px; padding: 20px 24px; margin-bottom: 24px; background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%); border: 1px solid #667eea; }
+  .q3-box h2 { font-size: 18px; color: #a78bfa; margin-bottom: 14px; }
+  .q3-item { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid rgba(45,45,68,0.5); }
+  .q3-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .q3-item .ql { font-size: 15px; font-weight: 700; color: #e2e8f0; margin-bottom: 6px; }
+  .q3-item .qa { font-size: 14px; color: #cbd5e1; }
+  .q3-item .qa b { color: #00d4aa; }
+  .q3-item .qa .r { color: #ffa502; }
+  .q3-item .qa .bad { color: #ff4757; }
+  .verify-box { border-radius: 10px; padding: 12px 16px; margin-bottom: 12px; font-size: 13px; }
+  .verify-bull { background: rgba(0,212,170,0.08); border-left: 3px solid #00d4aa; }
+  .verify-warn { background: rgba(255,165,2,0.08); border-left: 3px solid #ffa502; }
+  .verify-danger { background: rgba(255,71,87,0.08); border-left: 3px solid #ff4757; }
+  .index-cards { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 24px; }
+  .index-card { background: #1a1a2e; border-radius: 12px; padding: 16px; border: 1px solid #2d2d44; text-align: center; }
+  .index-card .name { font-size: 12px; color: #94a3b8; margin-bottom: 6px; }
+  .index-card .price { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .index-card .change { font-size: 13px; font-weight: 600; }
+  .index-card .change.green { color: #00d4aa; }
+  .index-card .change.red { color: #ff4757; }
+  .index-card .sub { font-size: 10px; color: #64748b; margin-top: 4px; }
+  .section { background: #1a1a2e; border-radius: 16px; padding: 24px 28px; margin-bottom: 20px; border: 1px solid #2d2d44; }
+  .section-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .section-title .num { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .theme-card { background: #16213e; border-radius: 14px; padding: 22px; margin-bottom: 16px; border: 1px solid #2d2d44; transition: border-color 0.3s; }
+  .theme-card:hover { border-color: #667eea; }
+  .theme-card.buy { border-left: 4px solid #00d4aa; }
+  .theme-card.watch { border-left: 4px solid #ffa502; }
+  .theme-card.avoid { border-left: 4px solid #ff4757; }
+  .theme-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+  .theme-name { font-size: 17px; font-weight: 700; }
+  .theme-signal { padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; }
+  .theme-signal.buy { background: rgba(0,212,170,0.15); color: #00d4aa; }
+  .theme-signal.watch { background: rgba(255,165,2,0.15); color: #ffa502; }
+  .theme-signal.avoid { background: rgba(255,71,87,0.15); color: #ff4757; }
+  .theme-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .theme-row .label { color: #64748b; font-size: 13px; margin-bottom: 4px; }
+  .theme-row .value { color: #e2e8f0; font-size: 14px; }
+  .theme-stocks { background: rgba(0,0,0,0.2); border-radius: 8px; padding: 12px 14px; margin-top: 8px; }
+  .theme-stocks .label { color: #64748b; font-size: 12px; margin-bottom: 6px; }
+  .stock-tag { display: inline-block; background: rgba(102,126,234,0.15); color: #a78bfa; padding: 3px 10px; border-radius: 6px; font-size: 12px; margin: 2px 4px 2px 0; }
+  .stock-tag.hl { background: rgba(0,212,170,0.15); color: #00d4aa; }
+  .stock-tag.gold { background: rgba(255,165,2,0.15); color: #ffa502; }
+  .catalyst-list { margin-top: 8px; }
+  .catalyst-list li { list-style: none; padding: 4px 0; font-size: 13px; color: #cbd5e1; padding-left: 18px; position: relative; }
+  .catalyst-list li::before { content: '▸'; position: absolute; left: 0; color: #667eea; }
+  .catalyst-list li.neg::before { color: #ff4757; }
+  .catalyst-list li.pos::before { color: #00d4aa; }
+  .stage-bar { background: rgba(0,0,0,0.3); border-radius: 8px; height: 32px; display: flex; align-items: center; position: relative; margin: 10px 0; overflow: hidden; }
+  .stage-segment { flex: 1; text-align: center; font-size: 11px; color: #64748b; border-right: 1px solid rgba(255,255,255,0.05); position: relative; z-index: 1; }
+  .stage-segment:last-child { border-right: none; }
+  .stage-marker { position: absolute; top: 0; height: 100%; border-radius: 8px; z-index: 0; }
+  .stage-marker.buy { background: linear-gradient(90deg, rgba(0,212,170,0.3), rgba(0,212,170,0.5)); }
+  .stage-marker.warm { background: linear-gradient(90deg, rgba(255,165,2,0.3), rgba(255,165,2,0.5)); }
+  .plan-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .plan-table th { background: rgba(102,126,234,0.1); color: #a78bfa; padding: 10px 12px; text-align: left; font-weight: 600; border-bottom: 1px solid #2d2d44; }
+  .plan-table td { padding: 10px 12px; border-bottom: 1px solid rgba(45,45,68,0.5); color: #cbd5e1; }
+  .plan-table tr:hover td { background: rgba(102,126,234,0.05); }
+  .plan-table .action-buy { color: #00d4aa; font-weight: 600; }
+  .plan-table .action-sell { color: #ff4757; font-weight: 600; }
+  .plan-table .action-hold { color: #ffa502; font-weight: 600; }
+  .position-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center; }
+  .position-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #16213e; border-radius: 8px; margin-bottom: 8px; border: 1px solid #2d2d44; }
+  .position-item .name { font-size: 14px; }
+  .position-item .pct { font-weight: 700; }
+  .position-item .pct.green { color: #00d4aa; }
+  .position-item .pct.orange { color: #ffa502; }
+  .position-item .pct.gray { color: #64748b; }
+  .alert-box { border-radius: 10px; padding: 14px 18px; margin-bottom: 12px; font-size: 14px; }
+  .alert-box.danger { background: rgba(255,71,87,0.08); border: 1px solid rgba(255,71,87,0.3); color: #ff6b7a; }
+  .alert-box.success { background: rgba(0,212,170,0.08); border: 1px solid rgba(0,212,170,0.3); color: #3dd9b0; }
+  .alert-box.warning { background: rgba(255,165,2,0.08); border: 1px solid rgba(255,165,2,0.3); color: #ffb84d; }
+  .alert-box .title { font-weight: 700; margin-bottom: 4px; }
+  .checklist { list-style: none; }
+  .checklist li { padding: 8px 0 8px 28px; position: relative; font-size: 14px; color: #cbd5e1; border-bottom: 1px solid rgba(45,45,68,0.3); }
+  .checklist li::before { content: '☐'; position: absolute; left: 0; font-size: 18px; color: #667eea; }
+  .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .scenario-card { background: #16213e; border-radius: 12px; padding: 16px; border: 1px solid #2d2d44; }
+  .scenario-card .prob { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+  .scenario-card .prob.neutral { color: #ffa502; }
+  .scenario-card .prob.bear { color: #ff4757; }
+  .scenario-card .prob.bull { color: #00d4aa; }
+  .scenario-card .desc { font-size: 13px; color: #94a3b8; }
+  .chart-container { width: 100%; height: 320px; margin: 10px 0; }
+  .level-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 16px; }
+  .level-card { background: #16213e; border-radius: 10px; padding: 14px; border: 1px solid #2d2d44; text-align: center; }
+  .level-card .label { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+  .level-card .value { font-size: 20px; font-weight: 700; }
+  .level-card .value.red { color: #ff4757; }
+  .level-card .value.green { color: #00d4aa; }
+  .level-card .value.orange { color: #ffa502; }
+  .level-card .note { font-size: 11px; color: #64748b; margin-top: 2px; }
+  .footer { text-align: center; color: #475569; font-size: 12px; padding: 20px 0; border-top: 1px solid #2d2d44; margin-top: 24px; }
+  .footer .disclaimer { background: rgba(255,71,87,0.05); border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; color: #94a3b8; font-size: 12px; text-align: left; }
+  @media (max-width: 768px) {
+    .index-cards { grid-template-columns: repeat(2, 1fr); }
+    .theme-row { grid-template-columns: 1fr; }
+    .position-grid { grid-template-columns: 1fr; }
+    .scenario-grid { grid-template-columns: 1fr; }
+    .level-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+  <h1>盘前交易计划 | 2026年8月14日（周五）· v33.0 · 8/13冲高回落（沪指最高3968.48破年线后尾盘翻绿收3926.96 -0.50%破3940·4317跌·62涨停·量2.55万亿放量滞涨）+ 8/13美股（标普收新高/存储闪迪+13.67%SK海力士+7.29%西部数据+7.31%/光通信分化Lumentum-5.58%Coherent-7.99%/纳指+0.81%），主线重排「创新药CRO医药(#1逆势最强) + AI硬件链算力+存储(#2分化·光通信弱) + 大消费地产(#3退潮)」（v32.0"AI硬件链#1/创新药#2/消费地产#3"被8/13反转·医药逆势升#1·算力存储强·半导体光通信/消费地产退潮）</h1>
+  <div class="subtitle">✅ <b style="color:#ff4757">v32.0(8/13 07:00)被8/13真实收盘+8/13美股决定性修正/降级</b>：<b>8/13 A股冲高回落、普跌破3940</b>——沪指<b>最高3968.48一度破年线3960、尾盘翻绿收3926.96 -0.50%、跌破3940(触发v32.0"破3940降至55%"纪律→总仓55%)</b>、深成-0.87%、创业板-0.45%、科创50-1.11%；<b>成交2.55万亿放量3985亿但冲高回落、量价背离(放量滞涨)</b>；<b>上涨1143/下跌4317、涨停62家(较8/12的92-96大幅缩)、赚钱效应约20%</b>→情绪退潮；<b>主线重排</b>——<b>创新药/CRO/医药逆势升#1</b>(板块+1.84%·博济/万邦/陇神20cm·誉衡5天4板·亚泰3连·百花7连后+3.35%分歧)，<b>AI硬件链内部分化降#2</b>(算力租赁城地香江3连延续+存储美股强催化；但半导体-1.47%最差、光通信-0.77%且8/13美股光通信分化回调)，<b>大消费+房地产退潮降#3</b>(房地产-2.20%领跌、消费-0.79%仅前排连板)；<b>电力新晋</b>(午后拉升·大唐发电等涨停)。<b>8/13美股对8/14偏多(标普收新高+存储强)但光通信分化回调(压制CPO)</b>。</div>
+  <div class="meta">
+    <span>📊 数据截至：2026-08-13 A股全天收盘（上证3926.96 -0.50%、深证成指14289.44 -0.87%、创业板指3586.04 -0.45%、科创50 1717.75 -1.11%、北证50 1097.80 -1.62%；成交2.55万亿放量3985亿；上涨1143/下跌4317、涨停62家/跌停4家、赚钱效应约20%、冲高回落；板块：创新药+1.84%(主力净流入+39.69亿·排名第4)/医疗服务CRO逆势领涨·博济医药陇神戎发万邦医药20cm涨停·誉衡药业5天4板·亚泰集团3连板·方盛制药涨停·百花医药7连后+3.35%分歧；半导体-1.47%(主力-88.83亿·124/124最差)；光通信-0.77%(天孚通信+7.13%/源杰科技+5.02%/华西股份涨停)；房地产-2.20%领跌(京投发展深振业A涨停但板块弱)；大消费-0.79%(一鸣食品皇氏集团4连板但板块跌)；电力新晋午后拉升·大唐发电京能电力江河集团涨停/梅雁吉祥+9.47%；算力租赁城地香江3连板/共进股份星网锐捷群兴玩具涨停/锐捷网络+13.52%；贵金属晓程科技招金黄金湖南白银下挫）+ 2026-08-13 美股（道指+0.13% 53839.99/标普+0.65% 7798.99创历史新高/纳指+0.81% 26803.03/费半+0.46%·存储闪迪+13.67%西部数据+7.31%SK海力士+7.29%希捷+4.91%美光+4.23%存储ETF+3.89%·光通信分化Coherent-7.99%AAOI-5.79%Lumentum-5.58%康宁-5.32%Credo-0.81%·英伟达+0.54%苹果+1%微软+0.9%Meta+2.78%特斯拉+3.8%·PPI同比+4.7%低于预期4.9%/核心PPI+4.2%缓解加息）+ 2026-08-14 盘前（央行适度宽松货币政策/药明康德1260H名单暂缓禁令/创新药BD交易热(8/10三起重磅)/存储涨价(服务器DDR5月涨15-23%)）</span>
+    <span>🔥 情绪评级：<span class="tag red">8/13冲高回落破3940(收3926.96)·4317跌·62涨停(缩)·赚钱效应20%·放量滞涨→情绪退潮·触发"降至55%"；仅创新药逆势主线+算力存储强+电力新晋；总仓55%防守、现金45%、不追高、去飞刀</span></span>
+    <span>⏰ 生成时间：2026-08-14 07:00</span>
+  </div>
+</div>
+
+<!-- ===== SUMMARY BAR ===== -->
+<div class="summary-bar">
+  <div class="verdict">🔴 核心判断：总仓位 <b>55%</b>（8/13沪指<b>最高3968.48一度破年线3960、尾盘翻绿收3926.96 -0.50%、跌破3940→触发v32.0"破3940降至55%"纪律</b>、深成-0.87%、科创50-1.11%；成交2.55万亿<b>放量3985亿但冲高回落、放量滞涨(量价背离)</b>；<b>上涨1143/下跌4317、涨停62家(较8/12的92-96大幅缩)、赚钱效应约20%</b>→情绪退潮），三大主流重排=「<b>创新药CRO医药商业(#1逆势最强) 15-20% + AI硬件链(算力租赁+存储)#2分化 20-25% + 大消费+房地产(#3退潮) 5-8%</b>」+ 新晋电力0-5% + 现金45%；<b>破3900降至45%、破3870降至35%</b>。</div>
+  <div class="verdict-desc">
+    <b style="color:#ff4757">8/13真实收盘决定性信号（v33.0重排依据·冲高回落·破3940·主线反转）</b>：① <b>沪指最高3968.48(盘中破年线3960)、尾盘翻绿收3926.96 -0.50%、跌破3940</b>：v32.0"破3940降至55%"纪律<b>触发→总仓55%</b>；深成-0.87%、创业板-0.45%、科创50-1.11%(最弱)；<b>成交2.55万亿放量3985亿但冲高回落、为放量滞涨(量价背离)</b>(非健康放量)；<b>上涨1143/下跌4317、涨停62家(较8/12的92-96大幅缩)、跌停4家、赚钱效应约20%</b>→广度与情绪显著退潮(对比8/12超4100涨/92-96涨停)。② <b>主线重排·创新药CRO医药逆势升#1</b>：<b>创新药板块+1.84%、主力净流入+39.69亿(全市场排名第4)、医疗服务/CRO逆势领涨</b>；<b>博济医药/陇神戎发/万邦医药20cm涨停、誉衡药业5天4板、亚泰集团3连板、方盛制药涨停</b>；百花医药7连板后<b>+3.35%高位分歧</b>(不再连板)；催化=创新药BD交易热(8/10单日三起重磅)+药明康德公告美法院批准初步禁令动议、暂缓1260H名单认定影响+公募医药配置历史极低。③ <b>AI硬件链内部分化降#2</b>：<b>算力租赁延续</b>——城地香江<b>3连板</b>(从2连→3连)、共进股份/星网锐捷/群兴玩具涨停、锐捷网络+13.52%；<b>存储美股强催化</b>(8/13美股闪迪+13.67%/SK海力士+7.29%/西部数据+7.31%/美光+4.23%→8/14 A股长鑫/江波龙/兆易强催化；服务器DDR5月涨15-23%)；但<b>半导体-1.47%(主力-88.83亿·124/124最差)</b>、<b>光通信-0.77%</b>(天孚+7.13%但板块跌)、且<b>8/13美股光通信分化回调(Lumentum-5.58%/Coherent-7.99%)→CPO承压</b>。④ <b>大消费+房地产退潮降#3</b>：<b>房地产-2.20%领跌</b>(京投发展/深振业A个别涨停但板块弱、城建/新城/滨江8/13跌)；<b>大消费-0.79%</b>(一鸣食品/皇氏集团4连板但板块跌、北京文化/中兴商业分化)→仅前排连板、板块普跌。⑤ <b>电力新晋</b>：午后拉升——大唐发电/京能电力/江河集团涨停、梅雁吉祥+9.47%、华电辽能+9.02%、电力ETF+0.64%→新晋支线(观察持续性)。<br>
+    <b style="color:#00d4aa">8/13美股（8/14盘前变量·偏多但分化）</b>：<b>标普+0.65%收历史新高(7798.99)、纳指+0.81%、道指+0.13%</b>(温和普涨)；<b>存储强</b>——闪迪+13.67%/西部数据+7.31%/SK海力士+7.29%/希捷+4.91%/美光+4.23%/存储ETF+3.89%→<b>对8/14 A股存储(长鑫/江波龙/兆易/北京君正)强催化</b>；<b>费半+0.46%</b>(英特尔+3.58%/泛林+3.34%/ARM+2.49%)；<b>光通信分化回调</b>——Coherent-7.99%/AAOI-5.79%/Lumentum-5.58%/康宁-5.32%/Credo-0.81%(前日暴涨后获利了结)→<b>对8/14 A股CPO(中际旭创/新易盛/天孚)偏压制</b>；PPI同比+4.7%(预期4.9%)/核心PPI+4.2%→缓解加息担忧。<br>
+    <b style="color:#ff4757">风险面</b>：8/13冲高回落破3940(收3926.96·年线3960假突破后回落)；<b>放量滞涨(2.55万亿但4317跌)</b>→量价背离、资金出逃；科创50-1.11%/北证50-1.62%(小票最弱)；<b>高位监管</b>(百花7连板后分歧/爱丽家居停牌核查外溢)；<b>光通信美股分化回调</b>(Lumentum-5.58%/Coherent-7.99%→CPO承压)；中概金龙前日-2.37%(核心资产承压)；中报雷；日本央行加息+套利平仓；两融获利盘。<br>
+    <b style="color:#00d4aa">盘前策略：创新药CRO医药(中军药明/誉衡/哈药/甘李分歧低吸+20cm弹性博济万邦陇神+医药商业开开+脑机宝莱特星网锐捷)#1主攻；AI硬件链(算力城地香江/共进/星网锐捷+存储长鑫/江波龙/兆易·美股强催化)分歧低吸#2、光通信CPO谨慎(美股分化)；大消费地产(一鸣/皇氏4连前排)仅换手不追#3；电力(大唐/京能/梅雁)新晋轻仓观察；现金45%守回踩。破3940已降至55%、破3900降至45%。</b>
+  </div>
+</div>
+
+<!-- ===== 三大问题速答 ===== -->
+<div class="q3-box">
+  <h2>📌 三个核心问题速答（8/14 周五盘前版 · v33.0）</h2>
+  <div class="q3-item">
+    <div class="ql">Q1 · 当下的主流题材是什么？（至多3个）</div>
+    <div class="qa">
+      ① <b>创新药 / CRO / 医药商业（含脑机接口）</b> —— <b>#1绝对主线·8/13逆势最强(唯一主线)</b>。板块<b>+1.84%、主力净流入+39.69亿(全市场第4)</b>；<b>博济医药/陇神戎发/万邦医药20cm涨停、誉衡药业5天4板、亚泰集团3连板、方盛制药涨停</b>；百花医药7连板后<b>+3.35%高位分歧</b>。逻辑=创新药BD交易热(8/10单日三起重磅)+药明康德1260H名单暂缓禁令(美法院批准初步禁令)+公募医药配置历史极低(抛压耗尽·向上弹性)+中报业绩超预期(药明/百济/荣昌)。<br>
+      ② <b>AI硬件链（算力租赁 + 存储芯片；光通信CPO分化走弱）</b> —— <b>#2分化·内部强弱切换</b>。<b>算力租赁延续</b>：城地香江<b>3连板</b>(2→3)、共进股份/星网锐捷/群兴玩具涨停、锐捷网络+13.52%；<b>存储强催化</b>：8/13美股闪迪+13.67%/SK海力士+7.29%/西部数据+7.31%/美光+4.23%(服务器DDR5月涨15-23%)→长鑫/江波龙/兆易/北京君正8/14强催化；但<b>半导体-1.47%最差、光通信-0.77%且8/13美股光通信分化回调(Lumentum-5.58%/Coherent-7.99%)→CPO承压</b>。逻辑=AI算力资本开支+存储涨价+HBM供不应求+美股存储强。<br>
+      ③ <b>大消费 + 房地产（政策驱动·退潮）</b> —— <b>#3退潮·仅前排连板</b>。房地产<b>-2.20%领跌</b>(京投发展/深振业A涨停但板块弱、城建/新城/滨江8/13跌)；大消费<b>-0.79%</b>(一鸣食品/皇氏集团<b>4连板</b>但板块跌、北京文化/中兴商业分化)。逻辑=政策(消费十五五+北京限购优化)余温+超跌反弹，但8/13板块普跌、持续性弱、降为退潮。<br>
+      <span class="bad">（半导体/光通信——8/13半导体-1.47%最差、光通信-0.77%美股分化回调→调整非主流；电力——大唐发电等涨停新晋·观察支线(非三大主流)；贵金属——晓程科技/招金黄金/湖南白银8/13下挫·COMEX黄金+0.63%但A股弱→观望；人形机器人——秦安4板后分歧、强度不及前三者；影视——北京文化分化）</span>
+    </div>
+  </div>
+  <div class="q3-item">
+    <div class="ql">Q2 · 主流题材的核心是谁？</div>
+    <div class="qa">
+      ① 创新药/CRO/医药商业/脑机：<b>20cm弹性</b>——博济医药(300404·20cm)/陇神戎发(300534·20cm)/万邦医药(301520·20cm)/近岸蛋白；<b>连板前排</b>——誉衡药业(002437·5天4板)/亚泰集团(600881·3连板)/方盛制药(603998·涨停)/百花医药(600721·7连后+3.35%分歧·不追)；<b>中军</b>——药明康德(603259·+2.07%·1260H暂缓)/哈药股份(600664)/浙江医药(600216)/康恩贝(600572)/甘李药业(603087·GLP-1)/舒泰神(300204)/红日药业(300026)；<b>医药商业</b>——开开实业(600272)；<b>脑机接口</b>——星网锐捷(002396·涨停·脑科学+华为)/宝莱特(300246)/爱朋医疗(300753)/创新医疗(002173)。<br>
+      ② AI硬件链：<b>算力租赁</b>——城地香江(603887·3连板)/共进股份(603118·涨停)/星网锐捷(002396·涨停)/群兴玩具(002575·涨停)/锐捷网络(301165·+13.52%)/宏景科技(301396)/润建股份(002929)；<b>存储</b>——长鑫科技(688825)/江波龙(301308)/兆易创新(002049)/北京君正(300223)(美股存储强催化)；<b>光通信CPO(谨慎)</b>——天孚通信(300394·+7.13%)/源杰科技(688498·+5.02%)/华西股份(000936·涨停)/中际旭创(300308·0%)/新易盛(300502·+0.4%)(美股光通信分化回调→承压)；<b>设备</b>——北方华创(002371)/中微公司(688012)/拓荆科技。<br>
+      ③ 大消费+房地产：<b>消费前排</b>——一鸣食品(605179·4连板)/皇氏集团(002329·4连板)/北京文化(000802·影视·分化)/中兴商业(000715·分化)/安记食品(603696)/好想你(002582)/今世缘(603369)；<b>房地产前排</b>——京投发展(600683·涨停)/深振业A(000006·涨停)/荣丰控股(000668·+9.91%)/城建发展(600266·8/13跌)/新城控股(601155·8/13跌)/滨江集团(002244·8/13跌)。<br>
+      <span class="r">新晋支线核心：电力——大唐发电(601991·涨停)/京能电力/江河集团(涨停)/梅雁吉祥(600868·+9.47%)/华电辽能(600396·+9.02%)；轮动——人形机器人(秦安股份603758·4板后分歧/华东数控002248/巨轮智能/北特科技)；影视(北京文化/华智数媒/上海电影)；贵金属(赤峰600988/紫金601899/招金000506·观望·A股仍弱)。</span>
+    </div>
+  </div>
+  <div class="q3-item">
+    <div class="ql">Q3 · 走到哪个阶段？能不能买？盘前交易计划？</div>
+    <div class="qa">
+      ① 创新药CRO医药 = <b>主升加速/高位分化期(博济万邦陇神20cm/誉衡5天4板/亚泰3连/百花7连后+3.35%分歧·板块+1.84%逆势主线)</b>，<span class="r">能买·强但更严格：中军(药明/誉衡/哈药/甘李)分歧低吸+20cm弹性(博济/万邦/陇神)+医药商业(开开)+脑机(宝莱特/星网锐捷)，不追连板(百花7连后分歧/监管)；仓位15-20%；防高位见顶+中位股掉队</span>；<br>
+      ② AI硬件链(算力+存储) = <b>主升分化期(算力城地香江3连强/存储美股强催化；半导体-1.47%最差/光通信-0.77%美股分化回调)</b>，<span class="r">能买·选择性：算力租赁(城地香江/共进/星网锐捷/宏景)+存储(长鑫/江波龙/兆易·美股强催化)分歧低吸；光通信CPO谨慎(美股Lumentum-5.58%/Coherent-7.99%承压)；仓位20-25%；防高位冲高回落</span>；<br>
+      ③ 大消费+房地产 = <b>退潮/分歧期(房地产-2.20%领跌/消费-0.79%仅前排连板)</b>，<span class="bad">谨慎·轻仓：仅一鸣/皇氏4连板前排换手(不追)；地产等企稳(京投/深振业个别涨停但板块弱)；仓位5-8%；防一日游/补跌</span>；<br>
+      ④ 电力 = <b>启动期(新晋·午后拉升)</b>，<span class="r">轻仓观察：大唐发电/京能电力/梅雁吉祥/华电辽能首板换手；仓位0-5%；防一日游(持续性待验)</span>。<br>
+      <b>总计划：总仓55%(8/13破3940触发v32.0"降至55%"纪律·放量滞涨+普跌+科创最弱→防守)，创新药CRO医药 15-20% + AI硬件链(算力+存储)20-25% + 大消费+房地产 5-8% + 电力新晋0-5% + 现金45%；守"中军分歧低吸/不追7连板/不接一字飞刀/去半导体光通信高位"纪律；破3900降至45%、破3870降至35%。</b>
+    </div>
+  </div>
+</div>
+
+<!-- ===== v32.0 → v33.0 变化 ===== -->
+<div class="verify-box verify-danger">
+  <strong style="color:#ff4757">🔁 v32.0（8/13 07:00·基于8/12反弹收复3940=总仓60-65%、主线=AI硬件链#1+创新药CRO#2+大消费地产#3、光通信回归、机器人轮动） → v33.0（8/14 07:00·基于8/13冲高回落破3940+8/13美股存储强/光通信分化，主线重排）哪些被反转 / 哪些被验证</strong><br>
+  <b style="color:#ff4757">✅ v32.0"8/12收复3940→总仓60-65%"被<b>反转(降级)</b></strong>：8/13沪指<b>最高3968.48破年线3960后尾盘翻绿收3926.96 -0.50%、跌破3940</b>→触发v32.0"破3940降至55%"纪律→<b>总仓降至55%</b>；成交2.55万亿放量但冲高回落(放量滞涨)、上涨1143/下跌4317、涨停62(缩)、赚钱效应20%→情绪退潮。<br>
+  <b style="color:#00d4aa">✅ v32.0"AI硬件链#1绝对主线"被<b>降级为#2且内部分化</b></strong>：8/13 <b>算力租赁(城地香江3连)、存储(美股闪迪+13.67%/SK海力士+7.29%强催化)仍强</b>，但<b>半导体-1.47%最差(主力-88.83亿)、光通信-0.77%且8/13美股光通信分化回调(Lumentum-5.58%/Coherent-7.99%)→CPO承压</b>→AI硬件链由"#1绝对主线"降为"#2分化(算力+存储为主、光通信走弱)"。<br>
+  <b style="color:#00d4aa">✅ v32.0"创新药CRO#2"被<b>逆势升为#1(唯一主线)</b></strong>：8/13 <b>创新药+1.84%、主力净流入+39.69亿(全市场第4)、医疗服务CRO逆势领涨</b>；博济/陇神/万邦20cm、誉衡5天4板、亚泰3连、方盛制药涨停；百花7连后+3.35%分歧→医药由"#2"因AI硬件退潮而升为"#1逆势最强主线"。<br>
+  <b style="color:#ffa502">🔄 v32.0"大消费+房地产#3新晋"被<b>降级为退潮</b></strong>：8/13 <b>房地产-2.20%领跌、大消费-0.79%仅前排连板(一鸣/皇氏4连但板块普跌)</b>→由"#3新晋"降为"退潮·仅前排换手、轻仓"。<br>
+  <b style="color:#00d4aa">✅ 全新支线(新晋)=电力</b>：8/13午后拉升——<b>大唐发电/京能电力/江河集团涨停、梅雁吉祥+9.47%、华电辽能+9.02%、电力ETF+0.64%</b>→政策(雅鲁藏布江水电/绿电)+防御属性新晋支线(观察持续性)。<br>
+  <b style="color:#ff4757">⚠️ 利空变量=破3940收3926.96/放量滞涨(2.55万亿但4317跌)/科创50-1.11%北证50-1.62%(小票最弱)/高位监管(百花7连后分歧·爱丽家居停牌核查外溢)/8/13美股光通信分化回调(Lumentum-5.58%Coherent-7.99%→CPO承压)/中概金龙前日-2.37%/中报雷/日本央行加息套利/两融获利盘。</b>
+</div>
+<div class="verify-box verify-warn">
+  <strong style="color:#ffa502">🔁 8/14 周五必须盯的落地事件</strong><br>
+  <b>① 创新药CRO·#1主线延续性</b>：8/13博济/万邦/陇神20cm+誉衡5天4板+亚泰3连→8/14能否延续 or 百花7连后分歧拖累(监管)；BD交易(8/10三起重磅)+药明1260H暂缓禁令+中报业绩催化 vs 高位见顶风险。<br>
+  <b>② AI硬件链·算力+存储强、光通信承压</b>：8/13美股<b>存储闪迪+13.67%/SK海力士+7.29%/西部数据+7.31%/美光+4.23%</b>→8/14 A股<b>存储(长鑫/江波龙/兆易/北京君正)+算力(城地香江3连/共进/星网锐捷)强催化</b>；但<b>8/13美股光通信分化回调(Lumentum-5.58%/Coherent-7.99%)→CPO(中际旭创/新易盛/天孚)承压</b>→去光通信高位、守算力+存储。<br>
+  <b>③ 指数3926.96·破3940后防守</b>：8/13收3926.96(破3940/盘中假破年线3960)→总仓55%；<b>3900(强支撑)/3870(极端)</b>防守线；成交能否重回2.5万亿+且收阳确认止跌。<br>
+  <b>④ 大消费+房地产退潮·前排换手</b>：一鸣/皇氏4连板→8/14能否5连 or 补跌(板块-2.20%/-0.79%普跌)；地产京投/深振业个别涨停但板块弱→不追。<br>
+  <b>⑤ 电力新晋持续性</b>：大唐发电/京能电力/梅雁吉祥→8/14能否2连 or 一日游；雅鲁藏布江水电/绿电政策。<br>
+  <b>⑥ 外围</b>：8/13美股标普收新高+存储强(偏多)但光通信分化；中概金龙前日-2.37%(核心资产承压)；PPI低于预期缓解加息；COMEX黄金+0.63%(贵金属A股仍弱)；日本央行加息+套利平仓/霍尔木兹油价。
+</div>
+
+<!-- ===== INDEX CARDS ===== -->
+<div class="index-cards">
+  <div class="index-card">
+    <div class="name">上证(8/13收盘)</div>
+    <div class="price" style="color:#ff4757;">3926.96</div>
+    <div class="change red">-0.50%</div>
+    <div class="sub">破3940·盘中3968假破年线</div>
+  </div>
+  <div class="index-card">
+    <div class="name">创业板指</div>
+    <div class="price" style="color:#ff4757;">3586.04</div>
+    <div class="change red">-0.45%</div>
+    <div class="sub">科创50 -1.11%最弱</div>
+  </div>
+  <div class="index-card">
+    <div class="name">科创50</div>
+    <div class="price" style="color:#ff4757;">1717.75</div>
+    <div class="change red">-1.11%</div>
+    <div class="sub">半导体-1.47%拖累</div>
+  </div>
+  <div class="index-card">
+    <div class="name">两市成交</div>
+    <div class="price" style="color:#ffa502;">2.55万亿</div>
+    <div class="change red">放量3985亿·滞涨</div>
+    <div class="sub">冲高回落·量价背离</div>
+  </div>
+  <div class="index-card">
+    <div class="name">涨停/涨跌</div>
+    <div class="price" style="color:#ffa502;">62</div>
+    <div class="change red">1143涨/4317跌</div>
+    <div class="sub">赚钱效应约20%·退潮</div>
+  </div>
+  <div class="index-card">
+    <div class="name">标普(8/13美)</div>
+    <div class="price" style="color:#00d4aa;">+0.65%</div>
+    <div class="change green">收历史新高·存储强</div>
+    <div class="sub">光通信分化·纳指+0.81%</div>
+  </div>
+</div>
+
+<!-- ===== Q1: 主流题材 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">1</span>当下主流题材（至多3个 + 新晋支线，基于8/13冲高回落破3940+8/13美股存储强/光通信分化重排，主线=「创新药CRO医药(#1逆势最强) + AI硬件链算力+存储(#2分化) + 大消费+房地产(#3退潮)」，电力新晋支线、半导体/光通信调整）</div>
+
+  <!-- Theme 1: 创新药CRO医药 -->
+  <div class="theme-card buy">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🟢 创新药 / CRO / 医药商业（含脑机接口）— 主升加速/高位分化期·#1逆势最强（8/13板块+1.84%·主力净流入+39.69亿全市场第4·博济万邦陇神20cm/誉衡5天4板/亚泰3连/百花7连后+3.35%分歧）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">8/13 <b>创新药板块+1.84%、医疗服务/CRO逆势领涨、主力净流入+39.69亿(全市场第4)</b>；<b>博济医药/陇神戎发/万邦医药20cm涨停、誉衡药业5天4板、亚泰集团3连板、方盛制药涨停</b>；百花医药7连板后<b>+3.35%高位分歧</b>(不再连板)。逻辑=创新药BD交易热(8/10单日三起重磅)+药明康德公告美法院批准初步禁令动议、暂缓1260H名单认定影响+公募医药配置历史极低(抛压耗尽·向上弹性大)+中报业绩超预期(药明/百济/荣昌/海思科等临床进展)+上海/浙江生物医药政策</div>
+      </div>
+      <div class="theme-signal buy">BUY · 中军/20cm弹性低吸·#1</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的（20cm弹性 / 连板前排 / 中军 / 医药商业 / 脑机）</div>
+        <div class="value">
+          <span class="stock-tag hl">博济医药 300404 (20cm) / 陇神戎发 300534 (20cm) / 万邦医药 301520 (20cm·3天2板) / 近岸蛋白 (20cm) (20cm弹性)</span>
+          <span class="stock-tag hl">誉衡药业 002437 (5天4板) / 亚泰集团 600881 (3连板) / 方盛制药 603998 (涨停) (连板前排)</span>
+          <span class="stock-tag hl">药明康德 603259 (+2.07%·1260H暂缓·中军) / 哈药股份 600664 / 浙江医药 600216 / 康恩贝 600572 / 甘李药业 603087 (GLP-1) / 舒泰神 300204 / 红日药业 300026 (中军)</span>
+          <span class="stock-tag hl">百花医药 600721 (7连后+3.35%分歧·不追) / 开开实业 600272 (医药商业) (前排/商业)</span>
+          <span class="stock-tag hl">星网锐捷 002396 (涨停·脑科学+华为) / 宝莱特 300246 / 爱朋医疗 300753 / 创新医疗 002173 (脑机接口)</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金/强度信号</div>
+        <div class="value" style="color:#00d4aa;">8/13创新药+1.84%、主力净流入+39.69亿(全市场第4)、医疗服务CRO逆势领涨；博济/陇神/万邦20cm、誉衡5天4板、亚泰3连；百花7连后+3.35%分歧；药明康德+2.07%(1260H暂缓)；BD交易热+公募医药配置极低→抛压耗尽</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          逻辑：主升加速/高位分化期(#1逆势最强)；<b>中军(药明/誉衡/哈药/甘李)分歧低吸+20cm弹性(博济/万邦/陇神)+医药商业(开开)+脑机(宝莱特/星网锐捷)</b>；不追连板(百花7连后分歧/监管)；防高位见顶+中位股掉队
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">创新药BD交易热：8月10日单日落地三起重磅BD交易；海思科/以岭/恒瑞/苑东等披露创新药新临床进展(小分子/多肽/生物制剂/siRNA/PROTAC多点开花)</li>
+        <li class="pos">药明康德公告：美哥伦比亚特区联邦地区法院8月7日批准其初步禁令动议，在起诉美国国防部期间免受1260H名单认定的即时不利影响→CRO情绪修复</li>
+        <li class="pos">公募医药配置比例历史极低(抛压耗尽、向上弹性大)；上海七部门生物医药政策+中报业绩(药明/百济/荣昌)超预期；脑机接口浙江政策(星网锐捷/宝莱特受益)</li>
+        <li class="neg">⚠️ 百花7连板高位+分歧(8/13仅+3.35%·监管复核风险·爱丽家居停牌核查外溢)→随时见顶；中位股(誉衡5天4板/亚泰3连)加速后承接分歧；高位无业绩纯题材中报雷；1-2日内板块或高位分歧</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker warm" style="left:48%;width:26%;"></div>
+        <div class="stage-segment">退潮</div>
+        <div class="stage-segment">启动</div>
+        <div class="stage-segment">加速</div>
+        <div class="stage-segment" style="color:#ffa502;font-weight:700;">↑ 主升加速/高位分化</div>
+        <div class="stage-segment">高位见顶(临)</div>
+      </div>
+      <div style="font-size:13px;color:#00d4aa;margin-top:4px;">
+        ✅ 主升加速/高位分化期·<b>能买·强但更严格：中军(药明/誉衡/哈药/甘李)分歧低吸+20cm弹性(博济/万邦/陇神)+医药商业(开开)+脑机(宝莱特/星网锐捷)，不追连板百花；仓位15-20%；防高位见顶+中位股掉队</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme 2: AI硬件链(算力+存储) -->
+  <div class="theme-card buy">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name">🟢 AI硬件链（算力租赁 + 存储芯片；光通信CPO分化走弱）— 主升分化期·#2（8/13算力城地香江3连/存储美股强催化；但半导体-1.47%最差/光通信-0.77%美股分化回调）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">8/13 <b>算力租赁延续</b>——城地香江<b>3连板</b>(2→3)、共进股份/星网锐捷/群兴玩具涨停、锐捷网络+13.52%；<b>存储强催化</b>——8/13美股<b>闪迪+13.67%/西部数据+7.31%/SK海力士+7.29%/希捷+4.91%/美光+4.23%(服务器DDR5月涨15-23%、HBM供不应求)</b>→长鑫/江波龙/兆易/北京君正8/14强催化；但<b>半导体-1.47%(主力-88.83亿·124/124最差)、光通信-0.77%</b>，且<b>8/13美股光通信分化回调(Lumentum-5.58%/Coherent-7.99%)→CPO承压</b>。逻辑=AI算力资本开支强劲+存储涨价+HBM供不应求+美股存储强；但光通信短期过热回调、半导体获利回吐</div>
+      </div>
+      <div class="theme-signal buy">BUY · 算力+存储低吸/光通信谨慎·#2</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的（算力租赁 / 存储 / 光通信CPO(谨慎) / 设备）</div>
+        <div class="value">
+          <span class="stock-tag hl">城地香江 603887 (3连板) / 共进股份 603118 (涨停) / 星网锐捷 002396 (涨停) / 群兴玩具 002575 (涨停) / 锐捷网络 301165 (+13.52%) / 宏景科技 301396 / 润建股份 002929 (算力租赁)</span>
+          <span class="stock-tag hl">长鑫科技 688825 / 江波龙 301308 / 兆易创新 002049 / 北京君正 300223 (存储·美股强催化)</span>
+          <span class="stock-tag hl">天孚通信 300394 (+7.13%) / 源杰科技 688498 (+5.02%) / 华西股份 000936 (涨停) / 中际旭创 300308 (0%) / 新易盛 300502 (+0.4%) (光通信CPO·谨慎·美股分化)</span>
+          <span class="stock-tag hl">北方华创 002371 / 中微公司 688012 / 拓荆科技 (设备)</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金/强度信号</div>
+        <div class="value" style="color:#00d4aa;">8/13算力租赁延续(城地香江3连/共进星网锐捷涨停/锐捷+13.52%)；8/13美股存储闪迪+13.67%/SK海力士+7.29%/西部数据+7.31%/美光+4.23%→存储强催化；但半导体-1.47%(主力-88.83亿最差)、光通信-0.77%、8/13美股光通信Lumentum-5.58%/Coherent-7.99%分化回调</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          逻辑：主升分化期(算力+存储强、光通信走弱)；<b>算力(城地香江/共进/星网锐捷/宏景)+存储(长鑫/江波龙/兆易·美股强催化)分歧低吸为主、去光通信高位(CPO美股分化回调)</b>；8/14受美股存储强催化但防冲高回落(8/13已放量滞涨)
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">存储景气：8/13美股闪迪+13.67%/西部数据+7.31%/SK海力士+7.29%/希捷+4.91%/美光+4.23%；服务器DDR5本月涨价15-23%、TrendForce称服务器DRAM供给不足、三季度持续上调报价预期；长鑫科技纳入MSCI迎被动资金</li>
+        <li class="pos">算力租赁：CoreWeave/Nebius业绩超预期(8/12美股)；城地香江3连板、共进股份/星网锐捷涨停、锐捷网络+13.52%；阿里云数据中心产能翻倍/AIDC交付缩短至100天</li>
+        <li class="pos">光通信余温：8/12 Lumentum财报超预期余波(天孚通信+7.13%/源杰伦)；但8/13美股光通信分化回调→短期过热、需确认</li>
+        <li class="neg">⚠️ 半导体-1.47%(主力-88.83亿·全市场最差)获利回吐；光通信8/13美股分化回调(Lumentum-5.58%/Coherent-7.99%)→CPO承压；8/13整体放量滞涨(2.55万亿但4317跌)→冲高回落风险；特朗普多晶硅15%关税(12月)；中报雷</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker buy" style="left:34%;width:26%;"></div>
+        <div class="stage-segment">退潮</div>
+        <div class="stage-segment">启动</div>
+        <div class="stage-segment" style="color:#00d4aa;font-weight:700;">↑ 主升分化期</div>
+        <div class="stage-segment">高位分歧</div>
+        <div class="stage-segment">去弱留强</div>
+      </div>
+      <div style="font-size:13px;color:#00d4aa;margin-top:4px;">
+        ✅ 主升分化期·<b>能买·选择性：算力租赁(城地香江/共进/星网锐捷/宏景)+存储(长鑫/江波龙/兆易·美股强催化)分歧低吸；光通信CPO谨慎(美股Lumentum-5.58%/Coherent-7.99%承压)；仓位20-25%；防高位冲高回落</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme 3: 大消费+房地产(退潮) -->
+  <div class="theme-card watch">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name" style="color:#ffb84d;">🟡 大消费 + 房地产（政策驱动）— 退潮/分歧期·#3（8/13房地产-2.20%领跌/大消费-0.79%仅前排连板·一鸣皇氏4连但板块普跌）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">8/13 <b>房地产-2.20%领跌</b>(京投发展/深振业A个别涨停但板块弱、城建发展/新城控股/滨江集团8/13跌)；<b>大消费-0.79%</b>(一鸣食品/皇氏集团<b>4连板</b>但板块普跌、北京文化/中兴商业分化)。逻辑=政策余温(消费十五五+北京限购优化)+超跌反弹，但8/13板块普跌、资金撤退、持续性弱→由v32.0"#3新晋"降为"退潮·仅前排换手"</div>
+      </div>
+      <div class="theme-signal watch">WATCH · 前排换手·退潮#3</div>
+    </div>
+    <div class="theme-row">
+      <div>
+        <div class="label">核心标的（消费前排 / 地产前排）</div>
+        <div class="value">
+          <span class="stock-tag hl">一鸣食品 605179 (4连板) / 皇氏集团 002329 (4连板) / 北京文化 000802 (影视·分化) / 中兴商业 000715 (分化) / 安记食品 603696 / 好想你 002582 / 今世缘 603369 (消费)</span>
+          <span class="stock-tag hl">京投发展 600683 (涨停) / 深振业A 000006 (涨停) / 荣丰控股 000668 (+9.91%) / 城建发展 600266 (8/13跌) / 新城控股 601155 (8/13跌) / 滨江集团 002244 (8/13跌) (房地产)</span>
+        </div>
+      </div>
+      <div>
+        <div class="label">资金/强度信号</div>
+        <div class="value" style="color:#ffa502;">8/13房地产-2.20%领跌(京投/深振业个别涨停但板块弱)、大消费-0.79%(一鸣/皇氏4连但板块普跌)；仅前排连板、板块资金撤退；政策余温但持续性弱</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          逻辑：退潮/分歧期(政策驱动余温)；<b>仅前排(一鸣/皇氏4连)换手不追、地产等企稳</b>；仓位5-8%；防一日游/补跌(板块已普跌)
+        </div>
+      </div>
+    </div>
+    <div class="theme-stocks">
+      <div class="label">📌 催化剂</div>
+      <ul class="catalyst-list">
+        <li class="pos">《扩大消费"十五五"规划》2030社零60万亿；北京优化限购+提高公积金(余温)；一鸣食品/皇氏集团4连板打开高度</li>
+        <li class="neg">⚠️ 8/13房地产-2.20%领跌、大消费-0.79%普跌→资金撤退；仅前排连板、板块无资金支撑；消费/地产基本面未反转(仅预期)；持续性弱、防补跌/一日游；破3940后风险偏好下降</li>
+      </ul>
+    </div>
+    <div style="margin-top:12px;">
+      <div class="label" style="color:#64748b;font-size:13px;margin-bottom:6px;">📍 阶段定位</div>
+      <div class="stage-bar">
+        <div class="stage-marker warm" style="left:56%;width:22%;"></div>
+        <div class="stage-segment">退潮</div>
+        <div class="stage-segment">启动</div>
+        <div class="stage-segment">发酵</div>
+        <div class="stage-segment">分歧</div>
+        <div class="stage-segment" style="color:#ffa502;font-weight:700;">↑ 退潮/分歧期</div>
+      </div>
+      <div style="font-size:13px;color:#ffa502;margin-top:4px;">
+        ⚠️ 退潮/分歧期·<b>谨慎·轻仓：仅一鸣/皇氏4连板前排换手(不追)；地产等企稳(京投/深振业个别涨停但板块弱)；仓位5-8%；防一日游/补跌</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- 新晋 电力 -->
+  <div class="theme-card watch">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name" style="color:#ffb84d;">🟡 电力（新晋支线）— 启动期（8/13午后拉升·大唐发电/京能电力/江河集团涨停·梅雁吉祥+9.47%·政策+防御）</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">8/13 电力板块午后震荡走高——<b>大唐发电/京能电力/江河集团涨停、梅雁吉祥+9.47%、华电辽能+9.02%、电力ETF+0.64%</b>。逻辑=雅鲁藏布江水电/绿电政策催化+指数冲高回落下的防御属性+夏季用电高峰；但持续性待验(新晋首日)。</div>
+      </div>
+      <div class="theme-signal watch">WATCH · 新晋·轻仓观察</div>
+    </div>
+    <div style="font-size:13px;color:#cbd5e1;margin-top:8px;">
+      核心(轻仓)：大唐发电(601991·涨停)/京能电力(600578)/江河集团(601886·涨停)/梅雁吉祥(600868·+9.47%)/华电辽能(600396·+9.02%)/华电能源。仅首板换手轻仓试错、不追高；新晋首日、防一日游。
+    </div>
+  </div>
+
+  <!-- 半导体/光通信/贵金属 偏弱 -->
+  <div class="theme-card avoid">
+    <div class="theme-header">
+      <div>
+        <div class="theme-name" style="color:#ff6b7a;">🔴 半导体（整体）/ 光通信CPO（高位分化）/ 贵金属 / 油气煤炭 — 调整/回避(AVOID·8/13领跌或分化)</div>
+        <div style="color:#64748b;font-size:13px;margin-top:2px;">8/13 <b>半导体-1.47%(主力-88.83亿·124/124最差)</b>获利回吐；<b>光通信-0.77%</b>且8/13美股光通信分化回调(Lumentum-5.58%/Coherent-7.99%)→CPO高位承压；<b>贵金属</b>晓程科技/招金黄金/湖南白银下挫(COMEX黄金+0.63%但A股弱)；油气煤炭延续弱→维持回避或仅机动观察，等企稳。</div>
+      </div>
+      <div class="theme-signal avoid">AVOID · 调整/回避</div>
+    </div>
+    <div style="font-size:13px;color:#cbd5e1;margin-top:8px;">
+      半导体(整体-1.47%)、光通信CPO(美股分化·高位)、贵金属(晓程科技/招金黄金/湖南白银下挫)、油气(通源石油/科力股份)、煤炭(潞安/淮北/平煤)8/13偏弱→回避；仅存储(美股强催化)与算力租赁可选择性参与，余下等企稳。
+    </div>
+  </div>
+</div>
+
+<!-- ===== Q2: 核心标的全览 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">2</span>主流题材核心标的全览（8/14 周五盘前版 · v33.0）</div>
+  <table class="plan-table">
+    <thead>
+      <tr>
+        <th>题材</th>
+        <th>核心标的</th>
+        <th>角色定位</th>
+        <th>逻辑/信号（8/13收盘+8/13美股）</th>
+        <th>操作方向</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="3" style="color:#00d4aa;font-weight:700;">创新药<br>CRO<br>医药商业<br>脑机</td>
+        <td><b>博济医药 300404(20cm) / 陇神戎发 300534(20cm) / 万邦医药 301520(20cm·3天2板) / 近岸蛋白(20cm)</b></td>
+        <td>20cm弹性(前排)</td>
+        <td style="color:#00d4aa;">8/13三股20cm涨停；创新药BD热+临床进展</td>
+        <td class="action-buy">分歧低吸</td>
+      </tr>
+      <tr>
+        <td><b>誉衡药业 002437(5天4板) / 亚泰集团 600881(3连板) / 方盛制药 603998(涨停) / 百花医药 600721(7连后+3.35%分歧·不追)</b></td>
+        <td>连板前排(高位)</td>
+        <td style="color:#00d4aa;">8/13誉衡5天4板/亚泰3连；百花高位分歧</td>
+        <td class="action-buy">换手·不追高</td>
+      </tr>
+      <tr>
+        <td><b>药明康德 603259(+2.07%·1260H暂缓·中军) / 哈药股份 600664 / 浙江医药 600216 / 康恩贝 600572 / 甘李药业 603087(GLP-1) / 舒泰神 300204 / 红日药业 300026 / 开开实业 600272(医药商业) / 星网锐捷 002396(脑科学+华为·涨停) / 宝莱特 300246(脑机)</b></td>
+        <td>中军+商业+脑机</td>
+        <td style="color:#00d4aa;">创新药+1.84%/主力+39.69亿第4；BD热+公募配置极低+脑机政策</td>
+        <td class="action-buy">中军低吸·#1</td>
+      </tr>
+      <tr>
+        <td rowspan="3" style="color:#00d4aa;font-weight:700;">AI硬件链<br>(算力<br>租赁/<br>存储)</td>
+        <td><b>城地香江 603887(3连板) / 共进股份 603118(涨停) / 星网锐捷 002396(涨停) / 群兴玩具 002575(涨停) / 锐捷网络 301165(+13.52%) / 宏景科技 301396 / 润建股份 002929</b></td>
+        <td>算力租赁(延续强)</td>
+        <td style="color:#00d4aa;">城地香江3连；CoreWeave/Nebius业绩超预期</td>
+        <td class="action-buy">分歧低吸</td>
+      </tr>
+      <tr>
+        <td><b>长鑫科技 688825 / 江波龙 301308 / 兆易创新 002049 / 北京君正 300223</b></td>
+        <td>存储芯片(美股强催化)</td>
+        <td style="color:#00d4aa;">8/13美股闪迪+13.67%/SK海力士+7.29%/西部数据+7.31%/美光+4.23%；DDR5月涨15-23%</td>
+        <td class="action-buy">低吸·#2</td>
+      </tr>
+      <tr>
+        <td><b>天孚通信 300394(+7.13%) / 源杰科技 688498(+5.02%) / 华西股份 000936(涨停) / 中际旭创 300308(0%) / 新易盛 300502(+0.4%) / 北方华创 002371 / 中微公司 688012</b></td>
+        <td>光通信CPO(谨慎)/设备</td>
+        <td style="color:#ffa502;">8/13美股光通信分化回调Lumentum-5.58%/Coherent-7.99%→CPO承压；设备随半导体-1.47%</td>
+        <td class="action-hold">谨慎·去高位</td>
+      </tr>
+      <tr>
+        <td rowspan="2" style="color:#ffb84d;font-weight:700;">大消费<br>+房地产<br>(退潮)</td>
+        <td><b>一鸣食品 605179(4连板) / 皇氏集团 002329(4连板) / 北京文化 000802(影视·分化) / 中兴商业 000715(分化) / 安记食品 603696 / 好想你 002582 / 今世缘 603369</b></td>
+        <td>大消费(前排连板)</td>
+        <td style="color:#ffb84d;">消费-0.79%仅前排；一鸣/皇氏4连</td>
+        <td class="action-hold">前排换手·不追</td>
+      </tr>
+      <tr>
+        <td><b>京投发展 600683(涨停) / 深振业A 000006(涨停) / 荣丰控股 000668(+9.91%) / 城建发展 600266(8/13跌) / 新城控股 601155(8/13跌) / 滨江集团 002244(8/13跌)</b></td>
+        <td>房地产(个别涨停·板块弱)</td>
+        <td style="color:#ffb84d;">房地产-2.20%领跌；仅京投/深振业涨停</td>
+        <td class="action-hold">等企稳·不追</td>
+      </tr>
+      <tr>
+        <td style="color:#ffb84d;font-weight:700;">新晋支线</td>
+        <td><b>电力(大唐发电601991·涨停/京能电力/江河集团·涨停/梅雁吉祥600868·+9.47%/华电辽能600396·+9.02%)；机器人(秦安股份603758·4板后分歧/华东数控/巨轮智能/北特科技)；贵金属(赤峰/紫金/招金·观望)</b></td>
+        <td>新晋/轮动(补涨)</td>
+        <td style="color:#ffb84d;">8/13电力午后拉升；黄金A股仍弱；持续性待验</td>
+        <td class="action-hold">轻仓·不追</td>
+      </tr>
+      <tr>
+        <td style="color:#ff6b7a;font-weight:700;">回避</td>
+        <td><b>半导体(整体-1.47%·主力-88.83亿最差)/光通信CPO高位(美股分化)/油气(通源石油/科力股份)/煤炭(潞安/淮北/平煤)/贵金属(晓程科技/招金黄金/湖南白银·下挫)</b></td>
+        <td>调整/弱周期</td>
+        <td style="color:#ff6b7a;">8/13领跌·资金流出·放量滞涨</td>
+        <td class="action-sell">回避·等企稳</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== Q3: 阶段判断 + 交易计划 ===== -->
+<div class="section">
+  <div class="section-title"><span class="num">3</span>阶段判断与 8/14 周五盘前交易计划（8/13冲高回落破3940收3926.96+8/13美股标普收新高/存储强闪迪+13.67%SK海力士+7.29%西部数据+7.31%/光通信分化Lumentum-5.58%Coherent-7.99% · 主线重排=创新药CRO医药(#1逆势最强) + AI硬件链算力+存储(#2分化) + 大消费+房地产(#3退潮)，电力新晋）</div>
+
+  <!-- Key Levels -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📐 上证指数关键点位（8/14 盘前 · 8/13收3926.96跌破3940、盘中最高3968.48假破年线3960、放量滞涨·触发"降至55%"；需缩量止跌或放量收回3940）</div>
+    <div class="level-grid">
+      <div class="level-card">
+        <div class="label">极端支撑</div>
+        <div class="value red">3870</div>
+        <div class="note">8/6最低3864·破则35%防御</div>
+      </div>
+      <div class="level-card">
+        <div class="label">强支撑</div>
+        <div class="value red">3900</div>
+        <div class="note">回踩支撑·破则降至45%</div>
+      </div>
+      <div class="level-card">
+        <div class="label">破位线</div>
+        <div class="value red">3940</div>
+        <div class="note">8/13已破·总仓55%</div>
+      </div>
+      <div class="level-card">
+        <div class="label">反弹压力</div>
+        <div class="value orange">3960</div>
+        <div class="note">年线反压·8/13假破</div>
+      </div>
+      <div class="level-card">
+        <div class="label">反转确认</div>
+        <div class="value green">4000+</div>
+        <div class="note">放量站稳=主升延续</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 能不能买 速览 -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">✅ 三大主线「能不能买」速览</div>
+    <div class="level-grid">
+      <div class="level-card">
+        <div class="label">创新药CRO医药</div>
+        <div class="value green">能买·强</div>
+        <div class="note">逆势#1·中军/20cm低吸</div>
+      </div>
+      <div class="level-card">
+        <div class="label">AI硬件链(算力+存储)</div>
+        <div class="value green">能买·选择性</div>
+        <div class="note">算力+存储强·光通信谨慎</div>
+      </div>
+      <div class="level-card">
+        <div class="label">大消费+房地产</div>
+        <div class="value orange">谨慎·退潮</div>
+        <div class="note">仅前排换手·不追</div>
+      </div>
+      <div class="level-card">
+        <div class="label">电力(新晋)</div>
+        <div class="value orange">轻仓·观察</div>
+        <div class="note">首日·防一日游</div>
+      </div>
+      <div class="level-card">
+        <div class="label">半导体/光通信/贵金属</div>
+        <div class="value red">不买·调整</div>
+        <div class="note">半导体-1.47%·CPO承压</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scenario -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">🎲 8/14 情景推演（8/13破3940收3926.96+放量滞涨4317跌+8/13美股标普收新高/存储强闪迪+13.67%SK海力士+7.29%西部数据+7.31%/光通信分化Lumentum-5.58%Coherent-7.99% · 总仓55%防守、现金45%、主线=医药#1+算力存储#2+消费地产退潮）</div>
+    <div class="scenario-grid">
+      <div class="scenario-card" style="border-color:rgba(0,212,170,0.3);">
+        <div class="prob bull">30%</div>
+        <div style="font-weight:600;margin-bottom:4px;">乐观：缩量止跌·医药/算力存储延续·反抽3940</div>
+        <div class="desc">沪指3926附近缩量止跌、收回3940；创新药(博济万邦誉衡/药明)延续#1、算力租赁(城地香江3连/共进/星网锐捷)与存储(长鑫/江波龙/兆易)受美股闪迪+13.67%/SK海力士+7.29%强催化走高；标普收新高+PPI低于预期缓解加息→结构行情延续；电力(大唐/京能)2连确认新晋；中概前日-2.37%被消化</div>
+      </div>
+      <div class="scenario-card" style="border-color:rgba(255,165,2,0.3);">
+        <div class="prob neutral">42%</div>
+        <div style="font-weight:600;margin-bottom:4px;">中性：3900-3940拉锯·主线(医药/算力存储)轮动·轻指数重个股</div>
+        <div class="desc">沪指在3900-3940(破3940后)窄幅震荡；创新药(中军分歧低吸+20cm弹性)、AI硬件链(算力+存储强、光通信谨慎)良性轮动；大消费地产退潮(一鸣/皇氏前排换手)、电力观察；中概-2.37%压制开盘、但美股存储对冲；成交维持2.3-2.5万亿；守中军+"分歧低吸/不追7连板/不接一字"；中报雷释放</div>
+      </div>
+      <div class="scenario-card" style="border-color:rgba(255,71,87,0.3);">
+        <div class="prob bear">28%</div>
+        <div style="font-weight:600;margin-bottom:4px;">悲观：破3900·主线分歧·降防至45%</div>
+        <div class="desc">沪指破3900(向3870寻支撑)；创新药高位见顶(百花炸板/誉衡亚泰掉队/药明回落)、算力冲高回落(城地香江开板)、存储高开低走(美股强但A股兑现)、大消费地产补跌、电力一日游；中概-2.37%+高位监管(爱丽家居停牌核查外溢)+两融获利盘+日本央行加息套利平仓+半导体延续弱→成交回落；需降至45%/35%防御；中报雷+高位监管外溢</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Position Allocation -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">💰 仓位配置建议（总仓位 55%·8/13破3940触发v32.0"降至55%"纪律·放量滞涨+普跌+科创最弱→防守、现金45%、不追高、去飞刀）</div>
+    <div class="position-grid">
+      <div id="positionChart" class="chart-container" style="height:280px;"></div>
+      <div class="position-list">
+        <div class="position-item">
+          <span class="name">🟢 创新药CRO医药商业(含脑机)</span>
+          <span class="pct green">15-20%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🟢 AI硬件链(算力+存储)</span>
+          <span class="pct green">20-25%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🟡 大消费+房地产(#3退潮)</span>
+          <span class="pct orange">5-8%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🟡 电力(新晋支线)</span>
+          <span class="pct orange">0-5%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">🔴 半导体/光通信/贵金属(回避)</span>
+          <span class="pct gray">0%</span>
+        </div>
+        <div class="position-item">
+          <span class="name">💵 现金（守回踩·去飞刀）</span>
+          <span class="pct gray">45%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trading Plan Table -->
+  <div style="margin-bottom:20px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📋 分批交易计划（8/14 周五盘前 · v33.0 · 基于8/13冲高回落破3940收3926.96+8/13美股标普收新高/存储强/光通信分化重排）</div>
+    <table class="plan-table">
+      <thead>
+        <tr>
+          <th>方向</th>
+          <th>触发条件</th>
+          <th>操作</th>
+          <th>仓位</th>
+          <th>止损/风控</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:#00d4aa;font-weight:700;">创新药CRO<br>医药商业<br>(#1逆势)</td>
+          <td>中军(药明/誉衡/哈药/甘李)分歧低吸；20cm弹性(博济/万邦/陇神)换手；医药商业(开开)；脑机(宝莱特/星网锐捷)；BD交易(8/10三起重磅)+药明1260H暂缓+中报业绩催化则加仓中军</td>
+          <td class="action-buy">中军/20cm分歧低吸</td>
+          <td>15-20%</td>
+          <td>⚠️ 百花7连后+3.35%高位分歧+监管复核风险(爱丽家居停牌核查)→随时见顶；中位股(誉衡5天4板/亚泰3连)加速后承接分歧；不追连板；破3940维持10-12%</td>
+        </tr>
+        <tr>
+          <td style="color:#00d4aa;font-weight:700;">AI硬件链<br>(#2分化)</td>
+          <td>算力租赁(城地香江3连/共进/星网锐捷/宏景/润建)低吸；存储(长鑫/江波龙/兆易/北京君正)受美股闪迪+13.67%/SK海力士+7.29%/西部数据+7.31%强催化低吸；<b>光通信CPO谨慎(美股Lumentum-5.58%/Coherent-7.99%分化回调→去高位)</b></td>
+          <td class="action-buy">算力+存储低吸</td>
+          <td>20-25%</td>
+          <td>⚠️ 半导体-1.47%(主力-88.83亿最差)获利回吐；光通信美股分化回调压制CPO；8/13放量滞涨(2.55万亿但4317跌)→防高开冲高回落；特朗普多晶硅15%关税(12月)；中报雷；破3940降至15%</td>
+        </tr>
+        <tr>
+          <td style="color:#ffb84d;font-weight:700;">大消费<br>+房地产</td>
+          <td>消费(一鸣/皇氏4连板)前排换手(不追)；地产(京投/深振业个别涨停)等板块企稳再低吸；政策(消费十五五+北京限购优化)余温</td>
+          <td class="action-hold">前排换手·不追</td>
+          <td>5-8%</td>
+          <td>⚠️ 8/13房地产-2.20%领跌/大消费-0.79%普跌→退潮；仅前排连板、板块无资金支撑；防一日游/补跌；破3940维持0-3%</td>
+        </tr>
+        <tr>
+          <td style="color:#ffb84d;font-weight:700;">电力<br>(新晋)</td>
+          <td>大唐发电/京能电力/江河集团/梅雁吉祥/华电辽能首板换手；雅鲁藏布江水电/绿电政策催化则轻仓试错</td>
+          <td class="action-hold">轻仓·首板换手</td>
+          <td>0-5%</td>
+          <td>新晋首日、持续性待验(防一日游)；仅首板换手、不追高；破3900维持0</td>
+        </tr>
+        <tr>
+          <td style="color:#ff6b7a;font-weight:700;">半导体<br>/光通信<br>/贵金属</td>
+          <td>半导体整体-1.47%(主力-88.83亿最差)→回避；光通信8/13美股分化回调(Lumentum-5.58%/Coherent-7.99%)→去高位CPO；贵金属(晓程科技/招金黄金/湖南白银)8/13下挫→等COMEX黄金带动A股资源企稳后再观、不抄半山腰；油气煤炭延续弱</td>
+          <td class="action-sell">回避</td>
+          <td>0%</td>
+          <td>8/13半导体/光通信/贵金属/油气煤炭偏弱+资金流出→等企稳；仅存储(美股强催化)与算力租赁可选择性参与</td>
+        </tr>
+        <tr>
+          <td style="color:#94a3b8;font-weight:700;">现金</td>
+          <td colspan="2">守到主线分歧后的低吸机会、中军(药明/誉衡/哈药/甘李/城地香江/长鑫/江波龙/一鸣)回踩、医药#1与算力存储#2轮动换手、3900上方主线核心资产；<b>去纯题材一字飞刀+半导体光通信高位回避+油气煤炭贵金属回避</b></td>
+          <td>45%</td>
+          <td>保留机动应对破3900/中概-2.37%/高位监管(百花7连)/中报雷/日本加息套利/光通信美股分化/地缘油价/COMEX黄金波动</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Alerts -->
+  <div style="margin-bottom:16px;">
+    <div class="alert-box danger">
+      <div class="title">🚨 风险警报（8/14 盘前关键变量 · 破3940收3926.96/放量滞涨2.55万亿/科创-1.11%/高位监管(百花7连后分歧)/光通信美股分化/中概-2.37%/中报雷）</div>
+      <div>① <b>沪指破3940收3926.96、盘中最高3968.48假破年线3960后尾盘翻绿</b> —— 触发v32.0"破3940降至55%"纪律；真要修复需缩量止跌或放量收回3940并向3960推进</div>
+      <div>② <b>放量滞涨</b> —— 8/13两市2.55万亿(放量3985亿)但<b>上涨1143/下跌4317、涨停仅62家、赚钱效应约20%</b>→量价背离、资金出逃(非健康放量)</div>
+      <div>③ <b>小票最弱</b> —— 科创50-1.11%、北证50-1.62%→高位题材/小票承压最大</div>
+      <div>④ <b>高位监管</b> —— 爱丽家居仍处于停牌核查；百花7连板后+3.35%分歧(全市场最高标、重点监控)随时触发复核；高位投机情绪退潮、监管外溢风险大</div>
+      <div>⑤ <b>光通信美股分化回调</b> —— 8/13美股Lumentum-5.58%/Coherent-7.99%/AAOI-5.79%/康宁-5.32%→8/14 A股CPO(中际旭创/新易盛/天孚)承压、去高位</div>
+      <div>⑥ <b>中概金龙前日-2.37%(核心资产承压)</b> —— 腾讯音乐-3.04%/网易/阿里/B站-2%→8/14 A股核心资产(尤其港股映射/外资偏好)开盘偏空</div>
+      <div>⑦ <b>外围扰动</b> —— 日本央行9月加息预期+美日联合干预→日元套利交易平仓风险；特朗普多晶硅15%关税(12/4)；两融获利盘；中报雷</div>
+      <div>⑧ <b>主线轮动过快+退潮</b> —— 8/13仅创新药逆势、其余普跌；追涨易被套；守中军+分歧低吸纪律、去纯题材飞刀</div>
+    </div>
+    <div class="alert-box success">
+      <div class="title">✅ 积极催化（8/13真实收盘 + 8/13美股 + 8/14盘前）</div>
+      <div>① <b>创新药CRO医药#1逆势最强</b> —— 8/13板块+1.84%、主力净流入+39.69亿(全市场第4)、医疗服务CRO逆势领涨；博济/陇神/万邦20cm、誉衡5天4板、亚泰3连；BD交易热(8/10三起重磅)+药明1260H暂缓禁令+公募医药配置极低</div>
+      <div>② <b>8/13美股存储强+标普收新高</b> —— 标普+0.65%收历史新高、纳指+0.81%；闪迪+13.67%/西部数据+7.31%/SK海力士+7.29%/希捷+4.91%/美光+4.23%/存储ETF+3.89%；费半+0.46%；<b>对8/14 A股存储(长鑫/江波龙/兆易/北京君正)强催化</b></div>
+      <div>③ <b>算力租赁延续</b> —— 城地香江3连板、共进股份/星网锐捷/群兴玩具涨停、锐捷网络+13.52%；CoreWeave/Nebius业绩超预期+阿里云数据中心产能翻倍</div>
+      <div>④ <b>政策+流动性</b> —— 央行二季度货币政策执行报告"继续实施好适度宽松的货币政策、及时谋划出台务实管用的增量政策"；PPI同比+4.7%(预期4.9%)/核心PPI+4.2%缓解加息；创新药BD+脑机接口政策；电力(雅鲁藏布江水电/绿电)新晋</div>
+      <div>⑤ <b>存储涨价</b> —— 服务器DDR5本月涨价15-23%、TrendForce称服务器DRAM供给不足、三季度持续上调报价预期；长鑫纳入MSCI迎被动资金</div>
+    </div>
+  </div>
+
+  <!-- Checklist -->
+  <div style="margin-bottom:16px;">
+    <div class="alert-box warning">
+      <div class="title">✅ 8/14 盘前检查清单（基于8/13冲高回落破3940收3926.96+8/13美股标普收新高/存储强/光通信分化重排）</div>
+      <ul class="checklist">
+        <li>✅ 主线重排：创新药CRO医药(#1逆势最强·+1.84%/博济万邦陇神20cm/誉衡5天4板/亚泰3连/百花7连后+3.35%分歧)+AI硬件链算力+存储(#2分化·城地香江3连/存储美股闪迪+13.67%SK海力士+7.29%；半导体-1.47%最差/光通信-0.77%美股分化)+大消费+房地产(#3退潮·房地产-2.20%领跌/消费-0.79%)；电力新晋(大唐/京能/梅雁)；半导体/光通信/贵金属回避；总仓55%(8/13破3940触发"降至55%"·放量滞涨+普跌+科创最弱)</li>
+        <li>⚠️ 开盘纪律：8/13沪指收3926.96(破3940/盘中假破年线3960)→<b>总仓55%、防守为主、现金45%、守分歧低吸不追飞刀</b>；创新药(中军药明/誉衡/哈药/甘李+20cm博济万邦陇神+医药商业开开+脑机宝莱特星网锐捷)#1主攻；AI硬件链(算力城地香江/共进/星网锐捷+存储长鑫/江波龙/兆易·美股强催化)分歧低吸#2、光通信CPO谨慎(美股分化)；大消费地产(一鸣/皇氏4连)仅前排换手#3；电力(大唐/京能/梅雁)新晋轻仓；半导体/光通信高位/贵金属回避</li>
+        <li>🔍 开盘观察：① 创新药(博济万邦誉衡/药明1260H暂缓)能否延续#1 or 百花7连后分歧拖累(监管) ② AI硬件链(美股存储闪迪+13.67%/SK海力士+7.29%→存储长鑫/江波龙/兆易强；但光通信Lumentum-5.58%/Coherent-7.99%→CPO承压；算力城地香江3连) ③ 指数3926.96(破3940) vs 3900(强支撑)/3960(年线反压)/4000 ④ 成交能否缩量止跌 or 放量收回3940 ⑤ 中概-2.37%对核心资产压制 ⑥ 电力新晋(大唐/京能)持续性 ⑦ 贵金属(COMEX黄金+0.63%)能否带动A股资源止跌 ⑧ 日本央行加息+套利平仓/霍尔木兹油价/地缘</li>
+        <li>🛡️ 创新药CRO医药：中军(药明/誉衡/哈药/甘李)分歧低吸+20cm弹性(博济/万邦/陇神)+医药商业(开开)+脑机(宝莱特/星网锐捷)；仓位15-20%；不追连板(百花7连后分歧/监管)</li>
+        <li>🛡️ AI硬件链：算力租赁(城地香江/共进/星网锐捷/宏景/润建)+存储(长鑫/江波/兆易/北京君正·美股强催化)分歧低吸；光通信CPO谨慎(美股Lumentum-5.58%/Coherent-7.99%承压)；仓位20-25%；防高开冲高回落(8/13放量滞涨)</li>
+        <li>🛡️ 大消费+房地产：一鸣/皇氏4连板前排换手(不追)；地产等企稳(京投/深振业个别涨停但板块弱)；仓位5-8%；退潮防一日游/补跌</li>
+        <li>🚫 新晋/轮动支线(电力/机器人/影视/脑机)：电力(大唐/京能/梅雁/华电辽能)轻仓0-5%首日观察、不追高；机器人(秦安4板后分歧/巨轮/北特)轻仓；贵金属(赤峰/紫金/招金)观望(A股仍弱)；半导体整体-1.47%/光通信高位/油气煤炭回避</li>
+        <li>📊 盘中决策：守3900上方(不破)→总仓55%主线+中军分歧低吸、去纯题材飞刀+半导体光通信高位回避+油气煤炭贵金属回避；破3900降至45%、破3870极端35%；放量收回3940且站稳→可回升至60%、否则3900-3940拉锯</li>
+        <li>全天纪律：<b>创新药CRO医药中军/20cm分歧低吸#1、AI硬件链算力+存储低吸#2(光通信谨慎)、大消费地产前排换手#3退潮、电力新晋轻仓、半导体/光通信高位/贵金属回避、现金45%守回踩</b>；"破3940+放量滞涨+普跌+科创最弱+高位监管"下偏重基本面/中军业绩，不接飞刀、不博纯题材连板、防中报雷+高位监管外溢</li>
+        <li>盘后跟踪：美股科技/费半/中概能否延续(标普新高/存储闪迪SK海力士/光通信Lumentum分化)、A股成交缩量止跌→决定下一日方向；央行增量政策/降准降息预期、创新药BD交易(8/10三起重磅)/药明1260H进展、存储涨价(服务器DDR5)、电力政策(雅鲁藏布江水电)、霍尔木兹/油价/COMEX黄金、中报业绩</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Signal Attribution -->
+  <div style="margin-bottom:16px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;color:#a78bfa;">📊 信号归因（四维雷达）</div>
+    <div id="radarChart" class="chart-container" style="height:320px;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+      <div class="alert-box success" style="margin:0;">
+        <div class="title">最强看多信号</div>
+        <div><b>创新药CRO医药#1逆势最强</b>(8/13+1.84%/主力+39.69亿第4/博济万邦陇神20cm/誉衡5天4板/亚泰3连/百花7连后+3.35%分歧+BD交易热8/10三起重磅+药明1260H暂缓+公募医药配置极低)+ <b>AI硬件链算力+存储#2</b>(城地香江3连/共进星网锐捷涨停+美股存储闪迪+13.67%/SK海力士+7.29%/西部数据+7.31%/美光+4.23%+服务器DDR5月涨15-23%)+ <b>8/13美股标普收新高+PPI低于预期缓解加息</b>+ <b>央行适度宽松货币政策</b>+ <b>电力新晋</b>。医药+算力存储+政策+流动性。</div>
+      </div>
+      <div class="alert-box danger" style="margin:0;">
+        <div class="title">最强看空信号</div>
+        <div><b>沪指破3940收3926.96(盘中假破年线3960后尾盘翻绿)</b>+ <b>放量滞涨</b>(2.55万亿但上涨1143/下跌4317/涨停62/赚钱效应20%)+ <b>科创50-1.11%/北证50-1.62%(小票最弱)</b>+ <b>高位监管</b>(百花7连后分歧/爱丽家居停牌核查)+ <b>8/13美股光通信分化回调</b>(Lumentum-5.58%/Coherent-7.99%→CPO承压)+ <b>半导体-1.47%最差</b>+ <b>中概金龙前日-2.37%</b>+ <b>中报雷</b>+ <b>大消费地产退潮</b>(房地产-2.20%领跌)。整体破3940后防守、但现金45%等待主线分歧低吸。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+  <div class="disclaimer">
+    ⚠️ 免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论均基于 2026-08-13 A股全天收盘（上证3926.96 -0.50%、深证成指14289.44 -0.87%、创业板指3586.04 -0.45%、科创50 1717.75 -1.11%、北证50 1097.80 -1.62%；成交2.55万亿放量3985亿；上涨1143家/下跌4317家、涨停62家/跌停4家、赚钱效应约20%、冲高回落；板块：创新药+1.84%(主力净流入+39.69亿·排名第4)·博济医药陇神戎发万邦医药20cm涨停·誉衡药业5天4板·亚泰集团3连板·方盛制药涨停·百花医药7连后+3.35%分歧；半导体-1.47%(主力-88.83亿·124/124最差)；光通信-0.77%(天孚通信+7.13%/源杰科技+5.02%/华西股份涨停)；房地产-2.20%领跌(京投发展深振业A涨停)；大消费-0.79%(一鸣食品皇氏集团4连板)；电力新晋(大唐发电京能电力江河集团涨停/梅雁吉祥+9.47%)；算力租赁城地香江3连板/共进股份星网锐捷群兴玩具涨停/锐捷网络+13.52%；贵金属晓程科技招金黄金湖南白银下挫）+ 2026-08-13 美股（道指+0.13% 53839.99/标普+0.65% 7798.99创历史新高/纳指+0.81% 26803.03/费半+0.46%·存储闪迪+13.67%西部数据+7.31%SK海力士+7.29%希捷+4.91%美光+4.23%存储ETF+3.89%·光通信分化Coherent-7.99%AAOI-5.79%Lumentum-5.58%康宁-5.32%Credo-0.81%·英伟达+0.54%苹果+1%微软+0.9%Meta+2.78%特斯拉+3.8%·PPI同比+4.7%低于预期4.9%/核心PPI+4.2%）+ 2026-08-14 盘前（央行适度宽松货币政策/药明康德1260H名单暂缓禁令/创新药BD交易热(8/10三起重磅)/存储涨价(服务器DDR5月涨15-23%)）+ 公开信息，不保证未来表现。<br>
+    数据来源：上证/深证/创业板/科创行情、智通财经、每日经济新闻、中国基金报、金融界、财联社、腾讯财经、东方财富、网易财经、新浪财经、雪球、今日头条等公开信息 | 生成时间：2026-08-14 07:00
+  </div>
+  <div>盘前计划 v33.0（8/14 周五 · 基于8/13冲高回落破3940收3926.96+8/13美股标普收新高/存储强闪迪+13.67%SK海力士+7.29%西部数据+7.31%/光通信分化Lumentum-5.58%Coherent-7.99%，主线重排=「创新药CRO医药(#1逆势最强) + AI硬件链算力+存储(#2分化) + 大消费+房地产(#3退潮)」，电力新晋、半导体/光通信高位/贵金属回避；v32.0"AI硬件链#1/创新药#2/消费地产#3"被8/13反转·医药逆势升#1·算力存储强·半导体光通信/消费地产退潮）| automation-1783645264539 | Powered by 星辰智能分析</div>
+</div>
+
+<script>
+// ===== Position Pie Chart =====
+var posChart = echarts.init(document.getElementById('positionChart'));
+posChart.setOption({
+  backgroundColor: 'transparent',
+  tooltip: { trigger: 'item', formatter: '{b}: {c}%' },
+  legend: { bottom: 0, textStyle: { color: '#94a3b8', fontSize: 12 } },
+  series: [{
+    type: 'pie',
+    radius: ['45%', '70%'],
+    center: ['50%', '42%'],
+    avoidLabelOverlap: false,
+    itemStyle: { borderColor: '#0f0f23', borderWidth: 2 },
+    label: {
+      show: true,
+      position: 'center',
+      formatter: '机动\n45%',
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: '#ffa502',
+      lineHeight: 24
+    },
+    data: [
+      { value: 17, name: '创新药CRO医药', itemStyle: { color: '#00d4aa' } },
+      { value: 23, name: 'AI硬件链(算力+存储)', itemStyle: { color: '#764ba2' } },
+      { value: 7, name: '大消费+房地产', itemStyle: { color: '#667eea' } },
+      { value: 3, name: '电力(新晋)', itemStyle: { color: '#ffb84d' } },
+      { value: 0, name: '回避', itemStyle: { color: '#ff4757' } },
+      { value: 50, name: '现金观望', itemStyle: { color: '#2d2d44' } }
+    ]
+  }]
+});
+
+// ===== Radar Chart =====
+var radarChart = echarts.init(document.getElementById('radarChart'));
+radarChart.setOption({
+  backgroundColor: 'transparent',
+  tooltip: {},
+  radar: {
+    indicator: [
+      { name: '技术指标', max: 100 },
+      { name: '新闻情绪', max: 100 },
+      { name: '基本面', max: 100 },
+      { name: '市场环境', max: 100 }
+    ],
+    center: ['50%', '55%'],
+    radius: '65%',
+    splitArea: { areaStyle: { color: ['rgba(102,126,234,0.03)', 'rgba(102,126,234,0.06)'] } },
+    axisLine: { lineStyle: { color: '#2d2d44' } },
+    splitLine: { lineStyle: { color: '#2d2d44' } },
+    axisName: { color: '#94a3b8', fontSize: 13 }
+  },
+  series: [{
+    type: 'radar',
+    data: [
+      {
+        value: [88, 92, 88, 72],
+        name: '创新药CRO医药',
+        areaStyle: { color: 'rgba(0,212,170,0.2)' },
+        lineStyle: { color: '#00d4aa', width: 2 },
+        itemStyle: { color: '#00d4aa' }
+      },
+      {
+        value: [80, 82, 85, 68],
+        name: 'AI硬件链(算力+存储)',
+        areaStyle: { color: 'rgba(118,75,162,0.18)' },
+        lineStyle: { color: '#764ba2', width: 2 },
+        itemStyle: { color: '#764ba2' }
+      },
+      {
+        value: [58, 55, 60, 52],
+        name: '大消费+房地产',
+        areaStyle: { color: 'rgba(102,126,234,0.18)' },
+        lineStyle: { color: '#667eea', width: 2 },
+        itemStyle: { color: '#667eea' }
+      }
+    ]
+  }],
+  legend: {
+    bottom: 0,
+    textStyle: { color: '#94a3b8', fontSize: 12 },
+    data: ['创新药CRO医药', 'AI硬件链(算力+存储)', '大消费+房地产']
+  }
+});
+
+window.addEventListener('resize', function() {
+  posChart.resize();
+  radarChart.resize();
+});
+</script>
+</body>
+</html>
