@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-13 15:45:33",
-  "total": 137,
+  "generatedAt": "2026-08-13 16:45:31",
+  "total": 138,
   "categories": [
     {
       "key": "panqian",
@@ -678,9 +678,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 26,
-      "latest": "20260812",
+      "count": 27,
+      "latest": "20260813",
       "reports": [
+        {
+          "date": "20260813",
+          "dateLabel": "2026-08-13（周四）",
+          "file": "reports/limitup/limitup_20260813.html",
+          "title": "涨停梯队复盘 · 2026-08-13（周四 · 真实交易日 · 分化·退潮·医药CRO逆势抱团 · 一鸣13天9板/秦安5板/誉衡5天4板/德龙10天6板）",
+          "size": 41375
+        },
         {
           "date": "20260812",
           "dateLabel": "2026-08-12（周三）",
