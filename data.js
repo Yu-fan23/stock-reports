@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-13 09:11:15",
-  "total": 134,
+  "generatedAt": "2026-08-13 12:45:57",
+  "total": 136,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 27,
-      "latest": "20260812",
+      "count": 28,
+      "latest": "20260813",
       "reports": [
+        {
+          "date": "20260813",
+          "dateLabel": "2026-08-13（周四）",
+          "file": "reports/panqian/panqian_20260813.html",
+          "title": "盘前交易计划 | 2026年8月13日（周四）· v32.0 · 8/12反弹(沪指+0.32%收复3946·超4100涨·92-96涨停) + 8/12美股科技大涨(费半+2.49%/SK海力士+9%/Lumentum+13.63%/CoreWeave+19%) + 中概-2.37%·主线重排「AI硬件链存储+光通信CPO(#1绝对主线) + 创新药CRO医药商业(#2持续) + 大消费+房地产(#3新晋)」(v31.0\"去CPO回避/MLCC为主/机器人#3\"被8/12反转·光通信强势回归·大消费地产新晋·机器人降级轮动)",
+          "size": 80976
+        },
         {
           "date": "20260812",
           "dateLabel": "2026-08-12（周三）",
@@ -208,9 +215,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 29,
-      "latest": "20260812",
+      "count": 30,
+      "latest": "20260813",
       "reports": [
+        {
+          "date": "20260813",
+          "dateLabel": "2026-08-13（周四）",
+          "file": "reports/noon/noon_20260813.html",
+          "title": "A股午间复盘 · 2026-08-13（周四）· 医药爆发·科创站稳1770·放量黄白背离·控仓",
+          "size": 39700
+        },
         {
           "date": "20260812",
           "dateLabel": "2026-08-12（周三）",
