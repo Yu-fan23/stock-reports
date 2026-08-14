@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-14 08:00:46",
-  "total": 140,
+  "generatedAt": "2026-08-14 12:45:53",
+  "total": 141,
   "categories": [
     {
       "key": "panqian",
@@ -222,9 +222,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 30,
-      "latest": "20260813",
+      "count": 31,
+      "latest": "20260814",
       "reports": [
+        {
+          "date": "20260814",
+          "dateLabel": "2026-08-14（周五）",
+          "file": "reports/noon/noon_20260814.html",
+          "title": "A股午间复盘 · 2026-08-14（周五）· 冲高回落·黄白背离加剧·科创回踩1700·控仓待变",
+          "size": 41006
+        },
         {
           "date": "20260813",
           "dateLabel": "2026-08-13（周四）",
