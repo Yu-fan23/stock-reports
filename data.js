@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-15 08:02:49",
-  "total": 145,
+  "generatedAt": "2026-08-15 12:45:47",
+  "total": 146,
   "categories": [
     {
       "key": "panqian",
@@ -229,9 +229,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 31,
-      "latest": "20260814",
+      "count": 32,
+      "latest": "20260815",
       "reports": [
+        {
+          "date": "20260815",
+          "dateLabel": "2026-08-15（周六）",
+          "file": "reports/noon/noon_20260815.html",
+          "title": "A股周度复盘 · 2026-08-15（周六·休市）· 8/10–8/14 震荡消化·存量博弈·高低切换·控仓待变",
+          "size": 38340
+        },
         {
           "date": "20260814",
           "dateLabel": "2026-08-14（周五）",
