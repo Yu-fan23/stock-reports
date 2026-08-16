@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-16 12:45:38",
-  "total": 151,
+  "generatedAt": "2026-08-16 15:45:40",
+  "total": 152,
   "categories": [
     {
       "key": "panqian",
@@ -478,9 +478,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 35,
-      "latest": "20260815",
+      "count": 36,
+      "latest": "20260816",
       "reports": [
+        {
+          "date": "20260816",
+          "dateLabel": "2026-08-16（周日）",
+          "file": "reports/close/close_20260816.html",
+          "title": "A股行情复盘 · 周末版（2026-08-16 · 周日休市 · 周度 8/10–8/14 + 下周8/17展望）",
+          "size": 37528
+        },
         {
           "date": "20260815",
           "dateLabel": "2026-08-15（周六）",
