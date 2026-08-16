@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股周日开盘作战手册 · 2026-08-16（周日·休市）· 8/17–8/21 政策暖风·美伊扰动·控仓均衡</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --accent1:#667eea; --accent2:#764ba2; --txt:#e2e8f0; --txt2:#94a3b8; --border:#2d2d44;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.55;padding:24px 16px 60px}
+  .wrap{max-width:1180px;margin:0 auto}
+  .glass{background:linear-gradient(135deg,rgba(102,126,234,.08),rgba(118,75,162,.06));border:1px solid var(--border);border-radius:16px}
+  header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:22px 26px;margin-bottom:20px}
+  header h1{font-size:23px;font-weight:700;letter-spacing:.5px}
+  header .sub{color:var(--txt2);font-size:13px;margin-top:4px;max-width:720px}
+  .badge{font-size:14px;font-weight:800;padding:10px 18px;border-radius:12px;letter-spacing:1px;max-width:480px;text-align:center}
+  .badge.danger{background:linear-gradient(135deg,#ff4757,#c0392b);color:#fff;box-shadow:0 6px 20px rgba(255,71,87,.4)}
+  .badge.warn{background:linear-gradient(135deg,#ffa502,#e67e22);color:#1a1a2e;box-shadow:0 6px 20px rgba(255,165,2,.35)}
+  .badge.rev{background:linear-gradient(135deg,#00d4aa,#00b894);color:#1a1a2e;box-shadow:0 6px 20px rgba(0,212,170,.4)}
+  .grid{display:grid;gap:18px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:880px){.g3,.g2{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.g3,.g2{grid-template-columns:1fr}}
+  section{margin:20px 0}
+  .sec-title{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;margin:6px 4px 14px}
+  .sec-title::before{content:"";width:5px;height:18px;border-radius:3px;background:linear-gradient(var(--accent1),var(--accent2))}
+  .card{padding:18px 20px}
+  .idx-head{display:flex;justify-content:space-between;align-items:baseline}
+  .idx-name{font-size:14px;font-weight:600}
+  .idx-code{font-size:11px;color:var(--txt2)}
+  .idx-price{font-size:21px;font-weight:800;margin:6px 0 2px}
+  .idx-chg{font-size:14px;font-weight:700}
+  .idx-range{font-size:11px;color:var(--txt2);margin-top:4px;line-height:1.5}
+  .chart{height:340px}
+  .chart-sm{height:260px}
+  .alert{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:12px;margin:10px 0}
+  .alert.risk{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.35)}
+  .alert.pos{background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.35)}
+  .alert.warn{background:rgba(255,165,2,.1);border:1px solid rgba(255,165,2,.35)}
+  .alert .ico{font-size:20px;line-height:1}
+  .alert .tt{font-weight:700;margin-bottom:3px}
+  .alert .bd{font-size:13px;color:var(--txt2);line-height:1.6}
+  .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  @media(max-width:780px){.kpis{grid-template-columns:1fr 1fr}}
+  .kpi{padding:14px;text-align:center}
+  .kpi .v{font-size:20px;font-weight:800}
+  .kpi .l{font-size:11px;color:var(--txt2);margin-top:3px}
+  .li{display:flex;gap:10px;padding:7px 0;font-size:13px;border-bottom:1px dashed rgba(45,45,68,.7)}
+  .li:last-child{border-bottom:none}
+  .li .dot{margin-top:6px;width:7px;height:7px;border-radius:50%;flex:0 0 auto}
+  .foot{font-size:11px;color:var(--txt2);text-align:center;margin-top:26px;line-height:1.8}
+  .meta-pill{display:inline-block;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;margin:4px 6px 0 0}
+  .summary-line{font-size:15px;font-weight:600;padding:14px 18px;border-left:4px solid var(--hold);background:rgba(255,165,2,.07);border-radius:0 10px 10px 0;margin:6px 0 14px}
+  .compare{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .chip{font-size:11px;padding:4px 10px;border-radius:8px;background:rgba(45,45,68,.5);border:1px solid var(--border);color:var(--txt2)}
+  .chip.now{border-color:var(--hold);color:var(--hold)}
+  .cat-card{padding:14px 16px;border-radius:12px;border:1px solid var(--border);background:rgba(26,26,46,.6)}
+  .cat-card .t{font-weight:700;font-size:14px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .cat-card .d{font-size:12px;color:var(--txt2);line-height:1.5}
+  .temp-wrap{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  .gauge{width:220px;height:190px;flex:0 0 auto}
+  .temp-side{flex:1;min-width:240px}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+  th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--txt2);font-weight:600;font-size:12px}
+  td.buy{color:var(--buy);font-weight:700}
+  td.sell{color:var(--sell);font-weight:700}
+  td.hold{color:var(--hold);font-weight:700}
+  .plan-card{font-size:15px;font-weight:700;margin:0 0 10px;color:var(--hold)}
+  .meter{height:8px;border-radius:6px;background:rgba(45,45,68,.7);overflow:hidden;margin:6px 0}
+  .meter>span{display:block;height:100%;border-radius:6px}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:720px){.twocol{grid-template-columns:1fr}}
+  .d-red{background:var(--sell)} .d-green{background:var(--buy)} .d-amber{background:var(--hold)}
+  .scn{border:1px solid var(--border);border-radius:12px;padding:14px 16px;background:rgba(26,26,46,.55)}
+  .scn .h{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+  .scn .nm{font-weight:800;font-size:15px}
+  .scn .p{font-weight:800;font-size:15px}
+  .scn .bd{font-size:12px;color:var(--txt2);line-height:1.6}
+  .bullet{font-size:13px;padding:4px 0 4px 16px;position:relative;color:var(--txt)}
+  .bullet::before{content:"";position:absolute;left:2px;top:11px;width:6px;height:6px;border-radius:50%;background:var(--accent1)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="glass">
+    <div>
+      <h1>A股周日开盘作战手册 · 2026-08-16</h1>
+      <div class="sub">周日休市 · 无午间行情，本日改为<b>开盘作战手册</b>，整合 8/10–8/14 周度复盘 + 8/15–8/16 周末新增催化 + 8/17（周一）开盘推演 + 8/17–8/21 仓位管理。</div>
+      <div style="margin-top:10px">
+        <span class="meta-pill">📅 交易日历：8/17 周一开盘</span>
+        <span class="meta-pill">🗓️ 覆盖：8/17–8/21</span>
+        <span class="meta-pill">📊 上一交易周：8/10–8/14</span>
+        <span class="meta-pill">🔗 数据源：交易所收盘 + 财联社/证券时报/央行/券商周报（WebSearch）</span>
+      </div>
+    </div>
+    <div class="badge warn">周末政策暖风 · 美伊扰动 · 控仓均衡 · 等共振加仓</div>
+  </header>
+
+  <!-- KPI ROW -->
+  <div class="kpis glass">
+    <div class="kpi"><div class="v" style="color:var(--txt)">3927.18</div><div class="l">上证指数（周 −0.33%）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--buy)">3626.30</div><div class="l">创业板（周 +1.77%）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--txt)">1717.68</div><div class="l">科创50（周 −1.51%）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--accent1)">2.35万亿</div><div class="l">全周日均成交（存量博弈）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--hold)">≈59</div><div class="l">周情绪均温 / 100</div></div>
+  </div>
+
+  <!-- 情绪温度 -->
+  <section class="glass card">
+    <div class="sec-title">🌡️ 市场情绪温度计（8/17 开盘前）</div>
+    <div class="temp-wrap">
+      <div id="gauge" class="gauge"></div>
+      <div class="temp-side">
+        <div class="plan-card" style="color:var(--hold)">情绪 ≈ 58 / 100 · 中性偏暖 · 控仓均衡</div>
+        <div class="li"><span class="dot d-green"></span><span><b>暖风（↑）</b>：央行二季度报告"适时调整工具"释放宽松加码信号、7月信贷走弱强化宽松预期、美零售负增推升降息交易、存储/中概海外偏强。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>中性（→）</b>：上周五美股小跌但周线三连涨、光通信回调、中概走强；A股黄白背离延续（指数稳、个股弱）。</span></div>
+        <div class="li"><span class="dot d-red"></span><span><b>压制（↓）</b>：科创50仍贴 1700 防线、全周广度中枢仅≈40%、私募84%高仓、美伊霍尔木兹实质扰动、中报业绩雷窗口。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 核心摘要 -->
+  <section>
+    <div class="summary-line">
+      <b>核心结论：</b>8/10–8/14 全市场进入"休养盘整"——指数涨跌互现（创业 +1.77% 最优、北证50 −4.12% 最弱），科技内部分化、医药/光通信领衔结构性行情；周末央行宽松信号 + 7月金融数据转松构成内部暖风，但美伊霍尔木兹通航受阻 + 美股光通信回调构成外部扰动。<b>下周（8/17–8/21）维持"总仓 45–55%、现金 45–55%"的控仓均衡，等沪指放量站年线补缺口 + 成交破 2.3 万亿 + 广度回 50% + 科创守 1700 的共振加仓信号</b>。
+    </div>
+  </section>
+
+  <!-- 上周复盘 -->
+  <section>
+    <div class="sec-title">📈 上周复盘（8/10–8/14）· 休养盘整 · 存量博弈</div>
+    <div class="grid g2">
+      <div class="glass card">
+        <div class="idx-head"><span class="idx-name">主要指数周涨跌幅</span><span class="idx-code">2026-08-14 收盘</span></div>
+        <div id="chart_idx" class="chart-sm"></div>
+      </div>
+      <div class="glass card">
+        <div class="idx-head"><span class="idx-name">上证 / 科创50 日收盘路径</span><span class="idx-code">8/10 → 8/14</span></div>
+        <div id="chart_path" class="chart-sm"></div>
+      </div>
+    </div>
+    <div class="grid g2" style="margin-top:18px">
+      <div class="glass card">
+        <div class="idx-head"><span class="idx-name">情绪 & 广度周轨迹</span><span class="idx-code">每日午间口径</span></div>
+        <div id="chart_sent" class="chart-sm"></div>
+      </div>
+      <div class="glass card">
+        <div class="idx-head"><span class="idx-name">周度行业主力净流入</span><span class="idx-code">单位：亿元</span></div>
+        <div id="chart_fund" class="chart-sm"></div>
+      </div>
+    </div>
+    <div class="twocol" style="margin-top:18px">
+      <div class="glass card">
+        <div class="sec-title" style="margin:0 0 10px;font-size:15px">🔥 周度领涨板块</div>
+        <div class="li"><span class="dot d-green"></span><span>通信线缆及配套 <b>+7.71%</b> · F5G +5.25% · 光纤受捧</span></div>
+        <div class="li"><span class="dot d-green"></span><span>CRO <b>+7.38%</b> · 细胞免疫 +6.31% · 减肥药 +4.83% · 维生素 +4.49%</span></div>
+        <div class="li"><span class="dot d-green"></span><span>光通信板块同步发力，蓝盾光电 5 连板（周 +148.76%）</span></div>
+      </div>
+      <div class="glass card">
+        <div class="sec-title" style="margin:0 0 10px;font-size:15px">❄️ 周度领跌板块</div>
+        <div class="li"><span class="dot d-red"></span><span>北证50 <b>−4.12%</b> · 上证50 −1.50% · 科创50 −1.51%</span></div>
+        <div class="li"><span class="dot d-red"></span><span>化妆品 −5.5% · 保险 −4.1% · 医美 −3.8% · 白银 −2.1%</span></div>
+        <div class="li"><span class="dot d-red"></span><span>小金属/黄金周中大涨后兑现回落</span></div>
+      </div>
+    </div>
+    <div class="alert warn">
+      <div class="ico">⚠️</div>
+      <div><div class="tt">赚钱效应：结构性强、广度弱</div><div class="bd">全周 2914 涨 / 2545 跌（对半开），日均成交 2.35 万亿较上周略缩，增量资金入场谨慎。周五收盘 2400 涨 / 2970 跌（43.3%）、涨停 64 / 跌停 13——风险可控但"指数稳、近 6 成个股绿"的黄白背离是最大约束。情绪轨迹 64→53→68→62→50，均温≈59。</div></div>
+    </div>
+  </section>
+
+  <!-- 周末新增催化 -->
+  <section>
+    <div class="sec-title">📰 周末新增催化（8/15–8/16，相对周六周报的增量）</div>
+    <div class="grid g2">
+      <div class="cat-card">
+        <div class="t">🟢 央行宽松信号加码</div>
+        <div class="d">① 央行《十五五改革发展规划》明确"双支柱"框架、价格型调控转型、单列债券科技板；② 二季度货币政策执行报告措辞由"灵活运用"转为"适时调整工具"，确认下半年宽松有望加码；③ DR001 核心调控地位确立、隔夜逆回购频次提升、贷款定价基准多元化（DRLPR 多锚并行）。</div>
+      </div>
+      <div class="cat-card">
+        <div class="t">🟢 7月金融数据偏弱→宽松预期升温</div>
+        <div class="d">社融存量同比 +7.4%、M2 +7.7%、M1 +4.0%；人民币贷款减少 3400 亿（信贷放缓），直接融资+政府债补位。货币政策定调"加大逆周期调节、谋划增量政策"，宽松预期升温。外管局全国推广跨国公司本外币跨境资金集中运营。</div>
+      </div>
+      <div class="cat-card">
+        <div class="t">🟢 科技产业暖风</div>
+        <div class="d">① SK海力士董事长：明年或现"史上最严重内存短缺"，AI 智能体用量 5 年或增 77 倍 → 存储/AI 硬件中期强逻辑；② 宇树科技叩响科创板 + DeepSeek 开源智能体框架；③ 中行落地全国首个算力"Token贷"（广州海珠，授信 2800 万）+ "词元八条"扶持。</div>
+      </div>
+      <div class="cat-card">
+        <div class="t">🟢 地产/消费边际改善</div>
+        <div class="d">北京楼市新政首周末：二手房成交 2450 套（环比 +8.6%）、新房 +4.4%，带看量明显回升；国内成品油 8/14 起下调（92# −0.18 元/升）→ 物流/交运成本端利好。</div>
+      </div>
+      <div class="cat-card">
+        <div class="t">🔴 美伊/霍尔木兹持续扰动</div>
+        <div class="d">霍尔木兹通航基本关闭、船舶通行量降至月均以下；特朗普称对伊港口封锁成"钢铁之墙"，财长贝森特称下周公布"史无前例"对伊经济孤立措施。阿联酋向伊朗转运 1.5 吨黄金（海湾国家转向直接交易）。油价地缘溢价 + 央行购金驱动黄金强势，多家机构看多至 6000 美元。</div>
+      </div>
+      <div class="cat-card">
+        <div class="t">🔴 外部摩擦 & 地缘情绪</div>
+        <div class="d">① 美对无人机加征 25%–100% 关税（与协议国 15%），9/3 生效 → 无人机/出口制造扰动；② 日本政要 8/15 参拜靖国神社，中方严正交涉 → 地缘情绪扰动中日相关板块；③ 研报合规监管再现罕见口头警示。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 海外映射 -->
+  <section>
+    <div class="sec-title">🌐 海外映射（美股 8/14 周五收盘）</div>
+    <div class="grid g3">
+      <div class="glass card">
+        <div class="idx-head"><span class="idx-name">美股三大指数</span><span class="idx-code">8/14 收盘</span></div>
+        <div class="idx-price" style="color:var(--sell)">标普 7785.76</div>
+        <div class="idx-chg" style="color:var(--sell)">−0.17%（周线三连涨）</div>
+        <div class="idx-range">道指 −0.20%(53732) · 纳指 −0.28%(26729) · 费半 −0.31%(12417)</div>
+      </div>
+      <div class="glass card">
+        <div class="idx-head"><span class="idx-name">存储强 / 光通信弱</span><span class="idx-code">板块分化</span></div>
+        <div class="idx-range" style="margin-top:8px">存储：闪迪 <b style="color:var(--buy)">+7.39%</b> · 希捷 +5.65% · 西数 +4.41% · 美光 +2.3% · SK海力士 +0.4%</div>
+        <div class="idx-range" style="margin-top:6px">光通信：Coherent <b style="color:var(--sell)">−7.99%</b> · Lumentum −5.58% · 博通 −5.94%</div>
+      </div>
+      <div class="glass card">
+        <div class="idx-head"><span class="idx-name">中概股活跃</span><span class="idx-code">金龙指数 +0.61%</span></div>
+        <div class="idx-range" style="margin-top:8px">阿里 +1.3% · 网易/腾讯音乐 +2%+ · 华住 +3% → 偏正面情绪，利好港股/A股消费互联网映射。</div>
+        <div class="idx-range" style="margin-top:6px">美国 7 月零售 −0.6%（预期 +0.1%，去年 5 月来最大降幅）→ CME 9 月维持利率不变概率 67.5%–70%，加息 32.5%。</div>
+      </div>
+    </div>
+    <div class="alert warn">
+      <div class="ico">🔄</div>
+      <div><div class="tt">A股映射判断</div><div class="bd">上周五 A股已是 CPO/光通信领涨，而美股光通信周五回调（Coherent/Lumentum 跌），周一或承压；存储海外全周强势支撑 A 股存储/半导体材料延续；中概走强 + 零售弱推升降息交易，利好成长/黄金/有色。整体外部"中性偏正"，非系统性风险。</div></div>
+    </div>
+  </section>
+
+  <!-- 资金流向 -->
+  <section>
+    <div class="sec-title">💰 资金流向（8/10–8/14 周度）</div>
+    <div class="twocol">
+      <div class="glass card">
+        <div class="sec-title" style="margin:0 0 10px;font-size:15px">行业主力净流入 TOP</div>
+        <div class="li"><span class="dot d-green"></span><span>医药生物 <b class="buy">+323 亿</b>（CRO/创新药业绩兑现）</span></div>
+        <div class="li"><span class="dot d-green"></span><span>通信 <b class="buy">+156 亿</b>（光通信 +122 亿概念居首）</span></div>
+        <div class="li"><span class="dot d-green"></span><span>机械设备 <b class="buy">+138 亿</b> · 电力设备 <b class="buy">+98 亿</b></span></div>
+        <div class="li"><span class="dot d-red"></span><span>电子 <b class="sell">−202 亿</b>（芯片/AI 净流出超百亿）· 有色 −94 亿 · 非银 −20 亿</span></div>
+        <div class="li"><span class="dot d-amber"></span><span>杠杆资金连续 8 日净买，本周 +271 亿（电子 74/医药 46/通信 33）</span></div>
+      </div>
+      <div class="glass card">
+        <div class="sec-title" style="margin:0 0 10px;font-size:15px">概念 & 个股资金</div>
+        <div class="li"><span class="dot d-green"></span><span>概念：光通信 +122 亿（唯一超百亿）· 6G +83 亿 · 生物科技/传媒 +60 亿+ · 创新药/CPO +50 亿+</span></div>
+        <div class="li"><span class="dot d-red"></span><span>净流出：消费电子/资源/茅指数超 200 亿，芯片/AI/顺周期超百亿</span></div>
+        <div class="li"><span class="dot d-amber"></span><span>个股：天孚通信/誉衡药业净流入超 30 亿；风华高科/剑桥科技/中国稀土/利通电子超 20 亿</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 周一推演 -->
+  <section>
+    <div class="sec-title">🎯 周一（8/17）开盘推演 · 三种情景</div>
+    <div id="chart_scenario" class="chart-sm"></div>
+    <div class="grid g3" style="margin-top:14px">
+      <div class="scn">
+        <div class="h"><span class="nm" style="color:var(--buy)">偏强</span><span class="p" style="color:var(--buy)">30%</span></div>
+        <div class="bd">央行宽松 + 货币信号驱动，放量攻 <b>3960–3970（年线）</b>、补缺口 3983–3995，成交破 2.3 万亿。主线：通信/半导体设备/创新药/有色贵金属。</div>
+      </div>
+      <div class="scn">
+        <div class="h"><span class="nm" style="color:var(--hold)">基准</span><span class="p" style="color:var(--hold)">50%</span></div>
+        <div class="bd">3930–3960 箱体震荡，前 30 分成交 >7000 亿 + 涨停 >50，黄白背离延续、存量博弈。盯盘三信号：前 30 分量能、沪指 3960 攻防、主线承接。</div>
+      </div>
+      <div class="scn">
+        <div class="h"><span class="nm" style="color:var(--sell)">偏弱</span><span class="p" style="color:var(--sell)">20%</span></div>
+        <div class="bd">美伊升级 / 光通信回调拖累，回踩 3900–3920，科创50 再破 1700，广度 <40%。私募 84% 高仓 + 中报雷共振兑现。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 仓位管理 -->
+  <section>
+    <div class="sec-title">🛡️ 仓位管理推荐（8/17–8/21）</div>
+    <div class="glass card">
+      <div class="plan-card">总仓 45%–55% · 现金 45%–55% · 控仓均衡（与 8/14、8/15 一致；周末宽松暖风未改"广度弱+科创1700未稳"的控仓前提）</div>
+      <div class="twocol">
+        <div>
+          <div class="sec-title" style="margin:6px 0 8px;font-size:14px;color:var(--buy)">✅ 配置方向（均衡哑铃）</div>
+          <div class="bullet">进攻：通信(CPO)/光通信 · 创新药/CRO · 半导体设备/电子化学品/玻纤/CCL · 有色金属/贵金属/小金属 · 算力租赁/液冷 · 机械电力设备</div>
+          <div class="bullet">防御底仓：银行 · 交运 · 煤炭/公用 · 高股息（红利回撤后性价比修复）</div>
+          <div class="bullet">主线逻辑：中报业绩验证（医药/CRO、通信设备、机械）+ 货币政策宽松 + 资源/贵金属避险三重驱动</div>
+        </div>
+        <div>
+          <div class="sec-title" style="margin:6px 0 8px;font-size:14px;color:var(--sell)">⛔ 规避方向</div>
+          <div class="bullet">保险/医美（周度趋势弱）· 高位贵金属追高 · 电力红利补跌 · 高位连板纯题材 · 影视退潮</div>
+          <div class="bullet">科创50 在 1700 未稳前勿重仓科技 · 纯软件/ST · 中报业绩雷 · 解禁股</div>
+          <div class="bullet">美无人机关税（9/3 生效）压制出口制造/无人机链</div>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>类型</th><th>触发条件</th><th>动作</th></tr></thead>
+        <tbody>
+          <tr><td class="buy">加仓触发</td><td>沪指放量破 3960–3970 站年线补缺口 3983–3995 + 成交破 2.3 万亿 + 科创守 1700 回 1750 + 广度 >50% + CPO/医药持续 + 两融延续 + 海外稳 + 央行宽松落地</td><td class="buy">总仓 45–55% → 55–65%</td></tr>
+          <tr><td class="sell">失效降级</td><td>沪指破 3900 + 科创破 1700 + 广度 <35% + 中报业绩雷 + 美联储加息回摆/美伊恶化 + 量能破 2 万亿</td><td class="sell">总仓 45–55% → 35–45%（现金 55%+）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 机构共识 -->
+  <section>
+    <div class="sec-title">🏛️ 机构下周共识（8/17–8/21）</div>
+    <div class="grid g2">
+      <div class="glass card">
+        <div class="li"><span class="dot d-green"></span><span><b>华泰</b>：超跌反弹仍有演绎空间，锚定中报均衡配置，首选通信设备，关注能源金属/小金属，非银+CXO 龙头，红利底仓（银行/交运）。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>申万宏源</b>：AI 重拾强势"四步走"第一步，国内 AI 链+小微盘中领涨；非科技关注医药/贵金属/工业金属/基础化工。</span></div>
+      </div>
+      <div class="glass card">
+        <div class="li"><span class="dot d-green"></span><span><b>银河</b>：均衡配置，半导体链（存储/设备材料/先进封装）+元件+通信+储能电力+机器人+商业航天；防御煤炭/煤化工/金融/公用；资源品修复（有色/化工/建材/钢铁）。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>中信建投</b>：W 型底部确立、反弹延续；AI 算力（全球供应链+国产设备）+创新药/CXO+有色（铜铝锡+贵金属+小金属）+机械（半导体设备超级景气+机器人+工程机械）。</span></div>
+      </div>
+    </div>
+    <div class="alert pos">
+      <div class="ico">✅</div>
+      <div><div class="tt">共识提炼</div><div class="bd">机构一致"反弹延续 + 均衡配置 + 中报验证"。方向高度重合：<b>AI 算力/通信/半导体设备 + 创新药CRO + 有色贵金属/小金属 + 红利防御（银行/交运/煤炭公用）</b>；规避纯题材、高位连板、业绩雷。与本文仓位框架一致。</div></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="foot">
+    <div>📌 分析时间：2026-08-16（周日·休市）｜策略模式：周日开盘作战手册（整合 8/10–8/14 周度 + 8/15–8/16 周末催化 + 8/17 开盘推演）</div>
+    <div>📊 数据来源：交易所日线收盘 + 财联社/证券时报/央行二季度货币政策执行报告/7月金融数据/券商周报（WebSearch 抓取；金融 MCP 连接器均 disconnected）</div>
+    <div>🌍 大盘环境摘要：A股处 8 月反弹后的"休养盘整"阶段，存量博弈、黄白背离；内部有央行宽松暖风，外部有美伊扰动与美股光通信回调，整体中性偏暖、控仓待共振。</div>
+    <div style="margin-top:8px;color:#64748b">⚠️ 免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论均基于历史数据与公开信息，不保证未来表现。</div>
+  </div>
+
+</div>
+
+<script>
+const axis = {color:'#94a3b8'};
+const grid = {left:48,right:18,top:24,bottom:28};
+
+// 情绪温度计
+(function(){
+  const c = echarts.init(document.getElementById('gauge'));
+  c.setOption({
+    series:[{
+      type:'gauge', min:0, max:100, radius:'92%', center:['50%','58%'],
+      progress:{show:true, width:14, itemStyle:{color:'#ffa502'}},
+      axisLine:{lineStyle:{width:14, color:[[0.35,'#ff4757'],[0.55,'#ffa502'],[1,'#00d4aa']]}},
+      axisTick:{show:false}, splitLine:{length:12, lineStyle:{color:'#2d2d44'}},
+      axisLabel:{color:'#94a3b8', fontSize:10, distance:14},
+      pointer:{width:5, itemStyle:{color:'#e2e8f0'}},
+      anchor:{show:true, size:12, itemStyle:{color:'#e2e8f0'}},
+      detail:{valueAnimation:true, formatter:'{value}', fontSize:30, fontWeight:'bolder', color:'#ffa502', offsetCenter:[0,'42%']},
+      title:{show:true, offsetCenter:[0,'72%'], color:'#94a3b8', fontSize:12},
+      data:[{value:58, name:'情绪温度 / 100'}]
+    }]
+  });
+})();
+
+// 周度指数涨跌幅
+(function(){
+  const c = echarts.init(document.getElementById('chart_idx'));
+  const d = [
+    {n:'创业板',v:1.77},{n:'深成指',v:0.30},{n:'上证指数',v:-0.33},
+    {n:'沪深300',v:-0.61},{n:'科创50',v:-1.51},{n:'北证50',v:-4.12}
+  ].sort((a,b)=>b.v-a.v);
+  c.setOption({
+    grid:{left:60,right:30,top:14,bottom:14},
+    tooltip:{trigger:'axis', axisPointer:{type:'shadow'}},
+    xAxis:{type:'value', axisLabel:axis, splitLine:{lineStyle:{color:'#2d2d44'}}},
+    yAxis:{type:'category', data:d.map(x=>x.n), axisLabel:axis, axisLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'bar', data:d.map(x=>({value:x.v, itemStyle:{color:x.v>=0?'#00d4aa':'#ff4757'}})),
+      label:{show:true, position:'right', color:'#e2e8f0', fontSize:11, formatter:'{c}%'}, barWidth:'55%'}]
+  });
+})();
+
+// 上证/科创50 日收盘路径
+(function(){
+  const c = echarts.init(document.getElementById('chart_path'));
+  const x=['8/10','8/11','8/12','8/13','8/14'];
+  c.setOption({
+    grid, tooltip:{trigger:'axis'}, legend:{data:['上证','科创50'], textStyle:{color:'#94a3b8'}, top:0},
+    xAxis:{type:'category', data:x, axisLabel:axis, axisLine:{lineStyle:{color:'#2d2d44'}}},
+    yAxis:{type:'value', axisLabel:axis, splitLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[
+      {name:'上证', type:'line', data:[3966.59,3934.09,3946.68,3926.96,3927.18], smooth:true, lineStyle:{width:2,color:'#667eea'}, itemStyle:{color:'#667eea'}, symbolSize:6},
+      {name:'科创50', type:'line', data:[1737.77,1709.50,1736.99,1717.75,1717.68], smooth:true, lineStyle:{width:2,color:'#764ba2'}, itemStyle:{color:'#764ba2'}, symbolSize:6, yAxisIndex:0}
+    ]
+  });
+})();
+
+// 情绪/广度周轨迹
+(function(){
+  const c = echarts.init(document.getElementById('chart_sent'));
+  const x=['周一','周二','周三','周四','周五'];
+  c.setOption({
+    grid, tooltip:{trigger:'axis'}, legend:{data:['情绪温度','广度%'], textStyle:{color:'#94a3b8'}, top:0},
+    xAxis:{type:'category', data:x, axisLabel:axis, axisLine:{lineStyle:{color:'#2d2d44'}}},
+    yAxis:[
+      {type:'value', max:100, axisLabel:axis, splitLine:{lineStyle:{color:'#2d2d44'}}},
+      {type:'value', max:100, axisLabel:axis, splitLine:{show:false}}
+    ],
+    series:[
+      {name:'情绪温度', type:'line', data:[64,53,68,62,50], smooth:true, lineStyle:{width:2,color:'#ffa502'}, itemStyle:{color:'#ffa502'}, symbolSize:6},
+      {name:'广度%', type:'line', data:[63.5,40.1,69.6,42.5,43.3], smooth:true, lineStyle:{width:2,color:'#00d4aa'}, itemStyle:{color:'#00d4aa'}, symbolSize:6, yAxisIndex:1}
+    ]
+  });
+})();
+
+// 行业资金净流入
+(function(){
+  const c = echarts.init(document.getElementById('chart_fund'));
+  const d=[
+    {n:'医药生物',v:323},{n:'通信',v:156},{n:'机械设备',v:138},{n:'电力设备',v:98},
+    {n:'非银金融',v:-20},{n:'有色金属',v:-94},{n:'电子',v:-202}
+  ];
+  c.setOption({
+    grid:{left:60,right:30,top:14,bottom:14},
+    tooltip:{trigger:'axis', axisPointer:{type:'shadow'}},
+    xAxis:{type:'value', axisLabel:axis, splitLine:{lineStyle:{color:'#2d2d44'}}},
+    yAxis:{type:'category', data:d.map(x=>x.n), axisLabel:axis, axisLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'bar', data:d.map(x=>({value:x.v, itemStyle:{color:x.v>=0?'#00d4aa':'#ff4757'}})),
+      label:{show:true, position:'right', color:'#e2e8f0', fontSize:11}, barWidth:'55%'}]
+  });
+})();
+
+// 周一情景
+(function(){
+  const c = echarts.init(document.getElementById('chart_scenario'));
+  c.setOption({
+    tooltip:{trigger:'item', formatter:'{b}: {c}%'},
+    legend:{bottom:0, textStyle:{color:'#94a3b8'}},
+    series:[{
+      type:'pie', radius:['42%','70%'], center:['50%','46%'],
+      itemStyle:{borderColor:'#0f0f23', borderWidth:2},
+      label:{color:'#e2e8f0', formatter:'{b}\n{c}%'},
+      data:[
+        {value:50, name:'基准', itemStyle:{color:'#ffa502'}},
+        {value:30, name:'偏强', itemStyle:{color:'#00d4aa'}},
+        {value:20, name:'偏弱', itemStyle:{color:'#ff4757'}}
+      ]
+    }]
+  });
+})();
+
+window.addEventListener('resize', ()=>{
+  document.querySelectorAll('.chart,.chart-sm,.gauge').forEach(el=>{
+    const inst = echarts.getInstanceByDom(el); if(inst) inst.resize();
+  });
+});
+</script>
+</body>
+</html>

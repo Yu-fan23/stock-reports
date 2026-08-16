@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-16 08:01:25",
-  "total": 150,
+  "generatedAt": "2026-08-16 12:45:38",
+  "total": 151,
   "categories": [
     {
       "key": "panqian",
@@ -236,9 +236,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 32,
-      "latest": "20260815",
+      "count": 33,
+      "latest": "20260816",
       "reports": [
+        {
+          "date": "20260816",
+          "dateLabel": "2026-08-16（周日）",
+          "file": "reports/noon/noon_20260816.html",
+          "title": "A股周日开盘作战手册 · 2026-08-16（周日·休市）· 8/17–8/21 政策暖风·美伊扰动·控仓均衡",
+          "size": 30816
+        },
         {
           "date": "20260815",
           "dateLabel": "2026-08-15（周六）",
