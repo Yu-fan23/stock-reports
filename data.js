@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-16 15:45:40",
-  "total": 152,
+  "generatedAt": "2026-08-16 16:45:42",
+  "total": 153,
   "categories": [
     {
       "key": "panqian",
@@ -741,9 +741,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 29,
-      "latest": "20260815",
+      "count": 30,
+      "latest": "20260816",
       "reports": [
+        {
+          "date": "20260816",
+          "dateLabel": "2026-08-16（周日）",
+          "file": "reports/limitup/limitup_20260816.html",
+          "title": "涨停梯队复盘 · 2026-08-16（周日 · 休市 · 沿用最近交易日 2026-08-14 · 缩量分化·算力硬件CPO反弹·高位股集体退潮·蓝盾光电5连板成新高度板）",
+          "size": 47626
+        },
         {
           "date": "20260815",
           "dateLabel": "2026-08-15（周六）",
