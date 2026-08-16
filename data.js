@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-16 16:45:42",
-  "total": 153,
+  "generatedAt": "2026-08-17 07:45:57",
+  "total": 154,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 31,
-      "latest": "20260816",
+      "count": 32,
+      "latest": "20260817",
       "reports": [
+        {
+          "date": "20260817",
+          "dateLabel": "2026-08-17（周一）",
+          "file": "reports/panqian/panqian_20260817.html",
+          "title": "盘前交易计划 | 2026年8月17日（周一）· v36.0 · 三大主流题材=「AI硬件链#1绝对主线 + 半导体设备工业母机#2减税新政 + 创新药CRO#3分化」+ 周末9大消息/券商金秋共识/解禁避雷/宏观数据变盘点",
+          "size": 49083
+        },
         {
           "date": "20260816",
           "dateLabel": "2026-08-16（周日）",
