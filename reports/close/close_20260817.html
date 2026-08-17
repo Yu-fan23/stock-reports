@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股行情复盘（2026-08-17 · 周一 · 放量突破年线3970）</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --card2:#16162a; --border:#2d2d44;
+    --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --up:#ef4444; --down:#22c55e; --txt:#e2e8f0; --txt2:#94a3b8;
+    --accent1:#667eea; --accent2:#764ba2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,sans-serif;line-height:1.6;padding:18px;max-width:1180px;margin:0 auto}
+  .header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:18px;padding:18px 22px;background:linear-gradient(135deg,#1a1a2e,#221b35);border:1px solid var(--border);border-radius:16px}
+  .header h1{font-size:22px;font-weight:700;letter-spacing:.5px}
+  .header .sub{color:var(--txt2);font-size:13px;margin-top:4px}
+  .badge{display:inline-block;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;background:rgba(0,212,170,.15);color:#9af0dd;border:1px solid rgba(0,212,170,.4)}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:860px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px}
+  .card h2{font-size:15px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .card h2 .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--accent1),var(--accent2))}
+  .chart{width:100%;height:300px}
+  .kpi{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+  .kpi .v{font-size:24px;font-weight:800;letter-spacing:.5px}
+  .kpi .l{font-size:12px;color:var(--txt2);margin-top:4px}
+  .up{color:var(--up)} .down{color:var(--down)} .neu{color:var(--txt2)}
+  .summary{font-size:15px;line-height:1.8}
+  .summary b{color:#fff}
+  .pill{display:inline-block;padding:3px 10px;border-radius:8px;font-size:12px;font-weight:600;margin:2px 4px 2px 0}
+  .pill-red{background:rgba(255,71,87,.15);color:var(--sell);border:1px solid rgba(255,71,87,.3)}
+  .pill-green{background:rgba(34,197,94,.13);color:var(--down);border:1px solid rgba(34,197,94,.3)}
+  .pill-amber{background:rgba(255,165,2,.15);color:var(--hold);border:1px solid rgba(255,165,2,.3)}
+  .pill-blue{background:rgba(102,126,234,.15);color:#8a9bff;border:1px solid rgba(102,126,234,.35)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--txt2);font-weight:600;font-size:12px}
+  tr:last-child td{border-bottom:none}
+  .note{font-size:12px;color:var(--txt2);margin-top:10px;padding:10px 12px;background:var(--card2);border-radius:10px;border-left:3px solid var(--accent1)}
+  .alert{background:rgba(255,71,87,.08);border:1px solid rgba(255,71,87,.3);border-radius:10px;padding:10px 14px;font-size:13px;color:#ffb3ba;margin-top:10px}
+  .ok{background:rgba(0,212,170,.08);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:10px 14px;font-size:13px;color:#9af0dd;margin-top:10px}
+  .warn{background:rgba(255,165,2,.08);border:1px solid rgba(255,165,2,.3);border-radius:10px;padding:10px 14px;font-size:13px;color:#ffd9a0;margin-top:10px}
+  .foot{margin-top:20px;font-size:11px;color:var(--txt2);text-align:center;line-height:1.8}
+  .temp-wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .temp-num{font-size:34px;font-weight:800;color:var(--buy)}
+  .stat-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px dashed var(--border)}
+  .stat-row:last-child{border-bottom:none}
+  .cata{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:860px){.cata{grid-template-columns:1fr}}
+  .cata-item{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:13px 15px}
+  .cata-item .t{font-size:13px;font-weight:700;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+  .cata-item .d{font-size:12.5px;color:var(--txt2);line-height:1.65}
+  .scen{padding:12px 14px;border-radius:12px;border:1px solid var(--border);margin-top:10px}
+  .scen-up{background:rgba(0,212,170,.07);border-color:rgba(0,212,170,.3)}
+  .scen-mid{background:rgba(255,165,2,.07);border-color:rgba(255,165,2,.3)}
+  .scen-dn{background:rgba(255,71,87,.07);border-color:rgba(255,71,87,.3)}
+  .scen .h{font-size:13.5px;font-weight:700;margin-bottom:4px}
+  .est{color:var(--hold);font-size:11px;border:1px dashed var(--hold);border-radius:4px;padding:0 4px}
+  .checklist{counter-reset:ck;list-style:none;padding:0;margin:10px 0 0}
+  .checklist li{position:relative;padding:9px 12px 9px 38px;font-size:13px;border-bottom:1px dashed var(--border)}
+  .checklist li:before{counter-increment:ck;content:counter(ck);position:absolute;left:10px;top:9px;width:20px;height:20px;line-height:20px;text-align:center;background:rgba(102,126,234,.18);color:#aab6ff;border-radius:50%;font-size:12px;font-weight:700}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>📊 A股行情复盘（2026-08-17 · 周一 · <span class="up">放量突破年线 3970</span>）</h1>
+    <div class="sub">数据快照 2026-08-17 15:27 · 赚钱效应 + 资金流向 + 仓位管理推荐 · 多市场智能股票分析师「星辰」</div>
+  </div>
+  <div class="badge">🟢 突破日 · 上调至 6.5–7.5 成中枢 · 年线初破待回踩确认</div>
+</div>
+
+<!-- 决策摘要 -->
+<div class="card" style="margin-bottom:16px">
+  <div class="summary">
+    <b>核心信号：周一(8/17)A股放量上攻、上证收盘 3982.65 一举突破压制两周的<b>年线 3970</b>（最高 3983.51、收 3982.65，+1.41%），为周末报告设定的「加仓信号」初现。</b>四指全线大涨：<span class="up">科创50 +4.14%（1788.85）</span>、<span class="up">创业板 +3.14%（3740.16）</span>、<span class="up">深成 +2.44%（14704.27）</span>、<span class="up">上证 +1.41%（3982.65）</span>。两市成交 <span class="up">2.387 万亿（较上周五 8/14 的 2.143 万亿放量 +2446 亿）</span>，<b>赚钱效应极佳</b>：红盘占比 <span class="up">78%</span>（4335 涨 / 1064 跌）、涨停 <span class="up">110</span> 家、跌停仅 <span class="down">1</span> 家。资金主攻<b>半导体（+20.06 亿主力净流入·科创50 受 SK海力士384亿美元建厂+汽车芯片5项国标催化）+ 通信设备（+5.97 亿·5日 +33.73 亿·光模块/CPO 延续）+ 电子化学品（+3.18 亿）</b>；全市场口径上证主力净流入 <span class="up">+189.54 亿</span>（超大单 +244.09 亿主导）。<b>仓位上调至 6.5–7.5 成中枢</b>——年线初破、广度与量能共振，但需回踩确认（量能未达 3 万亿门槛、科创 PE 仍 191.9 倍、两融 8/14 连增中断微降），故<b>分批加仓、不追高满仓</b>。
+  </div>
+  <div class="grid g4" style="margin-top:16px">
+    <div class="kpi"><div class="v up">+1.41%</div><div class="l">上证收盘 3982.65 · 突破年线3970（最高3983.51）</div></div>
+    <div class="kpi"><div class="v up">78%</div><div class="l">红盘占比（4335涨/1064跌·涨停110/跌停1）</div></div>
+    <div class="kpi"><div class="v up">2.39万亿</div><div class="l">两市成交（较8/14 +2446亿·放量）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--buy)">6.5–7.5 成</div><div class="l">推荐总仓中枢·上调1成·分批不追满</div></div>
+  </div>
+</div>
+
+<!-- 模块1 指数表现 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>一、指数表现 · 上证放量突破年线 3970，四指全线大涨</h2>
+  <div class="grid g2">
+    <div><div id="idxLine" class="chart"></div></div>
+    <div><div id="idxBar" class="chart"></div></div>
+  </div>
+  <div class="grid g4" style="margin-top:8px">
+    <div class="kpi"><div class="v up">+1.41%</div><div class="l">上证 3982.65（最高3983.51·破3970年线·PE18.40）</div></div>
+    <div class="kpi"><div class="v up">+2.44%</div><div class="l">深成 14704.27（PE47.19）</div></div>
+    <div class="kpi"><div class="v up">+3.14%</div><div class="l">创业板 3740.16（PE63.75）</div></div>
+    <div class="kpi"><div class="v up">+4.14%</div><div class="l">科创50 1788.85（PE191.90·仍偏高）</div></div>
+  </div>
+  <div class="note">8/10–8/14 上证两度逼近年线（最高 3968.48）均折返，确认 3970 强压；<b>今日(8/17)高开高走，最高 3983.51、收 3982.65，正式收盘站上年线</b>，终结两周拉锯。结构上<b>科创50(+4.14%)>创业板(+3.14%)>深成(+2.44%)>上证(+1.41%)</b>，成长/硬科技弹性最强——与「半导体+通信设备+电子化学品」主线完全对应。但<b>量能 2.387 万亿虽较 8/14 放量 2446 亿，仍未达加仓理想门槛 3 万亿</b>，突破有效性需后续回踩不破 + 补量确认。</div>
+</div>
+
+<!-- 模块2 赚钱效应 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>二、赚钱效应 · 极佳：红盘78%、涨停110、跌停仅1，情绪温度≈80°</h2>
+  <div class="grid g2">
+    <div><div id="breadth" class="chart" style="height:340px"></div></div>
+    <div>
+      <div class="temp-wrap" style="margin-bottom:6px">
+        <div class="temp-num">≈80°</div>
+        <div style="font-size:13px;color:var(--txt2)">今日情绪温度计<br>（8/17 · 贪婪偏暖·普涨）</div>
+      </div>
+      <div class="stat-row"><span>红盘占比</span><span><b>78%</b>（4335 涨 / 1064 跌 / 平 145）</span></div>
+      <div class="stat-row"><span>涨停 / 跌停</span><span><b>110 / 1</b>（跌停近乎清零）</span></div>
+      <div class="stat-row"><span>涨跌幅区间</span><span>7%以上170家·5–7%273家·2–5%1436家</span></div>
+      <div class="stat-row"><span>昨涨停今日表现</span><span>65只昨日涨停中 <b>66.15%</b> 今日续涨（短线活跃）</span></div>
+      <div class="stat-row"><span>对比上周五(8/14)</span><span>红盘 43%→<b>78%</b>、涨停 64→<b>110</b>、跌停 13→<b>1</b>、温度 48°→<b>80°</b></span></div>
+    </div>
+  </div>
+  <div class="ok" style="margin-top:10px">✅ 今日是典型<b>普涨赚钱日</b>：红盘近八成、百股涨停、仅 1 只跌停，广度与高度同步打开。对比 8/13（红盘20%/普跌）与 8/14（红盘43%），今日广度从「结构性分化」直接跃升为「全面修复」，亏钱面几乎消失。</div>
+  <div class="warn" style="margin-top:10px">⚠️ 但需警惕<b>「一致性过高」风险</b>：78% 红盘 + 110 涨停已处情绪高位（≈80°贪婪区），隔日分歧概率上升；且今日涨幅集中于科技硬件，若明日半导体/通信「一日游」，高位追涨盘易被套。情绪温度偏离长期中枢（约 50–60°）较多，短线不宜再加杠杆追高。</div>
+</div>
+
+<!-- 模块3 资金流向 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>三、资金流向 · 半导体单日吸金20亿领衔，上证主力净流入+189.54亿</h2>
+  <div class="grid g2">
+    <div><div id="flowBar" class="chart" style="height:320px"></div></div>
+    <div>
+      <div class="stat-row"><span>行业主力净流入 TOP1</span><span><b>半导体 +20.06 亿</b>（5日 +4.19 亿·中微半导 +16.81%）</span></div>
+      <div class="stat-row"><span>通信设备（单日）</span><span><b>+5.97 亿</b>（5日 +33.73 亿·太辰光 20cm·CPO延续）</span></div>
+      <div class="stat-row"><span>电子化学品Ⅱ（单日）</span><span><b>+3.18 亿</b>（中石科技 20cm）</span></div>
+      <div class="stat-row"><span>上证指数主力净流向</span><span><b>+189.54 亿</b>（超大单 +244.09 / 大单 -54.55）</span></div>
+      <div class="stat-row"><span>沪深300 / 中证500 / 创业板</span><span><b>+172.44 / +85.98 / +72.87 亿</b></span></div>
+      <div class="alert" style="margin-top:10px">⚠️ 资金结构：<b>超大单（机构/主力）是今日做多绝对主力</b>（上证超大单 +244 亿），大单小幅净流出（-54.55 亿）说明部分中大户逢高兑现；整体为「机构主攻、散户跟随」的健康放量上攻，但未到「全民扫货」的过热阶段。</div>
+    </div>
+  </div>
+  <div class="note">主线归纳：① <b>半导体硬件全面爆发</b>——SK海力士宣布 384 亿美元建晶圆厂 + 市场监管总局发布汽车芯片 5 项国家认证标准（全球首个汽车芯片全产业链能力评价体系），催化设备/材料/存储（中微半导 +16.81%、中科飞测等），半导体单日主力净流入 +20.06 亿居首；② <b>通信设备/CPO 延续</b>——5日主力累计 +33.73 亿，光模块回补（太辰光 20cm）；③ <b>电子化学品/新材料</b>同步跟涨。资金风格由上周「高切低、内切换」转为<b>「科技硬件主线合力做多」</b>，与年线突破形成正反馈。</div>
+</div>
+
+<!-- 模块4 板块表现 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>四、板块表现 · 领涨 TOP6：科技硬件（电子化学品/半导体/通信）霸榜</h2>
+  <div class="grid g2">
+    <div><div id="leadBar" class="chart" style="height:320px"></div></div>
+    <div>
+      <h2 style="font-size:13px;margin-bottom:8px"><span class="pill pill-green">今日领涨行业 TOP6（申万，8/17）</span></h2>
+      <div class="stat-row"><span>电子化学品Ⅱ</span><span class="up">+5.61%</span>（中石科技 20cm·新材料）</div>
+      <div class="stat-row"><span>半导体</span><span class="up">+5.46%</span>（中微半导 +16.81%·汽车芯片国标）</div>
+      <div class="stat-row"><span>通信设备</span><span class="up">+4.77%</span>（太辰光 20cm·CPO 5日+14.70%）</div>
+      <div class="stat-row"><span>其他电子Ⅱ</span><span class="up">+4.22%</span>（盈方微 +10.07%）</div>
+      <div class="stat-row"><span>种植业</span><span class="up">+4.16%</span>（神农种业 +11.13%·农业避险）</div>
+      <div class="stat-row"><span>橡胶</span><span class="up">+4.06%</span>（震安科技 +11.61%）</div>
+      <h2 style="font-size:13px;margin:14px 0 8px"><span class="pill pill-blue">风格特征</span></h2>
+      <div class="stat-row"><span>强势主线</span><span class="up">科技硬件（半导体/通信/电子化学品）三线齐飞</span></div>
+      <div class="stat-row"><span>跟涨/扩散</span><span class="up">种植业/橡胶（农业+材料轮动）· 科创50 +4.14%</span></div>
+      <div class="stat-row"><span>相对弱势</span><span class="down">红利/防御（电力/银行）跑输指数· 资金弃防御追成长</span></div>
+    </div>
+  </div>
+  <div class="note">🔍 板块呈「<b>科技硬件单主线集中爆发</b>」特征：TOP3 领涨（电子化学品/半导体/通信）全部为硬科技，且涨幅均 >4.7%，与资金净流入 TOP3 完全吻合，说明今日上涨由<b>真金白银的机构合力</b>驱动而非散户情绪脉冲。防御/红利（银行、电力、公用事业）跑输，属典型的「风险偏好回升、弃防御追成长」突破日结构。需观察明日能否从「单主线」扩散为「多主线」以巩固突破。</div>
+</div>
+
+<!-- 模块5 两融 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>五、两融余额 · 8/14 融资 26395.29 亿（-0.07%，连增链中断）</h2>
+  <div id="marginLine" class="chart" style="height:300px"></div>
+  <div class="grid g3" style="margin-top:8px">
+    <div class="kpi"><div class="v neu">26395.29</div><div class="l">最新融资余额（8/14 披露，亿）</div></div>
+    <div class="kpi"><div class="v down">-0.07%</div><div class="l">8/14 较 8/13（26413.69）微降·连增中断</div></div>
+    <div class="kpi"><div class="v" style="color:var(--hold)">待 8/18</div><div class="l">8/17 融资余额 T+1 未披露·突破日或回流</div></div>
+  </div>
+  <div class="warn" style="margin-top:10px">⚠️ <b>周末报告预期「九连增延续」，实际被证伪</b>：8/14 融资余额 26395.29 亿，较 8/13（26413.69 亿）微降 0.07%，此前「八连增」链在 8/14 中断。融券 259.73 亿、融资融券差额 26135.55 亿（< 20 日均值），杠杆做多情绪仍一般、未过热也未恐慌撤离。今日(8/17)年线突破，<b>8/18 披露的 8/17 融资余额能否重回连增、验证杠杆资金回流，是确认突破成色的关键读数</b>。</div>
+  <div class="note">⚠️ 两融是「滞后托底因子」：8/14 连增中断说明在年线下方资金仍谨慎（即便指数缩量修复），与当日缩量 2.14 万亿一致。今日放量突破若被杠杆资金认可（8/18 数据回升），则「机构主攻 + 杠杆回流」双引擎有望接力；若 8/17 融资仍不增，则突破更多由超大单(机构)推动，持续力需打折。</div>
+</div>
+
+<!-- 模块6 情报面 -->
+<div class="cata" style="margin-bottom:16px">
+  <div class="cata-item">
+    <div class="t"><span class="pill pill-green">🟢 积极</span> 年线 3970 正式突破（收盘 3982.65）</div>
+    <div class="d">上证最高 3983.51、收 3982.65，<b>收盘站上年线</b>，终结 8/10、8/13 两度折返的压制。这是周末报告设定的「加仓信号」核心条件初现，技术面打开上方空间（下一观察位约 4050–4100 箱体）。</div>
+  </div>
+  <div class="cata-item">
+    <div class="t"><span class="pill pill-green">🟢 积极</span> 半导体/硬科技催化密集</div>
+    <div class="d">SK海力士拟 <b>384 亿美元</b>建晶圆厂 + 市场监管总局发布<b>汽车芯片 5 项国家认证标准</b>（全球首个全产业链能力评价体系）+ 高盛称美股 AI 基础设施盈利强劲。半导体单日主力净流入 <b>+20.06 亿</b>、科创50 +4.14%。</div>
+  </div>
+  <div class="cata-item">
+    <div class="t"><span class="pill pill-green">🟢 积极</span> 广度与量能共振 + 政策暖风</div>
+    <div class="d">红盘 78%、涨停 110、跌停仅 1；成交放量至 <b>2.387 万亿</b>（+2446 亿）。统计局「加快财政支出与债券资金、推进两重两新、六张网」定调延续，流动性偏友好。</div>
+  </div>
+  <div class="cata-item">
+    <div class="t"><span class="pill pill-green">🟢 积极</span> 外围中性偏暖</div>
+    <div class="d">8/14 美股小跌（纳指 -0.28%/标普 -0.17%）但 <b>8/17 早盘美股期指飘红</b>；港股今日恒生 +1.57%、恒科 +1.89% 同步走强，全球风险偏好回升。</div>
+  </div>
+  <div class="cata-item">
+    <div class="t"><span class="pill pill-red">🔴 风险</span> 量能未达 3 万亿 + 突破待回踩确认</div>
+    <div class="d">2.387 万亿虽放量但仍<b>低于加仓理想门槛 3 万亿</b>；年线首次收盘突破，历史上常伴随回踩测试（假突破风险）。需观察 2–3 日能否稳守 3970 之上 + 补量。</div>
+  </div>
+  <div class="cata-item">
+    <div class="t"><span class="pill pill-red">🔴 风险</span> 科创50 PE 仍 191.9 倍 + 情绪偏高</div>
+    <div class="d">科创50 年内 +33.08%、PE <b>191.90</b> 仍处极高位；今日红盘 78%、涨停 110 已入情绪贪婪区（≈80°），<b>一致性过高、隔日分歧概率上升</b>，高位科技追涨易被套。</div>
+  </div>
+  <div class="cata-item">
+    <div class="t"><span class="pill pill-red">🔴 风险</span> 两融连增中断 + 大单逢高兑现</div>
+    <div class="d">8/14 融资余额 26395.29 亿（-0.07%，连增中断）；今日上证大单净流出 -54.55 亿（部分中大户兑现）。杠杆资金未明显加仓，突破持续力待 8/18 两融数据验证。</div>
+  </div>
+  <div class="note" style="grid-column:1/-1;margin-top:0">📌 信号归因（8/17 当日归因）：技术指标贡献 ≈30%（上证收盘突破年线 3970、四指多头排列、量价齐升但仍未达 3 万亿）；新闻情绪贡献 ≈35%（半导体/汽车芯片国标 + SK海力士建厂 + 统计局政策暖风 + 外围期指红，强偏多）；基本面贡献 ≈15%（中报业绩��撑局部半导体/新材料、AI 资本开支景气）；市场环境贡献 ≈20%（红盘 78% 广度、主力净流入 +189 亿、两融中性）。<b>最强看多信号：</b>上证收盘站上年线 3970 + 红盘 78%/涨停 110 + 半导体单日 +20 亿吸金；<b>最强看空信号：</b>量能 2.39 万亿未达 3 万亿 + 科创 PE191.9 + 两融 8/14 连增中断 + 情绪≈80°过高一致。</div>
+</div>
+
+<!-- 模块7 仓位管理推荐 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>七、仓位管理推荐 · 上调至 6.5–7.5 成中枢，年线初破分批加仓不追满</h2>
+  <div class="grid g3" style="margin-bottom:12px">
+    <div class="kpi"><div class="v up">3982.65</div><div class="l">① 年线突破&回踩确认（收破3970·待2–3日稳守）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--buy)">+189.5亿</div><div class="l">② 主力净流入确认（上证·超大单+244亿主导）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--hold)">2.39万亿</div><div class="l">③ 量能（放量+2446亿·未达3万亿门槛）</div></div>
+  </div>
+
+  <div class="scen scen-up">
+    <div class="h">🟢 乐观情景（回踩年线不破 + 补量 >3 万亿 + 两融回升 + 科技扩散）</div>
+    <div class="d">上证<b>回踩 3970 不破（年线由压变撑）</b> + 成交补至 <b>>3 万亿</b> + 8/18 两融数据回升确认杠杆回流 + 科技主线由「单主线」扩散为「多主线」。可将总仓由 6.5–7.5 成<b>加至 >7.5–8 成</b>；优先回踩 5/10 日线低吸硬科技（半导体设备/材料、CPO、电子化学品）。</div>
+  </div>
+  <div class="scen scen-mid">
+    <div class="h">🟡 基准情景（年线附近 3970–4050 震荡整固）— 当前实盘 / 默认应对</div>
+    <div class="d">今日突破年线、放量、广度极佳，但量能未达 3 万亿 + 两融待验证 + 科创 PE 偏高。<b>上调至 6.5–7.5 成中枢</b>。以「持有 + 分批低吸」为主，<b>不追高满仓</b>；重点做硬科技内部高低切（设备/材料优于高位抱团），保留防御底仓对冲回踩。</div>
+  </div>
+  <div class="scen scen-dn">
+    <div class="h">🔴 悲观情景（年线得而复失 / 跌破 3900 / 科技一日游）</div>
+    <div class="d">上证<b>收盘跌回 3970 下方（假突破）</b> + 红盘回落 &lt;25% + 跌停回升 30+ + 8/18 两融续降 + 半导体/通信炸板。<b>触发减仓，总仓降至 &lt;6 成</b>；正式跌破 3900 则降至 4–5 成。</div>
+  </div>
+
+  <table style="margin-top:12px">
+    <thead><tr><th>操作</th><th>触发条件</th><th>目标仓位</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill pill-green">加仓</span></td><td><b>回踩 3970 不破</b> + 成交补至 <b>>3 万亿</b> + 8/18 两融回升 + 科技主线扩散（半导体/通信/电子化学品持续）</td><td>&gt; 7.5–8 成</td></tr>
+      <tr><td><span class="pill pill-amber">维持</span></td><td>3970–4050 区间震荡整固、广度维持高位但量能&lt;3万亿、两融待验证、科创PE偏高（基准情景：收 3982.65、破年线、红盘78%）<b>← 当前</b></td><td>6.5–7.5 成</td></tr>
+      <tr><td><span class="pill pill-red">减仓</span></td><td><b>收盘跌回 3970 下方</b>（假突破）或 红盘&lt;25% + 跌停30+ + 两融续降 + 科技炸板<br>或 正式破 3900（收 3982、距约 82 点，暂未触发）</td><td>&lt; 6 成</td></tr>
+    </tbody>
+  </table>
+
+  <div class="ok" style="margin-top:12px">✅ 结构建议（上调仓位、主攻硬科技、留防御对冲）：<b>① 半导体设备/材料/存储</b>——汽车芯片国标 + 晶圆厂资本开支催化，等回踩不追高（半导体今日 +20 亿吸金为主线）；<b>② 通信设备/CPO</b>——5日主力 +33.73 亿，光模块回补，关注太辰光/中际旭创风向标；<b>③ 电子化学品/新材料</b>——中石科技 20cm 带动，业绩支撑。保留<b>防御底仓</b>（电力/国有大行/公用事业）对冲回踩，待突破确认后再向硬科技倾斜。</div>
+  <div class="alert" style="margin-top:10px">⚠️ 关键风险与纪律：（1）<b>量能 2.39 万亿未达 3 万亿门槛</b> + 年线首次收盘突破常伴回踩，故<b>上调至 6.5–7.5 成、分批加仓、严禁追高满仓</b>；（2）<b>科创50 PE 仍 191.9 倍</b>，高位成长估值风险未出清，科技持仓做内部高低切；（3）<b>情绪≈80°一致性过高</b>，隔日分歧概率上升；（4）<b>两融 8/14 连增中断</b>（融资 26395.29 亿，-0.07%），8/18 数据能否回流是确认突破成色的关键；（5）<b>外围美股上周五小跌</b> + 美联储预期，对高估值成长形成估值锚约束。总体：<b>顺势上调、分批进场、回踩确认后再加、绝不一把梭</b>。</div>
+
+  <div class="note" style="margin-top:10px">🔁 <b>周末版(8/16)预测校验 vs 今日(8/17)实际：</b>8/16 设定「维持 5.5–6.5 成、加仓需放量站稳 3970 年线 + 量能 2.8 万亿 + 两融连增 + 红盘>50% + 科技持续」。今日实盘：<b>上证收盘 3982.65 突破年线 3970 ✓（加仓条件①达成）</b>、红盘 78%>50% ✓、科技主线（半导体/通信/电子化学品）持续爆发 ✓、成交放量至 2.39 万亿（+2446 亿）但<b>未达 2.8–3 万亿门槛 ✗</b>、<b>两融 8/14 连增中断而非延续 ✗</b>。结论：<b>方向性加仓条件（破年线 + 广度 + 科技）已触发，但「量能充分 + 杠杆回流」两项未达标</b>，因此本报告将中枢<b>上调 1 成至 6.5–7.5 成（而非直接加满）</b>，并要求回踩确认 + 补量后再加——是对周末「加仓信号初现」的审慎兑现，而非推翻。</div>
+</div>
+
+<div class="foot">
+  数据来源：NeoData 金融数据（指数实时行情、大盘市场宽度统计、板块涨跌 / 资金排行、指数资金流向、融资融券市场统计；查询时间 2026-08-17 15:27）· 公开资讯交叉校验。<br>
+  北向资金净买入因交易所披露规则自 2024-08 起不再发布，本系列报告不单列；<b>今日为交易日，全部市场数据为 2026-08-17 收盘实值（数据时间 15:27）</b>；两融余额最新披露为 8/14（26395.29 亿，-0.07%，连增中断），8/17 数据 T+1 于 8/18 披露，届时验证杠杆回流与否；全市场主力净流向以上证指数口径 +189.54 亿为代理（沪深300 +172.44 / 中证500 +85.98 / 创业板 +72.87 亿，存在指数间重叠，仅供方向参考）；科创/创业/上证/深成 涨跌幅与 PE 均引自实时行情接口（科创 PE 191.90）。<br>
+  <b>点位说明：</b>四大指数收盘为 NeoData 精确实时值；年线 3970 为周末报告沿用之关键技术位，今日收盘 3982.65 确认站上。本报告为<b>交易日日度版</b>，覆盖 2026-08-17 全天，相较周末版新增「当日实际触发周末加仓条件的校验」。<br>
+  <b>免责声明：</b>本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论均基于历史数据与技术模型，不保证未来表现。
+</div>
+
+<script>
+(function(){
+  var UP='#ef4444', DOWN='#22c55e', BUY='#00d4aa', ACC1='#667eea', ACC2='#764ba2', TXT='#e2e8f0', TXT2='#94a3b8', BORDER='#2d2d44';
+  function g(left,right,top,bottom){return {left:left,right:right,top:top,bottom:bottom};}
+  function ax(color){return {axisLine:{lineStyle:{color:BORDER}},axisLabel:{color:TXT2},splitLine:{lineStyle:{color:'rgba(45,45,68,.5)'}}};}
+
+  // 1) 上证收盘折线 8/10-8/14 + 8/17（突破年线）
+  var idxLine=echarts.init(document.getElementById('idxLine'));
+  idxLine.setOption({
+    backgroundColor:'transparent',
+    title:{text:'上证指数收盘（8/10–8/17，突破年线3970）',left:'center',textStyle:{color:TXT,fontSize:13}},
+    tooltip:{trigger:'axis'},
+    grid:g(48,18,40,30),
+    xAxis:{type:'category',data:['8/10','8/11','8/12','8/13','8/14','8/17'],axisLabel:{color:TXT2},axisLine:{lineStyle:{color:BORDER}}},
+    yAxis:{type:'value',min:3900,max:4000,...ax(TXT2)},
+    series:[{
+      type:'line',smooth:true,data:[3966.59,3934.09,3946.68,3926.96,3927.18,3982.65],
+      lineStyle:{width:3,color:BUY},itemStyle:{color:BUY},symbolSize:8,
+      areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(0,212,170,.35)'},{offset:1,color:'rgba(0,212,170,0)'}])},
+      markLine:{silent:true,symbol:'none',data:[
+        {yAxis:3970,lineStyle:{color:UP,type:'dashed',width:2},label:{formatter:'年线3970',color:UP,position:'insideEndTop'}},
+        {yAxis:3900,lineStyle:{color:'#ffa502',type:'dashed'},label:{formatter:'3900',color:'#ffa502',position:'insideEndTop'}}
+      ]},
+      markPoint:{data:[{coord:['8/17',3982.65],value:'破年线',label:{color:'#fff',fontSize:11}}]}
+    }]
+  });
+
+  // 2) 今日四指涨跌幅（%）
+  var idxBar=echarts.init(document.getElementById('idxBar'));
+  idxBar.setOption({
+    backgroundColor:'transparent',
+    title:{text:'今日四指涨跌幅（8/17，%）',left:'center',textStyle:{color:TXT,fontSize:13}},
+    tooltip:{trigger:'axis',valueFormatter:function(v){return v+'%';}},
+    grid:g(60,20,40,30),
+    xAxis:{type:'value',axisLabel:{color:TXT2,formatter:'{value}%'},splitLine:{lineStyle:{color:'rgba(45,45,68,.5)'}}},
+    yAxis:{type:'category',data:['上证指数','深证成指','创业板指','科创50'],axisLabel:{color:TXT},axisLine:{lineStyle:{color:BORDER}}},
+    series:[{type:'bar',data:[
+        {value:1.41,itemStyle:{color:UP}},
+        {value:2.44,itemStyle:{color:UP}},
+        {value:3.14,itemStyle:{color:UP}},
+        {value:4.14,itemStyle:{color:UP}}
+      ],
+      label:{show:true,position:'right',color:TXT,formatter:'{c}%'},barWidth:'45%'}]
+  });
+
+  // 3) 赚钱效应双轴（涨停/跌停 + 红盘%&情绪温度，8/14 vs 8/17）
+  var breadth=echarts.init(document.getElementById('breadth'));
+  breadth.setOption({
+    backgroundColor:'transparent',
+    title:{text:'赚钱效应（8/14 → 8/17 对比）',left:'center',textStyle:{color:TXT,fontSize:13}},
+    tooltip:{trigger:'axis'},
+    legend:{top:24,textStyle:{color:TXT2},data:['涨停','跌停','红盘%','情绪温度']},
+    grid:g(48,18,58,30),
+    xAxis:{type:'category',data:['8/14','8/17'],axisLabel:{color:TXT2},axisLine:{lineStyle:{color:BORDER}}},
+    yAxis:[
+      {type:'value',name:'家数',axisLabel:{color:TXT2},splitLine:{lineStyle:{color:'rgba(45,45,68,.5)'}},axisLine:{lineStyle:{color:BORDER}}},
+      {type:'value',name:'%',max:100,axisLabel:{color:TXT2,formatter:'{value}%'},splitLine:{show:false},axisLine:{lineStyle:{color:BORDER}}}
+    ],
+    series:[
+      {name:'涨停',type:'bar',data:[64,110],itemStyle:{color:UP},barWidth:'28%'},
+      {name:'跌停',type:'bar',data:[13,1],itemStyle:{color:DOWN},barWidth:'28%'},
+      {name:'红盘%',type:'line',yAxisIndex:1,data:[43,78],smooth:true,lineStyle:{color:ACC1,width:3},itemStyle:{color:ACC1},symbolSize:9},
+      {name:'情绪温度',type:'line',yAxisIndex:1,data:[48,80],smooth:true,lineStyle:{color:BUY,width:2,type:'dashed'},itemStyle:{color:BUY},symbolSize:8}
+    ]
+  });
+
+  // 4) 行业主力净流入 TOP3（亿元·今日）
+  var flowBar=echarts.init(document.getElementById('flowBar'));
+  flowBar.setOption({
+    backgroundColor:'transparent',
+    title:{text:'行业主力净流入 TOP3（亿元·8/17）',left:'center',textStyle:{color:TXT,fontSize:13}},
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v+'亿';}},
+    grid:g(110,40,40,30),
+    xAxis:{type:'value',axisLabel:{color:TXT2},splitLine:{lineStyle:{color:'rgba(45,45,68,.5)'}}},
+    yAxis:{type:'category',data:['电子化学品Ⅱ','通信设备','半导体'],axisLabel:{color:TXT},axisLine:{lineStyle:{color:BORDER}}},
+    series:[{type:'bar',data:[
+        {value:3.18,itemStyle:{color:BUY}},
+        {value:5.97,itemStyle:{color:BUY}},
+        {value:20.06,itemStyle:{color:UP}}
+      ],
+      label:{show:true,position:'right',color:TXT,formatter:'{c}'},barWidth:'55%'}]
+  });
+
+  // 5) 领涨行业 TOP6（%，今日）
+  var leadBar=echarts.init(document.getElementById('leadBar'));
+  leadBar.setOption({
+    backgroundColor:'transparent',
+    title:{text:'领涨行业 TOP6（8/17，%）',left:'center',textStyle:{color:TXT,fontSize:13}},
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+    grid:g(120,30,40,30),
+    xAxis:{type:'value',axisLabel:{color:TXT2,formatter:'{value}%'},splitLine:{lineStyle:{color:'rgba(45,45,68,.5)'}}},
+    yAxis:{type:'category',data:['橡胶','种植业','其他电子Ⅱ','通信设备','半导体','电子化学品Ⅱ'],axisLabel:{color:TXT},axisLine:{lineStyle:{color:BORDER}}},
+    series:[{type:'bar',data:[4.06,4.16,4.22,4.77,5.46,5.61],
+      itemStyle:{color:UP},label:{show:true,position:'right',color:TXT,formatter:'{c}%'},barWidth:'55%'}]
+  });
+
+  // 6) 两融融资余额走势（8/3–8/14，连增中断）
+  var marginLine=echarts.init(document.getElementById('marginLine'));
+  marginLine.setOption({
+    backgroundColor:'transparent',
+    title:{text:'融资余额走势（亿元·8/3–8/14·连增中断）',left:'center',textStyle:{color:TXT,fontSize:13}},
+    tooltip:{trigger:'axis',valueFormatter:function(v){return v+'亿';}},
+    grid:g(62,20,40,30),
+    xAxis:{type:'category',data:['8/3','8/4','8/5','8/6','8/7','8/10','8/12','8/13','8/14'],axisLabel:{color:TXT2},axisLine:{lineStyle:{color:BORDER}}},
+    yAxis:{type:'value',min:25700,max:26600,axisLabel:{color:TXT2},splitLine:{lineStyle:{color:'rgba(45,45,68,.5)'}}},
+    series:[{type:'line',smooth:true,data:[25803.46,25923.04,26045.27,26155.57,26225.33,26366.04,26389.80,26413.69,26395.29],
+      symbol:'circle',symbolSize:7,lineStyle:{color:BUY,width:3},itemStyle:{color:BUY},
+      label:{show:true,color:TXT,fontSize:10,formatter:function(p){return p.value? p.value:'';}},
+      areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(0,212,170,.3)'},{offset:1,color:'rgba(0,212,170,0)'}])},
+      markPoint:{data:[{coord:['8/13',26413.69],value:'八连增顶',label:{color:'#fff',fontSize:10}},{coord:['8/14',26395.29],value:'-0.07%中断',label:{color:'#fff',fontSize:10}}]}}
+    ]
+  });
+
+  window.addEventListener('resize',function(){[idxLine,idxBar,breadth,flowBar,leadBar,marginLine].forEach(function(c){c.resize();});});
+})();
+</script>
+</body>
+</html>

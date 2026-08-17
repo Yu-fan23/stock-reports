@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-17 12:46:02",
-  "total": 156,
+  "generatedAt": "2026-08-17 15:45:33",
+  "total": 157,
   "categories": [
     {
       "key": "panqian",
@@ -492,9 +492,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 36,
-      "latest": "20260816",
+      "count": 37,
+      "latest": "20260817",
       "reports": [
+        {
+          "date": "20260817",
+          "dateLabel": "2026-08-17（周一）",
+          "file": "reports/close/close_20260817.html",
+          "title": "A股行情复盘（2026-08-17 · 周一 · 放量突破年线3970）",
+          "size": 34959
+        },
         {
           "date": "20260816",
           "dateLabel": "2026-08-16（周日）",
