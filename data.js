@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-17 15:45:33",
-  "total": 157,
+  "generatedAt": "2026-08-17 16:45:17",
+  "total": 158,
   "categories": [
     {
       "key": "panqian",
@@ -762,9 +762,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 30,
-      "latest": "20260816",
+      "count": 31,
+      "latest": "20260817",
       "reports": [
+        {
+          "date": "20260817",
+          "dateLabel": "2026-08-17（周一）",
+          "file": "reports/limitup/limitup_20260817.html",
+          "title": "涨停梯队复盘 · 2026-08-17（周一 · 真实交易日 · 普涨·科技成长爆发·半导体/存储/CPO主线·一鸣食品15天10板/风范11天7板）",
+          "size": 65657
+        },
         {
           "date": "20260816",
           "dateLabel": "2026-08-16（周日）",
