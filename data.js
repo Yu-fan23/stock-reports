@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-17 08:02:11",
-  "total": 155,
+  "generatedAt": "2026-08-17 12:46:02",
+  "total": 156,
   "categories": [
     {
       "key": "panqian",
@@ -243,9 +243,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 33,
-      "latest": "20260816",
+      "count": 34,
+      "latest": "20260817",
       "reports": [
+        {
+          "date": "20260817",
+          "dateLabel": "2026-08-17（周一）",
+          "file": "reports/noon/noon_20260817.html",
+          "title": "A股午间复盘 · 2026-08-17（周一）· 放量普涨·科技爆发·科创收复1700",
+          "size": 32108
+        },
         {
           "date": "20260816",
           "dateLabel": "2026-08-16（周日）",
