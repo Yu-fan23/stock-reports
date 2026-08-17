@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-17 16:45:17",
-  "total": 158,
+  "generatedAt": "2026-08-18 07:45:38",
+  "total": 159,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 32,
-      "latest": "20260817",
+      "count": 33,
+      "latest": "20260818",
       "reports": [
+        {
+          "date": "20260818",
+          "dateLabel": "2026-08-18（周二）",
+          "file": "reports/panqian/panqian_20260818.html",
+          "title": "盘前交易计划 | 2026年8月18日（周二）· v37.0 · 三大主流题材=「AI硬件链#1绝对主线(长鑫市值一哥) + 半导体国产替代#2(大基金+减税) + 创新药CRO#3(药明新高)」+ 国新办县域消费发布会/英伟达5000亿AI平台/7月宏观数据/美股芯片急挫防空开",
+          "size": 51217
+        },
         {
           "date": "20260817",
           "dateLabel": "2026-08-17（周一）",
