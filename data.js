@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-18 16:45:36",
-  "total": 162,
+  "generatedAt": "2026-08-19 07:45:41",
+  "total": 164,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 33,
-      "latest": "20260818",
+      "count": 34,
+      "latest": "20260819",
       "reports": [
+        {
+          "date": "20260819",
+          "dateLabel": "2026-08-19（周三）",
+          "file": "reports/panqian/panqian_20260819.html",
+          "title": "盘前计划 · 2026-08-19（周三）· v38.0",
+          "size": 17844
+        },
         {
           "date": "20260818",
           "dateLabel": "2026-08-18（周二）",
@@ -783,9 +790,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 31,
-      "latest": "20260817",
+      "count": 32,
+      "latest": "20260818",
       "reports": [
+        {
+          "date": "20260818",
+          "dateLabel": "2026-08-18（周二）",
+          "file": "reports/limitup/limitup_20260818.html",
+          "title": "涨停梯队复盘 · 2026-08-18（周二 · 真实交易日 · 分化·农业主线·粮食危机·愛丽家居13天12板/一鸣食品16天11板）",
+          "size": 40450
+        },
         {
           "date": "20260817",
           "dateLabel": "2026-08-17（周一）",
