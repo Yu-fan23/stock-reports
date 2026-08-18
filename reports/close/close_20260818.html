@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股行情复盘（2026-08-18 · 周二 · 突破后缩量整固·指数红个股弱）</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --card2:#16162a; --border:#2d2d44;
+    --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --up:#ef4444; --down:#22c55e; --txt:#e2e8f0; --txt2:#94a3b8;
+    --accent1:#667eea; --accent2:#764ba2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,sans-serif;line-height:1.6;padding:18px;max-width:1180px;margin:0 auto}
+  .header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:18px;padding:18px 22px;background:linear-gradient(135deg,#1a1a2e,#221b35);border:1px solid var(--border);border-radius:16px}
+  .header h1{font-size:22px;font-weight:700;letter-spacing:.5px}
+  .header .sub{color:var(--txt2);font-size:13px;margin-top:4px}
+  .badge{display:inline-block;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;background:rgba(255,165,2,.15);color:#ffd9a0;border:1px solid rgba(255,165,2,.4)}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:860px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px}
+  .card h2{font-size:15px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .card h2 .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--accent1),var(--accent2))}
+  .chart{width:100%;height:300px}
+  .kpi{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+  .kpi .v{font-size:24px;font-weight:800;letter-spacing:.5px}
+  .kpi .l{font-size:12px;color:var(--txt2);margin-top:4px}
+  .up{color:var(--up)} .down{color:var(--down)} .neu{color:var(--txt2)}
+  .summary{font-size:15px;line-height:1.8}
+  .summary b{color:#fff}
+  .pill{display:inline-block;padding:3px 10px;border-radius:8px;font-size:12px;font-weight:600;margin:2px 4px 2px 0}
+  .pill-red{background:rgba(255,71,87,.15);color:var(--sell);border:1px solid rgba(255,71,87,.3)}
+  .pill-green{background:rgba(34,197,94,.13);color:var(--down);border:1px solid rgba(34,197,94,.3)}
+  .pill-amber{background:rgba(255,165,2,.15);color:var(--hold);border:1px solid rgba(255,165,2,.3)}
+  .pill-blue{background:rgba(102,126,234,.15);color:#8a9bff;border:1px solid rgba(102,126,234,.35)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--txt2);font-weight:600;font-size:12px}
+  tr:last-child td{border-bottom:none}
+  .note{font-size:12px;color:var(--txt2);margin-top:10px;padding:10px 12px;background:var(--card2);border-radius:10px;border-left:3px solid var(--accent1)}
+  .alert{background:rgba(255,71,87,.08);border:1px solid rgba(255,71,87,.3);border-radius:10px;padding:10px 14px;font-size:13px;color:#ffb3ba;margin-top:10px}
+  .ok{background:rgba(0,212,170,.08);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:10px 14px;font-size:13px;color:#9af0dd;margin-top:10px}
+  .warn{background:rgba(255,165,2,.08);border:1px solid rgba(255,165,2,.3);border-radius:10px;padding:10px 14px;font-size:13px;color:#ffd9a0;margin-top:10px}
+  .foot{margin-top:20px;font-size:11px;color:var(--txt2);text-align:center;line-height:1.8}
+  .temp-wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .temp-num{font-size:34px;font-weight:800;color:var(--hold)}
+  .stat-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px dashed var(--border)}
+  .stat-row:last-child{border-bottom:none}
+  .cata{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:860px){.cata{grid-template-columns:1fr}}
+  .cata-item{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:13px 15px}
+  .cata-item .t{font-size:13px;font-weight:700;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+  .cata-item .d{font-size:12.5px;color:var(--txt2);line-height:1.65}
+  .scen{padding:12px 14px;border-radius:12px;border:1px solid var(--border);margin-top:10px}
+  .scen-up{background:rgba(0,212,170,.07);border-color:rgba(0,212,170,.3)}
+  .scen-mid{background:rgba(255,165,2,.07);border-color:rgba(255,165,2,.3)}
+  .scen-dn{background:rgba(255,71,87,.07);border-color:rgba(255,71,87,.3)}
+  .scen .h{font-size:13.5px;font-weight:700;margin-bottom:4px}
+  .est{color:var(--hold);font-size:11px;border:1px dashed var(--hold);border-radius:4px;padding:0 4px}
+  .checklist{counter-reset:ck;list-style:none;padding:0;margin:10px 0 0}
+  .checklist li{position:relative;padding:9px 12px 9px 38px;font-size:13px;border-bottom:1px dashed var(--border)}
+  .checklist li:before{counter-increment:ck;content:counter(ck);position:absolute;left:10px;top:9px;width:20px;height:20px;line-height:20px;text-align:center;background:rgba(102,126,234,.18);color:#aab6ff;border-radius:50%;font-size:12px;font-weight:700}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>📊 A股行情复盘（2026-08-18 · 周二 · <span class="hold">突破后缩量整固·指数红个股弱</span>）</h1>
+    <div class="sub">数据快照 2026-08-18 15:27 · 赚钱效应 + 资金流向 + 仓位管理推荐 · 多市场智能股票分析师「星辰」</div>
+  </div>
+  <div class="badge">🟡 整固日 · 维持 6.5–7 成中枢 · 年线3970上方持有待回踩确认</div>
+</div>
+
+<!-- 决策摘要 -->
+<div class="grid g4" style="margin-bottom:16px">
+  <div class="kpi"><div class="v up">3990.30</div><div class="l">上证指数 <span class="up">+0.19%</span></div></div>
+  <div class="kpi"><div class="v down">14622.50</div><div class="l">深证成指 <span class="down">-0.56%</span></div></div>
+  <div class="kpi"><div class="v down">3705.56</div><div class="l">创业板指 <span class="down">-0.93%</span></div></div>
+  <div class="kpi"><div class="v up">1790.87</div><div class="l">科创50 <span class="up">+0.11%</span></div></div>
+</div>
+
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>核心结论（一句话）</h2>
+  <div class="summary">
+    今日是 <b>8/17 放量突破年线后的首个缩量整固日</b>：沪指微红守住 3990、科创50 勉强翻红，但<b>深成/创业板回落、全市场 2121 涨 vs 3292 跌（红盘仅 38%）</b>，呈典型「<b>指数红、个股弱、赚指数不赚钱</b>」的赚面子格局；资金从拥挤的 AI 应用/算力链切向<b>农业种业（转基因+8.41%、种植业+9.54%）+ 光学光电子</b>等低位题材，主线仍待回踩确认。操作上<b>维持 6.5–7 成中枢、结构优于总量，不追高、等回踩均线低吸</b>。
+  </div>
+</div>
+
+<!-- 指数 + 情绪 -->
+<div class="grid g2" style="margin-bottom:16px">
+  <div class="card">
+    <h2><span class="dot"></span>主要指数涨跌（收盘）</h2>
+    <div id="idxChart" class="chart"></div>
+  </div>
+  <div class="card">
+    <h2><span class="dot"></span>市场情绪温度计</h2>
+    <div id="tempChart" class="chart"></div>
+    <div class="note">数据为交易所宽度统计标注「<b>正常</b>」，但综合红盘占比 38%、跌多涨少，给 ≈ <b>50° 中性·分歧</b>（指数红、个股弱）。</div>
+  </div>
+</div>
+
+<!-- 市场概况 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>市场概况（大盘市场宽度统计）</h2>
+  <div class="grid g4" style="margin-bottom:12px">
+    <div class="kpi"><div class="v">2.40<span style="font-size:14px">万亿</span></div><div class="l">两市成交额 <span class="up">+133亿</span></div></div>
+    <div class="kpi"><div class="v up">2121</div><div class="l">上涨家数（涨停 81）</div></div>
+    <div class="kpi"><div class="v down">3292</div><div class="l">下跌家数（跌停 6）</div></div>
+    <div class="kpi"><div class="v">38%</div><div class="l">红盘占比</div></div>
+  </div>
+  <div class="cata">
+    <div class="cata-item"><div class="t">📈 涨跌幅区间分布</div><div class="d">涨停 81 · 7%以上 77 · 5–7% 123 · 2–5% 535 · 0–2% 1305；平盘 132。<br>下跌：−2~0% 2392 · −5~−2% 797 · −7~−5% 63 · −7%以下 34 · 跌停 6。<br><b>超 2% 个股约 900 家（≈17%）</b>，亏钱面集中在中高位题材。</div></div>
+    <div class="cata-item"><div class="t">🔥 短线接力情绪</div><div class="d">昨日涨停 112 只，今日仅 <b>48.21% 上涨</b> → 接力情绪一般，连板高度压缩。<br>涨停 81（较前日 112 减少）、跌停仅 6，<b>跌停稀少说明无系统性恐慌</b>，属分歧而非踩踏。</div></div>
+  </div>
+</div>
+
+<!-- 赚钱效应总结 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>赚钱效应总结</h2>
+  <div class="summary">
+    <b>1. 指数与个股背离（黄白线分化）：</b>上证 +0.19%、科创50 +0.11% 翻红，但下跌家数（3292）远超上涨（2121），<b>权重护盘、个股普弱</b>，多数账户「指数红、持仓绿」。<br>
+    <b>2. 赚钱方向高度集中：</b>农业种业链（转基因 +8.41%、玉米 +7.76%、粮食 +6.52%、种植业整体 +9.54%）与光学光电子（面板/MR 光学）吸金；其余板块多为负贡献。<br>
+    <b>3. 亏钱面在高位拥挤链：</b>早盘 Manus / Kimi / 词元概念（AI 应用/算力）快速跳水（鸿博 −8.97%、网宿 −4.10%），前期涨幅过大题材退潮明显。<br>
+    <b>4. 结论：</b>属「<span class="pill pill-amber">结构性修复·局部赚钱</span>」而非普涨，赚钱效应 <b>中等偏弱</b>，宜轻指数重结构。
+  </div>
+  <div id="ratioChart" class="chart" style="height:260px;margin-top:14px"></div>
+  <div class="note">领涨方向涨股比：种植业 <b>20/20（100%）</b> 全线红盘、光学光电子 51/93（≈55%）、化学原料 31/57（≈54%）——资金扎堆于少数低位题材，广度有限。</div>
+</div>
+
+<!-- 资金流向 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>资金流向分析</h2>
+  <div class="grid g2" style="margin-bottom:12px">
+    <div class="cata-item"><div class="t">💰 行业主力净流入 TOP3（仅 3 家为正）</div><div class="d">光学光电子 <b class="up">+15.50 亿</b>（骏成科技 20cm）· 种植业 <b class="up">+14.22 亿</b>（神农种业 20cm）· 化学原料 <b class="up">+11.11 亿</b>（红星发展 10cm）。<br><span class="est">估</span> 中信一级中仅上述 3 行业主力净流入为正，<b>其余行业净流出占主导</b>。</div></div>
+    <div class="cata-item"><div class="t">📉 主力净流出（代表）</div><div class="d">创业板指单市当日主力净流出 <b class="down">−126.19 亿</b>、近 5 日净流出 −27.06 亿；前期拥挤的半导体/算力硬件延续「价弱钱出」。<br>全市场主力资金<b>整体净流出</b>，与红盘占比 38% 互为印证。</div></div>
+  </div>
+  <div id="flowChart" class="chart" style="height:280px"></div>
+  <div class="note">柱状图：3 个净流入行业（绿）vs 创业板指单市主力净流出（红，−126 亿，仅作净流出量级参照、非行业）。资金集中度极高， breadth 偏弱。</div>
+  <h2 style="margin-top:16px"><span class="dot"></span>融资融券（最新披露 2026-08-14）</h2>
+  <table>
+    <tr><th>指标</th><th>数值</th><th>变化/备注</th></tr>
+    <tr><td>两融余额</td><td>26,738.6 亿</td><td>较 8/13（26757.2 亿）−18.6 亿，微降</td></tr>
+    <tr><td>融资余额</td><td>26,478.7 亿</td><td>8/17 融资余额 26572.9 亿（宽度统计口径，+0.67%）</td></tr>
+    <tr><td>融券余额</td><td>259.9 亿</td><td>—</td></tr>
+    <tr><td>融资买入额</td><td>2,008.7 亿</td><td>交投活跃</td></tr>
+    <tr><td>维持担保比例</td><td>282.6%</td><td>安全垫厚，无强平风险</td></tr>
+    <tr><td>近两周趋势</td><td colspan="2">8/03 两融 26025 亿 → 8/14 26739 亿，<b>杠杆温和回升 +714 亿</b></td></tr>
+  </table>
+</div>
+
+<!-- 板块表现 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>板块表现（领涨 / 领跌）</h2>
+  <div class="grid g2">
+    <div>
+      <div class="ok">🟢 领涨概念：转基因 <b>+8.41%</b> · 玉米 +7.76% · 粮食概念 +6.52% · 大豆 +5.88% · 棉花 +4.11% · 大硅片 +3.97%。领涨股神农种业 20cm、有研硅 +13.43%。</div>
+      <div class="alert" style="margin-top:10px">🔴 领跌方向：AI 应用/算力链（Manus、Kimi、词元概念早盘快速跳水，鸿博 −8.97%、中广天择 −7.80%、网宿 −4.10%）；深市/创业板权重（新能源、医药）随指回落。前期高位纯题材退潮。</div>
+    </div>
+    <div>
+      <div id="leadChart" class="chart" style="height:240px"></div>
+      <div class="note">农业/种业链受转基因产业化政策预期 + 低位轮动驱动，为今日唯一具板块效应的主线；持续性待观察，慎追已涨停高位股。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 仓位管理 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>仓位管理推荐（结构优于总量）</h2>
+  <div class="warn">📌 当前位置：沪指 3990，处于 <b>年线 3970 上方</b>、8/17 放量突破后的缩量回踩区。年线未破=持有逻辑有效，破位即减。</div>
+  <div class="grid g3" style="margin-top:12px">
+    <div class="kpi"><div class="v" style="color:var(--hold)">6.5–7 成</div><div class="l">总仓中枢（维持 8/17 突破后上调）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--buy)">25–35%</div><div class="l">现金留存（机动低吸）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--accent1)">3970</div><div class="l">年线防守位（破则减仓）</div></div>
+  </div>
+  <div class="scen scen-up"><div class="h">🟢 加仓触发（&gt;7.5 成）</div>放量（两市 &gt;2.8 万亿）站稳 4030 + 涨跌家数 &gt;3000 多数红盘 + 主线由农业/光学向半导体/科创扩散反包。</div>
+  <div class="scen scen-mid"><div class="h">🟡 持有/观望（当前 6.5–7 成）</div>年线 3970 上方缩量整固，轻指数重结构，持有低位主线、等回踩均线低吸，不追已涨停高位股。</div>
+  <div class="scen scen-dn"><div class="h">🔴 减仓触发（&lt;5.5 成）</div>确认跌破年线 3970 且放量下杀，或半导体/科创连续 2 日大跌、涨停家数骤降至 &lt;40 且跌停 &gt;20。</div>
+  <ul class="checklist">
+    <li><b>持仓结构：</b>低位主线（农业/种业/粮食、光学光电子面板、化学原料涨价）可持有；前期拥挤 AI 应用/算力（词元、Manus、Kimi 概念）减仓回避。</li>
+    <li><b>买点偏好：</b>优先回踩 MA5/MA10 支撑的低吸，乖离率 &lt;5% 才考虑介入（严进策略）。</li>
+    <li><b>回避：</b>高位纯题材微盘、已连续涨停的种业龙头（神农种业等）追高、业绩雷区。</li>
+    <li><b>风控：</b>单票仓位 ≤15%，总仓跌破 5.5 成即触发防御；年线 3970 为硬止损参考位。</li>
+    <li><b>关注催化：</b>转基因产业化政策落地节奏、面板涨价周期、大硅片/半导体设备回踩后的二次机会。</li>
+  </ul>
+</div>
+
+<!-- 信号归因 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>信号归因（结论由哪些因素贡献）</h2>
+  <div class="grid g2">
+    <div class="cata-item"><div class="t">📊 技术指标 / 大势</div><div class="d">≈35%：沪指守住 3990、年线 3970 上方，8/17 突破结构未破坏；但深成/创业板回落、量能萎缩，上攻动能不足。</div></div>
+    <div class="cata-item"><div class="t">🌾 板块 / 资金</div><div class="d">≈30%：资金高度集中于农业/光学 3 行业，全市场主力净流出（创业板 −126亿），广度差、结构割裂。</div></div>
+    <div class="cata-item"><div class="t">😰 情绪 / 赚钱效应</div><div class="d">≈20%：红盘 38%、昨日涨停仅 48% 续涨，情绪中性偏弱（≈50°），无恐慌但无赚钱广度的「面子行情」。</div></div>
+    <div class="cata-item"><div class="t">🏦 杠杆 / 两融</div><div class="d">≈15%：两融近两周 +714 亿温和回升、维持担保 282% 安全，提供下方缓冲，非风险信号。</div></div>
+  </div>
+  <div class="ok" style="margin-top:12px">最强看多信号：年线 3970 未破 + 两融温和回升，中期持有逻辑 intact。</div>
+  <div class="alert" style="margin-top:8px">最强看空信号：红盘仅 38%、全市场主力净流出、高位 AI 应用链退潮——短线赚钱效应弱、追高易亏。</div>
+</div>
+
+<div class="foot">
+  数据来源：NeoData 金融数据（指数/宽度/板块资金/两融，快照 2026-08-18 15:27）。北向净买入因交易所披露规则 unavailable，未纳入。<br>
+  净流出行业全量 API 未返回（仅净流入前 3），整体净流出以「创业板指单市净流出 −126 亿 + 红盘占比」交叉刻画并标注 <span class="est">估</span>；8/18 两融次交易日(8/19)披露，引最新 8/14 值 + 8/17 融资余额口径。<br>
+  大盘环境摘要：震荡偏强（年线上方整固），结构性行情、轻指数重结构。 ⚠️ 本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。
+</div>
+
+<script>
+  var idxOpt = {
+    tooltip:{trigger:'axis',valueFormatter:function(v){return v+'%'}},
+    grid:{left:50,right:20,top:24,bottom:28},
+    xAxis:{type:'category',data:['上证指数','深证成指','创业板指','科创50'],axisLabel:{color:'#94a3b8'}},
+    yAxis:{type:'value',axisLabel:{color:'#94a3b8',formatter:'{value}%'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'bar',barWidth:'46%',label:{show:true,position:'top',color:'#e2e8f0',formatter:function(p){return p.value+'%'}},
+      data:[
+        {value:0.19,itemStyle:{color:'#ef4444'}},
+        {value:-0.56,itemStyle:{color:'#22c55e'}},
+        {value:-0.93,itemStyle:{color:'#22c55e'}},
+        {value:0.11,itemStyle:{color:'#ef4444'}}
+      ]}]
+  };
+  var tempOpt = {
+    series:[{type:'gauge',min:0,max:100,startAngle:210,endAngle:-30,
+      progress:{show:true,width:14,itemStyle:{color:'#ffa502'}},
+      axisLine:{lineStyle:{width:14,color:[[0.3,'#22c55e'],[0.6,'#ffa502'],[1,'#ef4444']]}},
+      axisTick:{show:false},splitLine:{length:10,lineStyle:{color:'#2d2d44'}},
+      pointer:{itemStyle:{color:'#ffa502'}},
+      detail:{valueAnimation:true,formatter:'{value}°',color:'#e2e8f0',fontSize:30,offsetCenter:[0,'42%']},
+      title:{color:'#94a3b8',fontSize:13,offsetCenter:[0,'72%']},
+      data:[{value:50,name:'中性·分歧'}]}]
+  };
+  var ratioOpt = {
+    tooltip:{trigger:'axis',valueFormatter:function(v){return v+'%'}},
+    grid:{left:46,right:20,top:24,bottom:28},
+    xAxis:{type:'category',data:['种植业','光学光电子','化学原料'],axisLabel:{color:'#94a3b8'}},
+    yAxis:{type:'value',max:100,axisLabel:{color:'#94a3b8',formatter:'{value}%'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'bar',barWidth:'46%',label:{show:true,position:'top',color:'#e2e8f0',formatter:'{c}%'},
+      data:[
+        {value:100,itemStyle:{color:'#ef4444'}},
+        {value:54.8,itemStyle:{color:'#ffa502'}},
+        {value:54.4,itemStyle:{color:'#ffa502'}}
+      ]}]
+  };
+  var flowOpt = {
+    tooltip:{trigger:'axis',valueFormatter:function(v){return v+'亿'}},
+    grid:{left:50,right:20,top:24,bottom:46},
+    xAxis:{type:'category',data:['光学光电子','种植业','化学原料','创业板指(净流出)'],axisLabel:{color:'#94a3b8',interval:0,fontSize:11}},
+    yAxis:{type:'value',axisLabel:{color:'#94a3b8',formatter:'{value}亿'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'bar',barWidth:'46%',label:{show:true,position:'top',color:'#e2e8f0',formatter:function(p){return p.value+'亿'}},
+      data:[
+        {value:15.50,itemStyle:{color:'#00d4aa'}},
+        {value:14.22,itemStyle:{color:'#00d4aa'}},
+        {value:11.11,itemStyle:{color:'#00d4aa'}},
+        {value:-126.19,itemStyle:{color:'#ff4757'}}
+      ]}]
+  };
+  var leadOpt = {
+    tooltip:{trigger:'axis',valueFormatter:function(v){return v+'%'}},
+    grid:{left:46,right:20,top:24,bottom:46},
+    xAxis:{type:'category',data:['转基因','玉米','粮食','大豆','棉花','大硅片'],axisLabel:{color:'#94a3b8',interval:0,fontSize:10,rotate:18}},
+    yAxis:{type:'value',axisLabel:{color:'#94a3b8',formatter:'{value}%'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'bar',barWidth:'50%',label:{show:true,position:'top',color:'#e2e8f0',formatter:'{c}%'},
+      data:[
+        {value:8.41,itemStyle:{color:'#ef4444'}},
+        {value:7.76,itemStyle:{color:'#ef4444'}},
+        {value:6.52,itemStyle:{color:'#ef4444'}},
+        {value:5.88,itemStyle:{color:'#ef4444'}},
+        {value:4.11,itemStyle:{color:'#ef4444'}},
+        {value:3.97,itemStyle:{color:'#ef4444'}}
+      ]}]
+  };
+  echarts.init(document.getElementById('idxChart')).setOption(idxOpt);
+  echarts.init(document.getElementById('tempChart')).setOption(tempOpt);
+  echarts.init(document.getElementById('ratioChart')).setOption(ratioOpt);
+  echarts.init(document.getElementById('flowChart')).setOption(flowOpt);
+  echarts.init(document.getElementById('leadChart')).setOption(leadOpt);
+</script>
+</body>
+</html>
