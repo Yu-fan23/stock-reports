@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-19 12:45:17",
-  "total": 166,
+  "generatedAt": "2026-08-19 15:45:34",
+  "total": 167,
   "categories": [
     {
       "key": "panqian",
@@ -520,9 +520,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 38,
-      "latest": "20260818",
+      "count": 39,
+      "latest": "20260819",
       "reports": [
+        {
+          "date": "20260819",
+          "dateLabel": "2026-08-19（周三）",
+          "file": "reports/close/close_20260819.html",
+          "title": "A股行情复盘（2026-08-19 · 周三 · 放量跌破年线·系统性恐慌·触发减仓）",
+          "size": 24659
+        },
         {
           "date": "20260818",
           "dateLabel": "2026-08-18（周二）",
