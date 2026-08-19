@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-19 15:45:34",
-  "total": 167,
+  "generatedAt": "2026-08-19 16:45:35",
+  "total": 168,
   "categories": [
     {
       "key": "panqian",
@@ -804,9 +804,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 32,
-      "latest": "20260818",
+      "count": 33,
+      "latest": "20260819",
       "reports": [
+        {
+          "date": "20260819",
+          "dateLabel": "2026-08-19（周三）",
+          "file": "reports/limitup/limitup_20260819.html",
+          "title": "涨停梯队复盘 · 2026-08-19（周三 · 系统性暴跌日 · 逾百股跌停 · 连板高度骤降至3板）",
+          "size": 37437
+        },
         {
           "date": "20260818",
           "dateLabel": "2026-08-18（周二）",
