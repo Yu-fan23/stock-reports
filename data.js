@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-19 08:01:54",
-  "total": 165,
+  "generatedAt": "2026-08-19 12:45:17",
+  "total": 166,
   "categories": [
     {
       "key": "panqian",
@@ -257,9 +257,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 35,
-      "latest": "20260818",
+      "count": 36,
+      "latest": "20260819",
       "reports": [
+        {
+          "date": "20260819",
+          "dateLabel": "2026-08-19（周三）",
+          "file": "reports/noon/noon_20260819.html",
+          "title": "A股午间复盘 · 2026-08-19（周三）· 指数微跌·个股普涨·科技回归·机器人爆发",
+          "size": 33258
+        },
         {
           "date": "20260818",
           "dateLabel": "2026-08-18（周二）",
