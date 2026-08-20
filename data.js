@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-20 08:26:11",
-  "total": 170,
+  "generatedAt": "2026-08-20 12:45:37",
+  "total": 171,
   "categories": [
     {
       "key": "panqian",
@@ -264,9 +264,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 36,
-      "latest": "20260819",
+      "count": 37,
+      "latest": "20260820",
       "reports": [
+        {
+          "date": "20260820",
+          "dateLabel": "2026-08-20（周四）",
+          "file": "reports/noon/noon_20260820.html",
+          "title": "A股午间复盘 · 2026-08-20（周四）· 创新药涨停潮·贵金属强势·普涨修复·科创高开低走",
+          "size": 37721
+        },
         {
           "date": "20260819",
           "dateLabel": "2026-08-19（周三）",
