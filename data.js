@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-21 08:01:20",
-  "total": 175,
+  "generatedAt": "2026-08-21 12:45:29",
+  "total": 176,
   "categories": [
     {
       "key": "panqian",
@@ -271,9 +271,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 37,
-      "latest": "20260820",
+      "count": 38,
+      "latest": "20260821",
       "reports": [
+        {
+          "date": "20260821",
+          "dateLabel": "2026-08-21（周五）",
+          "file": "reports/noon/noon_20260821.html",
+          "title": "A股午间复盘 · 2026-08-21（周五）· 指数走平·个股普跌·黄白背离·前期主线兑现·控仓降级",
+          "size": 38527
+        },
         {
           "date": "20260820",
           "dateLabel": "2026-08-20（周四）",
