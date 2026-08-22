@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-22 08:01:08",
-  "total": 180,
+  "generatedAt": "2026-08-22 12:45:24",
+  "total": 181,
   "categories": [
     {
       "key": "panqian",
@@ -278,9 +278,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 38,
-      "latest": "20260821",
+      "count": 39,
+      "latest": "20260822",
       "reports": [
+        {
+          "date": "20260822",
+          "dateLabel": "2026-08-22（周六）",
+          "file": "reports/noon/noon_20260822.html",
+          "title": "A股周度复盘 · 2026-08-17 → 08-21（周六）· 冲高回落·缩量破2万亿·高低切·控仓待放量",
+          "size": 40911
+        },
         {
           "date": "20260821",
           "dateLabel": "2026-08-21（周五）",
