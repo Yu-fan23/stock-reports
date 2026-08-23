@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股周日开盘作战手册 · 2026-08-23（周日）· 周末暖风·降息信号·美伊经济战·控仓待放量</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --accent1:#667eea; --accent2:#764ba2; --txt:#e2e8f0; --txt2:#94a3b8; --border:#2d2d44;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.55;padding:24px 16px 60px}
+  .wrap{max-width:1180px;margin:0 auto}
+  .glass{background:linear-gradient(135deg,rgba(102,126,234,.08),rgba(118,75,162,.06));border:1px solid var(--border);border-radius:16px}
+  header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:22px 26px;margin-bottom:20px}
+  header h1{font-size:23px;font-weight:700;letter-spacing:.5px}
+  header .sub{color:var(--txt2);font-size:13px;margin-top:4px;max-width:720px}
+  .badge{font-size:14px;font-weight:800;padding:10px 18px;border-radius:12px;letter-spacing:1px;max-width:480px;text-align:center}
+  .badge.danger{background:linear-gradient(135deg,#ff4757,#c0392b);color:#fff;box-shadow:0 6px 20px rgba(255,71,87,.4)}
+  .badge.warn{background:linear-gradient(135deg,#ffa502,#e67e22);color:#1a1a2e;box-shadow:0 6px 20px rgba(255,165,2,.35)}
+  .badge.rev{background:linear-gradient(135deg,#00d4aa,#00b894);color:#1a1a2e;box-shadow:0 6px 20px rgba(0,212,170,.4)}
+  .grid{display:grid;gap:18px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:880px){.g3,.g2,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.g3,.g2,.g4{grid-template-columns:1fr}}
+  section{margin:20px 0}
+  .sec-title{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;margin:6px 4px 14px}
+  .sec-title::before{content:"";width:5px;height:18px;border-radius:3px;background:linear-gradient(var(--accent1),var(--accent2))}
+  .card{padding:18px 20px}
+  .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+  @media(max-width:880px){.kpis{grid-template-columns:1fr 1fr 1fr}}
+  .kpi{padding:14px;text-align:center}
+  .kpi .v{font-size:19px;font-weight:800}
+  .kpi .l{font-size:11px;color:var(--txt2);margin-top:3px}
+  .chart{height:340px}
+  .chart-sm{height:260px}
+  .gauge{width:220px;height:190px;flex:0 0 auto}
+  .temp-wrap{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  .temp-side{flex:1;min-width:240px}
+  .alert{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:12px;margin:10px 0}
+  .alert.risk{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.35)}
+  .alert.pos{background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.35)}
+  .alert.warn{background:rgba(255,165,2,.1);border:1px solid rgba(255,165,2,.35)}
+  .alert .ico{font-size:20px;line-height:1}
+  .alert .tt{font-weight:700;margin-bottom:3px}
+  .alert .bd{font-size:13px;color:var(--txt2);line-height:1.6}
+  .li{display:flex;gap:10px;padding:7px 0;font-size:13px;border-bottom:1px dashed rgba(45,45,68,.7)}
+  .li:last-child{border-bottom:none}
+  .li .dot{margin-top:6px;width:7px;height:7px;border-radius:50%;flex:0 0 auto}
+  .foot{font-size:11px;color:var(--txt2);text-align:center;margin-top:26px;line-height:1.8}
+  .meta-pill{display:inline-block;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;margin:4px 6px 0 0}
+  .summary-line{font-size:15px;font-weight:600;padding:14px 18px;border-left:4px solid var(--hold);background:rgba(255,165,2,.07);border-radius:0 10px 10px 0;margin:6px 0 14px}
+  .plan-card{font-size:15px;font-weight:700;margin:0 0 10px;color:var(--hold)}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:720px){.twocol{grid-template-columns:1fr}}
+  .cat-card{padding:14px 16px;border-radius:12px;border:1px solid var(--border);background:rgba(26,26,46,.6)}
+  .cat-card .t{font-weight:700;font-size:14px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .cat-card .d{font-size:12px;color:var(--txt2);line-height:1.5}
+  .bullet{font-size:13px;padding:4px 0 4px 16px;position:relative;color:var(--txt)}
+  .bullet::before{content:"";position:absolute;left:2px;top:11px;width:6px;height:6px;border-radius:50%;background:var(--accent1)}
+  .meter{height:8px;border-radius:6px;background:rgba(45,45,68,.7);overflow:hidden;margin:6px 0}
+  .d-red{background:var(--sell)} .d-green{background:var(--buy)} .d-amber{background:var(--hold)}
+  .attr-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 20px;margin-top:8px}
+  @media(max-width:720px){.attr-grid{grid-template-columns:1fr}}
+  .attr-row{display:flex;align-items:center;gap:10px;font-size:13px}
+  .attr-row .lab{width:120px;color:var(--txt2);flex:0 0 auto}
+  .attr-row .bar{flex:1}
+  .attr-row .pct{width:42px;text-align:right;font-weight:700}
+  .day-row{display:grid;grid-template-columns:54px 1fr;gap:10px;align-items:center;padding:8px 0;font-size:12.5px;border-bottom:1px dashed rgba(45,45,68,.5)}
+  .day-row:last-child{border-bottom:none}
+  .day-tag{font-weight:800;font-size:13px;text-align:center;padding:4px 0;border-radius:8px}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+  th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--txt2);font-weight:600;font-size:12px}
+  td.buy{color:var(--buy);font-weight:700}
+  td.sell{color:var(--sell);font-weight:700}
+  td.hold{color:var(--hold);font-weight:700}
+  .newflag{display:inline-block;background:linear-gradient(135deg,#00d4aa,#00b894);color:#1a1a2e;font-size:10px;font-weight:800;padding:2px 8px;border-radius:8px;margin-left:6px;vertical-align:middle}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="glass">
+    <div>
+      <h1>A股周日开盘作战手册 · 2026-08-23（周日）</h1>
+      <div class="sub">上周（8/17–8/21）A股"<b>冲高→暴跌→缩量企稳</b>"后，本周末迎<b>政策暖风与风险扰动并存</b>：①央行释放<b>降息信号</b>（逆回购利率降5bp）+逆周期调节；②财政促内需扩容+超长期特别国债清单下达+四部门集成电路/工业母机税收优惠；③<b>中际旭创中报净利+241.7%大超预期</b>、英伟达CPO交换机量产；④但<b>美伊"经济战"升级</b>（贝森特周一8/24发布会），布油近月高位94.71美元。周一（8/24）开盘关键看<b>量能能否回2万亿+科创收复1700</b>，维持<b>控仓待放量</b>框架。</div>
+      <div style="margin-top:10px">
+        <span class="meta-pill">📅 2026-08-23 周日（休市·开盘作战手册）</span>
+        <span class="meta-pill">🗓️ 推演：周一(8/24)开盘 + 本周(8/24–8/28)</span>
+        <span class="meta-pill">📊 数据：Wind/东方财富/财联社/证券时报/网易/雪球 聚合（WebSearch；金融 MCP 连接器均 disconnected）</span>
+      </div>
+    </div>
+    <div class="badge warn">周末暖风·降息信号·美伊经济战·控仓待放量·周一防冲高回落</div>
+  </header>
+
+  <!-- KPI ROW -->
+  <div class="kpis glass">
+    <div class="kpi"><div class="v" style="color:var(--sell)">3905.20</div><div class="l">上证周五收（周−0.56%）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--sell)">1653.56</div><div class="l">科创50周五收（周−3.73%·最弱·未稳1700）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--hold)">1.89万亿</div><div class="l">周五成交（跌破2万亿·4月新低）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--sell)">1776/3683</div><div class="l">上周涨跌家数（涨/跌）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--buy)">−5bp</div><div class="l">央行逆回购利率（降息信号）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--hold)">≈53</div><div class="l">情绪温度 / 100（周末暖风后）</div></div>
+  </div>
+
+  <!-- 情绪温度 -->
+  <section class="glass card">
+    <div class="sec-title">🌡️ 市场情绪温度计（周末催化后）</div>
+    <div class="temp-wrap">
+      <div id="gauge" class="gauge"></div>
+      <div class="temp-side">
+        <div class="plan-card">情绪 ≈ 53 / 100 · 中性偏暖 · 周末暖风（降息+业绩+政策）对冲美伊扰动 · 控仓待放量</div>
+        <div class="li"><span class="dot d-green"></span><span><b>做多支撑（↑）</b>：央行降息信号（逆回购−5bp）+逆周期调节；中际旭创中报+241.7%验证AI算力景气；财政促内需+半导体税收优惠；黄金/有色避险延续；沪指守住3900。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>中性（→）</b>：成交跌破2万亿未解、科创50仍低于1700、8/19暴跌伤疤未愈；板块快速轮动、存量博弈。</span></div>
+        <div class="li"><span class="dot d-red"></span><span><b>压制（↓）</b>：美伊"经济战"升级（贝森特8/24发布会）+布油近月94.71美元高位→输入通胀/加息担忧；长江存储330亿IPO受理担忧分流；中报密集期业绩雷；8/28沃什杰克逊霍尔讲话。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 上周复盘 -->
+  <section>
+    <div class="sec-title">📅 上周（8/17–8/21）复盘 · 一句话回顾</div>
+    <div class="grid g2">
+      <div class="glass card">
+        <div class="day-row"><span class="day-tag" style="background:rgba(0,212,170,.18);color:var(--buy)">8/17一</span><span><b>放量大涨·科技领涨</b>：沪+1.41%报3982.65 / 深+2.44% / 科创+4.14%；成交2.39万亿；4335涨/110涨停。</span></div>
+        <div class="day-row"><span class="day-tag" style="background:rgba(255,165,2,.18);color:var(--hold)">8/18二</span><span><b>分化·农业接力</b>：沪+0.19%报3990.30（摸高3994未破4000）/ 深−0.56%；成交2.40万亿；农林牧渔+3.63%领涨。</span></div>
+        <div class="day-row"><span class="day-tag" style="background:rgba(255,71,87,.18);color:var(--sell)">8/19三</span><span><b>单日暴跌</b>：沪−2.40% / 创业−6.26% / 科创−6.89%报1667.52；成交2.53万亿放量杀跌（全周最惨烈）。</span></div>
+        <div class="day-row"><span class="day-tag" style="background:rgba(255,165,2,.18);color:var(--hold)">8/20四</span><span><b>弱反弹</b>：沪+0.24%报3903.72 / 深≈14024；成交2.09万亿；创新药/贵金属局部活跃。</span></div>
+        <div class="day-row"><span class="day-tag" style="background:rgba(0,212,170,.18);color:var(--buy)">8/21五</span><span><b>缩量收红·破2万亿</b>：沪+0.04%报3905.20 / 深+0.87% / 科创+0.04%；成交<b style="color:var(--sell)">1.89万亿（创4月新低）</b>；2505涨/2862跌、57涨停/14跌停；通信/有色/贵金属领涨。</span></div>
+      </div>
+      <div class="glass card">
+        <div class="idx-head"><span class="idx-name">周度指数涨跌幅 & 情绪/广度轨迹（8/17→8/21）</span><span class="idx-code">%</span></div>
+        <div id="chart_mood" class="chart-sm"></div>
+        <div class="li"><span class="dot d-red"></span><span>全周仅 <b>1776涨/3683跌</b>；情绪轨迹 78→55→25→48→50（周均≈50）；广度 80%→39%→18%→44%→47%（周三触底）。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span>领涨 <b>贵金属+16%</b>/转基因+6.8%/粮食+5.6%/金属铅+4.71%；领跌 算力租赁/游戏/医药−99亿/计算机(信创−202亿)。资金"<b>卖科技、买资源+农业</b>"。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 周末新增催化（核心NEW） -->
+  <section>
+    <div class="sec-title">📰 周末新增催化（8/22–8/23）<span class="newflag">本周重点·相对8/22周报增量</span></div>
+    <div class="grid g2">
+      <div class="cat-card">
+        <div class="t">🟢 央行释放降息信号 + 逆周期调节</div>
+        <div class="d">据8/23市场早报，央行周末下调逆回购利率5bp、时隔13天再释放降息信号，并重提"加大逆周期调节"、DR001作为短端利率调控核心指标加速转型。中泰证券称"先修渠后通水"、小幅分步推进；市场对"降息周期是否开启"存分歧。对权益为<b>明确流动性正面催化</b>。</div>
+      </div>
+      <div class="cat-card">
+        <div class="t">🟢 财政促内需扩容 + 半导体税收优惠</div>
+        <div class="d">财政金融协同促内需一揽子政策扩容（贷款贴息范围扩大、上限提高）；超长期特别国债项目清单全部下达（科技创新/先进制造/新型基建）；<b>四部门出台税收支持</b>：集成电路、工业母机企业资产增值所得可分五年计税，直接降低半导体高端装备税负，行业长期政策红利。</div>
+      </div>
+      <div class="cat-card">
+        <div class="t">🟢 中际旭创中报大超预期 + 设备翻倍</div>
+        <div class="d">光模块龙头<b>中际旭创</b>半年报：上半年净利136.51亿元、同比<b>+241.70%</b>，机构继续加仓，印证海外AI资本开支高景气；拓荆科技等半导体设备企业净利大幅翻倍，国产替代逻辑持续兑现——为CPO/光通信/半导体设备提供业绩锚。</div>
+      </div>
+      <div class="cat-card">
+        <div class="t">🟢 英伟达CPO交换机量产 + 机器人大会</div>
+        <div class="d">英伟达官宣CPO交换机实现量产（降功耗、减激光器用量，利好硅光/高速互联，但冲击传统可插拔光模块→板块内部分化）；世界机器人大会临近+具身智能/人形机器人补贴落地；开源智能体框架上线超算互联网（利好AI应用）。</div>
+      </div>
+      <div class="cat-card">
+        <div class="t">🟡 长江存储IPO受理（拟募330亿）</div>
+        <div class="d">长江存储控股科创板IPO状态更新为"已受理"，拟募资330亿元，继长鑫科技后国产两大存储IDM即将会师科创板。直接催化存储/半导体设备材料情绪，但市场担忧"巨无霸上市短期资金分流"，存储强周期属性仍是最大风险点。</div>
+      </div>
+      <div class="cat-card">
+        <div class="t">🔴 美伊"经济战"升级（贝森特周一发布会）</div>
+        <div class="d">美国财长贝森特称将对伊实施"史上最严制裁"+海上封锁组合拳，称"最大经济施压=不太可能军事重启"；<b>下周一(8/24)召开发布会披露细节</b>。布伦特原油近月高位94.71美元（6日连涨）。推升油价/黄金避险，但加剧输入通胀与加息担忧，是周一开盘最大外部变量。</div>
+      </div>
+    </div>
+    <div class="alert warn">
+      <div class="ico">🔍</div>
+      <div><div class="tt">下周全球关键事件窗口（密集·高波动）</div>
+      <div class="bd">① <b>8/24（一）</b> 美财长贝森特披露对伊"经济战"细节；② <b>8/26（三）</b> 美国7月PCE通胀数据 + <b>英伟达盘后财报</b>（全球AI风向标）；③ <b>8/27（四）</b> 韩国央行利率决议；④ <b>8/28（五）</b> 美联储主席沃什杰克逊霍尔演讲；⑤ 中报8/31前全部披露（密集验证期）。事件密集+美伊变量，周内波动或放大，控仓+不追高是底线。</div></div>
+    </div>
+  </section>
+
+  <!-- 海外映射 -->
+  <section class="glass card">
+    <div class="sec-title">🌍 海外映射（美东 8/21 收盘 + 周末）</div>
+    <div class="twocol">
+      <div>
+        <div class="li"><span class="dot d-green"></span><span><b>美股全线收涨（8/21）</b>：道指+0.98% / 标普+0.43% / 纳指+0.43% / 费城半导体−0.51%（博通·恩智浦+1%，Arm·英特尔−2%）；"科技七巨头"分化（特斯拉+5%、英伟达−0.98%）。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>贵金属股暴涨</b>：南方铜业+8%创历史新高、埃尔拉多黄金+7%、哈莫尼黄金+7%；现货黄金<b>重回4600美元</b>（周+5%）、白银报68.97。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>加密概念爆发</b>：比特币飙升，Robinhood+13%、Coinbase+8%；纳指金龙+0.4%（网易+7%、有道+8%）。</span></div>
+      </div>
+      <div>
+        <div class="li"><span class="dot d-amber"></span><span><b>商品/利率</b>：WTI原油87.06 / 布伦特94.39美元（6日连涨）；美债：财政部扩大国债回购"救市"缓解短期恐慌、利好黄金去主权货币叙事，但治标不治本。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>机构展望</b>：瑞银将标普500年终目标上调至8100点、维持"具有吸引力"；中信建投称美债回购"针对性稳定美股预期"。</span></div>
+        <div class="li"><span class="dot d-red"></span><span><b>A股映射</b>：外盘<b>黄金/有色/贵金属偏正</b>、纳指温和→科技中性偏正；但费半微跌+油价高位→周一油气/黄金或强、科技硬件分化延续（中际旭创业绩支撑vs 板块整体谨慎）。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 周一开盘推演 -->
+  <section>
+    <div class="sec-title">🎯 周一（8/24）开盘推演 · 三种情景</div>
+    <div class="grid g2">
+      <div class="glass card">
+        <div class="idx-head"><span class="idx-name">情景概率分布</span><span class="idx-code">机构一致"先扬后抑·冲高回落"</span></div>
+        <div id="chart_scenario" class="chart-sm"></div>
+      </div>
+      <div class="glass card">
+        <table>
+          <thead><tr><th>情景</th><th>概率</th><th>盘面特征</th><th>关键信号</th></tr></thead>
+          <tbody>
+            <tr><td class="buy">偏强</td><td class="buy">30%</td><td>央行降息信号+政策暖风+中际旭创业绩+黄金有色强势共振，放量攻3950–3970年线</td><td>前30分成交>7000亿+涨停>50；沪指放量破3970补缺口3983–3995；科创守1700回1750；成交回2.3万亿</td></tr>
+            <tr><td class="hold">基准</td><td class="hold">50%</td><td>3930–3960箱体震荡、黄白背离延续、存量轮动、板块高低切（科技内部分化）</td><td>成交1.9–2.3万亿；广度40–55%；科创1700附近徘徊；不追高、等分歧</td></tr>
+            <tr><td class="sell">偏弱</td><td class="sell">20%</td><td>贝森特对伊经济战发布会超预期鹰派+油价续涨+美伊恶化，回踩3900–3920</td><td>科创再破1700、沪指破3920；广度<40%；黄金/油气独强、科技兑现扩散</td></tr>
+          </tbody>
+        </table>
+        <div class="alert warn" style="margin-top:10px">
+          <div class="ico">🔍</div>
+          <div><div class="tt">周一铁律</div><div class="bd">不追高开长阳、等分歧低吸。央行降息+业绩验证若引发高开，参考8/10"先扬后抑"经验——<b>周一易出短线高点、随后1–2天调整</b>。盯盘三信号：①前30分成交是否>7000亿+涨停>50；②沪指3950–3970年线攻防；③主线（通信CPO/有色黄金/半导体业绩线）承接力与贝森特发布会实时措辞。</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 赚钱效应总结 -->
+  <section>
+    <div class="summary-line">
+      <b>赚钱效应总结（核心结论）：</b>上周A股赚钱效应<b>前高后低、广度显著恶化</b>——全周仅 <b>1776涨/3683跌</b>，周三（8/19）单日暴跌（创业板−6.26%/科创50−6.89%）直接逆转风险偏好，周五成交<b>跌破2万亿（1.89万亿·创4月新低）</b>、广度仅47%，呈"指数红、个股弱"特征。本周末<b>政策暖风（央行降息信号+财政促内需+半导体税收优惠）与业绩验证（中际旭创+241.7%）构成正面支撑</b>，但<b>美伊"经济战"升级推升油价/黄金、长江存储330亿IPO分流担忧、中报密集期业绩雷</b>形成对冲。综合判断：<b>短线偏修复但不宜乐观，周一关键看"量能能否重回2万亿+科创50收复1700"两道确认线</b>；在成交未放量、科创未稳前，赚钱效应仍以<b>结构性、事件驱动、高低切</b>为主，普涨行情尚未确立。
+    </div>
+  </section>
+
+  <!-- 资金流向 -->
+  <section>
+    <div class="sec-title">💰 资金流向分析（上周周度 + 周末新变量）</div>
+    <div class="grid g2">
+      <div class="glass card">
+        <div class="idx-head"><span class="idx-name">行业/概念 主力净流入方向（上周周度）</span><span class="idx-code">单位：亿元</span></div>
+        <div id="chart_fund" class="chart-sm"></div>
+        <div class="li"><span class="dot d-green"></span><span><b>净流入</b>：有色金属 <b class="buy">+219亿</b>（居首）/ 电子 +168亿 / 电力设备·机械·基础化工 各超+100亿；概念：资源股·玻璃基板·锂电池 超+100亿。</span></div>
+        <div class="li"><span class="dot d-red"></span><span><b>净流出</b>：计算机 <b class="sell">−106亿</b> / 医药生物 −99亿 / 公用事业 −90亿；概念：信创 −202亿（最高）。</span></div>
+      </div>
+      <div class="glass card">
+        <div class="idx-head"><span class="idx-name">杠杆 / 外资 / 风格 / 周末新动向</span><span class="idx-code">周度+最新</span></div>
+        <div class="li"><span class="dot d-red"></span><span><b>两融</b>：全周融资净卖出逾83亿（杠杆小幅减仓）；截至8/20两融约2.67万亿、近两日回落。</span></div>
+        <div class="li"><span class="dot d-red"></span><span><b>龙虎榜</b>：机构专用席位全周净卖出（买161亿/卖182亿）；风格仍"<b>卖科技、买资源+农业</b>"。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>周末新动向</b>：①中际旭创+241.7%业绩获机构加仓→科技硬件业绩线（CPO/光通信/半导体设备）资金有望回补；②长江存储330亿IPO受理→存储/设备材料情绪催化，但短期或引资金分流担忧；③央行降息信号→风险资产偏好边际改善。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>个股吸金首</b>：京东方A全周+83亿（最青睐）；中际旭创/旭光电子超+30亿；山东黄金等贵金属获机构净买。</span></div>
+      </div>
+    </div>
+    <div class="alert risk">
+      <div class="ico">🔍</div>
+      <div><div class="tt">资金结论：存量高低切延续，业绩线是破局锚</div><div class="bd">上周主力自高位科技成长（元件+半导体合计−323亿、计算机−106亿）大举撤出，转向<b>有色/贵金属/小金属+农业</b>。但周末<b>中际旭创+241.7%、拓荆科技翻倍</b>的业绩验证，使"科技内部业绩确定性方向"重新获得资金回补逻辑；央行降息信号边际改善风险偏好。整体仍处<b>存量博弈、增量观望</b>（成交破2万亿），风格快速轮动是常态——选股从"题材"转向"业绩+景气"是本周资金核心线索。</div></div>
+    </div>
+  </section>
+
+  <!-- 仓位管理 -->
+  <section>
+    <div class="sec-title">🛡️ 本周（8/24–8/28）仓位管理推荐</div>
+    <div class="glass card">
+      <div class="plan-card">总仓 40%–50% · 现金 50%–60% · 控仓待放量（成交重回2万亿+ 是核心观察指标；央行降息为潜在加仓强化项）</div>
+      <div class="twocol">
+        <div>
+          <div class="sec-title" style="margin:6px 0 8px;font-size:14px;color:var(--buy)">✅ 配置方向（逢回踩分批·不追高）</div>
+          <div class="bullet">业绩验证科技：通信/CPO/光通信（中际旭创+241.7%锚）、半导体设备/电子化学品（拓荆翻倍+税收优惠）、PCB/CCL</div>
+          <div class="bullet">避险+景气双击：有色金属/贵金属/黄金（央行降息+美伊避险+金价4600；回踩分批不追高）</div>
+          <div class="bullet">等分歧低吸：创新药/CRO（中报盈喜+License-out）、机械/电力设备（顺周期）、人形机器人（大会+补贴）</div>
+          <div class="bullet">稳健底仓：煤炭/油气/石化高股息、农业防御（再平衡）</div>
+        </div>
+        <div>
+          <div class="sec-title" style="margin:6px 0 8px;font-size:14px;color:var(--sell)">⛔ 规避方向</div>
+          <div class="bullet">追高高开长阳/纯题材/新股炒作（宇树上市后兑现）；周一忌追降息+业绩高开</div>
+          <div class="bullet">算力租赁/游戏（阶段性回调未止）、信创/软件（−202亿净流出）</div>
+          <div class="bullet">中报业绩雷 / 解禁 / ST / 无人机关税链（9/3生效）</div>
+          <div class="bullet">科创1700未稳前重仓硬科技；成交破1.8万亿前的满仓冲动</div>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>类型</th><th>触发条件</th><th>动作</th></tr></thead>
+        <tbody>
+          <tr><td class="buy">回补加仓（→50-60%）</td><td>成交破 2.3万亿 + 沪指站稳3950–3970(年线)补缺口3983–3995 + 科创50 守1700回1750 + 广度>55% + 科技/资源持续正反馈 + 央行降息落地/宽松延续 + 外围稳（贝森特未超预期鹰派/英伟达财报偏正/沃什不偏鹰）</td><td class="buy">总仓 40–50% → 50–60%</td></tr>
+          <tr><td class="hold">维持（当前）</td><td>指数横盘震荡 + 成交 1.9–2.3万亿 + 广度 40–55% + 板块快速轮动（存量高低切）+ 中报密集验证</td><td class="hold">总仓 40–50%、不追高、等分歧</td></tr>
+          <tr><td class="sell">失效继续降级（→30-40%）</td><td>成交破 1.8万亿（继续萎缩）+ 沪指破3850 + 科创50 有效破1600 + 广度<35% + 美伊经济战全面升级推油价破100 + 中报业绩雷扩散 + 沃什杰克逊霍尔偏鹰</td><td class="sell">总仓 40–50% → 30–40%（现金 60%+）</td></tr>
+        </tbody>
+      </table>
+      <div class="alert pos" style="margin-top:12px">
+        <div class="ico">✅</div>
+        <div><div class="tt">本周三大观察点</div><div class="bd">① <b>量能能否重回2万亿上方</b>：周五已跌破（1.89万亿·4月新低），是情绪修复核心指标；② <b>主线能否重新确立</b>：央行降息+中际旭创业绩能否驱动"科技业绩线（CPO/半导体设备）"凝聚共识，或延续"卖科技买资源+农业"；③ <b>科创50 能否收复1700 + 沪指攻年线</b>，同时盯美伊局势（贝森特8/24发布会）与英伟达8/26财报。操作上严禁满仓追涨，黄金/有色/农业持有+回踩分批、科技业绩线等回踩、创新药等分歧低吸。</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 机构共识 -->
+  <section>
+    <div class="sec-title">🏛️ 机构共识（反弹纵深·均衡配置·业绩为锚·控仓）</div>
+    <div class="grid g2">
+      <div class="glass card">
+        <div class="li"><span class="dot d-green"></span><span><b>国信证券</b>：8月下旬前维持反弹，但斜率放缓，8月底存在二次健康调整的内在需求；8月下旬至10月底有望再次做多窗口，届时可提高风险偏好及仓位。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>浙商证券</b>：本轮反弹大概率未结束，年线压力稍事整理后仍有冲击4000甚至更高可能；中线仓位持有，短线在指数"退一"时逢低参与，<b>勿在短期连续反弹的"进二"时追高</b>。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>东方财富证券</b>：再平衡需一定时间，有色超跌、黄金贵金属估值受美元信用堪忧支撑，中期逻辑仍在。</span></div>
+      </div>
+      <div class="glass card">
+        <div class="li"><span class="dot d-amber"></span><span><b>方正证券 张明晓</b>：8月24日、8月28日为关键时间点，几大指数（双创/沪深300/上证50）有望共振企稳反弹；半导体/元器件/通信设备60–90分钟底背离、收复10日线，有望走出修复。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>兴业/腾讯证券</b>：震荡下沿再出击，均衡配置、业绩为锚；科技看AI上游材料、医药关注CXO、蓝筹首选券商、消费重视养殖修复。</span></div>
+        <div class="li"><span class="dot d-red"></span><span><b>光大/华泰/银河</b>：中报密集披露=盈利驱动拐点=下半年最好配置窗口；聚焦科技硬件/涨价链/出口制造/医药CRO/军工；但短期需消化"美伊+主线兑现+广度恶化+成交萎缩"，<b>控仓待放量是共识动作</b>。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 信号归因 -->
+  <section class="glass card">
+    <div class="sec-title" style="margin-top:4px">📊 信号归因（本结论由哪些因素贡献）</div>
+    <div class="attr-grid">
+      <div class="attr-row"><span class="lab">市场环境贡献</span><span class="bar"><span class="meter"><span class="d-amber" style="width:30%"></span></span></span><span class="pct hold">30%</span></div>
+      <div class="attr-row"><span class="lab">资金面贡献</span><span class="bar"><span class="meter"><span class="d-amber" style="width:30%"></span></span></span><span class="pct hold">30%</span></div>
+      <div class="attr-row"><span class="lab">新闻情绪贡献</span><span class="bar"><span class="meter"><span class="d-green" style="width:25%"></span></span></span><span class="pct buy">25%</span></div>
+      <div class="attr-row"><span class="lab">技术指标贡献</span><span class="bar"><span class="meter"><span class="d-amber" style="width:15%"></span></span></span><span class="pct hold">15%</span></div>
+    </div>
+    <div class="li" style="margin-top:8px"><span class="dot d-green"></span><span><b>最强看多信号</b>：央行降息信号（逆回购−5bp）+逆周期调节 + 中际旭创中报+241.7%验证AI算力景气 + 财政促内需+半导体税收优惠 + 黄金/有色避险延续 + 沪指守住3900。</span></div>
+    <div class="li"><span class="dot d-red"></span><span><b>最强看空信号</b>：美伊"经济战"升级（贝森特8/24发布会）+布油近月94.71美元高位 + 成交跌破2万亿（1.89万亿） + 全周仅1776涨/3683跌（广度恶化） + 科创50持续低于1700 + 长江存储330亿IPO分流担忧 + 中报业绩雷窗口。</span></div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="foot">
+    <div>📌 分析时间：2026-08-23 周日（A股休市·开盘作战手册）｜模式：周日开盘作战手册（整合 8/22 周报 + 8/22–8/23 周末新增催化 + 8/24 开盘推演 + 8/24–8/28 仓位）</div>
+    <div>📊 数据来源：Wind / 东方财富(iFinD) / 财联社 / 证券时报 / 网易·览富财经 / 雪球 收盘与周末口径 聚合（WebSearch；金融 MCP 连接器均 disconnected，指数/广度/资金为聚合数据，仅供方向参考）</div>
+    <div>🌍 大盘环境摘要：上周 A股"冲高回落·缩量破2万亿·高低切(卖科技买资源+农业)·科创1700未稳"；本周末迎"政策暖风(央行降息信号+财政促内需+半导体税收优惠)+业绩验证(中际旭创+241.7%)+美伊经济战升级(贝森特8/24发布会·布油94.71)"多空交织。整体中性偏暖(情绪≈53)、控仓待放量(2万亿+)。本周维持总仓40–50%、现金50–60%；加仓触发=成交破2.3万亿+沪稳年线补缺口+科创守1700回1750+广度>55%+央行降息落地+外围稳。</div>
+    <div style="margin-top:8px;color:#64748b">⚠️ 免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论均基于历史数据与公开信息，不保证未来表现。</div>
+    <div style="margin-top:6px;color:#64748b">📝 备注：本环境金融 MCP 连接器（westock/neodata/腾讯自选股等）均 disconnected，数据通过 WebSearch 抓取公开财经媒体聚合，部分周末降息信号源自8/23市场早报、市场对降息周期开启存分歧，请以交易所实时行情为准。</div>
+  </div>
+
+</div>
+
+<script>
+const axis = {color:'#94a3b8'};
+
+// 情绪温度计
+(function(){
+  const c = echarts.init(document.getElementById('gauge'));
+  c.setOption({
+    series:[{
+      type:'gauge', min:0, max:100, radius:'92%', center:['50%','58%'],
+      progress:{show:true, width:14, itemStyle:{color:'#ffa502'}},
+      axisLine:{lineStyle:{width:14, color:[[0.35,'#ff4757'],[0.55,'#ffa502'],[1,'#00d4aa']]}},
+      axisTick:{show:false}, splitLine:{length:12, lineStyle:{color:'#2d2d44'}},
+      axisLabel:{color:'#94a3b8', fontSize:10, distance:14},
+      pointer:{width:5, itemStyle:{color:'#e2e8f0'}},
+      anchor:{show:true, size:12, itemStyle:{color:'#e2e8f0'}},
+      detail:{valueAnimation:true, formatter:'{value}', fontSize:30, fontWeight:'bolder', color:'#ffa502', offsetCenter:[0,'42%']},
+      title:{show:true, offsetCenter:[0,'72%'], color:'#94a3b8', fontSize:12},
+      data:[{value:53, name:'情绪 / 100'}]
+    }]
+  });
+})();
+
+// 情绪 & 广度轨迹
+(function(){
+  const c = echarts.init(document.getElementById('chart_mood'));
+  const days=['8/17','8/18','8/19','8/20','8/21'];
+  c.setOption({
+    grid:{left:40,right:40,top:40,bottom:30},
+    tooltip:{trigger:'axis'},
+    legend:{data:['情绪温度','涨跌广度%'], textStyle:{color:'#94a3b8'}, top:0},
+    xAxis:{type:'category', data:days, axisLabel:axis, axisLine:{lineStyle:{color:'#2d2d44'}}},
+    yAxis:[
+      {type:'value', min:0, max:100, axisLabel:axis, splitLine:{lineStyle:{color:'#2d2d44'}}},
+      {type:'value', min:0, max:100, axisLabel:axis, splitLine:{show:false}}
+    ],
+    series:[
+      {name:'情绪温度', type:'line', data:[78,55,25,48,50], smooth:true, lineStyle:{width:2.5,color:'#ffa502'}, itemStyle:{color:'#ffa502'}, symbolSize:7, areaStyle:{color:'rgba(255,165,2,.12)'}},
+      {name:'涨跌广度%', type:'line', yAxisIndex:1, data:[80,39,18,44,47], smooth:true, lineStyle:{width:2.5,color:'#00d4aa'}, itemStyle:{color:'#00d4aa'}, symbolSize:7}
+    ]
+  });
+})();
+
+// 周一情景饼图
+(function(){
+  const c = echarts.init(document.getElementById('chart_scenario'));
+  c.setOption({
+    tooltip:{trigger:'item', formatter:'{b}: {c}%'},
+    legend:{bottom:0, textStyle:{color:'#94a3b8'}},
+    series:[{
+      type:'pie', radius:['42%','70%'], center:['50%','46%'],
+      label:{color:'#e2e8f0', formatter:'{b}\n{c}%'},
+      data:[
+        {value:30, name:'偏强', itemStyle:{color:'#00d4aa'}},
+        {value:50, name:'基准', itemStyle:{color:'#ffa502'}},
+        {value:20, name:'偏弱', itemStyle:{color:'#ff4757'}}
+      ]
+    }]
+  });
+})();
+
+// 行业资金净流入（周度）
+(function(){
+  const c = echarts.init(document.getElementById('chart_fund'));
+  const d=[
+    {n:'有色金属',v:219},{n:'电子',v:168},{n:'电力设备',v:110},{n:'机械设备',v:105},{n:'基础化工',v:100}
+  ];
+  c.setOption({
+    grid:{left:80,right:34,top:14,bottom:14},
+    tooltip:{trigger:'axis', axisPointer:{type:'shadow'}, formatter:'{b}: +{c}亿'},
+    xAxis:{type:'value', axisLabel:axis, splitLine:{lineStyle:{color:'#2d2d44'}}},
+    yAxis:{type:'category', data:d.map(x=>x.n), axisLabel:axis, axisLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'bar', data:d.map(x=>({value:x.v, itemStyle:{color:'#00d4aa'}})),
+      label:{show:true, position:'right', color:'#e2e8f0', fontSize:11}, barWidth:'55%'}]
+  });
+})();
+
+window.addEventListener('resize', ()=>{
+  document.querySelectorAll('.chart,.chart-sm,.gauge').forEach(el=>{
+    const inst = echarts.getInstanceByDom(el); if(inst) inst.resize();
+  });
+});
+</script>
+</body>
+</html>

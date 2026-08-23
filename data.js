@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-23 08:02:13",
-  "total": 185,
+  "generatedAt": "2026-08-23 12:45:17",
+  "total": 186,
   "categories": [
     {
       "key": "panqian",
@@ -285,9 +285,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 39,
-      "latest": "20260822",
+      "count": 40,
+      "latest": "20260823",
       "reports": [
+        {
+          "date": "20260823",
+          "dateLabel": "2026-08-23（周日）",
+          "file": "reports/noon/noon_20260823.html",
+          "title": "A股周日开盘作战手册 · 2026-08-23（周日）· 周末暖风·降息信号·美伊经济战·控仓待放量",
+          "size": 36102
+        },
         {
           "date": "20260822",
           "dateLabel": "2026-08-22（周六）",
