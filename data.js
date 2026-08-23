@@ -1,5 +1,5 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-23 16:45:27",
+  "generatedAt": "2026-08-24 07:45:44",
   "total": 188,
   "categories": [
     {
@@ -15,8 +15,8 @@ window.SITE_DATA = {
           "date": "20260824",
           "dateLabel": "2026-08-24（周一）",
           "file": "reports/panqian/panqian_20260824.html",
-          "title": "盘前计划 · 周一 2026-08-24 · 星辰",
-          "size": 14695
+          "title": "盘前计划 · 周一 2026-08-24 · 星辰（3问版）",
+          "size": 16944
         },
         {
           "date": "20260822",
