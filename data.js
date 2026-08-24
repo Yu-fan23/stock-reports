@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-24 08:01:30",
-  "total": 189,
+  "generatedAt": "2026-08-24 12:45:17",
+  "total": 190,
   "categories": [
     {
       "key": "panqian",
@@ -285,9 +285,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 40,
-      "latest": "20260823",
+      "count": 41,
+      "latest": "20260824",
       "reports": [
+        {
+          "date": "20260824",
+          "dateLabel": "2026-08-24（周一）",
+          "file": "reports/noon/noon_20260824.html",
+          "title": "A股午间复盘 · 2026-08-24（周一）· 防御避险·科技出清·科创破1600·个股普跌·控仓降级",
+          "size": 40511
+        },
         {
           "date": "20260823",
           "dateLabel": "2026-08-23（周日）",
