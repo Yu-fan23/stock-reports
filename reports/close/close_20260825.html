@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股行情复盘（2026-08-25 · 周二 · 指数弱个股强·探底回升修复·中性偏多·仓位回升至5–6成）</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --card2:#16162a; --border:#2d2d44;
+    --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --up:#ef4444; --down:#22c55e; --txt:#e2e8f0; --txt2:#94a3b8;
+    --accent1:#667eea; --accent2:#764ba2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,sans-serif;line-height:1.6;padding:18px;max-width:1180px;margin:0 auto}
+  .header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:18px;padding:18px 22px;background:linear-gradient(135deg,#1a1a2e,#16243a);border:1px solid var(--border);border-radius:16px}
+  .header h1{font-size:22px;font-weight:700;letter-spacing:.5px}
+  .header .sub{color:var(--txt2);font-size:13px;margin-top:4px}
+  .badge{display:inline-block;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;background:rgba(0,212,170,.15);color:#9af0dd;border:1px solid rgba(0,212,170,.4)}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:860px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px}
+  .card h2{font-size:15px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .card h2 .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--accent1),var(--accent2))}
+  .chart{width:100%;height:300px}
+  .kpi{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+  .kpi .v{font-size:24px;font-weight:800;letter-spacing:.5px}
+  .kpi .l{font-size:12px;color:var(--txt2);margin-top:4px}
+  .up{color:var(--up)} .down{color:var(--down)} .neu{color:var(--txt2)}
+  .summary{font-size:15px;line-height:1.8}
+  .summary b{color:#fff}
+  .pill{display:inline-block;padding:3px 10px;border-radius:8px;font-size:12px;font-weight:600;margin:2px 4px 2px 0}
+  .pill-red{background:rgba(255,71,87,.15);color:var(--sell);border:1px solid rgba(255,71,87,.3)}
+  .pill-green{background:rgba(34,197,94,.13);color:var(--down);border:1px solid rgba(34,197,94,.3)}
+  .pill-amber{background:rgba(255,165,2,.15);color:var(--hold);border:1px solid rgba(255,165,2,.3)}
+  .pill-blue{background:rgba(102,126,234,.15);color:#8a9bff;border:1px solid rgba(102,126,234,.35)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--txt2);font-weight:600;font-size:12px}
+  tr:last-child td{border-bottom:none}
+  .note{font-size:12px;color:var(--txt2);margin-top:10px;padding:10px 12px;background:var(--card2);border-radius:10px;border-left:3px solid var(--accent1)}
+  .alert{background:rgba(255,71,87,.08);border:1px solid rgba(255,71,87,.3);border-radius:10px;padding:10px 14px;font-size:13px;color:#ffb3ba;margin-top:10px}
+  .ok{background:rgba(0,212,170,.08);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:10px 14px;font-size:13px;color:#9af0dd;margin-top:10px}
+  .warn{background:rgba(255,165,2,.08);border:1px solid rgba(255,165,2,.3);border-radius:10px;padding:10px 14px;font-size:13px;color:#ffd9a0;margin-top:10px}
+  .foot{margin-top:20px;font-size:11px;color:var(--txt2);text-align:center;line-height:1.8}
+  .temp-wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .temp-num{font-size:34px;font-weight:800;color:var(--hold)}
+  .stat-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px dashed var(--border)}
+  .stat-row:last-child{border-bottom:none}
+  .cata{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:860px){.cata{grid-template-columns:1fr}}
+  .cata-item{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:13px 15px}
+  .cata-item .t{font-size:13px;font-weight:700;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+  .cata-item .d{font-size:12.5px;color:var(--txt2);line-height:1.65}
+  .scen{padding:12px 14px;border-radius:12px;border:1px solid var(--border);margin-top:10px}
+  .scen-up{background:rgba(0,212,170,.07);border-color:rgba(0,212,170,.3)}
+  .scen-mid{background:rgba(255,165,2,.07);border-color:rgba(255,165,2,.3)}
+  .scen-dn{background:rgba(255,71,87,.07);border-color:rgba(255,71,87,.3)}
+  .scen .h{font-size:13.5px;font-weight:700;margin-bottom:4px}
+  .est{color:var(--hold);font-size:11px;border:1px dashed var(--hold);border-radius:4px;padding:0 4px}
+  .checklist{counter-reset:ck;list-style:none;padding:0;margin:10px 0 0}
+  .checklist li{position:relative;padding:9px 12px 9px 38px;font-size:13px;border-bottom:1px dashed var(--border)}
+  .checklist li:before{counter-increment:ck;content:counter(ck);position:absolute;left:10px;top:9px;width:20px;height:20px;line-height:20px;text-align:center;background:rgba(0,212,170,.18);color:#9af0dd;border-radius:50%;font-size:12px;font-weight:700}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>📊 A股行情复盘（2026-08-25 · 周二 · <span class="up">指数弱个股强·探底回升修复·中性偏多·仓位回升至 5–6 成</span>）</h1>
+    <div class="sub">数据快照 2026-08-25 15:25 · 赚钱效应 + 资金流向 + 仓位管理推荐 · 多市场智能股票分析师「星辰」</div>
+  </div>
+  <div class="badge">🟢 修复日 · 仓位 5–6 成 · 量缩1.83万亿·个股普涨·机动不追高</div>
+</div>
+
+<!-- 决策摘要 -->
+<div class="grid g4" style="margin-bottom:16px">
+  <div class="kpi"><div class="v up">3889.45</div><div class="l">上证指数 <span class="up">+0.19%</span></div></div>
+  <div class="kpi"><div class="v down">13745.87</div><div class="l">深证成指 <span class="down">-0.35%</span></div></div>
+  <div class="kpi"><div class="v down">3397.52</div><div class="l">创业板指 <span class="down">-1.00%</span></div></div>
+  <div class="kpi"><div class="v up">+0.91%</div><div class="l">北证50 <span class="up">小盘活跃</span></div></div>
+</div>
+
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>核心结论（一句话）</h2>
+  <div class="summary">
+    8/24 系统性回调（近 4000 股下跌、沪 −0.59%/深 −2.13%/创业 −3.21%、成交 2.02 万亿放量）后，8/25 迎来<b>「指数弱、个股强」的探底回升修复</b>：沪指<b>低开下探 3850 后回升收 3889.45（+0.19%）</b>，但深成 −0.35%、创业 −1.00%、沪深300 −0.24% 仍受权重科技与有色拖累；全市场<b>4234 涨 / 1245 跌（约 77% 红盘）、70 涨停仅 4 跌停</b>，消费（乳业 +3.07%、CRO +3.44%、化学制药 +1.47%）、粮食、跨境支付主线领涨，贵金属 −3.83%、能源金属、CPO 高位抱团兑现。两市成交缩量至 <b>1.83 万亿</b>，属<b>超跌修复而非反转</b>。操作上由周一防御位<b>回升至 5–6 成中性偏多，保留 40–50% 现金机动，不追高、等放量站稳 3900 再加仓</b>。
+  </div>
+</div>
+
+<!-- 指数 + 情绪 -->
+<div class="grid g2" style="margin-bottom:16px">
+  <div class="card">
+    <h2><span class="dot"></span>主要指数涨跌（收盘 · 8/25）</h2>
+    <div id="idxChart" class="chart"></div>
+    <div class="note">上证 +0.19%、深成 −0.35%、创业 −1.00%、北证50 +0.91%；沪深300 −0.24%、中证1000 +0.48%、中证2000 +1.51%——<b>小盘强于大盘、个股强于指数</b>的宽度分化特征明显。</div>
+  </div>
+  <div class="card">
+    <h2><span class="dot"></span>市场情绪温度计</h2>
+    <div id="tempChart" class="chart"></div>
+    <div class="note">红盘约 77%（4234 家上涨）、70 涨停仅 4 跌停，宽度由 8/24 冰点（近 4000 跌、红盘约 27%）修复 → 给 <b>70° 偏暖·个股修复</b>。但指数加权仍弱、成交缩量，属修复非亢奋。</div>
+  </div>
+</div>
+
+<!-- 技术形态 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>技术形态 · 8/25 当日走势（低开→下探3850→探底回升·修复阳）</h2>
+  <div class="grid g2">
+    <div><div id="shLineChart" class="chart" style="height:300px"></div></div>
+    <div class="summary" style="font-size:14px">
+      <b>「探底回升」形态：</b><br>
+      • 8/25 早盘<b>低开下探</b>（开盘 3863.37，盘中最低 3850.86），回踩 8/24 恐慌区下沿；<br>
+      • <b>午后探底回升、全线走强</b>，沪指收 3889.45（+0.19%），呈低开高走修复阳，最高 3896.21。<br>
+      • 收盘 3889.45 <b>仍低于 8/24 收盘 3882 的昨日基准但已收复失地</b>，距 3900 整数关一步之遥、上方 3950–4000 套牢区压力大。<br>
+      • 成交 1.83 万亿（缩量约 1900 亿 vs 周一 2.02 万亿），反弹<b>成色偏弱、非放量突破</b>。<br>
+      <span class="pill pill-amber">缩量反弹</span><span class="pill pill-blue">支撑≈3850/3830</span><span class="pill pill-red">压力≈3900/3950</span>
+      <div class="note" style="margin-top:10px">结构提示：当日为「个股强、指数弱」——全市场 4234 涨但沪深300/创业受权重拖累翻绿，赚钱效应在中小盘/消费医药，指数尚未真反转。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 市场概况 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>市场概况（大盘市场宽度统计）</h2>
+  <div class="grid g4" style="margin-bottom:12px">
+    <div class="kpi"><div class="v">1.83<span style="font-size:14px">万亿</span></div><div class="l">两市成交额 <span class="down">-1900亿</span></div></div>
+    <div class="kpi"><div class="v up">4234</div><div class="l">上涨家数（涨停 70）</div></div>
+    <div class="kpi"><div class="v down">1245</div><div class="l">下跌家数（跌停 4）</div></div>
+    <div class="kpi"><div class="v up">~77%</div><div class="l">红盘占比</div></div>
+  </div>
+  <div class="cata">
+    <div class="cata-item"><div class="t">📈 涨跌幅区间分布 <span class="est">估·示意</span></div><div class="d">涨停 70 · 涨 5%以上约 240 · 涨 2–5%约 950 · 涨 0–2%约 3044；<br>下跌：跌 0–2%约 1000 · 跌 2–5%约 220 · 跌 5%以上约 25。<br><b>约七成七个股收红、仅 4 只跌停</b>——较 8/24（近 4000 跌、红盘约 27%）显著修复，亏钱面快速收敛。</div></div>
+    <div class="cata-item"><div class="t">🔥 短线接力情绪</div><div class="d">涨停由 8/24 的近 50 只<b>回升至 70 只</b>，跌停由约 30+ 收敛至仅 4 只；<br>连板高度回升（新华百货 3 连板、登海种业 2 连板），<b>连板与趋势股赚钱效应回暖</b>，但分化仍存（高位贵金属/CPO 兑现）。</div></div>
+  </div>
+</div>
+
+<!-- 赚钱效应总结 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>赚钱效应总结</h2>
+  <div class="summary">
+    <b>1. 由冰点快速修复、广度明显改善（偏暖）：</b>红盘约 77%、4234 只上涨、70 涨停仅 4 跌停，是 8/24 恐慌后的明显修复；连板与低位题材（粮食/乳业/跨境支付）赚钱效应回暖。<br>
+    <b>2. 赚钱主线集中在「消费（乳业+CRO+化学制药）+ 粮食 + 跨境支付」：</b>乳业 +3.07%（金健米业/万向德农涨停）、CRO +3.44%（凯莱英涨停、药明康德 +3.31%）、化学制药 +1.47%、美容护理/影视院线/医药商业活跃、跨境支付/数字货币走强、粮食概念（登海种业 2 连板）强势。<br>
+    <b>3. 亏钱面大幅收敛、仅高位抱团与周期兑现：</b>贵金属 −3.83%（西部黄金/招金黄金跌超 7%）、能源金属（盛新锂能/永兴材料/融捷股份跌超 6%）、小金属/稀土、以及前期抱团的 CPO（共进股份跌停、中际旭创 −7.7%、天孚通信 −8.6%）高位分歧。<br>
+    <b>4. 结论：</b>属<span class="pill pill-amber">恐慌后超跌修复·中性偏暖·个股强指数弱</span>，赚钱效应较 8/24 显著好转，但<b>指数加权仍弱、成交缩量</b>，宜「低吸不追高」，确认放量站稳 3900 后再加仓。
+  </div>
+</div>
+
+<!-- 资金流向 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>资金流向分析</h2>
+  <div class="grid g2" style="margin-bottom:12px">
+    <div class="cata-item"><div class="t">💰 板块主力净流入（收盘口径·有据）</div><div class="d">CRO <b class="up">+18.07 亿</b> · 化学制药 <b class="up">+9.25 亿</b> · 乳业 <b class="up">+4.27 亿</b>。<br>盘中（开盘一小时/午间）机械设备 <b class="up">+27.98 亿</b>、专用设备 <b class="up">+27.59 亿</b>、医药生物 <b class="up">+15.75 亿</b>、数据中心 <b class="up">+26.92 亿</b>、机器人概念 <b class="up">+26.30 亿</b>——<b>消费+医药+低位制造共振回流</b>。</div></div>
+    <div class="cata-item"><div class="t">📉 板块主力净流出（代表）</div><div class="d">贵金属 <b class="down">−6.83 亿</b>（高位兑现，板块 −3.83%）；前期强势的半导体/通信设备/元件延续分歧（8/24 半导体净流出居前、约 −181.6 亿）。<br><b>资金内部分化：低位消费/医药/制造获加仓，高位贵金属/科技抱团遭兑现。</b></div></div>
+  </div>
+  <div id="flowChart" class="chart" style="height:280px"></div>
+  <div class="note">柱状图：板块主力净流入/流出（收盘口径，单位亿）。红=净流入（CRO/化学制药/乳业），绿=净流出（贵金属）。<b>全市场主力净流向当日未取到权威全量数字（网络源返回历史口径），按板块结构判断为「结构性调仓、非系统性流出」</b>。</div>
+  <h2 style="margin-top:16px"><span class="dot"></span>北向 / 两融（披露口径）</h2>
+  <table>
+    <tr><th>指标</th><th>数值</th><th>变化/备注</th></tr>
+    <tr><td>北向资金</td><td>未实时披露</td><td>交易所自 2024-08 起不再发布实时净买入，<b>未纳入决策</b></td></tr>
+    <tr><td>两融余额</td><td>当日未获取</td><td>数据源限制（搜索返回历史值）；居民存款入市/杠杆活跃趋势延续，需次交易日披露后复核</td></tr>
+    <tr><td>ETF 资金</td><td>中证1000ETF 近5日净流出</td><td>中证1000ETF华夏近 5 日净流出约 9.42 亿（每经），小盘宽基资金有阶段性赎回</td></tr>
+    <tr><td>成交额</td><td>1.83 万亿</td><td>较 8/24 的 2.02 万亿缩量约 1900 亿——缩量修复</td></tr>
+  </table>
+</div>
+
+<!-- 板块表现 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>板块表现（领涨 / 领跌）</h2>
+  <div class="grid g2">
+    <div>
+      <div class="ok">🟢 领涨（消费+医药+粮食+支付共振）：CRO <b>+3.44%</b> · 乳业 <b>+3.07%</b> · 化学制药 <b>+1.47%</b> · 美容护理 <b>+1.8%<span class="est">估</span></b> · 影视院线 <b>+1.3%<span class="est">估</span></b> · 跨境支付 <b>+1.6%<span class="est">估</span></b>。领涨股凯莱英（涨停）、药明康德（+3.31%）、金健米业/万向德农（涨停）、登海种业（2 连板）。<br><span style="color:var(--txt2);font-size:12.5px">（地面兵装/装修装饰/酒店餐饮/房地产服务/一般零售/医药商业/航海装备等申万二级亦涨幅居前）</span></div>
+      <div class="alert" style="margin-top:10px">🔴 领跌（高位抱团+周期兑现）：贵金属 <b>−3.83%</b> · 能源金属 <b>−2.5%<span class="est">估</span></b> · 小金属 <b>−1.8%<span class="est">估</span></b> · 稀土 <b>−1.5%<span class="est">估</span></b> · CPO/元件 <b>−3.0%<span class="est">估</span></b>。贵金属（西部黄金/招金黄金 −7%）、能源金属（盛新锂能/永兴材料/融捷 −6%）、CPO（共进股份跌停、中际旭创 −7.7%、天孚通信 −8.6%）高位分歧——属抱团兑现非系统性杀跌。</div>
+    </div>
+    <div>
+      <div id="leadChart" class="chart" style="height:230px"></div>
+      <div class="note" style="margin-top:6px">领涨方向（红，涨幅 %；标注 <span class="est">估</span> 为示意图）。</div>
+      <div id="lagChart" class="chart" style="height:230px;margin-top:8px"></div>
+      <div class="note" style="margin-top:6px">领跌方向（绿，跌幅 %；标注 <span class="est">估</span> 为示意图）。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 仓位管理 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>仓位管理推荐（中性偏多 · 恐慌后回升）</h2>
+  <div class="ok">📌 修复确认：8/24 放量恐慌（近 4000 跌、深创重挫）的减仓警报未延续恶化，8/25 探底回升、个股普涨（4234 涨、70 涨停仅 4 跌停），由防御位<b>回升至 5–6 成中性偏多</b>，现金 40–50% 机动；但指数加权仍弱+量缩，<b>不加满、不追高</b>。</div>
+  <div class="grid g3" style="margin-top:12px">
+    <div class="kpi"><div class="v" style="color:var(--hold)">5–6 成</div><div class="l">总仓中枢（较 8/24 防御位回升）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--buy)">40–50%</div><div class="l">现金留存（机动待放量确认）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--down)">3900–3950</div><div class="l">套牢区压力（收复前不追满）</div></div>
+  </div>
+  <div class="scen scen-up"><div class="h">🟢 加仓触发（&gt;6.5 成）</div>两市放量（&gt;2.2 万亿）且<b>站稳 3900 上方</b> + 红盘家数维持 &gt;60%（&gt;3200 家）+ 消费/医药/科技形成共振领涨 + 主力转为明显净流入。当前未全部满足。</div>
+  <div class="scen scen-mid"><div class="h">🟡 持有/低吸（当前 5–6 成）</div>中性偏多，持有消费（乳业/CRO/化学制药/白酒防御）+ 低位制造（机械/设备）+ 粮食/农业安全修复仓位；买点优先<b>回踩均线支撑（MA5/MA10）低吸</b>，乖离率 &lt;5% 才介入，不追分时急拉。</div>
+  <div class="scen scen-dn"><div class="h">🔴 再度减仓（&lt;4 成 · 防御）</div>跌回 3850 下方/逼近 8/24 恐慌区、或跌停再扩至 &gt;40 只、或主力净流出 &gt;600 亿、或高位抱团集体炸板。此时回落至 4 成以下、现金为主。</div>
+  <ul class="checklist">
+    <li><b>持仓结构：</b>消费（乳业/CRO/化学制药/美容护理）+ 低位制造（机械/专用设备）+ 粮食/农业安全/跨境支付修复主线；回避 8/24 以来高位抱团瓦解的贵金属、CPO/半导体、能源金属。</li>
+    <li><b>买点偏好：</b>严进——缩量回踩均线支撑再低吸，乖离率 &lt;5% 才考虑；不接分时飞刀、不追涨。</li>
+    <li><b>回避：</b>高位贵金属/黄金股、CPO/算力硬件抱团、新能源金属（锂钴）、主力持续净流出的半导体细分、两融/质押高个股。</li>
+    <li><b>风控：</b>单票仓位 ≤10%，总仓跌破 4 成即转入防御；3900–3950 套牢区为加仓硬门槛，放量确认前不追满。</li>
+    <li><b>关注催化：</b>消费旺季（中秋/开学）、医药/CRO 中报拐点、粮食与农业安全政策、成交额能否重回 2.2 万亿上方、3900 整数关突破确认。</li>
+  </ul>
+</div>
+
+<!-- 信号归因 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>信号归因（结论由哪些因素贡献）</h2>
+  <div class="grid g2">
+    <div class="cata-item"><div class="t">📊 技术指标 / 大势</div><div class="d">≈30%：沪指低开高走 +0.19% 收 3889.45（探底回升），但深成 −0.35%/创业 −1.00%/沪深300 −0.24% 仍弱，指数层面未真反转、3900 压力在即。</div></div>
+    <div class="cata-item"><div class="t">🌾 板块 / 资金</div><div class="d">≈30%：CRO +18.07 亿/化学制药 +9.25 亿/乳业 +4.27 亿等消费医药获主力净流入，但贵金属 −6.83 亿、科技抱团分歧，资金内部分化、反弹成色待验。</div></div>
+    <div class="cata-item"><div class="t">😀 情绪 / 赚钱效应</div><div class="d">≈30%：红盘约 77%、4234 涨、70 涨停仅 4 跌停，由 8/24 冰点（近 4000 跌）修复至 70° 偏暖·个股修复。</div></div>
+    <div class="cata-item"><div class="t">📉 量能 / 杠杆</div><div class="d">≈10%：成交缩量至 1.83 万亿（−1900 亿），两融/北向当日未取权威值，仅以 ETF 阶段性赎回（中证1000 近 5 日净流出 9.42 亿）旁证小盘资金有分歧。</div></div>
+  </div>
+  <div class="ok" style="margin-top:12px">最强看多信号：个股普涨（4234 涨/77% 红盘）、70 涨停仅 4 跌停、消费+医药+粮食主线清晰、沪指探底回升收复失地。</div>
+  <div class="alert" style="margin-top:8px">最强看空信号：指数加权仍弱（深创/沪深300 翻绿）、成交缩量 1.83 万亿、高位抱团（贵金属/CPO/半导体）兑现、3900–3950 套牢区压力，反弹为非放量反转、仍处修复区间。</div>
+</div>
+
+<div class="foot">
+  数据来源：WebSearch 聚合（界面新闻/新浪财经/网易/上游新闻/金十/东方财富/中证指数/金融界等，快照 2026-08-25 15:25）。<br>
+  北向资金因披露规则未实时发布、未纳入决策；全市场主力净流向当日未取到权威全量（网络源返回历史口径），按板块结构刻画并标注；少数板块涨幅/跌幅标注 <span class="est">估</span> 为示意。<br>
+  大盘环境摘要：8/24 放量恐慌后的「指数弱、个股强」探底回升修复日，中性偏多、机动不追高。 ⚠️ 本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。
+</div>
+
+<script>
+  var idxOpt = {
+    tooltip:{trigger:'axis',valueFormatter:function(v){return v+'%'}},
+    grid:{left:50,right:20,top:24,bottom:28},
+    xAxis:{type:'category',data:['上证指数','深证成指','创业板指','北证50'],axisLabel:{color:'#94a3b8'}},
+    yAxis:{type:'value',axisLabel:{color:'#94a3b8',formatter:'{value}%'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'bar',barWidth:'46%',label:{show:true,position:'top',color:'#e2e8f0',formatter:function(p){return p.value+'%'}},
+      data:[
+        {value:0.19,itemStyle:{color:'#ef4444'}},
+        {value:-0.35,itemStyle:{color:'#22c55e'}},
+        {value:-1.00,itemStyle:{color:'#22c55e'}},
+        {value:0.91,itemStyle:{color:'#ef4444'}}
+      ]}]
+  };
+  var tempOpt = {
+    series:[{type:'gauge',min:0,max:100,startAngle:210,endAngle:-30,
+      progress:{show:true,width:14,itemStyle:{color:'#ffa502'}},
+      axisLine:{lineStyle:{width:14,color:[[0.3,'#22c55e'],[0.6,'#ffa502'],[1,'#ef4444']]}},
+      axisTick:{show:false},splitLine:{length:10,lineStyle:{color:'#2d2d44'}},
+      pointer:{itemStyle:{color:'#ffa502'}},
+      detail:{valueAnimation:true,formatter:'{value}°',color:'#ffd9a0',fontSize:30,offsetCenter:[0,'42%']},
+      title:{color:'#94a3b8',fontSize:13,offsetCenter:[0,'72%']},
+      data:[{value:70,name:'偏暖·个股修复'}]}]
+  };
+  var shLineOpt = {
+    tooltip:{trigger:'axis',valueFormatter:function(v){return v.toFixed(2)}},
+    grid:{left:54,right:20,top:30,bottom:28},
+    xAxis:{type:'category',data:['开盘','早盘最低','午盘','午后','收盘'],axisLabel:{color:'#94a3b8'}},
+    yAxis:{type:'value',scale:true,axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'line',smooth:true,symbol:'circle',symbolSize:9,lineStyle:{width:3,color:'#00d4aa'},itemStyle:{color:'#00d4aa'},
+      data:[3863.37,3850.86,3868,3882,3889.45],
+      markLine:{symbol:'none',data:[
+        {yAxis:3882.01,lineStyle:{color:'#ff4757',type:'dashed',width:2},label:{formatter:'8/24收盘3882',color:'#ff8a93',position:'insideEndTop',fontSize:11}},
+        {yAxis:3850,lineStyle:{color:'#22c55e',type:'dashed',width:1.5},label:{formatter:'3850支撑',color:'#9af0dd',position:'insideEndTop',fontSize:11}}
+      ]},
+      markPoint:{data:[{type:'min',name:'最低'},{type:'max',name:'收盘'}],label:{fontSize:10,color:'#fff'}}
+    }]
+  };
+  var flowOpt = {
+    tooltip:{trigger:'axis',valueFormatter:function(v){return v+'亿'}},
+    grid:{left:50,right:20,top:24,bottom:46},
+    xAxis:{type:'category',data:['CRO','化学制药','乳业','贵金属'],axisLabel:{color:'#94a3b8',interval:0,fontSize:11}},
+    yAxis:{type:'value',axisLabel:{color:'#94a3b8',formatter:'{value}亿'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'bar',barWidth:'46%',label:{show:true,position:'top',color:'#e2e8f0',formatter:function(p){return p.value+'亿'}},
+      data:[
+        {value:18.07,itemStyle:{color:'#00d4aa'}},
+        {value:9.25,itemStyle:{color:'#00d4aa'}},
+        {value:4.27,itemStyle:{color:'#00d4aa'}},
+        {value:-6.83,itemStyle:{color:'#22c55e'}}
+      ]}]
+  };
+  var leadOpt = {
+    tooltip:{trigger:'axis',valueFormatter:function(v){return v+'%'}},
+    grid:{left:46,right:20,top:24,bottom:46},
+    xAxis:{type:'category',data:['CRO','乳业','化学制药','美容护理','影视院线'],axisLabel:{color:'#94a3b8',interval:0,fontSize:10,rotate:18}},
+    yAxis:{type:'value',axisLabel:{color:'#94a3b8',formatter:'{value}%'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'bar',barWidth:'50%',label:{show:true,position:'top',color:'#e2e8f0',formatter:'{c}%'},
+      data:[
+        {value:3.44,itemStyle:{color:'#ef4444'}},
+        {value:3.07,itemStyle:{color:'#ef4444'}},
+        {value:1.47,itemStyle:{color:'#ef4444'}},
+        {value:1.8,itemStyle:{color:'#ef4444'}},
+        {value:1.3,itemStyle:{color:'#ef4444'}}
+      ]}]
+  };
+  var lagOpt = {
+    tooltip:{trigger:'axis',valueFormatter:function(v){return v+'%'}},
+    grid:{left:46,right:20,top:24,bottom:46},
+    xAxis:{type:'category',data:['贵金属','能源金属','CPO/元件','小金属','稀土'],axisLabel:{color:'#94a3b8',interval:0,fontSize:10,rotate:18}},
+    yAxis:{type:'value',axisLabel:{color:'#94a3b8',formatter:'{value}%'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'bar',barWidth:'50%',label:{show:true,position:'top',color:'#e2e8f0',formatter:'{c}%'},
+      data:[
+        {value:-3.83,itemStyle:{color:'#22c55e'}},
+        {value:-2.5,itemStyle:{color:'#22c55e'}},
+        {value:-3.0,itemStyle:{color:'#22c55e'}},
+        {value:-1.8,itemStyle:{color:'#22c55e'}},
+        {value:-1.5,itemStyle:{color:'#22c55e'}}
+      ]}]
+  };
+  echarts.init(document.getElementById('idxChart')).setOption(idxOpt);
+  echarts.init(document.getElementById('tempChart')).setOption(tempOpt);
+  echarts.init(document.getElementById('shLineChart')).setOption(shLineOpt);
+  echarts.init(document.getElementById('flowChart')).setOption(flowOpt);
+  echarts.init(document.getElementById('leadChart')).setOption(leadOpt);
+  echarts.init(document.getElementById('lagChart')).setOption(lagOpt);
+</script>
+</body>
+</html>

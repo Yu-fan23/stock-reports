@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-25 12:45:43",
-  "total": 194,
+  "generatedAt": "2026-08-25 15:45:54",
+  "total": 195,
   "categories": [
     {
       "key": "panqian",
@@ -597,9 +597,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 44,
-      "latest": "20260824",
+      "count": 45,
+      "latest": "20260825",
       "reports": [
+        {
+          "date": "20260825",
+          "dateLabel": "2026-08-25（周二）",
+          "file": "reports/close/close_20260825.html",
+          "title": "A股行情复盘（2026-08-25 · 周二 · 指数弱个股强·探底回升修复·中性偏多·仓位回升至5–6成）",
+          "size": 27382
+        },
         {
           "date": "20260824",
           "dateLabel": "2026-08-24（周一）",
