@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-25 08:01:09",
-  "total": 193,
+  "generatedAt": "2026-08-25 12:45:43",
+  "total": 194,
   "categories": [
     {
       "key": "panqian",
@@ -292,9 +292,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 41,
-      "latest": "20260824",
+      "count": 42,
+      "latest": "20260825",
       "reports": [
+        {
+          "date": "20260825",
+          "dateLabel": "2026-08-25（周二）",
+          "file": "reports/noon/noon_20260825.html",
+          "title": "A股午间复盘 · 2026-08-25（周二）· 黄白背离·个股普涨·资源兑现·结构切换·控仓待放量",
+          "size": 37856
+        },
         {
           "date": "20260824",
           "dateLabel": "2026-08-24（周一）",
