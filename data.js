@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-26 12:45:37",
-  "total": 199,
+  "generatedAt": "2026-08-26 16:46:00",
+  "total": 201,
   "categories": [
     {
       "key": "panqian",
@@ -611,9 +611,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 45,
-      "latest": "20260825",
+      "count": 46,
+      "latest": "20260826",
       "reports": [
+        {
+          "date": "20260826",
+          "dateLabel": "2026-08-26（周三）",
+          "file": "reports/close/close_20260826.html",
+          "title": "A股行情复盘（2026-08-26 · 周三 · 权重发力·缩量收复3900·中性偏多·仓位维持5–6成）",
+          "size": 25575
+        },
         {
           "date": "20260825",
           "dateLabel": "2026-08-25（周二）",
@@ -937,9 +944,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 38,
-      "latest": "20260825",
+      "count": 39,
+      "latest": "20260826",
       "reports": [
+        {
+          "date": "20260826",
+          "dateLabel": "2026-08-26（周三）",
+          "file": "reports/limitup/limitup_20260826.html",
+          "title": "涨停梯队复盘 · 2026-08-26（周三 · 真实交易日）",
+          "size": 31940
+        },
         {
           "date": "20260825",
           "dateLabel": "2026-08-25（周二）",
