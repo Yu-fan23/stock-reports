@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-26 16:46:00",
-  "total": 201,
+  "generatedAt": "2026-08-27 08:01:59",
+  "total": 203,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 40,
-      "latest": "20260826",
+      "count": 41,
+      "latest": "20260827",
       "reports": [
+        {
+          "date": "20260827",
+          "dateLabel": "2026-08-27（周四）",
+          "file": "reports/panqian/panqian_20260827.html",
+          "title": "盘前计划 · 周四 2026-08-27 · 星辰（3问版）",
+          "size": 22432
+        },
         {
           "date": "20260826",
           "dateLabel": "2026-08-26（周三）",
@@ -952,7 +959,7 @@ window.SITE_DATA = {
           "dateLabel": "2026-08-26（周三）",
           "file": "reports/limitup/limitup_20260826.html",
           "title": "涨停梯队复盘 · 2026-08-26（周三 · 真实交易日）",
-          "size": 31940
+          "size": 41379
         },
         {
           "date": "20260825",
@@ -1228,9 +1235,16 @@ window.SITE_DATA = {
       "time": "08:00",
       "icon": "🌐",
       "color": "#7c5cff",
-      "count": 33,
-      "latest": "20260826",
+      "count": 34,
+      "latest": "20260827",
       "reports": [
+        {
+          "date": "20260827",
+          "dateLabel": "2026-08-27（周四）",
+          "file": "reports/global/global_20260827.html",
+          "title": "全球资本市场热点｜2026-08-27（截至早 8 点）",
+          "size": 17057
+        },
         {
           "date": "20260826",
           "dateLabel": "2026-08-26（周三）",

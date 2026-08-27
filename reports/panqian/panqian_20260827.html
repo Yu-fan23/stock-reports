@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盘前计划 · 周四 2026-08-27 · 星辰（3问版）</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --acc1:#667eea; --acc2:#764ba2; --txt:#e2e8f0; --txt2:#94a3b8; --bd:#2d2d44;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6;padding:20px;max-width:1080px;margin:0 auto}
+  h1{font-size:24px;font-weight:800;background:linear-gradient(90deg,var(--acc1),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  h2{font-size:17px;margin:28px 0 12px;padding-left:10px;border-left:4px solid var(--acc1)}
+  .q{font-size:15px;color:var(--acc1);font-weight:800;margin:22px 0 6px}
+  .q span{display:inline-block;background:linear-gradient(90deg,var(--acc1),var(--acc2));color:#fff;border-radius:8px;width:26px;height:26px;line-height:26px;text-align:center;margin-right:8px;font-size:14px}
+  .sub{color:var(--txt2);font-size:13px;margin-top:4px}
+  .card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;margin:12px 0}
+  .grid{display:grid;gap:14px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:780px){.g3,.g4{grid-template-columns:1fr}}
+  .top{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+  .ring{width:150px;height:150px;flex:0 0 150px}
+  .sig{display:inline-block;padding:6px 18px;border-radius:30px;font-weight:800;font-size:18px}
+  .sig.hold{background:linear-gradient(90deg,#ffa502,#ff7b00);color:#1a1a2e}
+  .pill{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;margin:3px 4px 3px 0}
+  .p-buy{background:rgba(0,212,170,.15);color:var(--buy);border:1px solid var(--buy)}
+  .p-sell{background:rgba(255,71,87,.15);color:var(--sell);border:1px solid var(--sell)}
+  .p-hold{background:rgba(255,165,2,.15);color:var(--hold);border:1px solid var(--hold)}
+  .p-info{background:rgba(102,126,234,.15);color:var(--acc1);border:1px solid var(--acc1)}
+  .kv{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--bd);font-size:14px}
+  .kv:last-child{border-bottom:none}
+  .kv b{color:var(--txt)}
+  .theme{border-top:3px solid var(--acc1)}
+  .theme h3{margin:6px 0;font-size:16px}
+  .stage{font-weight:700;font-size:14px;margin:8px 0}
+  .core{font-size:13px;color:var(--txt2);margin:6px 0}
+  .core b{color:var(--txt)}
+  .verdict{font-size:14px;font-weight:700;padding:8px 10px;border-radius:8px;margin-top:8px}
+  .v-yes{background:rgba(0,212,170,.12);color:var(--buy)}
+  .v-wait{background:rgba(255,165,2,.12);color:var(--hold)}
+  .v-no{background:rgba(255,71,87,.12);color:var(--sell)}
+  .alert{background:rgba(255,71,87,.1);border:1px solid var(--sell);border-radius:10px;padding:14px;margin:10px 0}
+  .alert b{color:var(--sell)}
+  .good{background:rgba(0,212,170,.1);border:1px solid var(--buy);border-radius:10px;padding:14px;margin:10px 0}
+  .good b{color:var(--buy)}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--bd)}
+  th{color:var(--txt2);font-weight:600;background:rgba(102,126,234,.08)}
+  tr:hover td{background:rgba(102,126,234,.05)}
+  .check{list-style:none}
+  .check li{padding:7px 0 7px 26px;position:relative;font-size:14px;border-bottom:1px dashed var(--bd)}
+  .check li:before{content:"☑";position:absolute;left:0;color:var(--buy)}
+  .check li.risk:before{content:"⚠";color:var(--sell)}
+  .note{color:var(--txt2);font-size:12px;margin-top:6px}
+  .foot{color:var(--txt2);font-size:12px;margin-top:30px;text-align:center;line-height:1.8}
+  .hl{color:var(--hold);font-weight:700}
+  .up{color:var(--buy)} .down{color:var(--sell)}
+  .ans{background:rgba(102,126,234,.1);border:1px solid var(--acc1);border-radius:10px;padding:12px 14px;margin:8px 0;font-size:14px}
+  .ans b{color:var(--acc1)}
+  .attr{font-size:13px;line-height:1.9}
+  .attr .bar{height:8px;border-radius:4px;background:var(--bd);margin:2px 0 8px;overflow:hidden}
+  .attr .bar i{display:block;height:100%;border-radius:4px}
+  .earn{background:rgba(255,165,2,.12);border:1px dashed var(--hold);border-radius:10px;padding:12px 14px;margin:10px 0;font-size:13px}
+  .earn b{color:var(--hold)}
+  .new{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:800;background:linear-gradient(90deg,#00d4aa,#00b894);color:#0f0f23;margin-left:6px}
+</style>
+</head>
+<body>
+
+<h1>📊 盘前计划 · 周四 2026-08-27（3问版）</h1>
+<div class="sub">多市场智能股票分析师 · 星辰 ｜ 数据基准：8/26(周三)收盘 + 盘前资讯 ｜ 信号：HOLD（结构低吸·轻仓试多·英伟达靴子落地）｜ 计划仓位 50%</div>
+
+<div class="card top">
+  <div class="ring" id="ring"></div>
+  <div style="flex:1;min-width:240px">
+    <div style="margin-bottom:8px"><span class="sig hold">HOLD</span> <span class="pill p-info">综合评分 58/100</span></div>
+    <div class="kv"><span>大盘环境</span><b>三连阳·缩量 3880-3950 拉锯（英伟达靴子落地·大金融/有色接力）</b></div>
+    <div class="kv"><span>沪指 / 成交</span><b>3912.52 (+0.59%) ／ 1.81 万亿（连续地量，未破 2 万亿）</b></div>
+    <div class="kv"><span>涨跌家数</span><b><span class="up">2900+ 涨</span> ／ 下跌有限（<span class="down">跌停仅 2 家</span>，亏钱效应收敛）</b></div>
+    <div class="kv"><span>涨停格局</span><b>13 连板 + 43 首板（炸板率 33%，高位分歧·连板高度 5 板）</b></div>
+    <div class="kv"><span>计划仓位</span><b>50%（轻仓试多，预留 50% 现金等杰克逊霍尔 + 放量破 2 万亿）</b></div>
+  </div>
+</div>
+
+<div class="earn">
+  <b>⚡ 今日核心变量（多重事件叠加 · 分歧消化日）</b>　① <b>英伟达财报落地（利好）</b>：FY27Q2 营收 962 亿美元(+106% 同比、超预期约 4%)，Q3 指引 1080 亿(首破千亿)，盘后由 -4% 反转至 +4.5%；A 股算力链今日情绪修复，但需防"利好兑现"冲高回落。② <b>杰克逊霍尔央行年会(8/27-29)开幕</b>，沃什 8/28 演讲前美元/美债高位压制成长估值；美国 7 月核心 PCE 同比 3.3%、市场定价年内加息概率约 78%。③ <b>中报收官高峰(8/26-29)</b>：北方华创、中芯国际、招商银行等密集披露，业绩暴雷与超预期并存。④ 沪指预计 3880-3950 拉锯，<b>向上突破需成交重回 2 万亿确认</b>。
+</div>
+
+<!-- ===================== Q1 ===================== -->
+<div class="q"><span>1</span>当下的主流题材是什么？（至多 3 个）</div>
+<div class="ans">市场完成一次<b>题材轮动</b>：医药/CRO、农业、白酒、地产继续退潮，资金切向"权重资源 + 业绩科技"。相较前几期，<b>半导体已并入算力链、大金融新晋主流</b>。当下至多 3 个主流题材：<b>① 大金融（券商/保险/多元金融）<span class="new">新晋</span>　② 有色金属·铜/黄金/工业金属　③ AI算力硬件/半导体（CPO/光模块/液冷/国产芯片）</b>。三者 8/26 盘面共振确认，均有"中报业绩硬兑现 + 商品/产业/政策"三重逻辑支撑。<br><span class="note">8/26 盘面证据：证券 +2.75%（20 家券商中报高增）、工业金属(铜)+3.33%（LME 期铜 14324.5 创历史收盘新高）、科创 50 +1.71% 领涨；主力净流入 中报预增 +103.9 亿 &gt; 小金属 +65 亿 &gt; 金属铜 +63 亿 &gt; 黄金 +59 亿。连板高度：深中华 A 5 连板(黄金/锂电)、楚天龙 4 连板(券商)。</span></div>
+
+<div class="grid g3">
+  <div class="card theme">
+    <div class="pill p-buy">主线 ① <span class="new">新晋</span></div>
+    <h3>大金融 / 券商 / 保险 / 多元金融</h3>
+    <div class="stage up">阶段：低位启动·中报业绩拐点（指数搭台主力）</div>
+    <div class="core"><b>核心：</b>东方财富(300059)、中信证券(600030)；弹性·楚天龙(003040)、锦龙股份(000712)、湘财股份(600095)、恒银科技(603106)</div>
+    <div class="verdict v-yes">✅ 低位最安全方向之一 · 可低吸券商/ETF</div>
+  </div>
+  <div class="card theme">
+    <div class="pill p-buy">主线 ②</div>
+    <h3>有色金属 · 铜 / 黄金 / 工业金属</h3>
+    <div class="stage up">阶段：加速冲顶·高潮区（涨停潮 + 商品创新高）</div>
+    <div class="core"><b>核心：</b>紫金矿业(601899)、江西铜业(600362)；山东黄金(600547)、湖南白银(002716)、白银有色(601212)、金诚信(603979)</div>
+    <div class="verdict v-wait">⏳ 已过热·只回踩低吸不追涨停</div>
+  </div>
+  <div class="card theme">
+    <div class="pill p-buy">主线 ③</div>
+    <h3>AI算力硬件 / 半导体 / CPO / 液冷</h3>
+    <div class="stage up">阶段：英伟达靴子落地·今日修复（防利好兑现）</div>
+    <div class="core"><b>核心：</b>中际旭创(300308)、新易盛(300502)、工业富联(601138)；半导体设备·北方华创(002371)、中微(688012)、长川科技；国产芯片·寒武纪(688256)</div>
+    <div class="verdict v-wait">⏳ 修复可参与·选业绩龙头回踩/不追高开</div>
+  </div>
+</div>
+
+<!-- ===================== Q2 ===================== -->
+<div class="q"><span>2</span>主流题材的核心是谁？</div>
+<div class="ans">按 "辨识度 + 中军权重 + 弹性" 锁定各题材核心标的——它们就是板块强弱的定海神针：</div>
+<div class="card">
+  <table>
+    <thead><tr><th>题材</th><th>绝对核心（中军/龙头）</th><th>弹性前锋</th><th>ETF 工具</th></tr></thead>
+    <tbody>
+      <tr><td><b>大金融/券商</b><br><span class="note">新晋主线·业绩拐点</span></td><td>东方财富(300059)、中信证券(600030)、中国平安(601318)</td><td>楚天龙(003040·4板)、锦龙股份(000712)、湘财股份(600095)、恒银科技(603106)</td><td>证券ETF(512880)、券商ETF(516200)</td></tr>
+      <tr><td><b>有色·铜/黄金</b><br><span class="note">加速冲顶·商品创新高</span></td><td>紫金矿业(601899·铜金PE13.5)、江西铜业(600362·净利+106.77%)、山东黄金(600547)</td><td>湖南白银(002716)、白银有色(601212·4天3板)、盛达资源(000603)、金诚信(603979)、深中华A(000017·5板)</td><td>有色ETF(512940)、黄金ETF(518880)</td></tr>
+      <tr><td><b>算力硬件/半导体</b><br><span class="note">英伟达落地·修复</span></td><td>中际旭创(300308)、工业富联(601138)、新易盛(300502)</td><td>天孚通信(300394)、沃尔核材(铜缆)、英维克(液冷)、长川科技(设备)、寒武纪(688256)</td><td>通信ETF(515880)、半导体设备ETF(561980)</td></tr>
+    </tbody>
+  </table>
+  <div class="note">"核心"不是荐股，而是观察题材强弱的锚——看强弱先看这些标的的竞价与分时承接。今日重点看：楚天龙(券商高度)、深中华A(有色 5 板风向)、中际旭创/新易盛(算力对英伟达最敏感)。</div>
+</div>
+
+<!-- ===================== Q3 ===================== -->
+<div class="q"><span>3</span>题材走到哪个阶段了，能不能买，盘前交易计划？</div>
+<div class="ans">一句话：<b>① 大金融低位最安全、可积极低吸（券商/ETF）　② 有色已过热、只回踩不追涨停　③ 算力硬件英伟达落地修复、选业绩龙头回踩参与、防高开低走</b>。整体维持 HOLD·结构低吸偏积极，综合评分升至 58（英伟达超预期 + 大金融接力），仓位由 35% 提至 50%，预留 50% 现金等杰克逊霍尔(8/28 沃什演讲) + 放量破 2 万亿再转进攻。</div>
+
+<div class="card">
+  <table>
+    <thead><tr><th>题材</th><th>所处阶段</th><th>能不能买</th><th>买点 / 止损</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>大金融/券商</b><br><span class="note">低位启动·中报高增拐点</span></td>
+        <td>刚启动<br>指数搭台<br>最安全方向</td>
+        <td><span class="up">可积极低吸</span></td>
+        <td>东方财富/中信证券/证券ETF 回踩不破 MA5 低吸；连板弹性(楚天龙/锦龙)只做换手板、不接力一字；止损破 MA20</td>
+      </tr>
+      <tr>
+        <td><b>有色·铜/黄金</b><br><span class="note">加速冲顶·涨停潮+商品新高</span></td>
+        <td>高潮区<br>获利盘厚<br>冲高回落风险</td>
+        <td><span class="hl">已过热·只回踩</span><br>不追涨停/不追高开&gt;5%</td>
+        <td>江西铜业/金诚信回踩 5 日线小仓；紫金/山东黄金锚定金价(4640 支撑)；COMEX 已 -0.99% 回调，黄金更需防兑现。止损破 5 日线</td>
+      </tr>
+      <tr>
+        <td><b>算力硬件/半导体</b><br><span class="note">英伟达落地·今日修复</span></td>
+        <td>利空出清<br>修复启动<br>防"买预期卖事实"</td>
+        <td><span class="up">可参与·回踩优先</span></td>
+        <td>中际旭创/新易盛仅回踩/分批、不追高开；液冷(英维克)/光纤(亨通)回调充分品种；半导体设备(北方华创/长川)相对低位可积极。止损破 MA20</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>盘前作战计划（轻仓试多 · 封顶 50%，预留 50% 现金）</h2>
+<div class="card">
+  <table>
+    <thead><tr><th>批次</th><th>方向</th><th>标的</th><th>触发条件</th><th>仓位</th></tr></thead>
+    <tbody>
+      <tr><td>① 开盘防守低吸</td><td>大金融低位 / 半导体设备</td><td>东方财富·证券ETF / 北方华创·中微·长川科技</td><td>不追高，仅回踩 MA5 不破时小仓</td><td>15%</td></tr>
+      <tr><td>② 盘中回踩</td><td>有色·铜低位</td><td>紫金矿业 / 金诚信 / 江西铜业</td><td>高开不追，等回踩 5 日线温和量能</td><td>15%</td></tr>
+      <tr><td>③ 算力修复(不追高开)</td><td>算力硬件/液冷</td><td>中际旭创·新易盛 / 英维克·亨通光电</td><td>仅回踩或分批，量能同步放大才拿</td><td>15%</td></tr>
+      <tr><td>预留</td><td>现金</td><td>—</td><td>等 8/28 沃什演讲 + 放量破 2 万亿 + 中报雷区过峰</td><td>50% 观望</td></tr>
+    </tbody>
+  </table>
+  <div class="note">单票不超 12%；今日是"财报落地后的分歧消化日"，无单边大涨基础、也无深跌条件；放量站稳 3900 + 成交回 2 万亿 + 杰克逊霍尔偏鸽，次日再把预留现金转为进攻。</div>
+</div>
+
+<h2>信号归因雷达（四维强度）+ 贡献拆解</h2>
+<div class="card grid g4">
+  <div style="grid-column:1/3"><div id="radar" style="width:100%;height:300px"></div></div>
+  <div style="grid-column:3/5">
+    <div class="kv"><span>技术指标强度</span><b>60</b></div>
+    <div class="kv"><span>新闻情绪强度</span><b>65</b></div>
+    <div class="kv"><span>基本面强度</span><b>72</b></div>
+    <div class="kv"><span>市场环境强度</span><b>38</b></div>
+    <div class="attr" style="margin-top:10px">
+      <div>📊 信号归因（贡献占比 · 合计 100%）</div>
+      <div>技术指标 <b>22%</b><div class="bar"><i style="width:22%;background:#667eea"></i></div></div>
+      <div>新闻情绪 <b>28%</b><div class="bar"><i style="width:28%;background:#764ba2"></i></div></div>
+      <div>基本面 <b>32%</b><div class="bar"><i style="width:32%;background:#00d4aa"></i></div></div>
+      <div>市场环境 <b>18%</b><div class="bar"><i style="width:18%;background:#ffa502"></i></div></div>
+      <div class="note">最强看多：英伟达 FY27Q2 大超预期 + FY28 指引 +70%、A 股算力链利空出清；大金融/有色中报业绩硬兑现接力。<br>最强看空：大盘连续地量(1.81 万亿未破 2 万亿) + 杰克逊霍尔/加息预期未落地 + 中报压哨雷区 + 高位连板炸板率 33%。</div>
+    </div>
+  </div>
+</div>
+
+<h2>板块涨跌透视（8/26 收盘）</h2>
+<div class="card"><div id="sector" style="width:100%;height:360px"></div></div>
+
+<h2>风险警报 & 积极催化</h2>
+<div class="alert">
+  <b>🔴 风险警报（分歧消化日 · 多重事件未落地）</b>
+  <ul style="margin:8px 0 0 18px;font-size:14px">
+    <li><b>英伟达"买预期卖事实"风险</b>：过去 4 个季度财报后首日均收跌，本月已累涨 10%+；若今日美股高开低走，A 股算力链跟涨持续性存疑，防高开低走被挂尖</li>
+    <li><b>杰克逊霍尔央行年会(8/27-29) + 美国核心 PCE 偏热</b>：年内加息概率定价约 78%，沃什 8/28 演讲若鹰派，美债收益率上行冲击全球权益估值</li>
+    <li><b>中报压哨披露高峰(8/26-29)</b>：北方华创/中芯国际/招商银行等密集披露，业绩暴雷与超预期并存，高位科技尤险</li>
+    <li><b>有色已处高潮区</b>：工业金属涨停潮 + LME 铜创历史新高 + 深中华 A 5 连板，COMEX 金/银已小幅回调(-0.99%/-0.87%)，获利盘厚、冲高回落风险大</li>
+    <li><b>大盘连续地量 1.81 万亿</b>，未破 2 万亿，"白线强于黄线"权重占优、个股分化；连板炸板率 33%、高度松动（6 板断板）</li>
+  </ul>
+</div>
+<div class="good">
+  <b>🟢 积极催化</b>
+  <ul style="margin:8px 0 0 18px;font-size:14px">
+    <li><b>英伟达 FY27Q2 大超预期</b>：营收 962 亿(+106%)、Q3 指引 1080 亿(首破千亿)、CFO 预计 FY28 再增约 70%；亚马逊承诺额外 200 万块 GPU，Vera Rubin 全面投产——算力链利空出清</li>
+    <li><b>大金融中报高增拐点</b>：20 家券商中报普涨，中泰 +146%、华安/财达翻倍、招商 +104.87%，行业整合+头部合并预期升温</li>
+    <li><b>有色业绩+商品共振</b>：LME 期铜 14324.5 创历史收盘新高，江西铜业净利 +106.77%、金诚信/中稀有色等多股大增；降息周期美元走弱利好商品</li>
+    <li><b>政策密集</b>：本周内工信部将发布促进中小企业"十五五"规划（打造集成电路等新兴支柱产业）；上海集成电路产业升级方案加码；六大行贷款贴息上限上调</li>
+    <li><b>亏钱效应收敛</b>：跌停仅 2 家、科创 50 +1.71% 领涨，市场处"冰点后分歧修复"，结构性机会有支撑</li>
+  </ul>
+</div>
+
+<h2>操作检查清单（风控）</h2>
+<div class="card">
+  <ul class="check">
+    <li>开盘前 30 分钟定情绪：券商(楚天龙)/有色(深中华A)/算力(中际旭创)竞价强度 + 最高板承接，若大面积高开兑现→当日防守、减少开仓</li>
+    <li>严进策略：个股乖离率 &gt; 5% 一律不追，只做回踩均线低吸（尤其有色高位股/一字连板）</li>
+    <li class="risk">算力链防"利好兑现"：高开量能跟不上→优先减仓而非加仓；仅回踩/分批参与，不追高开</li>
+    <li class="risk">有色已过热：江西铜业等涨停股高开不追，等回踩 5 日线；黄金锚定 COMEX，跌破 4640 减仓</li>
+    <li class="risk">中报雷区(8/26-29)：回避业绩存疑的高估值高位票，披露周格外谨慎</li>
+    <li>大金融/半导体设备为相对最安全方向，回调即低吸，可优先于高位题材配置</li>
+    <li>跌破 MA20 / 分时均线放量破位，无条件止损，不格局</li>
+    <li class="risk">真突破必伴随放量：成交重回 2 万亿 + 指数站稳 3900 + 杰克逊霍尔偏鸽，才是加仓信号</li>
+  </ul>
+</div>
+
+<div class="foot">
+  分析时间：2026-08-27（周四）06:55 盘前 ｜ 使用策略：多头趋势 + 热点题材 + 缩量回踩<br>
+  数据来源：公开行情/资讯/机构研报整合（8/26 收盘 + 盘前）｜ 大盘环境：震荡市·缩量三连阳（英伟达靴子落地·大金融/有色接力）<br>
+  ⚠️ 免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论基于历史数据与技术模型，不保证未来表现。
+</div>
+
+<script>
+const ring = echarts.init(document.getElementById('ring'));
+ring.setOption({
+  series:[{type:'gauge',startAngle:90,endAngle:-270,radius:'100%',pointer:{show:false},
+    progress:{show:true,roundCap:true,width:14,itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#ffa502'},{offset:1,color:'#ff7b00'}])}},
+    axisLine:{lineStyle:{width:14,color:[[1,'#2d2d44']]}},splitLine:{show:false},axisTick:{show:false},
+    detail:{valueAnimation:true,fontSize:34,fontWeight:'bolder',color:'#ffa502',offsetCenter:[0,'0%'],formatter:'{value}'},
+    title:{show:true,offsetCenter:[0,'28%'],color:'#94a3b8',fontSize:12},
+    data:[{value:58,name:'综合评分 /100'}]}]
+});
+const radar = echarts.init(document.getElementById('radar'));
+radar.setOption({
+  tooltip:{},legend:{data:['强度'],textStyle:{color:'#94a3b8'},bottom:0},
+  radar:{indicator:[{name:'技术指标',max:100},{name:'新闻情绪',max:100},{name:'基本面',max:100},{name:'市场环境',max:100}],
+    axisName:{color:'#e2e8f0'},splitLine:{lineStyle:{color:'#2d2d44'}},splitArea:{areaStyle:{color:['rgba(102,126,234,.04)','rgba(102,126,234,.08)']}},axisLine:{lineStyle:{color:'#2d2d44'}}},
+  series:[{type:'radar',data:[{value:[60,65,72,38],name:'强度',
+    areaStyle:{color:'rgba(0,212,170,.25)'},lineStyle:{color:'#00d4aa'},itemStyle:{color:'#00d4aa'}}]}]
+});
+const sec = echarts.init(document.getElementById('sector'));
+const d=[['造纸',3.79,1],['工业金属/铜',3.33,1],['证券',2.75,1],['非银金融',2.47,1],['保险',2.06,1],['有色',1.84,1],['科创/算力',1.71,1],['小家电',-1.35,1],['出版',-1.44,1],['数字媒体',-1.10,1],['电机',-0.95,1],['医疗服务/CRO',-1.34,1]];
+sec.setOption({
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+  grid:{left:110,right:30,top:20,bottom:20},
+  xAxis:{type:'value',axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+  yAxis:{type:'category',data:d.map(x=>x[0]),axisLabel:{color:'#e2e8f0'}},
+  series:[{type:'bar',data:d.map(x=>({value:x[1],itemStyle:{color:x[1]>0?'#00d4aa':'#ff4757'}})),
+    label:{show:true,position:'right',color:'#e2e8f0',formatter:'{c}%'},barWidth:'55%'}]
+});
+window.addEventListener('resize',()=>{ring.resize();radar.resize();sec.resize();});
+</script>
+</body>
+</html>
