@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-27 08:01:59",
-  "total": 203,
+  "generatedAt": "2026-08-27 12:45:28",
+  "total": 204,
   "categories": [
     {
       "key": "panqian",
@@ -306,9 +306,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 43,
-      "latest": "20260826",
+      "count": 44,
+      "latest": "20260827",
       "reports": [
+        {
+          "date": "20260827",
+          "dateLabel": "2026-08-27（周四）",
+          "file": "reports/noon/noon_20260827.html",
+          "title": "A股午间复盘 · 2026-08-27（周四）· 英伟达财报引爆AI科技行情·科创50领涨+3.45%·放量普涨·内外资共振做多算力硬件",
+          "size": 40560
+        },
         {
           "date": "20260826",
           "dateLabel": "2026-08-26（周三）",
