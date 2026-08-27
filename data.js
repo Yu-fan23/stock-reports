@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-27 12:45:28",
-  "total": 204,
+  "generatedAt": "2026-08-27 15:45:46",
+  "total": 205,
   "categories": [
     {
       "key": "panqian",
@@ -625,9 +625,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 46,
-      "latest": "20260826",
+      "count": 47,
+      "latest": "20260827",
       "reports": [
+        {
+          "date": "20260827",
+          "dateLabel": "2026-08-27（周四）",
+          "file": "reports/close/close_20260827.html",
+          "title": "A股行情复盘（2026-08-27 · 周四 · 放量普涨·科技主线爆发·中性偏多·仓位上调至6成）",
+          "size": 24794
+        },
         {
           "date": "20260826",
           "dateLabel": "2026-08-26（周三）",
