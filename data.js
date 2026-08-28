@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-28 12:45:27",
-  "total": 209,
+  "generatedAt": "2026-08-28 15:45:33",
+  "total": 210,
   "categories": [
     {
       "key": "panqian",
@@ -639,9 +639,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 47,
-      "latest": "20260827",
+      "count": 48,
+      "latest": "20260828",
       "reports": [
+        {
+          "date": "20260828",
+          "dateLabel": "2026-08-28（周五）",
+          "file": "reports/close/close_20260828.html",
+          "title": "A股行情复盘（2026-08-28 · 周五 · 高位分化·良性轮动·年线下方蓄势·中性偏多·仓位维持6成）",
+          "size": 25929
+        },
         {
           "date": "20260827",
           "dateLabel": "2026-08-27（周四）",
