@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-28 16:45:47",
-  "total": 211,
+  "generatedAt": "2026-08-29 07:45:57",
+  "total": 212,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 42,
-      "latest": "20260828",
+      "count": 43,
+      "latest": "20260829",
       "reports": [
+        {
+          "date": "20260829",
+          "dateLabel": "2026-08-29（周六）",
+          "file": "reports/panqian/panqian_20260829.html",
+          "title": "盘前计划 · 周六 2026-08-29 · 星辰（3问版·适用 8/31 周一）",
+          "size": 20212
+        },
         {
           "date": "20260828",
           "dateLabel": "2026-08-28（周五）",
