@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-28 08:00:39",
-  "total": 208,
+  "generatedAt": "2026-08-28 12:45:27",
+  "total": 209,
   "categories": [
     {
       "key": "panqian",
@@ -313,9 +313,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 44,
-      "latest": "20260827",
+      "count": 45,
+      "latest": "20260828",
       "reports": [
+        {
+          "date": "20260828",
+          "dateLabel": "2026-08-28（周五）",
+          "file": "reports/noon/noon_20260828.html",
+          "title": "A股午间复盘 · 2026-08-28（周五）· 震荡分化·黄白背离·结构切换·科技分歧·农业AI接力·控仓待确认",
+          "size": 41872
+        },
         {
           "date": "20260827",
           "dateLabel": "2026-08-27（周四）",

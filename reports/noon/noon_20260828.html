@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股午间复盘 · 2026-08-28（周五）· 震荡分化·黄白背离·结构切换·科技分歧·农业AI接力·控仓待确认</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --accent1:#667eea; --accent2:#764ba2; --txt:#e2e8f0; --txt2:#94a3b8; --border:#2d2d44;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.55;padding:24px 16px 60px}
+  .wrap{max-width:1180px;margin:0 auto}
+  .glass{background:linear-gradient(135deg,rgba(102,126,234,.08),rgba(118,75,162,.06));border:1px solid var(--border);border-radius:16px}
+  header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:22px 26px;margin-bottom:20px}
+  header h1{font-size:23px;font-weight:700;letter-spacing:.5px}
+  header .sub{color:var(--txt2);font-size:13px;margin-top:4px;max-width:720px}
+  .badge{font-size:14px;font-weight:800;padding:10px 18px;border-radius:12px;letter-spacing:1px;max-width:480px;text-align:center}
+  .badge.danger{background:linear-gradient(135deg,#ff4757,#c0392b);color:#fff;box-shadow:0 6px 20px rgba(255,71,87,.4)}
+  .badge.warn{background:linear-gradient(135deg,#ffa502,#e67e22);color:#1a1a2e;box-shadow:0 6px 20px rgba(255,165,2,.35)}
+  .badge.rev{background:linear-gradient(135deg,#00d4aa,#00b894);color:#1a1a2e;box-shadow:0 6px 20px rgba(0,212,170,.4)}
+  .grid{display:grid;gap:18px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:880px){.g3,.g2,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.g3,.g2,.g4{grid-template-columns:1fr}}
+  section{margin:20px 0}
+  .sec-title{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;margin:6px 4px 14px}
+  .sec-title::before{content:"";width:5px;height:18px;border-radius:3px;background:linear-gradient(var(--accent1),var(--accent2))}
+  .card{padding:18px 20px}
+  .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+  @media(max-width:880px){.kpis{grid-template-columns:1fr 1fr 1fr}}
+  .kpi{padding:14px;text-align:center}
+  .kpi .v{font-size:19px;font-weight:800}
+  .kpi .l{font-size:11px;color:var(--txt2);margin-top:3px}
+  .idx-card .idx-head{display:flex;justify-content:space-between;align-items:baseline}
+  .idx-name{font-size:13px;font-weight:600}
+  .idx-code{font-size:11px;color:var(--txt2)}
+  .idx-price{font-size:22px;font-weight:800;margin:6px 0 2px}
+  .idx-chg{font-size:13px;font-weight:700}
+  .idx-range{font-size:11px;color:var(--txt2);margin-top:4px;line-height:1.5}
+  .chart{height:340px}
+  .chart-sm{height:260px}
+  .spark{height:60px}
+  .alert{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:12px;margin:10px 0}
+  .alert.risk{background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.35)}
+  .alert.pos{background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.35)}
+  .alert.warn{background:rgba(255,165,2,.1);border:1px solid rgba(255,165,2,.35)}
+  .alert .ico{font-size:20px;line-height:1}
+  .alert .tt{font-weight:700;margin-bottom:3px}
+  .alert .bd{font-size:13px;color:var(--txt2);line-height:1.6}
+  .li{display:flex;gap:10px;padding:7px 0;font-size:13px;border-bottom:1px dashed rgba(45,45,68,.7)}
+  .li:last-child{border-bottom:none}
+  .li .dot{margin-top:6px;width:7px;height:7px;border-radius:50%;flex:0 0 auto}
+  .foot{font-size:11px;color:var(--txt2);text-align:center;margin-top:26px;line-height:1.8}
+  .meta-pill{display:inline-block;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;margin:4px 6px 0 0}
+  .summary-line{font-size:15px;font-weight:600;padding:14px 18px;border-left:4px solid var(--hold);background:rgba(255,165,2,.07);border-radius:0 10px 10px 0;margin:6px 0 14px}
+  .temp-wrap{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  .gauge{width:220px;height:190px;flex:0 0 auto}
+  .temp-side{flex:1;min-width:240px}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+  th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--txt2);font-weight:600;font-size:12px}
+  td.buy{color:var(--buy);font-weight:700}
+  td.sell{color:var(--sell);font-weight:700}
+  td.hold{color:var(--hold);font-weight:700}
+  .plan-card{font-size:15px;font-weight:700;margin:0 0 10px;color:var(--hold)}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:720px){.twocol{grid-template-columns:1fr}}
+  .cat-card{padding:14px 16px;border-radius:12px;border:1px solid var(--border);background:rgba(26,26,46,.6)}
+  .cat-card .t{font-weight:700;font-size:14px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .cat-card .d{font-size:12px;color:var(--txt2);line-height:1.5}
+  .bullet{font-size:13px;padding:4px 0 4px 16px;position:relative;color:var(--txt)}
+  .bullet::before{content:"";position:absolute;left:2px;top:11px;width:6px;height:6px;border-radius:50%;background:var(--accent1)}
+  .meter{height:8px;border-radius:6px;background:rgba(45,45,68,.7);overflow:hidden;margin:6px 0}
+  .d-red{background:var(--sell)} .d-green{background:var(--buy)} .d-amber{background:var(--hold)}
+  .attr-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 20px;margin-top:8px}
+  @media(max-width:720px){.attr-grid{grid-template-columns:1fr}}
+  .attr-row{display:flex;align-items:center;gap:10px;font-size:13px}
+  .attr-row .lab{width:120px;color:var(--txt2);flex:0 0 auto}
+  .attr-row .bar{flex:1}
+  .attr-row .pct{width:42px;text-align:right;font-weight:700}
+  .day-row{display:grid;grid-template-columns:54px 1fr;gap:10px;align-items:center;padding:8px 0;font-size:12.5px;border-bottom:1px dashed rgba(45,45,68,.5)}
+  .day-row:last-child{border-bottom:none}
+  .day-tag{font-weight:800;font-size:13px;text-align:center;padding:4px 0;border-radius:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="glass">
+    <div>
+      <h1>A股午间复盘 · 2026-08-28（周五）</h1>
+      <div class="sub">承接 8/27“<b>英伟达财报引爆AI科技行情·科创50+3.45%放量普涨</b>”之后，今日 A股 走出“<b>震荡分化、黄白背离、结构切换、昨日科技主线分歧、低位题材接力</b>”的轮动日：沪指微红<b>+0.08%(3959.64)</b>，深成<b>-0.14%(14029.83)</b>/创业<b>-0.32%(3462.07)</b>/<b>科创50 -0.72%(1681.25·盘中摸1712后回落、未守1700)</b>/北证50 -0.45%；半日成交<b>1.42万亿（放量716亿）</b>；<b>3193涨/2192跌（广度≈58%）、63涨停/2跌停</b>；农业/种业/黄金/AI应用/网络安全/房地产接力领涨，昨日领涨的半导体产业链分化回调、医药/CRO领跌。情绪由8/27的78回落至62，控仓待确认。</div>
+      <div style="margin-top:10px">
+        <span class="meta-pill">📅 2026-08-28 周五（午间 11:30 收盘口径）</span>
+        <span class="meta-pill">🗓️ 覆盖：当日上午盘（9:30–11:30）</span>
+        <span class="meta-pill">📊 数据：同花顺/财联社/东方财富/新浪/证券时报/中新经纬/网易/腾讯财经/澎湃 午评口径（WebSearch 聚合；金融 MCP 连接器均 disconnected）</span>
+      </div>
+    </div>
+    <div class="badge warn">震荡分化 · 黄白背离 · 结构切换 · 科技分歧 · 农业AI接力 · 控仓待确认</div>
+  </header>
+
+  <!-- KPI ROW -->
+  <div class="kpis glass">
+    <div class="kpi"><div class="v" style="color:var(--buy)">+0.08%</div><div class="l">上证（收3959.64）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--sell)">-0.32%</div><div class="l">创业板（收3462.07）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--sell)">-0.72%</div><div class="l">科创50（收1681.25·未守1700）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--buy)">1.42万亿</div><div class="l">半日成交（放量+716亿）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--hold)">3193/2192</div><div class="l">涨跌家数（广度≈58%）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--hold)">≈62</div><div class="l">情绪温度 / 100</div></div>
+  </div>
+
+  <!-- 情绪温度 -->
+  <section class="glass card">
+    <div class="sec-title">🌡️ 午间市场情绪温度计</div>
+    <div class="temp-wrap">
+      <div id="gauge" class="gauge"></div>
+      <div class="temp-side">
+        <div class="plan-card">午间情绪 ≈ 62 / 100 · 中性偏暖（较8/27的78回落）· 震荡分化 · 黄白背离 · 结构切换 · 控仓待确认</div>
+        <div class="li"><span class="dot d-green"></span><span><b>做多（↑·量能维持）</b>：半日成交1.42万亿（放量716亿）+ 3193涨/2192跌（广度≈58%）+ <b>63涨停/2跌停（无恐慌）</b> + 低位题材（农业/种业/黄金/AI应用/网络安全/房地产）接力轮动、连板活跃（万向德农9天6板、楚天龙5连板）。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>中性（→·分歧）</b>：昨日领涨主线（半导体/算力硬件）今日分化回调、科创50冲高回落未守1700（-0.72%）；指数早盘冲高回落（创业板盘中+1%→-0.32%）呈现黄白背离。</span></div>
+        <div class="li"><span class="dot d-red"></span><span><b>压制（↓）</b>：医药/CRO高位补跌领跌 + 半导体产业链分歧 + 美联储沃什今晚杰克逊霍尔讲话（美债收益率上行扰动高估值成长）+ 北向盘中不披露（盘后更新）+ 午后量能与科技回流仍需确认。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 核心摘要 / 赚钱效应总结 -->
+  <section>
+    <div class="summary-line">
+      <b>核心结论（赚钱效应总结）：</b>今日 A股 在 8/27 放量突破后步入“<b>震荡分化、黄白背离、结构切换</b>”的轮动日——① <b>指数分化、黄白背离</b>：沪+0.08%(3959.64)/深-0.14%(14029.83)/创业-0.32%(3462.07)/<b>科创50-0.72%(1681.25·盘中摸1712后回落、未守1700)</b>/北证50-0.45%，早盘冲高回落、权重（沪指）略强于个股平均；② <b>个股偏涨、无恐慌</b>：3193涨/2192跌（广度≈58%）、<b>涨停63/跌停仅2</b>、涨幅>9%达81只——赚钱效应温和，连板情绪活跃（万向德农9天6板、楚天龙5连板、昊华科技/沃特股份2连板）；③ <b>结构切换：农业/AI应用接棒科技</b>：种植业与林业（敦煌种业/万向德农/新赛股份/福建金森涨停）、贵金属/黄金（深中华A/莱绅通灵涨停）、PTFE/碳基半导体/PEEK（昊华科技/沃特股份2连板）、网络安全/AI应用（麒麟信安20cm、天娱数科/三六零/税友股份涨停·赛富时AI财报催化）、房地产（深物业A/我爱我家涨停）、旅游/商业连锁接力；④ <b>逆风：昨日科技主线分歧+医药补跌</b>：半导体产业链分化回调（虽部分材料股仍强，但板块指数冲高回落）、电子化学品（广钢气体/同宇新材-4%+）、通信设备冲高回落、医药/CRO/疫苗/生物制品领跌（万邦医药-10%+）；⑤ <b>量能维持</b>：半日成交1.42万亿（放量716亿），资金自高位科技分歧流出、切入低位题材与防御。整体判断：<b>量能健康+个股涨多跌少+63涨停，偏暖但分歧加大（科创未守1700+科技主线分化），维持中性偏多但收敛、控仓待确认（总仓55–65%、现金35–45%）</b>。
+    </div>
+  </section>
+
+  <!-- 指数表现 -->
+  <section>
+    <div class="sec-title">📈 主要指数表现（午间 11:30 收盘口径）</div>
+    <div class="grid g4">
+      <div class="glass card idx-card">
+        <div class="idx-head"><span class="idx-name">上证指数</span><span class="idx-code">000001</span></div>
+        <div class="idx-price" style="color:var(--buy)">3959.64</div>
+        <div class="idx-chg" style="color:var(--buy)">午 +0.08%</div>
+        <div class="idx-range">开3950.24/高3970.31/低3947.80；低开高走、守3950、冲高3970后回落，未触年线~3970附近压制</div>
+      </div>
+      <div class="glass card idx-card">
+        <div class="idx-head"><span class="idx-name">深证成指</span><span class="idx-code">399001</span></div>
+        <div class="idx-price" style="color:var(--sell)">14029.83</div>
+        <div class="idx-chg" style="color:var(--sell)">午 -0.14%</div>
+        <div class="idx-range">开14019.28/高14148.68/低13984.75；窄幅震荡、守住14000</div>
+      </div>
+      <div class="glass card idx-card">
+        <div class="idx-head"><span class="idx-name">创业板指</span><span class="idx-code">399006</span></div>
+        <div class="idx-price" style="color:var(--sell)">3462.07</div>
+        <div class="idx-chg" style="color:var(--sell)">午 -0.32%</div>
+        <div class="idx-range">开3453.73/高3521.47/低3449.28；早盘冲高一度+1%后回落翻绿，黄白分化明显</div>
+      </div>
+      <div class="glass card idx-card">
+        <div class="idx-head"><span class="idx-name">科创50</span><span class="idx-code">000688</span></div>
+        <div class="idx-price" style="color:var(--sell)">1681.25</div>
+        <div class="idx-chg" style="color:var(--sell)">午 -0.72%（昨收1693.48）</div>
+        <div class="idx-range">开1684.72/高1711.99/低1675.54；盘中摸1712逼近1700后回落未守，昨日领涨主线分歧</div>
+      </div>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="glass card">
+        <div class="idx-head"><span class="idx-name">主要指数午间涨跌幅</span><span class="idx-code">% (2026-08-28 午)</span></div>
+        <div id="chart_idx" class="chart-sm"></div>
+      </div>
+      <div class="glass card">
+        <div class="idx-head"><span class="idx-name">指数 vs 个股广度（黄白分化）</span><span class="idx-code">指数涨跌% vs 涨跌广度%</span></div>
+        <div id="chart_breadth" class="chart-sm"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 涨跌家数 / 涨停跌停 -->
+  <section>
+    <div class="sec-title">📊 涨跌家数 & 涨停跌停（赚钱效应量化）</div>
+    <div class="grid g2">
+      <div class="glass card">
+        <div class="idx-head"><span class="idx-name">全市场涨跌分布（午间）</span><span class="idx-code">上涨 3193 / 下跌 2192 / 平 158</span></div>
+        <div id="chart_advance" class="chart-sm"></div>
+        <div class="li"><span class="dot d-green"></span><span><b>广度 ≈ 58%</b>（3193 / 5543），与8/27的≈57%基本持平——个股偏涨、无系统性出清，但指数（沪红其余绿）强于个股平均，黄白分歧。</span></div>
+        <div class="li"><span class="dot d-green"></span><span><b>涨停 63 / 跌停 2</b>——连板情绪活跃（万向德农9天6板、楚天龙5连板、昊华科技/沃特股份2连板），跌停仅2家、无恐慌，赚钱效应温和。</span></div>
+      </div>
+      <div class="glass card">
+        <div class="idx-head"><span class="idx-name">近三日情绪 / 广度 轨迹（分歧日）</span><span class="idx-code">8/26午 → 8/27午 → 8/28午</span></div>
+        <div id="chart_compare" class="chart-sm"></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>情绪温度</b>：67（8/26）→ 78（8/27·偏暖）→ <b>62</b>（8/28午·中性偏暖）——科技主线分歧导致情绪回落。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>广度</b>：≈66%（8/26）→ ≈57%（8/27）→ <b>≈58%</b>（8/28午）——广度稳定，结构由“科技抱团”切向“低位题材轮动”。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 板块 -->
+  <section>
+    <div class="sec-title">🔥 板块表现 · 领涨 / 领跌（农业/AI应用接力）</div>
+    <div class="grid g2">
+      <div class="glass card">
+        <div class="idx-head"><span class="idx-name">午间领涨方向（概念/行业涨跌幅）</span><span class="idx-code">%（午间估算）</span></div>
+        <div id="chart_lead" class="chart-sm"></div>
+      </div>
+      <div class="glass card">
+        <div class="idx-head"><span class="idx-name">午间领跌方向（科技分歧/医药）</span><span class="idx-code">板块涨跌幅 %（估算）</span></div>
+        <div id="chart_lag" class="chart-sm"></div>
+      </div>
+    </div>
+    <div class="twocol" style="margin-top:16px">
+      <div class="glass card">
+        <div class="sec-title" style="margin:0 0 10px;font-size:15px;color:var(--buy)">✅ 主线逻辑（农业/AI应用/资源/事件）</div>
+        <div class="bullet"><b>种植业与林业 / 种业 / 粮食（最强主线·接力）</b>：敦煌种业/新赛股份/万向德农/福建金森涨停，秋乐种业/国投丰乐跟涨；厄尔尼诺或成有记录最强（国家气候中心）、粮价上行，中信证券“红利+成长”双重定价——万向德农9天6板、新赛股份2连板。</div>
+        <div class="bullet"><b>贵金属 / 黄金</b>：深中华A/莱绅通灵涨停、湖南黄金等活跃；避险+金价（Comex黄金~4600美元）双驱动。</div>
+        <div class="bullet"><b>网络安全 / AI应用（新催化）</b>：麒麟信安20cm涨停，中安科/天融信/深信服/奇安信/三六零跟涨，天娱数科一字涨停；隔夜赛富时AI产品ARR同比+210%催化AI应用端（鼎捷数智20cm）。</div>
+        <div class="bullet"><b>PTFE / 碳基半导体 / PEEK材料 + 房地产 + 旅游</b>：昊华科技/沃特股份2连板（PTFE延续强势）；深物业A/我爱我家涨停（房地产反弹）；陕西旅游触板、众信旅游/岭南控股跟涨（中秋国庆出游热度月环比+116%）；商业连锁/纺织服饰/农林牧渔小幅走强；算力租赁（鸿博股份）、超节点（星网锐捷2连板）、环氧丙烷（红宝丽）局部活跃。</div>
+      </div>
+      <div class="glass card">
+        <div class="sec-title" style="margin:0 0 10px;font-size:15px;color:var(--sell)">⛔ 逆风方向（科技分歧 / 医药补跌）</div>
+        <div class="bullet"><b>医药 / CRO / 疫苗 / 生物制品 / 化学制药（领跌）</b>：万邦医药-10%+、康希诺/近岸蛋白/百花医药/兰卫医学跟跌；昨日强势医药今日高位补跌、资金集中抛售。</div>
+        <div class="bullet"><b>半导体产业链（分化回调）</b>：板块指数冲高回落（科创50 -0.72%拖累），电子化学品（广钢气体/同宇新材-4%+）、部分设备/制造走弱；但碳基半导体/PTFE/PCB材料分支仍强势（内部分化）。</div>
+        <div class="bullet"><b>通信设备（冲高回落）/ 电信运营 / 保险</b>：昨日领涨的通信硬件早盘冲高后回落；电信运营、保险小幅下跌。</div>
+        <div class="bullet"><b>能源设备 / 发电设备 / 电工电网 / 电脑硬件</b>：随科技分歧整体偏弱。</div>
+        <div class="bullet"><b>提示</b>：逆风以“昨日主线分歧+医药补跌”为主，非系统性出清；资金自高位科技切向低位题材与防御，属轮动而非退潮。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 资金流向 -->
+  <section>
+    <div class="sec-title">💰 资金流向分析（午间·方向性定性 + 昨日参考）</div>
+    <div class="grid g2">
+      <div class="glass card">
+        <div class="idx-head"><span class="idx-name">8/28 午间 资金净流入方向（定性强度 1-10）</span><span class="idx-code">基于板块涨跌方向</span></div>
+        <div id="chart_fund_in" class="chart-sm"></div>
+        <div class="li"><span class="dot d-green"></span><span><b>资金切入低位题材</b>：农业/种业（最强接力）、贵金属/黄金、AI应用/网络安全（赛富时催化）、房地产、旅游/商业连锁获资金；算力租赁/超节点局部活跃。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>北向资金</b>：港交所盘中披露机制调整，<b>不再实时披露沪深股通买卖金额（盘后更新）</b>；北向上日龙虎榜布局光通信/算力硬件，今日以盘后数据为准。</span></div>
+      </div>
+      <div class="glass card">
+        <div class="idx-head"><span class="idx-name">8/28 午间 资金净流出方向（定性强度 1-10）</span><span class="idx-code">基于板块涨跌方向</span></div>
+        <div id="chart_fund_out" class="chart-sm"></div>
+        <div class="li"><span class="dot d-red"></span><span><b>净流出方向</b>：医药/CRO（高位补跌、集中抛售）居首；半导体产业链分歧（虽分支分化）、电子化学品、通信设备（冲高回落）、电信运营/保险承压。</span></div>
+        <div class="li"><span class="dot d-amber"></span><span><b>流动性</b>：央行8/27单日净投放6065亿（超预期）夯实基础；8/28开展1013亿7天逆回购、净投放13亿——资金面宽松。</span></div>
+      </div>
+    </div>
+    <div class="alert warn">
+      <div class="ico">🔍</div>
+      <div><div class="tt">资金结论："自高位科技分歧流出、切入低位题材与防御"——与8/27"内外资共振做多AI算力硬件"形成方向反转</div><div class="bd">今日资金从昨日领涨的半导体/算力硬件分歧流出，转向 <b>农业/种业（厄尔尼诺+粮价）、贵金属/黄金（避险）、AI应用/网络安全（赛富时催化）、房地产、旅游/商业连锁</b> 等低位题材与防御；医药/CRO遭集中抛售。<b>注：金融 MCP 连接器本环境均 disconnected，午间实时板块主力净额未获权威聚合，以上为基于板块涨跌方向的定性判断（强度1-10）。</b>参考昨日（8/27）全天真实主力净流入：电子 <b class="buy">+398亿</b>、通信 +107~150亿、机械设备 +118亿、有色金属 +115亿（煤炭连续净流入）；净流出 银行 -39亿、电力设备 -26亿——即8/27是"科技硬件吸金日"，8/28转为"科技分歧+低位接力"。央行净投放6065亿（8/27）/13亿（8/28）维持宽松。属轮动而非系统性出清，控仓待午后科技回流确认。</div></div>
+    </div>
+  </section>
+
+  <!-- 催化面 -->
+  <section>
+    <div class="sec-title">📰 情报面 · 催化与风险</div>
+    <div class="grid g2">
+      <div class="cat-card">
+        <div class="t">🟢 隔夜英伟达/纳指/费半走强 → 但A股科技分化</div>
+        <div class="d">隔夜英伟达+8.74%、纳指+1.57%、费城半导体+2.33%，强化全球AI资本开支预期；但今日A股资金切换至AI应用端（赛富时ARR+210%催化），硬件链分歧，呈现"海外强、国内分化"。</div>
+      </div>
+      <div class="cat-card">
+        <div class="t">🟢 中报业绩亮眼 + 工业企业利润修复</div>
+        <div class="d">中芯国际H1归母净利同比+94.2%、存储/元件业绩突出；1-7月规上工业企业利润同比+17.6%（电子/有色/化工突出）——盈利驱动支撑结构行情。</div>
+      </div>
+      <div class="cat-card">
+        <div class="t">🟢 厄尔尼诺最强 + 粮价上行 → 农业/种业</div>
+        <div class="d">国家气候中心研判本次厄尔尼诺或成有记录最强，农产品价格逐步上行；中信证券"红利+成长"双重定价，种业/粮食全线活跃（万向德农9天6板）。</div>
+      </div>
+      <div class="cat-card">
+        <div class="t">🟢 流动性宽松 + 地产/出游政策预期</div>
+        <div class="d">央行8/27净投放6065亿（超预期）、8/28逆回购净投放13亿；中秋国庆出游热度月环比+116%，房地产政策预期升温，地产/旅游反弹。</div>
+      </div>
+      <div class="cat-card">
+        <div class="t">🔴 医药/CRO高位补跌 + 半导体分歧</div>
+        <div class="d">昨日强势医药今日补跌（万邦医药-10%+）；半导体产业链冲高回落（科创50盘中1712→1681未守1700）——昨日主线分歧，追高需谨慎。</div>
+      </div>
+      <div class="cat-card">
+        <div class="t">🔴 美联储沃什杰克逊霍尔讲话 + 地缘</div>
+        <div class="d">今晚美联储主席沃什讲话，美债收益率上行扰动高估值成长；美伊"经济战"、油价高位等外部变量仍需警惕，北向盘中不披露（盘后更新）。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 信号归因 -->
+  <section class="glass card">
+    <div class="sec-title" style="margin-top:4px">📊 信号归因（本结论由哪些因素贡献）</div>
+    <div class="attr-grid">
+      <div class="attr-row"><span class="lab">市场环境贡献</span><span class="bar"><span class="meter"><span class="d-amber" style="width:32%"></span></span></span><span class="pct hold">32%</span></div>
+      <div class="attr-row"><span class="lab">新闻情绪贡献</span><span class="bar"><span class="meter"><span class="d-amber" style="width:28%"></span></span></span><span class="pct hold">28%</span></div>
+      <div class="attr-row"><span class="lab">技术指标贡献</span><span class="bar"><span class="meter"><span class="d-amber" style="width:25%"></span></span></span><span class="pct hold">25%</span></div>
+      <div class="attr-row"><span class="lab">基本面贡献</span><span class="bar"><span class="meter"><span class="d-amber" style="width:15%"></span></span></span><span class="pct hold">15%</span></div>
+    </div>
+    <div class="li" style="margin-top:8px"><span class="dot d-green"></span><span><b>最强看多信号</b>：半日成交1.42万亿（放量716亿、量能维持健康）+ 个股涨多跌少（广度≈58%）+ 63涨停/2跌停无恐慌 + 低位题材（农业/AI应用/地产/黄金）接力轮动、连板活跃。</span></div>
+    <div class="li"><span class="dot d-red"></span><span><b>最强看空信号</b>：科创50冲高回落未守1700（-0.72%，盘中1712→1681）+ 半导体产业链分化回调 + 医药/CRO领跌 + 指数早盘冲高回落（创业板盘中+1%→-0.32%）呈现黄白背离。</span></div>
+  </section>
+
+  <!-- 仓位管理 -->
+  <section>
+    <div class="sec-title">🛡️ 仓位管理推荐（8/28 午间 → 后续）</div>
+    <div class="glass card">
+      <div class="plan-card">总仓 55%–65% · 现金 35%–45% · 中性偏多但收敛·控仓待确认（较8/27的60–70%略降，因科创未守1700+半导体分歧+指数冲高回落；量能健康+个股偏涨，不全面加仓、保留35–45%现金应对午后变盘）</div>
+      <div class="twocol">
+        <div>
+          <div class="sec-title" style="margin:6px 0 8px;font-size:14px;color:var(--buy)">✅ 配置方向（逢回踩分批·不追高）</div>
+          <div class="bullet">农业/种业/粮食：厄尔尼诺+粮价逻辑，但避免追高连板（万向德农9天6板等）</div>
+          <div class="bullet">贵金属/黄金：避险+金价双驱动，回踩低吸</div>
+          <div class="bullet">AI应用/网络安全：低位新催化（赛富时），鼎捷/天娱/麒麟信安等回踩</div>
+          <div class="bullet">房地产/旅游：低位政策+消费修复，深物业A/我爱我家/众信旅游等</div>
+          <div class="bullet">算力硬件/半导体：仅回踩低吸、等午后回流确认，不追高长阳</div>
+          <div class="bullet">红利底仓：银行/交运/煤炭（部分），对冲波动</div>
+        </div>
+        <div>
+          <div class="sec-title" style="margin:6px 0 8px;font-size:14px;color:var(--sell)">⛔ 规避方向</div>
+          <div class="bullet">高位科技分歧段：半导体冲高回落、电子化学品、通信设备（追高易吃面）</div>
+          <div class="bullet">医药/CRO（领跌）：万邦医药等高位补跌，暂避</div>
+          <div class="bullet">追高连板纯情绪票：万向德农/楚天龙等连板负反馈风险</div>
+          <div class="bullet">中报业绩雷/解禁/ST、纯情绪高估值题材、计算机（净流出）</div>
+          <div class="bullet">科创1700未稳前重仓纯硬科技；成交缩量下的满仓冲动</div>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>类型</th><th>触发条件</th><th>动作</th></tr></thead>
+        <tbody>
+          <tr><td class="buy">回补加仓（→65-70%）</td><td>科创50 放量站稳1700 + 全天成交破2.3万亿 + 半导体/算力硬件午后回流确认 + 广度>55%(今日已满足) + 北向盘后净流入 + 沃什讲话偏鸽</td><td class="buy">总仓 55–65% → 65–70%</td></tr>
+          <tr><td class="hold">维持（当前）</td><td>指数震荡分化 + 成交 1.3–2.3万亿 + 广度 55–60% + 科技分歧/低位轮动(黄白分化、存量切换)</td><td class="hold">总仓 55–65%、不追高</td></tr>
+          <tr><td class="sell">失效降级（→45-55%）</td><td>科创50 有效破1650 + 沪指破3940 + 半导体高位集体退潮(跌停扩散) + 跌停>15 + 医药恐慌蔓延 + 沃什偏鹰推升美债</td><td class="sell">总仓 55–65% → 45–55%（现金 45%+）</td></tr>
+        </tbody>
+      </table>
+      <div class="alert warn" style="margin-top:12px">
+        <div class="ico">🔍</div>
+        <div><div class="tt">午后三大观察点</div><div class="bd">① <b>科创50能否放量站稳1700</b>：今日半日1681.25(-0.72%，盘中摸1712回落)，若午后放量突破1700则确认科技主线趋势延续、可加仓至65-70%。② <b>量能能否持续放大</b>：半日已1.42万亿(放量716亿)，全天若破2.3万亿则支撑反弹升级。③ <b>半导体/算力硬件午后是否回流</b>：实现科技与低位题材共振。操作上农业/黄金/AI应用/地产回踩分批、严禁追高长阳与高位连板（万向德农9天6板警示），保留35-45%现金应对午后变盘；北向盘中不披露，以盘后数据为准。</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 机构观点 -->
+  <section>
+    <div class="sec-title">🏛️ 机构观点速览（震荡再平衡·结构机会）</div>
+    <div class="twocol">
+      <div class="glass card">
+        <div class="bullet"><b>华泰证券</b>：A股或处"震荡再平衡"阶段，布局盈利与筹码的"配置差"；不追高拥挤品种，AI链优先通信设备/AI电力/半导体材料设备，非科技关注船舶/电池/工程机械/农业，弱美元关注铜铝/创新药，红利作底仓（银行/交运/煤炭）。</div>
+        <div class="bullet"><b>中金公司</b>：继续看好AI算力成长主线，关注国产算力（服务器/交换机/液冷）与海外算力（ASIC/光模块）两大机会。</div>
+        <div class="bullet"><b>东吴证券</b>：短期规避高估值题材、以低波红利对冲，聚焦国产科技链（国产算力/半导体设备/先进制程）；科技进入"缩圈分化"轮动早期。</div>
+      </div>
+      <div class="glass card">
+        <div class="bullet"><b>东方证券</b>：科技成长回暖提振短线情绪，关注反弹持续性；沪综指有望再攻"年线+3995缺口+4000关口"多重压力位。</div>
+        <div class="bullet"><b>方正证券</b>：海内外资金进场稳健、盈利驱动主导行情，牛市进程未结束，科技主线回归。</div>
+        <div class="bullet"><b>天风证券</b>：政策底逐步显现，长线资金积极入场；<b>中原证券</b>：预计上证继续震荡整理、结构再平衡为核心，关注半导体/元件/通信设备/消费电子。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="foot">
+    <div>📌 分析时间：2026-08-28 周五（午间 11:30 收盘口径）｜模式：A股当日午间行情复盘 · 赚钱效应总结 · 资金流向 · 仓位管理</div>
+    <div>📊 数据来源：同花顺/财联社/东方财富/新浪财经/证券时报/中新经纬/网易/腾讯财经/澎湃 午评口径 聚合（WebSearch；金融 MCP 连接器均 disconnected，指数/广度/资金为午间聚合数据，仅供方向参考）</div>
+    <div>🌍 大盘环境摘要：今日 A股 处"8/27放量突破后的震荡分化、黄白背离、结构切换"窗口——三大指数分化、沪+0.08%(3959.64)/深-0.14%(14029.83)/创业-0.32%(3462.07)/科创50-0.72%(1681.25·未守1700)/北证50-0.45%；3193涨/2192跌(广度≈58%)、63涨停/2跌停，赚钱效应温和无恐慌；农业/种业/黄金/AI应用/网络安全/房地产接力，半导体分歧+医药/CRO领跌；半日成交1.42万亿(放量716亿)。整体中性偏暖(情绪62)、控仓待确认。维持总仓55–65%、现金35–45%。</div>
+    <div style="margin-top:8px;color:#64748b">⚠️ 免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论均基于历史数据与公开信息，不保证未来表现。</div>
+    <div style="margin-top:6px;color:#64748b">📝 备注：金融 MCP 连接器（westock/neodata/tushare/wind 等）本环境均 disconnected，数据经 WebSearch 聚合多源午评（同花顺/财联社/东财/新浪/证券时报/中新经纬/网易/腾讯/澎湃）；指数点位为基于涨跌幅与昨收的实时口径、涨跌家数/涨停跌停为午评聚合；板块涨跌幅(%)与资金方向(1-10定性强度)为午间估算/方向性判断，非精确成交额；北向资金因港交所盘中披露机制调整不再实时披露(盘后更新)；广度按涨跌家数占比≈58%测算，仅供方向参考。搜索结果中混入的其他年份"8月28日"数据（如2023年降印花税日、2018年沪指3367等）已识别并剔除。</div>
+  </div>
+
+</div>
+
+<script>
+const axis = {color:'#94a3b8'};
+
+// 情绪温度计
+(function(){
+  const c = echarts.init(document.getElementById('gauge'));
+  c.setOption({
+    series:[{
+      type:'gauge', min:0, max:100, radius:'92%', center:['50%','58%'],
+      progress:{show:true, width:14, itemStyle:{color:'#00d4aa'}},
+      axisLine:{lineStyle:{width:14, color:[[0.35,'#ff4757'],[0.55,'#ffa502'],[1,'#00d4aa']]}},
+      axisTick:{show:false}, splitLine:{length:12, lineStyle:{color:'#2d2d44'}},
+      axisLabel:{color:'#94a3b8', fontSize:10, distance:14},
+      pointer:{width:5, itemStyle:{color:'#e2e8f0'}},
+      anchor:{show:true, size:12, itemStyle:{color:'#e2e8f0'}},
+      detail:{valueAnimation:true, formatter:'{value}', fontSize:30, fontWeight:'bolder', color:'#00d4aa', offsetCenter:[0,'42%']},
+      title:{show:true, offsetCenter:[0,'72%'], color:'#94a3b8', fontSize:12},
+      data:[{value:62, name:'午间情绪 / 100'}]
+    }]
+  });
+})();
+
+// 指数涨跌幅
+(function(){
+  const c = echarts.init(document.getElementById('chart_idx'));
+  c.setOption({
+    grid:{left:70,right:40,top:20,bottom:30},
+    tooltip:{trigger:'axis', axisPointer:{type:'shadow'}, formatter:'{b}: {c}%'},
+    xAxis:{type:'category', data:['上证','深成指','创业板','科创50','北证50'], axisLabel:axis, axisLine:{lineStyle:{color:'#2d2d44'}}},
+    yAxis:{type:'value', axisLabel:axis, splitLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'bar', barWidth:'50%', data:[
+      {value:0.08, itemStyle:{color:'#00d4aa'}},
+      {value:-0.14, itemStyle:{color:'#ff4757'}},
+      {value:-0.32, itemStyle:{color:'#ff4757'}},
+      {value:-0.72, itemStyle:{color:'#ff4757'}},
+      {value:-0.45, itemStyle:{color:'#ff4757'}}
+    ], label:{show:true, position:'top', color:'#e2e8f0', fontSize:11, formatter:'{c}%'}}]
+  });
+})();
+
+// 指数 vs 广度（黄白分化）
+(function(){
+  const c = echarts.init(document.getElementById('chart_breadth'));
+  c.setOption({
+    grid:{left:50,right:50,top:30,bottom:30},
+    tooltip:{trigger:'axis'},
+    legend:{data:['指数(创业板%)','涨跌广度%'], textStyle:{color:'#94a3b8'}, top:0},
+    xAxis:{type:'category', data:['上证','深成指','创业板','科创50'], axisLabel:axis, axisLine:{lineStyle:{color:'#2d2d44'}}},
+    yAxis:[
+      {type:'value', axisLabel:axis, splitLine:{lineStyle:{color:'#2d2d44'}}},
+      {type:'value', min:0, max:100, axisLabel:axis, splitLine:{show:false}}
+    ],
+    series:[
+      {name:'指数(创业板%)', type:'bar', data:[0.08,-0.14,-0.32,-0.72], itemStyle:{color:'#ff4757'}, barWidth:'40%'},
+      {name:'涨跌广度%', type:'line', yAxisIndex:1, data:[58,58,58,58], lineStyle:{width:2.5,color:'#ffa502'}, itemStyle:{color:'#ffa502'}, symbolSize:7, areaStyle:{color:'rgba(255,165,2,.12)'}}
+    ]
+  });
+})();
+
+// 涨跌分布（环形）
+(function(){
+  const c = echarts.init(document.getElementById('chart_advance'));
+  c.setOption({
+    tooltip:{trigger:'item', formatter:'{b}: {c} ({d}%)'},
+    legend:{bottom:0, textStyle:{color:'#94a3b8'}},
+    series:[{
+      type:'pie', radius:['45%','70%'], center:['50%','45%'],
+      data:[
+        {value:3193, name:'上涨', itemStyle:{color:'#00d4aa'}},
+        {value:2192, name:'下跌', itemStyle:{color:'#ff4757'}},
+        {value:158, name:'平盘', itemStyle:{color:'#94a3b8'}}
+      ],
+      label:{color:'#e2e8f0', fontSize:12, formatter:'{b}\n{c}'},
+      itemStyle:{borderColor:'#0f0f23', borderWidth:2}
+    }]
+  });
+})();
+
+// 近三日情绪/广度对比
+(function(){
+  const c = echarts.init(document.getElementById('chart_compare'));
+  c.setOption({
+    grid:{left:40,right:40,top:40,bottom:30},
+    tooltip:{trigger:'axis'},
+    legend:{data:['情绪温度','涨跌广度%'], textStyle:{color:'#94a3b8'}, top:0},
+    xAxis:{type:'category', data:['8/26午','8/27午','8/28午'], axisLabel:axis, axisLine:{lineStyle:{color:'#2d2d44'}}},
+    yAxis:{type:'value', min:0, max:100, axisLabel:axis, splitLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[
+      {name:'情绪温度', type:'bar', data:[67,78,62], barWidth:'30%', itemStyle:{color:'#ffa502'}, label:{show:true,position:'top',color:'#e2e8f0',fontSize:11}},
+      {name:'涨跌广度%', type:'line', data:[66,57,58], lineStyle:{width:2.5,color:'#00d4aa'}, itemStyle:{color:'#00d4aa'}, symbolSize:8}
+    ]
+  });
+})();
+
+// 领涨（估算）
+(function(){
+  const c = echarts.init(document.getElementById('chart_lead'));
+  const d=[{n:'种植业/种业/粮食',v:4.5},{n:'PTFE/碳基半导体/PEEK',v:3.2},{n:'贵金属/黄金',v:3.0},{n:'网络安全',v:2.8},{n:'AI应用',v:2.5},{n:'房地产',v:2.0},{n:'旅游/商业连锁',v:1.8},{n:'算力租赁/超节点',v:1.8},{n:'环氧丙烷/有色锑',v:1.6},{n:'纺织服饰',v:1.5}];
+  c.setOption({
+    grid:{left:110,right:34,top:14,bottom:14},
+    tooltip:{trigger:'axis', axisPointer:{type:'shadow'}, formatter:'{b}: +{c}%'},
+    xAxis:{type:'value', axisLabel:axis, splitLine:{lineStyle:{color:'#2d2d44'}}},
+    yAxis:{type:'category', data:d.map(x=>x.n), axisLabel:axis, axisLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'bar', data:d.map(x=>({value:x.v, itemStyle:{color:'#00d4aa'}})),
+      label:{show:true, position:'right', color:'#e2e8f0', fontSize:11, formatter:'+{c}%'}, barWidth:'55%'}]
+  });
+})();
+
+// 领跌（估算）
+(function(){
+  const c = echarts.init(document.getElementById('chart_lag'));
+  const d=[{n:'医药/CRO/生物制品',v:-2.5},{n:'电子化学品',v:-2.0},{n:'化学制药',v:-1.8},{n:'通信设备',v:-1.2},{n:'半导体(分歧)',v:-1.0},{n:'能源设备/发电',v:-1.2},{n:'电工电网/电脑硬件',v:-1.0},{n:'电信运营/保险',v:-1.0}];
+  c.setOption({
+    grid:{left:120,right:40,top:14,bottom:14},
+    tooltip:{trigger:'axis', axisPointer:{type:'shadow'}, formatter:'{b}: {c}%'},
+    xAxis:{type:'value', axisLabel:axis, splitLine:{lineStyle:{color:'#2d2d44'}}},
+    yAxis:{type:'category', data:d.map(x=>x.n), axisLabel:axis, axisLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'bar', data:d.map(x=>({value:x.v, itemStyle:{color:'#ff4757'}})),
+      label:{show:true, position:'left', color:'#e2e8f0', fontSize:11, formatter:'{c}%'}, barWidth:'55%'}]
+  });
+})();
+
+// 资金净流入方向（定性 1-10）
+(function(){
+  const c = echarts.init(document.getElementById('chart_fund_in'));
+  const d=[{n:'农业/种业',v:9},{n:'贵金属/黄金',v:8},{n:'AI应用/网络安全',v:8},{n:'房地产',v:6},{n:'旅游/商业连锁',v:6},{n:'算力租赁/超节点',v:5}];
+  c.setOption({
+    grid:{left:110,right:34,top:14,bottom:14},
+    tooltip:{trigger:'axis', axisPointer:{type:'shadow'}, formatter:'{b}: 强度 {c}/10'},
+    xAxis:{type:'value', max:10, axisLabel:axis, splitLine:{lineStyle:{color:'#2d2d44'}}},
+    yAxis:{type:'category', data:d.map(x=>x.n), axisLabel:axis, axisLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'bar', data:d.map(x=>({value:x.v, itemStyle:{color:'#00d4aa'}})),
+      label:{show:true, position:'right', color:'#e2e8f0', fontSize:11, formatter:'{c}'}, barWidth:'55%'}]
+  });
+})();
+
+// 资金净流出方向（定性 1-10）
+(function(){
+  const c = echarts.init(document.getElementById('chart_fund_out'));
+  const d=[{n:'医药/CRO',v:9},{n:'半导体(分歧)',v:6},{n:'电子化学品',v:6},{n:'通信设备',v:5},{n:'电信/保险',v:4}];
+  c.setOption({
+    grid:{left:110,right:34,top:14,bottom:14},
+    tooltip:{trigger:'axis', axisPointer:{type:'shadow'}, formatter:'{b}: 强度 {c}/10'},
+    xAxis:{type:'value', max:10, axisLabel:axis, splitLine:{lineStyle:{color:'#2d2d44'}}},
+    yAxis:{type:'category', data:d.map(x=>x.n), axisLabel:axis, axisLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'bar', data:d.map(x=>({value:x.v, itemStyle:{color:'#ff4757'}})),
+      label:{show:true, position:'right', color:'#e2e8f0', fontSize:11, formatter:'{c}'}, barWidth:'55%'}]
+  });
+})();
+</script>
+
+</body>
+</html>
