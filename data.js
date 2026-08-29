@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-29 08:00:51",
-  "total": 213,
+  "generatedAt": "2026-08-29 12:45:26",
+  "total": 214,
   "categories": [
     {
       "key": "panqian",
@@ -320,9 +320,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 45,
-      "latest": "20260828",
+      "count": 46,
+      "latest": "20260829",
       "reports": [
+        {
+          "date": "20260829",
+          "dateLabel": "2026-08-29（周六）",
+          "file": "reports/noon/noon_20260829.html",
+          "title": "A股周度复盘 · 2026.08.24–08.28",
+          "size": 21862
+        },
         {
           "date": "20260828",
           "dateLabel": "2026-08-28（周五）",
