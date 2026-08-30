@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盘前计划 · 周一 2026-08-31 · 星辰（3问版）</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --acc1:#667eea; --acc2:#764ba2; --txt:#e2e8f0; --txt2:#94a3b8; --bd:#2d2d44;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6;padding:20px;max-width:1080px;margin:0 auto}
+  h1{font-size:24px;font-weight:800;background:linear-gradient(90deg,var(--acc1),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  h2{font-size:17px;margin:28px 0 12px;padding-left:10px;border-left:4px solid var(--acc1)}
+  .q{font-size:15px;color:var(--acc1);font-weight:800;margin:22px 0 6px}
+  .q span{display:inline-block;background:linear-gradient(90deg,var(--acc1),var(--acc2));color:#fff;border-radius:8px;width:26px;height:26px;line-height:26px;text-align:center;margin-right:8px;font-size:14px}
+  .sub{color:var(--txt2);font-size:13px;margin-top:4px}
+  .card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;margin:12px 0}
+  .grid{display:grid;gap:14px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:780px){.g3,.g4{grid-template-columns:1fr}}
+  .top{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+  .ring{width:150px;height:150px;flex:0 0 150px}
+  .sig{display:inline-block;padding:6px 18px;border-radius:30px;font-weight:800;font-size:18px}
+  .sig.hold{background:linear-gradient(90deg,#ffa502,#ff7b00);color:#1a1a2e}
+  .pill{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;margin:3px 4px 3px 0}
+  .p-buy{background:rgba(0,212,170,.15);color:var(--buy);border:1px solid var(--buy)}
+  .p-sell{background:rgba(255,71,87,.15);color:var(--sell);border:1px solid var(--sell)}
+  .p-hold{background:rgba(255,165,2,.15);color:var(--hold);border:1px solid var(--hold)}
+  .p-info{background:rgba(102,126,234,.15);color:var(--acc1);border:1px solid var(--acc1)}
+  .kv{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--bd);font-size:14px}
+  .kv:last-child{border-bottom:none}
+  .kv b{color:var(--txt)}
+  .theme{border-top:3px solid var(--acc1)}
+  .theme h3{margin:6px 0;font-size:16px}
+  .stage{font-weight:700;font-size:14px;margin:8px 0}
+  .core{font-size:13px;color:var(--txt2);margin:6px 0}
+  .core b{color:var(--txt)}
+  .verdict{font-size:14px;font-weight:700;padding:8px 10px;border-radius:8px;margin-top:8px}
+  .v-yes{background:rgba(0,212,170,.12);color:var(--buy)}
+  .v-wait{background:rgba(255,165,2,.12);color:var(--hold)}
+  .v-no{background:rgba(255,71,87,.12);color:var(--sell)}
+  .alert{background:rgba(255,71,87,.1);border:1px solid var(--sell);border-radius:10px;padding:14px;margin:10px 0}
+  .alert b{color:var(--sell)}
+  .good{background:rgba(0,212,170,.1);border:1px solid var(--buy);border-radius:10px;padding:14px;margin:10px 0}
+  .good b{color:var(--buy)}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--bd)}
+  th{color:var(--txt2);font-weight:600;background:rgba(102,126,234,.08)}
+  tr:hover td{background:rgba(102,126,234,.05)}
+  .check{list-style:none}
+  .check li{padding:7px 0 7px 26px;position:relative;font-size:14px;border-bottom:1px dashed var(--bd)}
+  .check li:before{content:"☑";position:absolute;left:0;color:var(--buy)}
+  .check li.risk:before{content:"⚠";color:var(--sell)}
+  .note{color:var(--txt2);font-size:12px;margin-top:6px}
+  .foot{color:var(--txt2);font-size:12px;margin-top:30px;text-align:center;line-height:1.8}
+  .hl{color:var(--hold);font-weight:700}
+  .up{color:var(--buy)} .down{color:var(--sell)}
+  .ans{background:rgba(102,126,234,.1);border:1px solid var(--acc1);border-radius:10px;padding:12px 14px;margin:8px 0;font-size:14px}
+  .ans b{color:var(--acc1)}
+  .attr{font-size:13px;line-height:1.9}
+  .attr .bar{height:8px;border-radius:4px;background:var(--bd);margin:2px 0 8px;overflow:hidden}
+  .attr .bar i{display:block;height:100%;border-radius:4px}
+  .new{background:rgba(255,71,87,.12);border:1px dashed var(--sell);border-radius:8px;padding:8px 10px;font-size:13px;margin-top:8px;color:var(--sell)}
+  .new b{color:var(--sell)}
+</style>
+</head>
+<body>
+
+<h1>📊 盘前计划 · 周一 2026-08-31（3问版）</h1>
+<div class="sub">多市场智能股票分析师 · 星辰 ｜ 数据基准：8/28(周五)收盘 + 8/29–30 周末/外盘 ｜ 信号：HOLD（防守·压哨日）｜ 计划仓位 35%</div>
+
+<div class="card top">
+  <div class="ring" id="ring"></div>
+  <div style="flex:1;min-width:240px">
+    <div style="margin-bottom:8px"><span class="sig hold">HOLD</span> <span class="pill p-info">综合评分 48/100</span> <span class="pill p-hold">防守偏谨慎</span></div>
+    <div class="kv"><span>大盘环境</span><b>缩量割裂 · 3940 拉锯 · 外盘科技杀+压哨日</b></div>
+    <div class="kv"><span>沪指 / 成交</span><b>3942.65 (+0.09%) ／ 1.90 万亿（连续地量）</b></div>
+    <div class="kv"><span>今日关键变量</span><b>英伟达-4%传导 · 美联储加息预期 · 中报压哨 · PMI公布</b></div>
+    <div class="kv"><span>中概对冲</span><b class="up">阿里+13%、金龙指数+1.55%（A股科技情绪托底）</b></div>
+    <div class="kv"><span>计划仓位</span><b>35%（分 2–3 批，65% 现金过压哨+月末，等 9/1 转攻）</b></div>
+  </div>
+</div>
+
+<div class="new">
+  <b>🔥 相对 8/30 版（v47.0）的核心变化：</b>英伟达 8/29 重挫 4%+ 费半 -3.5%（加息预期升温：巴克莱/法兴预测 9月、12月各加息一次）→ 周一算力/半导体短线承压；黄金高位受加息预期压制（沪金夜盘一度 -2.65%）；8/31 为中报压哨最后日（158 家集中披露）+ 月末资金扰动 + 8月 PMI 今日公布。评分由 55 下修至 <b>48</b>，仓位由 45% 收至 <b>35%</b>。防守基调强化，但中报高景气 + 中概强势 + 大金融低位托底，<b>9/1 起压哨落地后仍有转攻条件</b>。
+</div>
+
+<!-- ===================== Q1 ===================== -->
+<div class="q"><span>1</span>当下的主流题材是什么？（至多 3 个）</div>
+<div class="ans">当下市场呈 <b>"大金融搭台 + 科技/资源助攻"双主线格局，医药/农业/白酒/地产继续退潮</b>。至多 3 个主流题材：<b>① 大金融（券商/保险/多元金融·中报拐点·低位）　② AI算力硬件/半导体（CPO/液冷/国产芯片/设备·英伟达锚·业绩主升但短线承压）　③ 有色·铜/黄金/工业金属（加速冲顶后高位分歧·加息预期压制）</b>。三者为 8/28 盘面仅有的赚钱效应载体，均有业绩/政策/涨价硬逻辑。<br><span class="note">新变化：外盘科技股（英伟达-4%、费半-3.5%）周五重挫，将压制 A股算力/半导体周一开盘；但中概（阿里+13%）强势形成情绪对冲。资金偏好从"高位科技"向"低位+中报确定性"倾斜，<b>大金融相对最稳，有色/算力短线需防获利回吐</b>。</span></div>
+
+<div class="grid g3">
+  <div class="card theme">
+    <div class="pill p-buy">主线 ①</div>
+    <h3>大金融 / 券商 / 保险 / 多元金融</h3>
+    <div class="stage up">阶段：启动转加速 · 中报拐点 · 相对最安全</div>
+    <div class="core"><b>核心：</b>东方财富(300059)、中信证券(600030)、中国平安(601318)；弹性·楚天龙(003040)</div>
+    <div class="verdict v-yes">✅ 低位最稳 · 可逢低小仓低吸（不追高）</div>
+  </div>
+  <div class="card theme">
+    <div class="pill p-hold">主线 ②</div>
+    <h3>AI算力硬件 / 半导体（CPO/液冷/国产芯片/设备）</h3>
+    <div class="stage down">阶段：业绩主升 · 但英伟达-4%+加息预期→短线承压</div>
+    <div class="core"><b>核心：</b>中际旭创(300308)、新易盛(300502)、工业富联(601138)；设备·北方华创(002371)、中微(688012)</div>
+    <div class="verdict v-wait">⏳ 不追高位 · 等回踩/企稳；设备受 CSEAC 催化可小仓</div>
+  </div>
+  <div class="card theme">
+    <div class="pill p-hold">主线 ③</div>
+    <h3>有色 · 铜 / 黄金 / 工业金属</h3>
+    <div class="stage down">阶段：高位分歧 · 加息预期升温→贵金属短线承压</div>
+    <div class="core"><b>核心：</b>紫金矿业(601899)、江西铜业(600362)、山东黄金(600547)；弹性·湖南白银(002716)、白银有色(601212)</div>
+    <div class="verdict v-wait">⏳ 持有可减 · 不追；金价破 4600 减仓，回踩 5 日线才考虑</div>
+  </div>
+</div>
+
+<!-- ===================== Q2 ===================== -->
+<div class="q"><span>2</span>主流题材的核心是谁？</div>
+<div class="ans">按 "辨识度 + 中军权重 + 弹性" 锁定各题材核心标的——它们是板块涨跌的定海神针，盘前先看它们的竞价强度与承接：</div>
+<div class="card">
+  <table>
+    <thead><tr><th>题材</th><th>绝对核心（中军/龙头）</th><th>弹性前锋</th><th>ETF 工具</th></tr></thead>
+    <tbody>
+      <tr><td><b>大金融</b></td><td>东方财富(300059)、中信证券(600030)、中国平安(601318)</td><td>楚天龙(003040)、指南针、券商弹性标的</td><td>券商ETF(512000)、保险ETF(515630)</td></tr>
+      <tr><td><b>算力/半导体</b></td><td>中际旭创(300308)、工业富联(601138)</td><td>新易盛(300502)、天孚通信(300394)；设备·北方华创(002371)、中微(688012)、长川科技</td><td>通信ETF(515880)、半导体设备ETF(561980)</td></tr>
+      <tr><td><b>有色贵金属</b></td><td>紫金矿业(601899)、江西铜业(600362)、山东黄金(600547)</td><td>湖南白银(002716)、白银有色(601212)、盛达资源</td><td>黄金ETF(518880)、有色ETF(159980)</td></tr>
+    </tbody>
+  </table>
+  <div class="note">"核心"不是荐股，而是观察题材强弱的锚——今日重点看：①东方财富/中信竞价是否抗住外盘科技杀 ②中际旭创/新易盛是否低开企稳而非一字下挫 ③紫金/山东黄金对加息预期的反馈。</div>
+</div>
+
+<!-- ===================== Q3 ===================== -->
+<div class="q"><span>3</span>题材走到哪个阶段了，能不能买，盘前交易计划？</div>
+<div class="ans">一句话：<b>① 大金融低位最稳、可小仓低吸不追　② 算力半导体受英伟达拖累短线承压、不追等回踩，设备有 CSEAC 催化可小仓　③ 有色贵金属加息预期压制、持有可减不追</b>。整体维持 HOLD·防守，仓位封顶 35%，现金 65% 过 8/31 压哨+月末，等 9/1 转攻信号（成交回 2 万亿+站稳 3940）。</div>
+
+<div class="card">
+  <table>
+    <thead><tr><th>题材</th><th>所处阶段</th><th>能不能买</th><th>买点 / 止损</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>大金融</b><br><span class="note">启动转加速·中报拐点·低位</span></td>
+        <td>启动→加速<br>相对最安全<br>赔率最好</td>
+        <td><span class="up">可小仓低吸</span><br>不追高（月末效应）</td>
+        <td>东方财富/中信回踩 MA5 不破、券商ETF 逢跌加；止损破 MA20。仓位上限 15%</td>
+      </tr>
+      <tr>
+        <td><b>算力/半导体</b><br><span class="note">英伟达-4%、加息预期升温</span></td>
+        <td>业绩主升<br>但短线承压<br>高位分歧</td>
+        <td><span class="hl">不追高位</span><br>设备小仓<br>等回踩企稳</td>
+        <td>北方华创/中微 回踩 MA10/MA20 低吸（CSEAC 催化）；CPO 高位回避；止损破位即走。仓位上限 10%</td>
+      </tr>
+      <tr>
+        <td><b>有色贵金属</b><br><span class="note">高位+加息预期压制</span></td>
+        <td>加速后分歧<br>贵金属承压<br>获利盘厚</td>
+        <td><span class="hl">持有可减</span><br>不追<br>仅回踩考虑</td>
+        <td>紫金/江西铜业回踩 5 日线才低吸；持仓锚定金价：站稳 4640 持有，跌破 4600 减仓。仓位上限 10%</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>盘前作战计划（分批建仓 · 封顶 35%）</h2>
+<div class="card">
+  <table>
+    <thead><tr><th>批次</th><th>方向</th><th>标的</th><th>触发条件</th><th>仓位</th></tr></thead>
+    <tbody>
+      <tr><td>① 开盘观察</td><td>—</td><td>—</td><td>看外盘科技回调传导、核心股竞价承接、<b>9:30 后 8月 PMI 数据</b>、最高板（深中华A/楚天龙）是否断板</td><td>0%（不急于开仓）</td></tr>
+      <tr><td>② 大金融试探</td><td>券商/保险</td><td>东方财富 / 中信证券 / 券商ETF</td><td>竞价不强转弱、回踩 MA5 不破、量能温和</td><td>15%</td></tr>
+      <tr><td>③ 半导体设备</td><td>设备/材料</td><td>北方华创 / 中微 / 半导体设备ETF</td><td>CSEAC 催化 + 回踩 MA20 企稳（非追高）</td><td>10%</td></tr>
+      <tr><td>④ 有色回踩</td><td>铜/金</td><td>紫金矿业 / 江西铜业</td><td>仅高开不多（&lt;3%）或回踩 5 日线、金价守住 4600</td><td>10%</td></tr>
+      <tr><td>预留</td><td>现金</td><td>—</td><td>等 8/31 压哨落地 + 9/1 成交回 2 万亿 + 站稳 3940 转攻信号</td><td>65% 观望</td></tr>
+    </tbody>
+  </table>
+  <div class="note">单票不超 15%；今日以"防守+结构低吸"为主，放量站稳 3940 且成交回 2 万亿以上，再把预留现金转为 9/1 进攻。</div>
+</div>
+
+<h2>信号归因雷达（四维强度）+ 贡献拆解</h2>
+<div class="card grid g4">
+  <div style="grid-column:1/3"><div id="radar" style="width:100%;height:300px"></div></div>
+  <div style="grid-column:3/5">
+    <div class="kv"><span>技术指标强度</span><b>55</b></div>
+    <div class="kv"><span>新闻情绪强度</span><b>42</b></div>
+    <div class="kv"><span>基本面强度</span><b>72</b></div>
+    <div class="kv"><span>市场环境强度</span><b>30</b></div>
+    <div class="attr" style="margin-top:10px">
+      <div>📊 信号归因（贡献占比 · 合计 100%）</div>
+      <div>技术指标 <b>22%</b><div class="bar"><i style="width:22%;background:#667eea"></i></div></div>
+      <div>新闻情绪 <b>20%</b><div class="bar"><i style="width:20%;background:#764ba2"></i></div></div>
+      <div>基本面 <b>33%</b><div class="bar"><i style="width:33%;background:#00d4aa"></i></div></div>
+      <div>市场环境 <b>25%</b><div class="bar"><i style="width:25%;background:#ffa502"></i></div></div>
+      <div class="note">最强看多：中报高景气硬兑现（AI/半导体/有色业绩快增、大金融中报拐点）<br>最强看空：英伟达-4%+费半-3.5% 外盘科技杀 + 美联储加息预期升温 + 中报压哨+月末资金扰动 + 大盘地量未破 2 万亿</div>
+    </div>
+  </div>
+</div>
+
+<h2>板块涨跌透视（8/28 收盘延续 · 今日研判）</h2>
+<div class="card"><div id="sector" style="width:100%;height:360px"></div>
+  <div class="note">8/28 大金融/有色/算力领涨，医药/农业/白酒/地产领跌。今日研判：大金融（券商）有望延续低位补涨；半导体设备受 CSEAC 催化局部活跃但整体受英伟达拖累；有色贵金属高位分歧、贵金属受加息预期短线承压；高位 CPO/纯题材防获利回吐。</div>
+</div>
+
+<h2>风险警报 & 积极催化</h2>
+<div class="alert">
+  <b>🔴 风险警报（今日高波动 · 压哨+月末+外盘科技杀）</b>
+  <ul style="margin:8px 0 0 18px;font-size:14px">
+    <li><b>英伟达 8/29 重挫 4%+ 费半 -3.5%</b>：加息预期升温（巴克莱/法兴预测 9月、12月各加息一次）叠加高位获利了结；周一 A股算力/半导体（中际旭创/新易盛）易低开/承压，防"利好兑现+外盘拖累"双杀</li>
+    <li><b>美联储加息预期升温</b>：彻底扭转此前宽松交易，高估值科技 + 贵金属短线首当其冲，美元走强压制</li>
+    <li><b>8/31 中报压哨最后日</b>：158 家公司集中披露（含三一重工、长江电力、天风证券等），尾部"业绩杀"/资产减值负面信息易集中释放，高位科技/纯题材尤险</li>
+    <li><b>8月制造业 PMI 今日公布</b>（7月 49.2% 收缩）：若低于预期，加剧经济弱复苏担忧与防守情绪</li>
+    <li><b>月末资金面扰动 + 大盘地量 1.90 万亿</b>：指数红、个股冷的割裂延续，接力情绪弱（连板晋级率偏低）</li>
+  </ul>
+</div>
+<div class="good">
+  <b>🟢 积极催化（对冲项）</b>
+  <ul style="margin:8px 0 0 18px;font-size:14px">
+    <li><b>中概逆势大涨</b>：阿里+13%（AI 基础设施累计投入超千亿）、纳斯达克中国金龙指数+1.55%、百度+4.7%——对 A股 AI/科技情绪形成对冲，富时 A50 夜盘仅微涨 0.05%</li>
+    <li><b>CSEAC 2026 半导体设备展今日无锡开幕（8/31–9/2）</b>：半导体设备/材料方向有事件催化，国产替代逻辑强化</li>
+    <li><b>大金融中报拐点 + 低位</b>：券商/保险估值处历史低位，资金防御切换首选，搭台作用仍在</li>
+    <li><b>黄金仍在 4600+ 高位</b>，央行购金（Q2 +62.4% y/y）提供底部支撑；铜供需偏紧（TC 深度为负）中长期逻辑未破，仅短线受加息压制</li>
+    <li><b>9/1 起压哨落地 + 金九银十 + 政策窗口</b>：若成交回 2 万亿、站稳 3940，仓位可由 35% 提至 60% 转攻</li>
+  </ul>
+</div>
+
+<h2>操作检查清单（风控）</h2>
+<div class="card">
+  <ul class="check">
+    <li>开盘前 30 分钟定情绪：东方财富/中信、中际旭创/新易盛、紫金/山东黄金 竞价强度；若核心股大面积低开弱承接→当日防守、减少开仓</li>
+    <li>严进策略：个股乖离率 &gt; 5% 一律不追，只做回踩均线低吸（尤其 CPO/有色高位股）</li>
+    <li class="risk">外盘科技杀传导：算力/半导体仓位不超配（封顶 10%），英伟达-4% 当日不追高开，等回踩企稳</li>
+    <li class="risk">贵金属加息预期压制：若金价跌破 4600，持仓减仓；跳空高开&gt;5% 不追，防冲高回落</li>
+    <li class="risk">中报压哨日：回避业绩存疑的高估值高位票；PMI 若低于预期，整体降噪</li>
+    <li>大金融为相对最安全方向，回调即低吸机会，可优先于高位题材配置（封顶 15%）</li>
+    <li>跌破 MA20 / 分时均线放量破位，无条件止损，不格局</li>
+    <li>真突破必伴放量：成交重回 2 万亿 + 指数站稳 3940，才是 9/1 加仓信号</li>
+  </ul>
+</div>
+
+<div class="foot">
+  分析时间：2026-08-31（周一）06:55 盘前 ｜ 使用策略：多头趋势 + 热点题材 + 缩量回踩 + 事件驱动<br>
+  数据来源：公开行情/资讯/机构研报整合（8/28 收盘 + 8/29–30 外盘/周末）｜ 大盘环境：震荡市·缩量割裂（压哨日+外盘科技杀）<br>
+  ⚠️ 免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论基于历史数据与技术模型，不保证未来表现。
+</div>
+
+<script>
+const ring = echarts.init(document.getElementById('ring'));
+ring.setOption({
+  series:[{type:'gauge',startAngle:90,endAngle:-270,radius:'100%',pointer:{show:false},
+    progress:{show:true,roundCap:true,width:14,itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#ffa502'},{offset:1,color:'#ff7b00'}])}},
+    axisLine:{lineStyle:{width:14,color:[[1,'#2d2d44']]}},splitLine:{show:false},axisTick:{show:false},
+    detail:{valueAnimation:true,fontSize:34,fontWeight:'bolder',color:'#ffa502',offsetCenter:[0,'0%'],formatter:'{value}'},
+    title:{show:true,offsetCenter:[0,'28%'],color:'#94a3b8',fontSize:12},
+    data:[{value:48,name:'综合评分 /100'}]}]
+});
+const radar = echarts.init(document.getElementById('radar'));
+radar.setOption({
+  tooltip:{},legend:{data:['强度'],textStyle:{color:'#94a3b8'},bottom:0},
+  radar:{indicator:[{name:'技术指标',max:100},{name:'新闻情绪',max:100},{name:'基本面',max:100},{name:'市场环境',max:100}],
+    axisName:{color:'#e2e8f0'},splitLine:{lineStyle:{color:'#2d2d44'}},splitArea:{areaStyle:{color:['rgba(102,126,234,.04)','rgba(102,126,234,.08)']}},axisLine:{lineStyle:{color:'#2d2d44'}}},
+  series:[{type:'radar',data:[{value:[55,42,72,30],name:'强度',
+    areaStyle:{color:'rgba(255,165,2,.25)'},lineStyle:{color:'#ffa502'},itemStyle:{color:'#ffa502'}}]}]
+});
+const sec = echarts.init(document.getElementById('sector'));
+const d=[['大金融/券商',3.2,1],['半导体设备',2.6,1],['铜/工业金属',2.4,1],['黄金/贵金属',2.0,1],['CPO/液冷',1.6,1],['AI服务器',1.4,1],['创新药/CRO',-3.0,-1],['农业种植',-2.3,-1],['白酒',-1.6,-1],['游戏/教育',-1.2,-1],['房地产开发',-1.0,-1],['高位纯题材',-2.0,-1]];
+sec.setOption({
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+  grid:{left:100,right:30,top:20,bottom:20},
+  xAxis:{type:'value',axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+  yAxis:{type:'category',data:d.map(x=>x[0]),axisLabel:{color:'#e2e8f0'}},
+  series:[{type:'bar',data:d.map(x=>({value:x[1],itemStyle:{color:x[2]>0?'#00d4aa':'#ff4757'}})),
+    label:{show:true,position:'right',color:'#e2e8f0',formatter:'{c}%'},barWidth:'55%'}]
+});
+window.addEventListener('resize',()=>{ring.resize();radar.resize();sec.resize();});
+</script>
+</body>
+</html>
