@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-30 08:00:51",
-  "total": 218,
+  "generatedAt": "2026-08-30 12:45:42",
+  "total": 219,
   "categories": [
     {
       "key": "panqian",
@@ -327,9 +327,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 46,
-      "latest": "20260829",
+      "count": 47,
+      "latest": "20260830",
       "reports": [
+        {
+          "date": "20260830",
+          "dateLabel": "2026-08-30（周日）",
+          "file": "reports/noon/noon_20260830.html",
+          "title": "A股周日开盘作战手册 · 2026-08-30（周日）· 地产新政·长鑫LPDDR6首发·阿里业绩·美联储鹰派·贵金属暴跌",
+          "size": 40683
+        },
         {
           "date": "20260829",
           "dateLabel": "2026-08-29（周六）",
