@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-08-31 08:02:20",
-  "total": 223,
+  "generatedAt": "2026-08-31 12:45:41",
+  "total": 224,
   "categories": [
     {
       "key": "panqian",
@@ -334,9 +334,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 47,
-      "latest": "20260830",
+      "count": 48,
+      "latest": "20260831",
       "reports": [
+        {
+          "date": "20260831",
+          "dateLabel": "2026-08-31（周一）",
+          "file": "reports/noon/noon_20260831.html",
+          "title": "A股午间复盘 · 2026-08-31（周一）· 高低切加速·沪指微跌深创承压·贵金属瀑布·银行煤炭托底·控仓",
+          "size": 35870
+        },
         {
           "date": "20260830",
           "dateLabel": "2026-08-30（周日）",
