@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-01 15:46:03",
-  "total": 228,
+  "generatedAt": "2026-09-01 16:45:45",
+  "total": 229,
   "categories": [
     {
       "key": "panqian",
@@ -1056,9 +1056,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 44,
-      "latest": "20260831",
+      "count": 45,
+      "latest": "20260901",
       "reports": [
+        {
+          "date": "20260901",
+          "dateLabel": "2026-09-01（周二）",
+          "file": "reports/limitup/limitup_20260901.html",
+          "title": "涨停梯队复盘 · 2026-09-01（周二）· 题材强指数弱·农业消费短剧主线",
+          "size": 38981
+        },
         {
           "date": "20260831",
           "dateLabel": "2026-08-31（周一）",
