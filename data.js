@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-01 08:01:08",
-  "total": 227,
+  "generatedAt": "2026-09-01 12:45:33",
+  "total": 228,
   "categories": [
     {
       "key": "panqian",
@@ -341,9 +341,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 48,
-      "latest": "20260831",
+      "count": 49,
+      "latest": "20260901",
       "reports": [
+        {
+          "date": "20260901",
+          "dateLabel": "2026-09-01（周二）",
+          "file": "reports/noon/noon_20260901.html",
+          "title": "A股午间复盘 · 2026-09-01（周二）· 逼近4000·高低切(农业+中特估托底·AI硬件杀跌)·控仓55-65%",
+          "size": 34977
+        },
         {
           "date": "20260831",
           "dateLabel": "2026-08-31（周一）",
