@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盘前计划 · 2026-09-02（v50.0 · 3问版）</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --acc1:#667eea; --acc2:#764ba2; --txt:#e2e8f0; --txt2:#94a3b8; --border:#2d2d44;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6;padding:18px;max-width:1180px;margin:0 auto}
+  .head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+  .head h1{font-size:20px;background:linear-gradient(90deg,var(--acc1),var(--acc2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:800}
+  .head .meta{font-size:12px;color:var(--txt2)}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px}
+  .card h2{font-size:16px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .card h2 .tag{font-size:11px;background:linear-gradient(90deg,var(--acc1),var(--acc2));padding:2px 8px;border-radius:6px;color:#fff}
+  /* summary */
+  .summary{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:14px}
+  @media(max-width:820px){.summary{grid-template-columns:1fr}}
+  .sig-big{font-size:34px;font-weight:900;text-align:center;padding:18px 8px;border-radius:12px}
+  .sig-BUY{background:linear-gradient(135deg,#00d4aa33,#00d4aa11);color:var(--buy);border:1px solid #00d4aa55}
+  .price-row{display:flex;justify-content:space-around;text-align:center;margin-top:6px}
+  .price-row div span{display:block;font-size:11px;color:var(--txt2)}
+  .price-row div b{font-size:18px}
+  .ring-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center}
+  /* q blocks */
+  .q{background:linear-gradient(135deg,#1a1a2e,#16162b);border-left:4px solid var(--acc1);border-radius:10px;padding:14px 16px;margin-bottom:12px}
+  .q .qt{font-size:14px;font-weight:700;color:var(--acc1);margin-bottom:6px}
+  .q .qa{font-size:14px;color:var(--txt)}
+  .q .qa b{color:#fff}
+  .pill{display:inline-block;font-size:12px;padding:2px 9px;border-radius:20px;margin:2px 3px 2px 0}
+  .p-new{background:#00d4aa22;color:var(--buy);border:1px solid #00d4aa55}
+  .p-cont{background:#667eea22;color:#9db4ff;border:1px solid #667eea55}
+  .p-watch{background:#ffa50222;color:var(--hold);border:1px solid #ffa50255}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+  th,td{border:1px solid var(--border);padding:8px 10px;text-align:left}
+  th{background:#22223a;color:var(--txt2);font-weight:600}
+  td b{color:#fff}
+  .up{color:var(--buy)} .down{color:var(--sell)} .mid{color:var(--hold)}
+  .stages{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:820px){.stages{grid-template-columns:1fr}}
+  .stage{background:#16162b;border:1px solid var(--border);border-radius:10px;padding:14px}
+  .stage h3{font-size:14px;margin-bottom:8px;color:#fff}
+  .bar{height:8px;background:#2d2d44;border-radius:6px;overflow:hidden;margin:8px 0}
+  .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--acc1),var(--buy))}
+  .ok{color:var(--buy);font-weight:700} .warn{color:var(--hold);font-weight:700} .no{color:var(--sell);font-weight:700}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:820px){.grid2{grid-template-columns:1fr}}
+  .risk{background:#ff475711;border:1px solid #ff475744;border-radius:10px;padding:12px 14px;margin-top:10px}
+  .risk b{color:var(--sell)}
+  .cat{background:#00d4aa11;border:1px solid #00d4aa44;border-radius:10px;padding:12px 14px;margin-top:10px}
+  .cat b{color:var(--buy)}
+  .note{font-size:12px;color:var(--txt2);margin-top:10px;line-height:1.7}
+  .footer{font-size:11px;color:var(--txt2);text-align:center;margin-top:18px;padding-top:14px;border-top:1px solid var(--border);line-height:1.8}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--txt2);margin-top:6px}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:middle}
+</style>
+</head>
+<body>
+
+<div class="head">
+  <h1>📊 盘前计划 · 2026-09-02（周三）</h1>
+  <div class="meta">v50.0 · 3问版 · 数据基准：9/1(周二)收盘 + 隔夜外盘 + 盘前资讯<br>分析框架：情绪周期 + 热点题材 + 多头趋势 | 综合评分 <b style="color:var(--buy)">64</b>/100</div>
+</div>
+
+<!-- ========== 顶部决策摘要 ========== -->
+<div class="card">
+  <div class="summary">
+    <div>
+      <div class="sig-big sig-BUY">BUY<br><span style="font-size:13px;color:var(--txt2);font-weight:400">择机买入 · 结构低吸偏积极</span></div>
+      <div class="price-row">
+        <div><span>计划仓位</span><b style="color:var(--buy)">55%</b></div>
+        <div><span>现金储备</span><b style="color:var(--hold)">45%</b></div>
+        <div><span>分批</span><b>3-4 批</b></div>
+      </div>
+    </div>
+    <div class="ring-wrap"><div id="ring" style="width:100%;height:170px"></div></div>
+    <div>
+      <div style="font-size:13px;color:var(--txt2);margin-bottom:6px">大盘环境（9/1收盘）</div>
+      <table>
+        <tr><th>指数</th><th>收盘</th><th>涨跌幅</th></tr>
+        <tr><td>上证</td><td>3979.89</td><td class="down">-0.16%</td></tr>
+        <tr><td>深成指</td><td>13872.38</td><td class="down">-1.02%</td></tr>
+        <tr><td>创业板</td><td>3393.43</td><td class="down">-1.32%</td></tr>
+        <tr><td>两市成交</td><td colspan="2">2.03万亿（维持2万亿+）</td></tr>
+        <tr><td>涨跌/停</td><td colspan="2">3387涨 / 86涨停 / <b style="color:var(--buy)">0跌停</b></td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ========== Q1 主流题材 ========== -->
+<div class="card">
+  <h2><span class="tag">Q1</span> 当下的主流题材是什么？（至多3个）</h2>
+  <div class="q">
+    <div class="qt">💡 一句话结论</div>
+    <div class="qa">9/1 盘面完成<b>「高低切」轮动</b>：旧主线 <b>AI算力硬件（半导体/PCB/服务器）</b>高位分歧回落，资金切向 <b>低位补涨 + 新催化</b>。当下三大主流题材为：<b>① 农业/种业（粮食安全）· 新晋绝对主线</b>　<b>② AI应用（AI影视/短剧/数字媒体）· 延续主线</b>　<b>③ 大金融（银行/保险/券商）· 压舱石</b>。</div>
+  </div>
+  <table>
+    <tr><th style="width:8%">排序</th><th style="width:20%">主流题材</th><th style="width:14%">9/1强度</th><th>核心逻辑 / 驱动</th><th style="width:12%">阶段</th></tr>
+    <tr>
+      <td><b>①</b></td>
+      <td><b>农业 / 种业<br><span style="color:var(--txt2);font-size:11px">粮食安全</span></b></td>
+      <td>种植业 <span class="up">+7.19%</span><br>转基因 <span class="up">+8.07%</span><br>主力净流入 <span class="up">+17.7亿(全市场第一)</span></td>
+      <td>全球粮价大涨（彭博农业现货指数8月+13%，小麦/玉米创3年新高）；超强厄尔尼诺概率上调至95%；国内主粮最低收购价托底；种业振兴+转基因商业化第三年→业绩兑现期。行业<b>20/20只全涨</b>、15+股涨停，首日即主线级。</td>
+      <td><span class="pill p-new">新晋主线</span><br>启动→加速</td>
+    </tr>
+    <tr>
+      <td><b>②</b></td>
+      <td><b>AI应用<br><span style="color:var(--txt2);font-size:11px">AI影视/短剧/数字媒体</span></b></td>
+      <td>数字媒体 <span class="up">+5.60%</span><br>芒果超媒 <span class="up">+20.02%</span><br>区块链主力 <span class="up">+34.8亿</span></td>
+      <td>AI应用从"上游算力"向"下游内容"扩散；芒果超媒20cm领涨、中文在线活跃（量比3.57）；短剧/互动游戏多股涨停。AI应用成为9月"科技内低位补涨"主线，情绪高但整体估值仍低于年初。</td>
+      <td><span class="pill p-cont">延续主线</span><br>主升初期</td>
+    </tr>
+    <tr>
+      <td><b>③</b></td>
+      <td><b>大金融<br><span style="color:var(--txt2);font-size:11px">银行/保险/券商</span></b></td>
+      <td>保险 <span class="up">+2.62%</span><br>银行 <span class="up">+1.88%</span><br>券商 <span class="up">+1.18%</span></td>
+      <td>市场"搭台"压舱石。银行此前创历史新高后高位延续（邮储+4.18%、招行/农行+1.8%+）；保险/券商低位补涨刚启动；中报拐点+红利属性，稳健资金避风港。</td>
+      <td><span class="pill p-cont">压舱石</span><br>银行高位/券商补涨</td>
+    </tr>
+  </table>
+  <div class="note">⚠️ <b>分歧观察（未列入主流）</b>：<span class="mid">AI算力硬件</span>（半导体设备 -2.84%、PCB -2.90%、服务器 -2.10%）9/1 高位回落，液冷超充 +1.98%、华为算力 +1.70% 抗跌——暂列"观察/等止跌"，待回踩企稳后再评估回流。</div>
+</div>
+
+<!-- ========== Q2 核心股 ========== -->
+<div class="card">
+  <h2><span class="tag">Q2</span> 主流题材的核心是谁？（核心股对照表）</h2>
+  <table>
+    <tr><th>题材</th><th>弹性龙头（打板/分歧）</th><th>中军（业绩/稳健）</th><th>ETF（趋势仓位）</th></tr>
+    <tr>
+      <td><b>① 农业/种业</b></td>
+      <td>神农种业(300189)<span class="up">+20%</span>、新赛股份(600540)<span class="up">+10%</span>、敦煌种业、万向德农</td>
+      <td>隆平高科(000998)<span class="up">+10%</span>、农发种业(600313)<span class="up">+10%</span>、登海种业、荃银高科</td>
+      <td>农业ETF(159825)、粮食ETF、养殖ETF</td>
+    </tr>
+    <tr>
+      <td><b>② AI应用</b></td>
+      <td>芒果超媒(300413)<span class="up">+20%</span>、欢瑞世纪/掌阅科技/博纳影业(涨停)</td>
+      <td>中文在线(300364)<span class="up">+3.78%</span>、上海电影、昆仑万维、光线传媒</td>
+      <td>影视ETF(516620/159855)、传媒ETF(512980)</td>
+    </tr>
+    <tr>
+      <td><b>③ 大金融</b></td>
+      <td>东方财富、中信证券（券商弹性）；新华保险（保险弹性）</td>
+      <td>招商银行(600036)<span class="up">+1.84%</span>、农业银行(601288)<span class="up">+1.88%</span>、邮储银行(601658)<span class="up">+4.18%</span>、中国平安</td>
+      <td>银行ETF(512820/159253)、证券ETF</td>
+    </tr>
+  </table>
+  <div class="legend">
+    <span><i style="background:var(--buy)"></i>弹性龙头=高波动高弹性，适合分歧低吸/打板高手</span>
+    <span><i style="background:var(--acc1)"></i>中军=机构主导、趋势稳，适合大多数人低吸</span>
+    <span><i style="background:var(--hold)"></i>ETF=分散风险、吃板块β</span>
+  </div>
+</div>
+
+<!-- ========== Q3 阶段 + 能不能买 + 计划 ========== -->
+<div class="card">
+  <h2><span class="tag">Q3</span> 走到哪个阶段了？能不能买？盘前交易计划</h2>
+  <div class="stages">
+    <div class="stage">
+      <h3>① 农业/种业</h3>
+      <div class="bar"><i style="width:38%"></i></div>
+      <div style="font-size:12px;color:var(--txt2)">阶段：启动 → 加速初期（9/1首板爆发）</div>
+      <p style="margin:8px 0;font-size:13px">首日情绪过热（神农种业已20cm、乖离偏大）。基本面驱动（全球粮价+厄尔尼诺+种业振兴）有持续性，非一日游。</p>
+      <p><span class="ok">✅ 能买</span> 但<b>不追涨停、等回踩</b>。优先头部种企（隆平高科/农发种业/登海种业，有业绩）或农业ETF做趋势；弹性股仅适合分歧低吸。</p>
+    </div>
+    <div class="stage">
+      <h3>② AI应用</h3>
+      <div class="bar"><i style="width:45%"></i></div>
+      <div style="font-size:12px;color:var(--txt2)">阶段：主升初期（数字媒体5日+12.65%，但20日仅+4.32%、年初至今-7.87%→低位启动）</div>
+      <p style="margin:8px 0;font-size:13px">9/1 验证日通过（延续爆发），但板块从低位启动、估值仍低，空间未充分兑现。</p>
+      <p><span class="ok">✅ 能买</span> 龙头<b>回踩5日线低吸</b>（芒果超媒/中文在线），不追20cm涨停；影视ETF做趋势仓位。</p>
+    </div>
+    <div class="stage">
+      <h3>③ 大金融</h3>
+      <div class="bar"><i style="width:55%"></i></div>
+      <div style="font-size:12px;color:var(--txt2)">阶段：银行高位（乖离偏大）/ 保险·券商补涨刚启动</div>
+      <p style="margin:8px 0;font-size:13px">压舱石角色，稳健资金避风港；券商/保险低位补涨最安全。</p>
+      <p><span class="ok">✅ 能买</span> 券商/保险低位补涨可积极低吸（东方财富/中信/中国平安）；<b>银行不追高、等回踩</b>。</p>
+    </div>
+  </div>
+
+  <h3 style="margin:18px 0 8px;font-size:14px">📋 分批建仓计划（总仓位 55%，分 3-4 批）</h3>
+  <table>
+    <tr><th style="width:10%">批次</th><th style="width:18%">方向</th><th style="width:12%">仓位</th><th>操作要点（狙击点）</th></tr>
+    <tr><td>第1批</td><td>大金融（券商/保险）</td><td>15%</td><td>低位补涨最稳，开盘不追高、回踩5日线低吸东方财富/中信证券/中国平安</td></tr>
+    <tr><td>第2批</td><td>AI应用（传媒/影视）</td><td>15%</td><td>龙头回踩5日线低吸芒果超媒/中文在线，或影视ETF建趋势仓；不追20cm</td></tr>
+    <tr><td>第3批</td><td>农业/种业</td><td>10-15%</td><td>仅分歧低吸头部种企（隆平高科/农发种业）或农业ETF；神农种业等弹性股不打板不追</td></tr>
+    <tr><td>机动</td><td>预留现金</td><td>45%</td><td>应对高位分歧+9月震荡；若农业次日转一致/成交再破2.1万亿可加至60%</td></tr>
+  </table>
+
+  <div class="risk">
+    <b>🔴 风险警报（一票否决项）</b><br>
+    1. <b>农业首日过热</b>：若9/2 开盘大幅高开（种业指数+5%以上）则放弃追高，等分歧回踩——避免"利好兑现"大面。<br>
+    2. <b>AI算力硬件高位未止跌</b>：半导体设备/PCB/服务器 9/1 已 -2~3%，相关持仓暂不补，等缩量企稳。<br>
+    3. <b>创业板弱势</b>（-1.32%）：科技成长整体承压，高位连板乖离股（前高标）警惕补跌。<br>
+    4. <b>9月日历偏震荡</b> + 美联储加息预期（沃什表态）扰动 + 隔夜英伟达温和 -1.51%（无系统性风险但压制算力情绪）。
+  </div>
+  <div class="cat">
+    <b>🟢 积极催化</b><br>
+    ① 两市成交连续维持 <b>2万亿+</b>、<b>0跌停</b> → 市场情绪正常、无明显退潮；② 新主线农业逻辑硬（全球粮价+政策托底），持续性优于此前一日游题材；③ 大金融稳健搭台，给低位题材提供容错空间；④ 隔夜外盘平稳（中概-0.10%），开盘无外部冲击。
+  </div>
+
+  <div class="note">
+    <b>📌 今日（9/2）关键观察清单：</b><br>
+    · 农业能否"次日不坑人"（分歧转一致）→ 决定主线成色；<br>
+    · AI应用（芒果超媒/中文在线）延续性 vs 冲高回落；<br>
+    · 大金融能否继续搭台（券商/保险补涨力度）；<br>
+    · 成交能否维持 2万亿+；创业板能否止跌（决定风格是否延续高低切）。
+  </div>
+</div>
+
+<!-- ========== 信号归因 + 板块涨跌 ========== -->
+<div class="card">
+  <h2><span class="tag">归因</span> 信号归因雷达 & 9/1 板块涨跌</h2>
+  <div class="grid2">
+    <div><div id="radar" style="width:100%;height:300px"></div></div>
+    <div><div id="sector" style="width:100%;height:300px"></div></div>
+  </div>
+  <div class="note">
+    <b>📊 信号归因（四维贡献度≈100%）：</b><br>
+    · 技术指标贡献 <b>30%</b>：沪指3950-4000区间震荡未破位、MA多头但创业板走弱；农业/AI应用板块技术突破。<br>
+    · 新闻情绪贡献 <b>28%</b>：全球粮价/厄尔尼诺/种业振兴（农业强催化）、芒果超媒20cm情绪高；英伟达-1.51%温和无系统性风险。<br>
+    · 基本面贡献 <b>20%</b>：中报落地、种业进入业绩兑现期、银行保险中报拐点、全球粮食供需趋紧。<br>
+    · 市场环境贡献 <b>22%</b>：成交2.03万亿维持2万亿+、0跌停情绪正常；但9月偏震荡+加息预期+创业板弱势。<br>
+    <b>最强看多信号</b>：农业/种业首日即主线级（行业全涨+主力净流入全市场第一）+ 成交持续2万亿+。<br>
+    <b>最强看空信号</b>：AI算力硬件高位分歧回落 + 创业板单日-1.32% 拖累成长风格。
+  </div>
+</div>
+
+<!-- ========== 元信息 ========== -->
+<div class="card">
+  <h2><span class="tag">环境</span> 大盘环境摘要 & 元信息</h2>
+  <table>
+    <tr><th style="width:22%">维度</th><th>状态</th></tr>
+    <tr><td>市场阶段</td><td>结构性行情 · 高低切轮动（科技高位→低位补涨+新主线）</td></tr>
+    <tr><td>量能</td><td>两市 2.03万亿，连续维持 2万亿+（健康），较8/31缩量976亿</td></tr>
+    <tr><td>情绪</td><td>正常（上升家数占比60%，86涨停 / <b style="color:var(--buy)">0跌停</b>）</td></tr>
+    <tr><td>风格</td><td>低位防御+政策催化占优；高位科技分歧</td></tr>
+    <tr><td>隔夜外盘</td><td>英伟达 -1.51%（盘后217.49）、中概股回归 -0.10% → 无系统性风险</td></tr>
+    <tr><td>相对 v49.0 核心变化</td><td>旧主线 AI算力硬件分歧退居观察；<b style="color:var(--buy)">农业/种业新晋绝对主线</b>；AI应用/大金融延续</td></tr>
+  </table>
+  <div class="footer">
+    分析时间：2026-09-02 06:56（盘前）｜数据来源：NeoData 金融数据（9/1 收盘 + 隔夜）｜使用策略：情绪周期 + 热点题材 + 多头趋势<br>
+    <b style="color:var(--txt2)">⚠️ 免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论均基于历史数据与技术模型，不保证未来表现。</b>
+  </div>
+</div>
+
+<script>
+// 综合评分环
+var ring = echarts.init(document.getElementById('ring'));
+ring.setOption({
+  series:[{
+    type:'gauge',startAngle:210,endAngle:-30,min:0,max:100,
+    progress:{show:true,width:14,itemStyle:{color:'#00d4aa'}},
+    axisLine:{lineStyle:{width:14,color:[[1,'#2d2d44']]}},
+    pointer:{show:false},axisTick:{show:false},splitLine:{show:false},
+    axisLabel:{show:false},
+    detail:{valueAnimation:true,fontSize:34,fontWeight:'bolder',color:'#00d4aa',offsetCenter:[0,'0%'],formatter:'{value}'},
+    title:{show:true,offsetCenter:[0,'32%'],color:'#94a3b8',fontSize:12},
+    data:[{value:64,name:'综合评分 / BUY'}]
+  }]
+});
+
+// 信号归因雷达（四维评分0-100）
+var radar = echarts.init(document.getElementById('radar'));
+radar.setOption({
+  tooltip:{},
+  radar:{
+    indicator:[
+      {name:'技术指标',max:100},{name:'新闻情绪',max:100},
+      {name:'基本面',max:100},{name:'市场环境',max:100}
+    ],
+    radius:'65%',axisName:{color:'#e2e8f0',fontSize:12},
+    splitLine:{lineStyle:{color:'#2d2d44'}},splitArea:{areaStyle:{color:['#1a1a2e','#16162b']}},
+    axisLine:{lineStyle:{color:'#2d2d44'}}
+  },
+  series:[{
+    type:'radar',data:[{value:[66,72,60,62],
+      areaStyle:{color:'rgba(102,126,234,0.35)'},lineStyle:{color:'#667eea'},itemStyle:{color:'#00d4aa'}}],
+    label:{show:true,color:'#e2e8f0',fontSize:11}
+  }]
+});
+
+// 9/1 板块涨跌 TOP（概念+行业混合）
+var sector = echarts.init(document.getElementById('sector'));
+var sd = [
+  {n:'种植业',v:7.19},{n:'转基因',v:8.07},{n:'玉米',v:7.06},{n:'数字媒体',v:5.60},
+  {n:'保险',v:2.62},{n:'银行',v:1.88},{n:'券商',v:1.18},
+  {n:'半导体设备',v:-2.84},{n:'PCB',v:-2.90},{n:'服务器',v:-2.10}
+];
+sector.setOption({
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+  grid:{left:70,right:20,top:10,bottom:20},
+  xAxis:{type:'value',axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+  yAxis:{type:'category',data:sd.map(d=>d.n).reverse(),axisLabel:{color:'#e2e8f0',fontSize:11},axisLine:{lineStyle:{color:'#2d2d44'}}},
+  series:[{
+    type:'bar',data:sd.map(d=>({value:d.v,itemStyle:{color:d.v>=0?'#00d4aa':'#ff4757'}})).reverse(),
+    label:{show:true,position:'right',color:'#e2e8f0',fontSize:11,formatter:'{c}%'},
+    barWidth:'55%'
+  }]
+});
+
+window.addEventListener('resize',function(){ring.resize();radar.resize();sector.resize();});
+</script>
+</body>
+</html>
