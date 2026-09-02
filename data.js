@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-02 08:01:55",
-  "total": 231,
+  "generatedAt": "2026-09-02 12:45:27",
+  "total": 232,
   "categories": [
     {
       "key": "panqian",
@@ -348,9 +348,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 49,
-      "latest": "20260901",
+      "count": 50,
+      "latest": "20260902",
       "reports": [
+        {
+          "date": "20260902",
+          "dateLabel": "2026-09-02（周三）",
+          "file": "reports/noon/noon_20260902.html",
+          "title": "A股午间复盘 · 2026-09-02（周三）· 放量下挫·抱团瓦解·冰点第一天·控仓40-50%",
+          "size": 35662
+        },
         {
           "date": "20260901",
           "dateLabel": "2026-09-01（周二）",
