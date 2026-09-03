@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股行情复盘（2026-09-03 · 周四 · 缩量横盘·指数红个股绿·中性偏谨慎·仓位降至4-5成）</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --card2:#16162a; --border:#2d2d44;
+    --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --up:#ef4444; --down:#22c55e; --txt:#e2e8f0; --txt2:#94a3b8;
+    --accent1:#667eea; --accent2:#764ba2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,sans-serif;line-height:1.6;padding:18px;max-width:1180px;margin:0 auto}
+  .header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:18px;padding:18px 22px;background:linear-gradient(135deg,#1a1a2e,#16243a);border:1px solid var(--border);border-radius:16px}
+  .header h1{font-size:22px;font-weight:700;letter-spacing:.5px}
+  .header .sub{color:var(--txt2);font-size:13px;margin-top:4px}
+  .badge{display:inline-block;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;background:rgba(255,165,2,.15);color:#ffd9a0;border:1px solid rgba(255,165,2,.4)}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:860px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px}
+  .card h2{font-size:15px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .card h2 .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--accent1),var(--accent2))}
+  .chart{width:100%;height:300px}
+  .kpi{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+  .kpi .v{font-size:24px;font-weight:800;letter-spacing:.5px}
+  .kpi .l{font-size:12px;color:var(--txt2);margin-top:4px}
+  .up{color:var(--up)} .down{color:var(--down)} .neu{color:var(--txt2)}
+  .summary{font-size:15px;line-height:1.8}
+  .summary b{color:#fff}
+  .pill{display:inline-block;padding:3px 10px;border-radius:8px;font-size:12px;font-weight:600;margin:2px 4px 2px 0}
+  .pill-red{background:rgba(255,71,87,.15);color:var(--sell);border:1px solid rgba(255,71,87,.3)}
+  .pill-green{background:rgba(34,197,94,.13);color:var(--down);border:1px solid rgba(34,197,94,.3)}
+  .pill-amber{background:rgba(255,165,2,.15);color:var(--hold);border:1px solid rgba(255,165,2,.3)}
+  .pill-blue{background:rgba(102,126,234,.15);color:#8a9bff;border:1px solid rgba(102,126,234,.35)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--txt2);font-weight:600;font-size:12px}
+  tr:last-child td{border-bottom:none}
+  .note{font-size:12px;color:var(--txt2);margin-top:10px;padding:10px 12px;background:var(--card2);border-radius:10px;border-left:3px solid var(--accent1)}
+  .alert{background:rgba(255,71,87,.08);border:1px solid rgba(255,71,87,.3);border-radius:10px;padding:10px 14px;font-size:13px;color:#ffb3ba;margin-top:10px}
+  .ok{background:rgba(0,212,170,.08);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:10px 14px;font-size:13px;color:#9af0dd;margin-top:10px}
+  .warn{background:rgba(255,165,2,.08);border:1px solid rgba(255,165,2,.3);border-radius:10px;padding:10px 14px;font-size:13px;color:#ffd9a0;margin-top:10px}
+  .foot{margin-top:20px;font-size:11px;color:var(--txt2);text-align:center;line-height:1.8}
+  .temp-wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .temp-num{font-size:34px;font-weight:800;color:var(--hold)}
+  .stat-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px dashed var(--border)}
+  .stat-row:last-child{border-bottom:none}
+  .cata{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:860px){.cata{grid-template-columns:1fr}}
+  .cata-item{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:13px 15px}
+  .cata-item .t{font-size:13px;font-weight:700;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+  .cata-item .d{font-size:12.5px;color:var(--txt2);line-height:1.65}
+  .scen{padding:12px 14px;border-radius:12px;border:1px solid var(--border);margin-top:10px}
+  .scen-up{background:rgba(0,212,170,.07);border-color:rgba(0,212,170,.3)}
+  .scen-mid{background:rgba(255,165,2,.07);border-color:rgba(255,165,2,.3)}
+  .scen-dn{background:rgba(255,71,87,.07);border-color:rgba(255,71,87,.3)}
+  .scen .h{font-size:13.5px;font-weight:700;margin-bottom:4px}
+  .est{color:var(--hold);font-size:11px;border:1px dashed var(--hold);border-radius:4px;padding:0 4px}
+  .checklist{counter-reset:ck;list-style:none;padding:0;margin:10px 0 0}
+  .checklist li{position:relative;padding:9px 12px 9px 38px;font-size:13px;border-bottom:1px dashed var(--border)}
+  .checklist li:before{counter-increment:ck;content:counter(ck);position:absolute;left:10px;top:9px;width:20px;height:20px;line-height:20px;text-align:center;background:rgba(255,165,2,.18);color:#ffd9a0;border-radius:50%;font-size:12px;font-weight:700}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>📊 A股行情复盘（2026-09-03 · 周四 · <span class="down">缩量横盘·指数红个股绿·中性偏谨慎·仓位降至 4–5 成</span>）</h1>
+    <div class="sub">数据快照 2026-09-03 15:30 · 赚钱效应 + 资金流向 + 仓位管理推荐 · 多市场智能股票分析师「星辰」</div>
+  </div>
+  <div class="badge">🟡 静默期 · 仓位 4–5 成 · 量缩+个股普跌+科创走弱·控回撤不追高</div>
+</div>
+
+<!-- 决策摘要 -->
+<div class="grid g4" style="margin-bottom:16px">
+  <div class="kpi"><div class="v up">3942.09</div><div class="l">上证指数 <span class="up">+0.02%</span></div></div>
+  <div class="kpi"><div class="v up">13625.12</div><div class="l">深证成指 <span class="up">+0.10%</span></div></div>
+  <div class="kpi"><div class="v up">3312.54</div><div class="l">创业板指 <span class="up">+0.01%</span></div></div>
+  <div class="kpi"><div class="v down">-0.40%</div><div class="l">科创50 <span class="down">1611.17·走弱</span></div></div>
+</div>
+
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>核心结论（一句话）</h2>
+  <div class="summary">
+    9/3（周四）A股呈典型的<b>「指数失真、个股普跌」</b>分化格局：三大指数微幅收红（沪指<b>+0.02% 报 3942.09、深成 +0.10%、创业 +0.01%</b>，但<b>科创50 −0.40%、北证50 −1.61%</b> 走弱），全市场<b>仅约 1844 只上涨、超 3565 只下跌（红盘约 33%）、46 涨停 / 16 跌停</b>；两市成交<b>约 1.76 万亿（较 9/2 缩量约 323 亿）</b>，连续萎缩、多空观望。板块上<b>培育钻石（+4.18%）、航运港口（+2.99%）、贵金属（+2.18%）、券商保险、有色（小金属/镍）</b>局部活跃，<b>农林牧渔、社会服务、教育、传媒、光伏</b>调整，前期高位人气股批量跌停。资金<b>高低切</b>：主力净流入小金属概念 +20.71 亿、锂电池 +19.64 亿、券商 +17.55 亿、贵金属 +7.79 亿，而<b>电子午盘净流出超 45 亿、通信/半导体遭兑现</b>；两融小幅降温（9/2 融资余额 26230.74 亿，环比 −54.64 亿）。操作上由前期高位<b>降至 4–5 成中性偏谨慎，保留 50–55% 现金机动，不追高、控回撤，等放量选择方向</b>。
+  </div>
+</div>
+
+<!-- 指数 + 情绪 -->
+<div class="grid g2" style="margin-bottom:16px">
+  <div class="card">
+    <h2><span class="dot"></span>主要指数涨跌（收盘 · 9/3）</h2>
+    <div id="idxChart" class="chart"></div>
+  </div>
+  <div class="card">
+    <h2><span class="dot"></span>市场情绪温度计</h2>
+    <div id="tempChart" class="chart"></div>
+    <div class="note">红盘仅约 33%（1844 涨 / 3565 跌）、超六成个股下跌、46 涨停 / 16 跌停，较 9/2 普跌进一步分化；指数微红但赚钱效应差，<b>给 30° 偏冷·分歧观望</b>。指数未破位（仍稳 20 日线上方），尚非恐慌，但缩量+科创走弱提示风险积累。</div>
+  </div>
+</div>
+
+<!-- 技术形态 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>技术形态 · 9/3 当日走势（高开→冲高→回落→尾盘勉强翻红）</h2>
+  <div class="grid g2">
+    <div><div id="shLineChart" class="chart" style="height:300px"></div></div>
+    <div class="summary" style="font-size:14px">
+      <b>「高开低走、尾盘勉强翻红」形态：</b><br>
+      • 9/3 早盘<b>高开 3952.79</b>（+0.29%），随后冲高至 <b>3968.11</b>；<br>
+      • 午后快速回落、一度翻绿探至 <b>3930.45</b>，尾盘小幅回收收 <b>3942.09（+0.02%）</b>，呈高开低走十字星。<br>
+      • 收盘 3942 仍在 <b>20 日线（约 3880）上方约 60 点</b>，但连续多日高开低走，<b>3980–4000 区域压力真实存在</b>。<br>
+      • 科创50 盘中跌破 1600 点（最低 1596.62）、收 1611.17（−0.40%），成长/小盘空头排列；成交 1.76 万亿<b>连续缩量</b>，属方向选择前的「静默期」。<br>
+      <span class="pill pill-amber">高开低走</span><span class="pill pill-blue">支撑≈3880/3900</span><span class="pill pill-red">压力≈3980–4000</span><span class="pill pill-red">科创破1600</span>
+      <div class="note" style="margin-top:10px">注：上证盘中最高 3968.11 / 最低 3930.45 / 收盘 3942.09 取自交易所收盘数据；20 日线约 3880 为第三方复盘口径。市场处「缩量横盘、风险积累」阶段，需警惕缩量极致后放量选择方向。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 市场概况 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>市场概况（大盘市场宽度统计）</h2>
+  <div class="grid g4" style="margin-bottom:12px">
+    <div class="kpi"><div class="v">1.76<span style="font-size:14px">万亿</span></div><div class="l">两市成交额 <span class="down">-323亿</span></div></div>
+    <div class="kpi"><div class="v up">约1844</div><div class="l">上涨家数（涨停 46）</div></div>
+    <div class="kpi"><div class="v down">约3565</div><div class="l">下跌家数（跌停 16）</div></div>
+    <div class="kpi"><div class="v down">~33%</div><div class="l">红盘占比</div></div>
+  </div>
+  <div class="cata">
+    <div class="cata-item"><div class="t">📈 涨跌幅区间分布 <span class="est">估·示意</span></div><div class="d">涨停 46 · 涨 9%以上 64 · 涨 5%以上 ~90 · 涨 2–5% ~350 · 涨 0–2% ~1340；<br>下跌：跌 0–2% ~1900 · 跌 2–5% ~1200 · 跌 5%以上 ~465（含跌停 16、跌 9%以上 32）。<br><b>约三分之二个股收绿、仅逾三成收红</b>——指数红、个股绿的极致分化，赚钱效应偏弱。</div></div>
+    <div class="cata-item"><div class="t">🔥 短线接力情绪</div><div class="d">涨停 46 只（较前期百股涨停明显收敛），跌停 16 只；<br>涨幅≥9% 共 64 只、跌幅≥9% 共 32 只，<b>多空大致 2:1 但集中在局部题材</b>；<br>前期高位人气股（传智教育、深中华A、爱丽家居等）<b>批量跌停</b>，高位题材亏钱效应释放。</div></div>
+  </div>
+</div>
+
+<!-- 赚钱效应总结 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>赚钱效应总结</h2>
+  <div class="summary">
+    <b>1. 指数红、个股绿，广度极差（偏冷）：</b>三大指数微红，但<b>红盘仅约 33%、超 3565 只个股下跌</b>，是 9/2 普跌后的延续分化；涨幅≥9% 仅 64 只 vs 跌幅≥9% 32 只，赚钱效应集中在少数题材。<br>
+    <b>2. 赚钱主线零散、偏「消息驱动 + 低位顺周期」：</b><b>培育钻石（+4.18%）、航运港口（+2.99%，海通发展等涨停）、贵金属（+2.18%，白银有色涨停）、有色（小金属/镍）、液冷服务器、券商保险</b>局部活跃；华为/特斯拉机器人、镍减产等消息驱动为主，<b>持续性偏弱、轮动快</b>。<br>
+    <b>3. 亏钱面在高位题材与弱势行业：</b>农林牧渔（新赛股份/福建金森跌停）、社会服务（传智教育跌停）、教育、文化传媒、光伏、能源设备调整；银行股批量新高后派发、「易中天」（中际旭创/新易盛/天孚通信）低迷掣肘创业板。<br>
+    <b>4. 结论：</b>属<span class="pill pill-amber">缩量静默期·指数失真·个股偏弱·偏冷观望</span>，赚钱效应差、不宜追高；宜「控仓 + 低吸低位确定性」，等待放量确认方向。
+  </div>
+</div>
+
+<!-- 资金流向 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>资金流向分析</h2>
+  <div class="grid g2" style="margin-bottom:12px">
+    <div class="cata-item"><div class="t">💰 主力净流入（概念 TOP · 同花顺收盘）</div><div class="d">小金属概念 <b class="up">+20.71 亿</b> · 锂电池 <b class="up">+19.64 亿</b> · 比亚迪概念 <b class="up">+18.86 亿</b> · 券商 <b class="up">+17.55 亿</b> · 贵金属 <b class="up">+7.79 亿</b>。<br>资金偏好<b>低位顺周期（有色/小金属/镍）+ 大金融（券商/保险）+ 事件驱动</b>，呈明显「高低切」。</div></div>
+    <div class="cata-item"><div class="t">📉 主力净流出（代表）</div><div class="d">早盘<b>电子板块净流出超 45 亿</b>、通信、半导体同步遭兑现；银行股批量新高后派发。<br><b>资金从高位科技（电子/通信/半导体）向低位顺周期与金融切换</b>，前期抱团方向承压。</div></div>
+  </div>
+  <div id="flowChart" class="chart" style="height:280px"></div>
+  <div class="note">柱状图：主力净流入概念 TOP5（绿，单位亿）。净流出居前（电子/通信/半导体/银行）见左侧文字。整体呈「高低切」、增量资金观望，成交连续缩量。</div>
+  <h2 style="margin-top:16px"><span class="dot"></span>融资融券（最新披露口径 · 9/2 收盘）</h2>
+  <table>
+    <tr><th>指标</th><th>数值</th><th>变化/备注</th></tr>
+    <tr><td>融资余额</td><td>26230.74 亿</td><td>环比 −54.64 亿（9/2），杠杆资金小幅降温</td></tr>
+    <tr><td>两融余额</td><td>≈ 26609.90 亿</td><td>较 9/1（26665.22 亿）减少 55.32 亿，连增 2 日后首降</td></tr>
+    <tr><td>北向资金</td><td>（口径不一）</td><td>实时披露已停、收盘口径各源冲突，<b>未纳入决策</b></td></tr>
+    <tr><td>ETF 资金</td><td>交投活跃·分化</td><td>全市场 ETF 半日成交近 2800 亿但净申赎方向不一，未获明确净流入数据</td></tr>
+  </table>
+</div>
+
+<!-- 板块表现 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>板块表现（领涨 / 领跌）</h2>
+  <div class="grid g2">
+    <div>
+      <div class="ok">🟢 领涨（消息驱动 + 低位顺周期 + 金融）：培育钻石 <b>+4.18%</b> · 航运港口 <b>+2.99%</b> · 贵金属 <b>+2.18%</b> · 小金属 <b>+0.45%</b> · 航空运输概念 <b>+0.43%</b>。活跃股白银有色（涨停）、海通发展/凤凰航运（涨停）、思泉新材/艾华集团（液冷服务器涨停）、长江证券/广发证券/中国太保（涨超 3%）。<br><span style="color:var(--txt2);font-size:12.5px">（宽基维度中证500 +0.34%、中证1000 +0.22% 领涨，中盘占优；沪深300 +0.10%、国证2000 +0.19%，风格均衡偏中盘）</span></div>
+      <div class="alert" style="margin-top:10px">🔴 领跌（弱势行业 + 高位兑现）：社会服务 <b>−0.89%</b> · 农林牧渔 <b>−0.69%</b> · 教育/文化传媒/光伏 <b>调整（估 −0.5%~−0.85%）</b>。农林牧渔新赛股份/福建金森跌停，传智教育（社会服务）跌停，银行批量新高后派发、「易中天」低迷。</div>
+    </div>
+    <div>
+      <div id="leadChart" class="chart" style="height:230px"></div>
+      <div class="note" style="margin-top:6px">领涨方向（红，收盘涨跌幅 %，取自行情指标表）。</div>
+      <div id="lagChart" class="chart" style="height:230px;margin-top:8px"></div>
+      <div class="note" style="margin-top:6px">领跌方向（绿，跌幅 %；社会服务/农林牧渔为收盘值，其余标注 <span class="est">估</span>）。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 仓位管理 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>仓位管理推荐（中性偏谨慎 · 缩量静默期降仓）</h2>
+  <div class="warn">📌 降仓逻辑：指数微红但个股普跌（红盘仅 33%）、成交缩量至 1.76 万亿、科创/北证走弱、高位科技遭兑现、两融降温，市场处「方向选择前的静默期、风险持续积累」。由前期高位<b>降至 4–5 成中性偏谨慎</b>，现金 50–55% 机动；<b>不追高、控回撤、等放量确认</b>。</div>
+  <div class="grid g3" style="margin-top:12px">
+    <div class="kpi"><div class="v" style="color:var(--hold)">4–5 成</div><div class="l">总仓中枢（较前期高位降仓）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--buy)">50–55%</div><div class="l">现金留存（机动待方向选择）</div></div>
+    <div class="kpi"><div class="v" style="color:var(--down)">3880 / 3980</div><div class="l">20日线支撑 / 套牢区压力</div></div>
+  </div>
+  <div class="scen scen-up"><div class="h">🟢 加仓触发（&gt;5.5 成）</div>两市放量（&gt;2 万亿）且<b>站稳 3980 上方</b> + 红盘家数回升 &gt;50%（&gt;2700 家）+ 科创50/创业板止跌转强 + 主力转为净流入。当前均未满足。</div>
+  <div class="scen scen-mid"><div class="h">🟡 持有/低吸（当前 4–5 成）</div>中性偏谨慎，持有<b>低位顺周期（有色/小金属/贵金属）+ 大金融（券商/保险）+ 业绩确定性方向</b>；买点优先<b>回踩均线支撑（MA20/MA60）低吸</b>，乖离率 &lt;5% 才介入，不追分时急拉、不接高位飞刀。</div>
+  <div class="scen scen-dn"><div class="h">🔴 再度减仓（&lt;4 成 · 防御）</div>沪指跌破 3880（20 日线）/ 逼近 9/2 低位、或跌停扩至 &gt;40 只、或成交继续萎缩且科创50 跌破 1550。此时回落至 4 成以下、现金为主。</div>
+  <ul class="checklist">
+    <li><b>持仓结构：</b>低位顺周期（有色/小金属/贵金属/海运）+ 大金融（券商/保险）+ 业绩能见度高的半导体设备/材料/PCB/通信设备；回避高位抱团瓦解、资金持续净流出的电子/通信/半导体、及前期高位人气股。</li>
+    <li><b>买点偏好：</b>严进——缩量回踩均线支撑再低吸，乖离率 &lt;5% 才考虑；不追涨、不接分时飞刀。</li>
+    <li><b>回避：</b>高位科技（电子/通信/半导体）兑现压力方向、前期高位人气股（批量跌停）、微盘/北交所（北证50 −1.61%）、业绩证伪及两融/质押高个股。</li>
+    <li><b>风控：</b>单票仓位 ≤10%，总仓跌破 4 成即转入防御；3980–4000 套牢区为加仓硬门槛，放量确认前不追满。</li>
+    <li><b>关注催化：</b>9 月 FOMC 表态与流动性预期、央行「适度宽松」落地节奏、镍/贵金属供给扰动、券商中报经纪高景气延续、成交能否重回 2 万亿上方。</li>
+  </ul>
+</div>
+
+<!-- 信号归因 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>信号归因（结论由哪些因素贡献）</h2>
+  <div class="grid g2">
+    <div class="cata-item"><div class="t">📊 技术指标 / 大势</div><div class="d">≈35%：三大指数微红（上证 +0.02%/深成 +0.10%/创业 +0.01%）但<b>科创50 −0.40%、北证50 −1.61%</b> 走弱；高位震荡、3980–4000 压力、20 日线 3880 支撑，缩量横盘、风险积累。</div></div>
+    <div class="cata-item"><div class="t">🌾 板块 / 资金</div><div class="d">≈30%：主力流入小金属概念 +20.71 亿/锂电池 +19.64 亿/券商 +17.55 亿/贵金属 +7.79 亿，但<b>电子午盘净流出超 45 亿、通信/半导体兑现</b>，资金高低切、增量观望。</div></div>
+    <div class="cata-item"><div class="t">😀 情绪 / 赚钱效应</div><div class="d">≈25%：红盘仅约 33%（1844 涨 / 3565 跌）、46 涨停 / 16 跌停，超六成个股下跌，由 9/2 普跌延续分化，<b>赚钱效应差、偏冷 30°</b>。</div></div>
+    <div class="cata-item"><div class="t">🏦 杠杆 / 两融</div><div class="d">≈10%：9/2 融资余额 26230.74 亿（环比 −54.64 亿）、两融余额约 26609.90 亿（较 9/1 −55.32 亿），杠杆资金小幅降温；北向/ETF 口径不一未纳入。</div></div>
+  </div>
+  <div class="ok" style="margin-top:12px">最强看多信号：指数未破位（稳 20 日线 3880 上方）、低位顺周期（有色/贵金属）与大金融获主力加仓、政策仍「适度宽松」、中盘（中证500/1000）相对占优。</div>
+  <div class="alert" style="margin-top:8px">最强看空信号：个股普跌（超六成下跌）、成交缩量至 1.76 万亿、科创/北证走弱、高位科技兑现、两融降温、3980–4000 套牢区压力，属缩量静默期、风险持续积累。</div>
+</div>
+
+<div class="foot">
+  数据来源：WebSearch 聚合（交易所收盘数据 / 中新经纬 / 证券时报 / 澎湃 / 同花顺 / 东方财富 / 金融界 / Wind / 大智慧等，快照 2026-09-03 15:30）。<br>
+  注：9/3 当日部分媒体（每经/中证）曾出现 2025-09-03（周三）的「3813 −1.16% / 超4500跌」历史数据误匹配，本报告以交易所收盘数据与多源一致确认集（上证 3942.09 +0.02%、1844 涨/3565 跌、46 涨停/16 跌停）为准。<br>
+  北向资金因实时披露已停、收盘口径各源不一未纳入决策；少数广度/领跌行业数字标注 <span class="est">估</span> 为示意。<br>
+  大盘环境摘要：9/3 为缩量横盘、指数失真个股普跌的「静默期」，中性偏谨慎、控仓不追高、等放量选择方向。 ⚠️ 本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。
+</div>
+
+<script>
+  var idxOpt = {
+    tooltip:{trigger:'axis',valueFormatter:function(v){return v+'%'}},
+    grid:{left:50,right:20,top:24,bottom:28},
+    xAxis:{type:'category',data:['上证指数','深证成指','创业板指','科创50'],axisLabel:{color:'#94a3b8'}},
+    yAxis:{type:'value',axisLabel:{color:'#94a3b8',formatter:'{value}%'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'bar',barWidth:'46%',label:{show:true,position:'top',color:'#e2e8f0',formatter:function(p){return p.value+'%'}},
+      data:[
+        {value:0.02,itemStyle:{color:'#ef4444'}},
+        {value:0.10,itemStyle:{color:'#ef4444'}},
+        {value:0.01,itemStyle:{color:'#ef4444'}},
+        {value:-0.40,itemStyle:{color:'#22c55e'}}
+      ]}]
+  };
+  var tempOpt = {
+    series:[{type:'gauge',min:0,max:100,startAngle:210,endAngle:-30,
+      progress:{show:true,width:14,itemStyle:{color:'#ffa502'}},
+      axisLine:{lineStyle:{width:14,color:[[0.3,'#22c55e'],[0.6,'#ffa502'],[1,'#ef4444']]}},
+      axisTick:{show:false},splitLine:{length:10,lineStyle:{color:'#2d2d44'}},
+      pointer:{itemStyle:{color:'#ffa502'}},
+      detail:{valueAnimation:true,formatter:'{value}°',color:'#ffd9a0',fontSize:30,offsetCenter:[0,'42%']},
+      title:{color:'#94a3b8',fontSize:13,offsetCenter:[0,'72%']},
+      data:[{value:30,name:'偏冷·分歧观望'}]}]
+  };
+  var shLineOpt = {
+    tooltip:{trigger:'axis',valueFormatter:function(v){return v.toFixed(2)}},
+    grid:{left:54,right:20,top:30,bottom:28},
+    xAxis:{type:'category',data:['开盘','盘中最高','午盘','盘中最低','收盘'],axisLabel:{color:'#94a3b8'}},
+    yAxis:{type:'value',scale:true,axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'line',smooth:true,symbol:'circle',symbolSize:9,lineStyle:{width:3,color:'#ffa502'},itemStyle:{color:'#ffa502'},
+      data:[3952.79,3968.11,3958.19,3930.45,3942.09],
+      markLine:{symbol:'none',data:[
+        {yAxis:4000,lineStyle:{color:'#ff4757',type:'dashed',width:2},label:{formatter:'4000压力',color:'#ff8a93',position:'insideEndTop',fontSize:11}},
+        {yAxis:3880,lineStyle:{color:'#22c55e',type:'dashed',width:1.5},label:{formatter:'20日线3880支撑',color:'#9af0dd',position:'insideEndBottom',fontSize:11}}
+      ]},
+      markPoint:{data:[{type:'max',name:'最高'},{type:'min',name:'最低'}],label:{fontSize:10,color:'#fff'}}
+    }]
+  };
+  var flowOpt = {
+    tooltip:{trigger:'axis',valueFormatter:function(v){return v+'亿'}},
+    grid:{left:50,right:20,top:24,bottom:46},
+    xAxis:{type:'category',data:['小金属概念','锂电池','比亚迪概念','券商','贵金属'],axisLabel:{color:'#94a3b8',interval:0,fontSize:11}},
+    yAxis:{type:'value',axisLabel:{color:'#94a3b8',formatter:'{value}亿'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'bar',barWidth:'46%',label:{show:true,position:'top',color:'#e2e8f0',formatter:function(p){return p.value+'亿'}},
+      data:[
+        {value:20.71,itemStyle:{color:'#00d4aa'}},
+        {value:19.64,itemStyle:{color:'#00d4aa'}},
+        {value:18.86,itemStyle:{color:'#00d4aa'}},
+        {value:17.55,itemStyle:{color:'#00d4aa'}},
+        {value:7.79,itemStyle:{color:'#00d4aa'}}
+      ]}]
+  };
+  var leadOpt = {
+    tooltip:{trigger:'axis',valueFormatter:function(v){return v+'%'}},
+    grid:{left:46,right:20,top:24,bottom:46},
+    xAxis:{type:'category',data:['培育钻石','航运港口','贵金属','小金属','航空运输概念'],axisLabel:{color:'#94a3b8',interval:0,fontSize:10,rotate:18}},
+    yAxis:{type:'value',axisLabel:{color:'#94a3b8',formatter:'{value}%'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'bar',barWidth:'50%',label:{show:true,position:'top',color:'#e2e8f0',formatter:'{c}%'},
+      data:[
+        {value:4.18,itemStyle:{color:'#ef4444'}},
+        {value:2.99,itemStyle:{color:'#ef4444'}},
+        {value:2.18,itemStyle:{color:'#ef4444'}},
+        {value:0.45,itemStyle:{color:'#ef4444'}},
+        {value:0.43,itemStyle:{color:'#ef4444'}}
+      ]}]
+  };
+  var lagOpt = {
+    tooltip:{trigger:'axis',valueFormatter:function(v){return v+'%'}},
+    grid:{left:46,right:20,top:24,bottom:46},
+    xAxis:{type:'category',data:['社会服务','农林牧渔','教育','文化传媒','光伏'],axisLabel:{color:'#94a3b8',interval:0,fontSize:10,rotate:18}},
+    yAxis:{type:'value',axisLabel:{color:'#94a3b8',formatter:'{value}%'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'bar',barWidth:'50%',label:{show:true,position:'top',color:'#e2e8f0',formatter:'{c}%'},
+      data:[
+        {value:-0.89,itemStyle:{color:'#22c55e'}},
+        {value:-0.69,itemStyle:{color:'#22c55e'}},
+        {value:-0.85,itemStyle:{color:'#22c55e'}},
+        {value:-0.72,itemStyle:{color:'#22c55e'}},
+        {value:-0.55,itemStyle:{color:'#22c55e'}}
+      ]}]
+  };
+  echarts.init(document.getElementById('idxChart')).setOption(idxOpt);
+  echarts.init(document.getElementById('tempChart')).setOption(tempOpt);
+  echarts.init(document.getElementById('shLineChart')).setOption(shLineOpt);
+  echarts.init(document.getElementById('flowChart')).setOption(flowOpt);
+  echarts.init(document.getElementById('leadChart')).setOption(leadOpt);
+  echarts.init(document.getElementById('lagChart')).setOption(lagOpt);
+</script>
+</body>
+</html>

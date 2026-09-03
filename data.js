@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-03 12:45:26",
-  "total": 237,
+  "generatedAt": "2026-09-03 15:45:31",
+  "total": 238,
   "categories": [
     {
       "key": "panqian",
@@ -723,9 +723,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 51,
-      "latest": "20260902",
+      "count": 52,
+      "latest": "20260903",
       "reports": [
+        {
+          "date": "20260903",
+          "dateLabel": "2026-09-03（周四）",
+          "file": "reports/close/close_20260903.html",
+          "title": "A股行情复盘（2026-09-03 · 周四 · 缩量横盘·指数红个股绿·中性偏谨慎·仓位降至4-5成）",
+          "size": 27821
+        },
         {
           "date": "20260902",
           "dateLabel": "2026-09-02（周三）",
