@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-03 08:01:15",
-  "total": 236,
+  "generatedAt": "2026-09-03 12:45:26",
+  "total": 237,
   "categories": [
     {
       "key": "panqian",
@@ -355,9 +355,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 50,
-      "latest": "20260902",
+      "count": 51,
+      "latest": "20260903",
       "reports": [
+        {
+          "date": "20260903",
+          "dateLabel": "2026-09-03（周四）",
+          "file": "reports/noon/noon_20260903.html",
+          "title": "A股午间复盘 · 2026-09-03（周四）· 指数红个股绿·黄白背离·大金融航运护盘·控仓55-60%",
+          "size": 37203
+        },
         {
           "date": "20260902",
           "dateLabel": "2026-09-02（周三）",
