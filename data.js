@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-03 16:45:27",
-  "total": 238,
+  "generatedAt": "2026-09-04 07:45:45",
+  "total": 240,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 48,
-      "latest": "20260903",
+      "count": 49,
+      "latest": "20260904",
       "reports": [
+        {
+          "date": "20260904",
+          "dateLabel": "2026-09-04（周五）",
+          "file": "reports/panqian/panqian_20260904.html",
+          "title": "盘前计划_20260904 · 星辰智能决策仪表盘",
+          "size": 20609
+        },
         {
           "date": "20260903",
           "dateLabel": "2026-09-03（周四）",
@@ -1098,9 +1105,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 46,
-      "latest": "20260902",
+      "count": 47,
+      "latest": "20260903",
       "reports": [
+        {
+          "date": "20260903",
+          "dateLabel": "2026-09-03（周四）",
+          "file": "reports/limitup/limitup_20260903.html",
+          "title": "涨停梯队复盘 · 2026-09-03（周四 · 退潮初期 · 液冷散热主线 · 国芳集团5板总龙）",
+          "size": 48633
+        },
         {
           "date": "20260902",
           "dateLabel": "2026-09-02（周三）",
