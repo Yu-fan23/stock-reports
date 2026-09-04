@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-04 08:21:09",
-  "total": 241,
+  "generatedAt": "2026-09-04 12:45:16",
+  "total": 242,
   "categories": [
     {
       "key": "panqian",
@@ -362,9 +362,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 51,
-      "latest": "20260903",
+      "count": 52,
+      "latest": "20260904",
       "reports": [
+        {
+          "date": "20260904",
+          "dateLabel": "2026-09-04（周五）",
+          "file": "reports/noon/noon_20260904.html",
+          "title": "A股午间复盘 · 2026-09-04（周五）· 高开回落·4100股普涨·低位内需接力·仓位60-65%",
+          "size": 42505
+        },
         {
           "date": "20260903",
           "dateLabel": "2026-09-03（周四）",
