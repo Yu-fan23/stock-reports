@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-04 12:45:16",
-  "total": 242,
+  "generatedAt": "2026-09-04 15:45:30",
+  "total": 243,
   "categories": [
     {
       "key": "panqian",
@@ -737,9 +737,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 52,
-      "latest": "20260903",
+      "count": 53,
+      "latest": "20260904",
       "reports": [
+        {
+          "date": "20260904",
+          "dateLabel": "2026-09-04（周五）",
+          "file": "reports/close/close_20260904.html",
+          "title": "A股复盘 · 2026-09-04 · 放量杀跌·硬件退潮·应用接力",
+          "size": 29760
+        },
         {
           "date": "20260903",
           "dateLabel": "2026-09-03（周四）",
