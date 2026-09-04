@@ -1,5 +1,5 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-04 08:02:53",
+  "generatedAt": "2026-09-04 08:21:09",
   "total": 241,
   "categories": [
     {
@@ -15,8 +15,8 @@ window.SITE_DATA = {
           "date": "20260904",
           "dateLabel": "2026-09-04（周五）",
           "file": "reports/panqian/panqian_20260904.html",
-          "title": "盘前计划_20260904 · 星辰智能决策仪表盘",
-          "size": 20609
+          "title": "盘前计划_20260904 · v52.1 更新版 · 星辰智能决策仪表盘",
+          "size": 35837
         },
         {
           "date": "20260903",
