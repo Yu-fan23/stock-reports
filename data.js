@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-04 15:45:30",
-  "total": 243,
+  "generatedAt": "2026-09-04 16:45:39",
+  "total": 244,
   "categories": [
     {
       "key": "panqian",
@@ -1119,9 +1119,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 47,
-      "latest": "20260903",
+      "count": 48,
+      "latest": "20260904",
       "reports": [
+        {
+          "date": "20260904",
+          "dateLabel": "2026-09-04（周五）",
+          "file": "reports/limitup/limitup_20260904.html",
+          "title": "涨停梯队复盘 · 2026-09-04（周五 · 退潮第二天 · 猪/酒/消费高低切换 · 楚天龙11天7板 · 龙版传媒5板空间龙）",
+          "size": 57507
+        },
         {
           "date": "20260903",
           "dateLabel": "2026-09-03（周四）",
