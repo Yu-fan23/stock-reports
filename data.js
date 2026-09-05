@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-05 15:45:57",
-  "total": 248,
+  "generatedAt": "2026-09-05 16:45:54",
+  "total": 249,
   "categories": [
     {
       "key": "panqian",
@@ -1140,9 +1140,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 48,
-      "latest": "20260904",
+      "count": 49,
+      "latest": "20260905",
       "reports": [
+        {
+          "date": "20260905",
+          "dateLabel": "2026-09-05（周六）",
+          "file": "reports/limitup/limitup_20260905.html",
+          "title": "涨停梯队复盘 · 2026-09-05（周六 · 休市 · 沿用 9/4 收盘 · 周末非农爆表加息概率58.6% · 退潮第二天 · 楚天龙11天7板）",
+          "size": 68241
+        },
         {
           "date": "20260904",
           "dateLabel": "2026-09-04（周五）",
