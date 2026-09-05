@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-05 08:00:35",
-  "total": 246,
+  "generatedAt": "2026-09-05 12:45:57",
+  "total": 247,
   "categories": [
     {
       "key": "panqian",
@@ -369,9 +369,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 52,
-      "latest": "20260904",
+      "count": 53,
+      "latest": "20260905",
       "reports": [
+        {
+          "date": "20260905",
+          "dateLabel": "2026-09-05（周六）",
+          "file": "reports/noon/noon_20260905.html",
+          "title": "A股周度复盘 · 2026-09-05（周六）· 8/31–9/4 周线三连阴·主力净流出1055亿·高低切换·控仓50-55%",
+          "size": 52117
+        },
         {
           "date": "20260904",
           "dateLabel": "2026-09-04（周五）",
