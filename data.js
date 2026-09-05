@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-05 12:45:57",
-  "total": 247,
+  "generatedAt": "2026-09-05 15:45:57",
+  "total": 248,
   "categories": [
     {
       "key": "panqian",
@@ -751,9 +751,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 53,
-      "latest": "20260904",
+      "count": 54,
+      "latest": "20260905",
       "reports": [
+        {
+          "date": "20260905",
+          "dateLabel": "2026-09-05（周六）",
+          "file": "reports/close/close_20260905.html",
+          "title": "A股复盘 · 2026-09-05 周末特刊 · 周线收阴·硬件退潮·政策对冲",
+          "size": 45065
+        },
         {
           "date": "20260904",
           "dateLabel": "2026-09-04（周五）",
