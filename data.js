@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-06 08:00:37",
-  "total": 251,
+  "generatedAt": "2026-09-06 12:45:47",
+  "total": 252,
   "categories": [
     {
       "key": "panqian",
@@ -376,9 +376,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 53,
-      "latest": "20260905",
+      "count": 54,
+      "latest": "20260906",
       "reports": [
+        {
+          "date": "20260906",
+          "dateLabel": "2026-09-06（周日）",
+          "file": "reports/noon/noon_20260906.html",
+          "title": "A股周一作战手册 · 2026-09-06（周日休市）· 布油破96地缘升温·两融单日降103亿·控仓50-55%",
+          "size": 50837
+        },
         {
           "date": "20260905",
           "dateLabel": "2026-09-05（周六）",
