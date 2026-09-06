@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-06 15:45:37",
-  "total": 253,
+  "generatedAt": "2026-09-06 16:45:46",
+  "total": 254,
   "categories": [
     {
       "key": "panqian",
@@ -1161,9 +1161,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 49,
-      "latest": "20260905",
+      "count": 50,
+      "latest": "20260906",
       "reports": [
+        {
+          "date": "20260906",
+          "dateLabel": "2026-09-06（周日）",
+          "file": "reports/limitup/limitup_20260906.html",
+          "title": "涨停梯队复盘 · 2026-09-06（周日休市 · 数据基准9/4收盘 · 周末消息面与周一策略）",
+          "size": 75473
+        },
         {
           "date": "20260905",
           "dateLabel": "2026-09-05（周六）",
