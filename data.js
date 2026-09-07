@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-07 12:45:50",
-  "total": 257,
+  "generatedAt": "2026-09-07 15:45:53",
+  "total": 258,
   "categories": [
     {
       "key": "panqian",
@@ -779,9 +779,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 55,
-      "latest": "20260906",
+      "count": 56,
+      "latest": "20260907",
       "reports": [
+        {
+          "date": "20260907",
+          "dateLabel": "2026-09-07（周一）",
+          "file": "reports/close/close_20260907.html",
+          "title": "A股复盘 · 2026-09-07 · 算力硬件超跌反攻",
+          "size": 42615
+        },
         {
           "date": "20260906",
           "dateLabel": "2026-09-06（周日）",
