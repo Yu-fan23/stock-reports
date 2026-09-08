@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-08 12:45:31",
-  "total": 262,
+  "generatedAt": "2026-09-08 15:45:44",
+  "total": 263,
   "categories": [
     {
       "key": "panqian",
@@ -793,9 +793,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 56,
-      "latest": "20260907",
+      "count": 57,
+      "latest": "20260908",
       "reports": [
+        {
+          "date": "20260908",
+          "dateLabel": "2026-09-08（周二）",
+          "file": "reports/close/close_20260908.html",
+          "title": "A股复盘 · 2026-09-08 · 涨价链接力，科技一日游",
+          "size": 40654
+        },
         {
           "date": "20260907",
           "dateLabel": "2026-09-07（周一）",
