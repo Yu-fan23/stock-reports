@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盘前计划 v58.0 · 2026-09-10（周四 适用当日）</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+:root{
+  --bg:#0f0f23; --card:#1a1a2e; --card2:#20203a; --bd:#2d2d44;
+  --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502; --purple1:#667eea; --purple2:#764ba2;
+  --tx:#e2e8f0; --tx2:#94a3b8; --tx3:#64748b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:"PingFang SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;line-height:1.65;padding:16px;max-width:1280px;margin:0 auto}
+h1,h2,h3,h4{line-height:1.3}
+.hdr{background:linear-gradient(135deg,#1a1a2e 0%,#2a1f4e 55%,#1a1a2e 100%);border:1px solid var(--bd);border-radius:16px;padding:22px 24px;margin-bottom:14px}
+.hdr .t1{font-size:13px;color:var(--tx2);letter-spacing:2px}
+.hdr h1{font-size:26px;margin:6px 0 4px;background:linear-gradient(90deg,#fff,#a5b4fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hdr .sub{font-size:13px;color:var(--tx2)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px 20px;margin-bottom:14px}
+.card h2{font-size:18px;margin-bottom:12px;padding-left:11px;border-left:4px solid var(--purple1)}
+.card h3{font-size:15px;margin:14px 0 8px;color:#c7d2fe}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:900px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.kpi{background:var(--card2);border:1px solid var(--bd);border-radius:12px;padding:14px}
+.kpi .k{font-size:12px;color:var(--tx3);letter-spacing:1px}
+.kpi .v{font-size:21px;font-weight:700;margin-top:4px}
+.kpi .d{font-size:12px;color:var(--tx2);margin-top:2px}
+.up{color:#ff6b7a}.dn{color:#00d4aa}.nu{color:#ffa502}.pn{color:#a5b4fc}
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;margin-right:6px}
+.t-buy{background:rgba(0,212,170,.15);color:#00d4aa;border:1px solid rgba(0,212,170,.4)}
+.t-sell{background:rgba(255,71,87,.15);color:#ff4757;border:1px solid rgba(255,71,87,.4)}
+.t-hold{background:rgba(255,165,2,.15);color:#ffa502;border:1px solid rgba(255,165,2,.4)}
+.t-pur{background:rgba(102,126,234,.15);color:#a5b4fc;border:1px solid rgba(102,126,234,.4)}
+.t-gry{background:rgba(148,163,184,.12);color:#94a3b8;border:1px solid rgba(148,163,184,.3)}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+th,td{padding:8px 9px;text-align:left;border-bottom:1px solid var(--bd);vertical-align:top}
+th{color:var(--tx3);font-weight:600;font-size:12px;background:rgba(102,126,234,.06)}
+tr:hover td{background:rgba(102,126,234,.05)}
+.chart{width:100%;height:320px;margin-top:8px}
+.alert{border-radius:10px;padding:12px 14px;margin:10px 0;font-size:13.5px;border-left:4px solid}
+.a-red{background:rgba(255,71,87,.08);border-color:#ff4757}
+.a-grn{background:rgba(0,212,170,.08);border-color:#00d4aa}
+.a-yel{background:rgba(255,165,2,.08);border-color:#ffa502}
+.a-blu{background:rgba(102,126,234,.08);border-color:#667eea}
+.q{background:linear-gradient(135deg,rgba(102,126,234,.12),rgba(118,75,162,.06));border:1px solid rgba(102,126,234,.35);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.q .qt{font-size:15px;font-weight:700;color:#a5b4fc;margin-bottom:8px}
+.q .qa{font-size:13.5px;line-height:1.75}
+.ladder{background:var(--card2);border:1px solid var(--bd);border-radius:12px;padding:14px}
+.rung{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px dashed var(--bd)}
+.rung:last-child{border-bottom:none}
+.rung .lv{font-weight:700;font-size:14px;min-width:74px}
+.rung .lb{font-size:12.5px;color:var(--tx2);flex:1}
+.rung .rl{font-size:11.5px;padding:2px 8px;border-radius:10px;font-weight:600}
+.r-s{background:rgba(255,71,87,.15);color:#ff6b7a}
+.r-r{background:rgba(0,212,170,.15);color:#00d4aa}
+.r-n{background:rgba(148,163,184,.12);color:#94a3b8}
+ul{margin:6px 0 6px 20px;font-size:13.5px}
+li{margin:4px 0}
+.mini{font-size:12px;color:var(--tx3)}
+.ring{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.foot{text-align:center;color:var(--tx3);font-size:12px;padding:16px 0 6px;line-height:1.9}
+.big{font-size:15px;font-weight:700}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="t1">PRE-MARKET PLAN · v58.0</div>
+  <h1>盘前计划 · 2026-09-10（周四）</h1>
+  <div class="sub">数据基准：9/9（周三）收盘 + 9/9 盘后至 9/10 早间消息面 · 三问版 · 适用 9/10 当日</div>
+  <div class="sub" style="margin-top:8px">
+    <span class="tag t-buy">偏多·结构性做多</span>
+    <span class="tag t-pur">综合评分 62（上期 56，+6）</span>
+    <span class="tag t-hold">仓位 40% → 45%</span>
+    <span class="tag t-gry">现金 55%</span>
+  </div>
+</div>
+
+<!-- ============ 三问三答 ============ -->
+<div class="card">
+  <h2>三问三答 · 核心结论</h2>
+
+  <div class="q">
+    <div class="qt">Q1｜当下的主流题材是什么？</div>
+    <div class="qa">
+      <p><span class="tag t-buy">主线①</span><span class="big">资源通胀·再通胀链</span>（铜 / 煤炭 / 黄金 / 油气 / 航运）<br>
+      <span class="mini">最强主线。<b>PPI 环比由 -0.7% 转为 +0.4%，8 个月来首次转正</b>，同比 +3.8% 扩大 0.3pct —— 再通胀从"预期"变成"兑现"。LME 铜 14773.6 美元连续第 5 日创历史新高，布伦特 101.37 破百，8 月全球黄金 ETF 吸金 180 亿美元（历史第二大单月）。9/9：煤炭开采 +3.04%、航运港口 +3.86%、工业金属 +2.01%、橡胶 +4.07%、有色（锑）+3.26%。</span></p>
+      <p style="margin-top:8px"><span class="tag t-pur">主线②</span><span class="big">AI 算力硬件</span>（光通信 / PCB / 存储）<br>
+      <span class="mini">资金最实的主线。通信设备主力净流入 <b>57.14 亿（全市场行业第 1，5 日 +193.0 亿）</b>、元件 <b>49.31 亿（第 2，5 日 +163.8 亿）</b>。CIOE 光博会 9/9-11 开幕 + 高盛上调光模块 TAM。外盘存储链暴动：SK 海力士 +7.05% 创历史新高、美光 +2.75%、闪迪 +1.51%，2 倍做多海力士 ETF 涨超 14%。</span></p>
+      <p style="margin-top:8px"><span class="tag t-hold">主线③</span><span class="big">农业·涨价链</span>（种植 / 白糖 / 农化）<span class="tag t-sell">退潮中</span><br>
+      <span class="mini">种植业 20 日 +33.91%、农产品加工 20 日 +24.31%、白糖 +4.66%（20 日 +25.55%）。但退潮信号已明：<b>超 20 只 A 股集中提示风险</b>、龙头亚盛集团开板巨量换手 40.55%、中军苏垦农发 -2.93% / 金健米业 -3.11%。</span></p>
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="qt">Q2｜主流题材的核心是谁？</div>
+    <div class="qa">
+      <table>
+        <tr><th style="width:15%">主线</th><th style="width:20%">绝对核心</th><th style="width:32%">中军 / 跟风</th><th style="width:33%">状态与买点（MA5 乖离）</th></tr>
+        <tr>
+          <td><b>资源通胀</b></td>
+          <td><b class="up">招商轮船 20.99</b><br><span class="mini">涨停 · 1695亿 · 封单超50万手</span></td>
+          <td>紫金矿业 34.40｜江西铜业 49.57｜洛阳钼业 19.09<br>中国神华 47.33｜兖矿能源 22.15｜中远海能 21.43<br>湖南黄金 28.45（涨停）｜山东黄金 36.25</td>
+          <td>招商轮船 <b class="up">+7.91% 不可追</b>；紫金 +2.51%、洛钼 +2.51%、神华 <b class="dn">+0.65%</b>、兖矿 +2.79%、江铜 +4.64%、中远海能 +4.97%（临界）</td>
+        </tr>
+        <tr>
+          <td><b>AI 算力</b></td>
+          <td><b>中际旭创 908.90</b><br><span class="mini">1.07万亿 · 全链风向标</span></td>
+          <td>华工科技 108.79 <b class="up">+8.22%</b>（光博会最强）<br>沪电股份 127.55｜深南电路 383.30｜新易盛 414.80<br>江波龙 348.03｜澜起科技 195.30｜崇达技术（机构净买3.49亿）</td>
+          <td>中际旭创 +4.79%、新易盛 +2.72%、澜起 <b class="dn">+1.04%</b>、江波龙 <b class="dn">-1.78%（唯一在5日线下）</b>；华工 +7.54%、深南 +6.23%、沪电 +5.76% 禁追</td>
+        </tr>
+        <tr>
+          <td><b>农业</b></td>
+          <td><b class="nu">亚盛集团 5.71</b><br><span class="mini">开板 · 换手 40.55% · 见顶信号</span></td>
+          <td>红棉股份 4.36（一字板·换手0.28%）<br>中粮糖业 19.80 +9.03%｜中粮科技 6.41 涨停<br>苏垦农发 10.28 -2.93%（掉队）</td>
+          <td><b class="up">全部禁买</b>。龙头开板 + 中军掉队 + 20 股风险提示 = 退潮确认，只减不加</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="qt">Q3｜走到哪个阶段了，能不能买？</div>
+    <div class="qa">
+      <div class="alert a-grn" style="margin-top:0">
+        <b>① 资源通胀链 = 主升中段 · 商品新高 / 股价滞后的"背离修复初段" → <span style="color:#00d4aa">可以买（首选）</span></b><br>
+        判据：<b>股价严重落后于商品</b>——铜概念 20 日仅 +1.09%、工业金属 20 日 +2.31%、煤炭 20 日 +6.56%，而 LME 铜连创 5 日历史新高、布油破 100、金饰价格 +33.6%。这不是高位，是<b>基本面已兑现但股价未定价</b>的补涨起手位。唯一例外是<b>航运</b>（20 日 +11.16%，招商轮船涨停 = 爆发首日），乖离已大，只做回踩不追板。
+      </div>
+      <div class="alert a-blu">
+        <b>② AI 算力硬件 = 底部吸筹第 2-3 天 → <span style="color:#a5b4fc">可低吸，不可追高（次选）</span></b><br>
+        判据：<b>资金猛进、股价滞涨 = 机构吸筹/洗盘</b>。9/9 通信设备盘中冲高 +3.19% 却收 +0.79%（长上影）、半导体 -0.69%，但资金却是全市场行业第 1、第 2。位置：通信设备 60 日 -23.22%、元件 60 日 -17.81%、中际旭创 60 日 -27.18% —— <b>深度调整后的底部区域，向下空间有限</b>。今日催化密集：光博会第 2 天 + 外盘存储暴动 + DeepSeek V4.1 发布 + 燧原科技 9/11 上市。
+      </div>
+      <div class="alert a-red">
+        <b>③ 农业链 = 退潮分化期 → <span style="color:#ff6b7a">不能买，逢高减</span></b><br>
+        判据：涨停家数 <b>74-75 → 49</b>（腰斩）、跌停 <b>1 → 9</b>、龙头开板巨量、中军掉队、超 20 只 A 股风险提示。白糖（红棉一字）尚有惯性但属末端，不参与。
+      </div>
+      <div class="alert a-yel">
+        <b>结论：能买，但只买"低乖离 + 基本面兑现"的方向，仓位不超过 45%。</b><br>
+        沪指 9/9 收 3951.51（五连阳），<b>首次同时站上 MA5/MA10/MA20/MA30/MA60 五线</b>，MACD 红柱由 1.55 扩大至 2.13，技术形态是 9 月以来最好的一天。但<b>赚钱效应在收缩</b>（上涨占比仅 32%、成交缩量 1047 亿至 1.8556 万亿），这是"指数搭台、结构分化"的行情，<b>不是普涨行情</b> —— 买错方向照样亏钱。上方 MA250 3988 / MA120 3999 是硬压力，9/11 美国 CPI 与 9/16 FOMC 双重悬顶，<b>不加到 60% 以上</b>。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 相对 v57 变化 ============ -->
+<div class="card">
+  <h2>相对 v57.0 的 8 项核心变化</h2>
+  <table>
+    <tr><th style="width:20%">维度</th><th style="width:38%">v57.0（9/9 盘前）</th><th style="width:42%">v58.0（9/10 盘前）</th></tr>
+    <tr><td>主线排序</td><td>① 资源通胀链 ② 农业 ③ AI算力（验证位）</td><td>① 资源通胀链（强化）② <b>AI算力升为第2</b>（资金坐实）③ 农业<b>降为退潮</b></td></tr>
+    <tr><td>PPI/CPI</td><td>待公布，预期 CPI +0.9% / PPI +3.8%</td><td><b>CPI +0.8%、PPI +3.8%、PPI环比 +0.4%（由降转涨）</b> —— 再通胀确认</td></tr>
+    <tr><td>沪指技术</td><td>站上 MA5/MA20，受阻 MA10 3947.43 / MA60 3950.33</td><td><b>站上 MA5/MA10/MA20/MA30/MA60 五线</b>，MACD 红柱 1.55→2.13</td></tr>
+    <tr><td>算力定位</td><td>v56 被证伪为"修复一日游"，降为验证位</td><td><b>资金连续 2 日行业第 1/第 2 → 定性为底部吸筹</b>，升回第 2 主线</td></tr>
+    <tr><td>农业</td><td>主升中后段，全链乖离 >5% 无一可买</td><td><b>退潮确认</b>：亚盛开板换手 40.55%、苏垦 -2.93%、20 股风险提示</td></tr>
+    <tr><td>新增变量</td><td>龙版传媒停牌、CIOE 光博会</td><td><b>国新办 15:00 金融强国发布会、苹果折叠屏 iPhone Duo、DeepSeek V4.1、美债风暴加息预期</b></td></tr>
+    <tr><td>外盘</td><td>A50 -0.62%、纳指金龙 -1.73%</td><td>美股<b>三连跌</b>（道 -0.77%/纳 -0.64%/标普 -0.48%），但<b>存储、光通信逆市走高</b></td></tr>
+    <tr><td>仓位/评分</td><td>40%，评分 56</td><td><b>45%，评分 62</b>（技术+3 / 消息+3 / 基本面-1 / 环境-5 → 净 +6）</td></tr>
+  </table>
+</div>
+
+<!-- ============ 评分 ============ -->
+<div class="card">
+  <h2>综合评分 62 · 偏多区中部</h2>
+  <div class="grid g2">
+    <div class="ring">
+      <div id="chScore" style="width:240px;height:240px"></div>
+      <div style="flex:1;min-width:200px">
+        <table>
+          <tr><th>维度</th><th>得分</th><th>较上期</th></tr>
+          <tr><td>技术面 25</td><td class="pn"><b>16</b></td><td class="dn">+3</td></tr>
+          <tr><td>消息面 35</td><td class="pn"><b>25</b></td><td class="dn">+3</td></tr>
+          <tr><td>资金面 15</td><td class="pn"><b>11</b></td><td class="dn">-1</td></tr>
+          <tr><td>环境面 25</td><td class="nu"><b>10</b></td><td class="up">-5</td></tr>
+          <tr><td><b>合计</b></td><td><b class="pn">62</b></td><td class="dn"><b>+6</b></td></tr>
+        </table>
+        <div class="mini" style="margin-top:8px">区间：&lt;35 极弱｜35-44 偏弱｜45-54 中性｜<b>55-64 偏多</b>｜65-74 积极｜75+ 贪婪</div>
+      </div>
+    </div>
+    <div>
+      <div class="alert a-grn" style="margin-top:0"><b>加分项</b><br>
+      ① 沪指站上五线（MA5/10/20/30/60），9 月首次；② MACD 红柱扩大 1.55→2.13，市场画像"技术指标：极强"；③ PPI 环比 8 个月来首次转正、同比 +3.8%；④ 核心 CPI +1.0% 连续第 4 个月扩大；⑤ 国新办 15:00 金融强国发布会（央行+证监会+金融监管总局+外汇局）；⑥ 苹果折叠屏 + DeepSeek V4.1 + 光博会 + 黄金 ETF 历史第二大流入。</div>
+      <div class="alert a-red"><b>扣分项</b><br>
+      ① 涨停 74-75 → <b>49</b>（腰斩），跌停 1 → <b>9</b>；② 上涨占比仅 <b>32%</b>（1794 涨 / 3642 跌）；③ 成交缩量 1047 亿至 <b>1.8556 万亿</b>；④ 美股三连跌 + 美债风暴（长债回购上限 60 亿不及预期）→ 加息预期升温；⑤ 9/11 美国 CPI、9/16 FOMC 双重悬顶；⑥ 估值 PE 分位 70-90% 偏高；⑦ 中长期均线仍空头排列，MA120/MA250 未收复。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 指数 ============ -->
+<div class="card">
+  <h2>9/9 收盘 · 指数与情绪</h2>
+  <div class="grid g4">
+    <div class="kpi"><div class="k">上证指数</div><div class="v up">3951.51</div><div class="d">+0.28% · 五连阳</div></div>
+    <div class="kpi"><div class="k">深证成指</div><div class="v up">13723.32</div><div class="d">+0.15%</div></div>
+    <div class="kpi"><div class="k">创业板指</div><div class="v dn">3354.97</div><div class="d">-0.14%</div></div>
+    <div class="kpi"><div class="k">科创50</div><div class="v dn">1580.06</div><div class="d">-0.69%</div></div>
+    <div class="kpi"><div class="k">沪深300</div><div class="v up">4572.60</div><div class="d">+0.30%</div></div>
+    <div class="kpi"><div class="k">上证50</div><div class="v up">2910.40</div><div class="d">+0.06%</div></div>
+    <div class="kpi"><div class="k">两市成交</div><div class="v nu">1.8556 万亿</div><div class="d">-1047.28 亿（缩量）</div></div>
+    <div class="kpi"><div class="k">涨停 / 跌停</div><div class="v"><span class="up">49</span> / <span class="dn">9</span></div><div class="d">上期 74-75 / 1 · <b class="up">腰斩</b></div></div>
+  </div>
+  <div class="alert a-yel" style="margin-top:12px">
+    <b>关键背离：指数五连阳 vs 赚钱效应腰斩。</b>上涨 1794 / 下跌 3642 / 平 124，上涨占比仅 <b>32%</b>。
+    沪指靠<b>资源（煤炭 +2.98%、工业金属 +2.01%）与航运（+3.86%）</b>等权重拉动，而题材端（农业、传媒）在退潮。
+    <b>这是典型的"指数搭台、结构分化"行情 —— 方向比仓位更重要。</b>
+  </div>
+  <h3>市场画像总评（14 维度）</h3>
+  <div class="grid g4">
+    <div class="kpi"><div class="k">技术指标</div><div class="v dn">5 / 5</div><div class="d">极强（MACD 金叉发散）</div></div>
+    <div class="kpi"><div class="k">个股宽度</div><div class="v dn">5 / 5</div><div class="d">普涨（创新高 &gt;200 只）</div></div>
+    <div class="kpi"><div class="k">短期趋势方向</div><div class="v dn">4</div><div class="d">温和上涨</div></div>
+    <div class="kpi"><div class="k">风格轮动</div><div class="v up">1</div><div class="d">价值主导（价值 &gt; 成长 +5%）</div></div>
+    <div class="kpi"><div class="k">中长期趋势方向</div><div class="v up">2</div><div class="d">弱势下跌（均线空头）</div></div>
+    <div class="kpi"><div class="k">成交量能</div><div class="v nu">3</div><div class="d">缩量震荡</div></div>
+    <div class="kpi"><div class="k">情绪指标</div><div class="v nu">3</div><div class="d">中性</div></div>
+    <div class="kpi"><div class="k">估值水平</div><div class="v nu">4</div><div class="d">偏高（PE 分位 70-90%）</div></div>
+  </div>
+</div>
+
+<!-- ============ 板块与资金 ============ -->
+<div class="card">
+  <h2>板块涨跌 vs 主力资金（9/9）</h2>
+  <div id="chSector" class="chart" style="height:400px"></div>
+  <div class="alert a-blu" style="margin-top:10px">
+    <b>资金与股价的背离，是今天最重要的信号。</b>
+    <b>通信设备 +0.79% 却净流入 57.14 亿（行业第 1）</b>、<b>元件 +2.04% 净流入 49.31 亿（第 2）</b>，
+    5 日口径 +193.0 亿 / +163.8 亿。而股价端通信设备盘中冲高 +3.19% 收 +0.79%（长上影）、半导体 -0.69%。
+    <b>资金真金白银在买、股价不涨 = 机构吸筹洗盘，而非出货。</b>
+    反观涨幅榜前列的橡胶（+4.07%）、黄酒（+5.23%）、白糖（+4.66%）均无资金榜身影 —— <b>纯题材脉冲，无资金承接，不参与。</b>
+  </div>
+</div>
+
+<!-- ============ 乖离 ============ -->
+<div class="card">
+  <h2>核心股 MA5 乖离排行（严进策略：&lt;5% 才买）</h2>
+  <div id="chBias" class="chart" style="height:420px"></div>
+  <table style="margin-top:12px">
+    <tr><th style="width:14%">可买区（乖离 &lt;5%）</th><th style="width:13%">现价 / MA5</th><th style="width:11%">乖离</th><th style="width:62%">说明</th></tr>
+    <tr><td><b>中国神华</b></td><td>47.33 / 47.026</td><td class="dn"><b>+0.65%</b></td><td><b>最优</b>。MA10 47.569 → -0.50%（十日线下方），煤炭中军刚启动，PPI 转正直接受益</td></tr>
+    <tr><td><b>江波龙</b></td><td>348.03 / 354.348</td><td class="dn"><b>-1.78%</b></td><td><b>唯一在 5 日线下方</b>，MA20 376.02 → -7.4%。存储超跌 + 外盘 SK 海力士 +7.05% 创新高，今日弹性最大</td></tr>
+    <tr><td><b>澜起科技</b></td><td>195.30 / 193.296</td><td class="dn"><b>+1.04%</b></td><td>MA10 199.71 → -2.2%，内存接口芯片，跟存储链</td></tr>
+    <tr><td><b>紫金矿业</b></td><td>34.40 / 33.558</td><td class="dn"><b>+2.51%</b></td><td>铜金双龙头，LME 铜 5 日新高 + 黄金 ETF 历史第二大流入</td></tr>
+    <tr><td><b>洛阳钼业</b></td><td>19.09 / 18.622</td><td class="dn"><b>+2.51%</b></td><td>9/9 除息（XD），铜钴弹性品种</td></tr>
+    <tr><td><b>新易盛</b></td><td>414.80 / 403.832</td><td class="dn"><b>+2.72%</b></td><td>MA20 414.734 → +0.02%（刚好在 20 日线），光模块性价比优于中际旭创</td></tr>
+    <tr><td><b>兖矿能源</b></td><td>22.15 / 21.548</td><td class="dn"><b>+2.79%</b></td><td>MA10 22.149 → <b>+0.00%</b>（正好压十日线），动力煤弹性</td></tr>
+    <tr><td><b>江西铜业</b></td><td>49.57 / 47.372</td><td class="nu"><b>+4.64%</b></td><td>铜纯度最高，5 日 +6.49%</td></tr>
+    <tr><td><b>中际旭创</b></td><td>908.90 / 867.346</td><td class="nu"><b>+4.79%</b></td><td>1.07 万亿风向标，只接 880-895 回踩</td></tr>
+    <tr><td><b>中远海能</b></td><td>21.43 / 20.416</td><td class="nu"><b>+4.97%</b></td><td>临界。油运，20 日 +28.02%，只做回踩不追</td></tr>
+    <tr><th>禁买区（乖离 &gt;5%）</th><th>现价 / MA5</th><th>乖离</th><th>说明</th></tr>
+    <tr><td><b>沪电股份</b></td><td>127.55 / 120.604</td><td class="up"><b>+5.76%</b></td><td>PCB 龙头，但乖离过大，回踩 121-123 再考虑</td></tr>
+    <tr><td><b>湖南黄金</b></td><td>28.45 / 26.92</td><td class="up"><b>+5.68%</b></td><td>涨停 + 换手 9.47%，锑/金双概念，情绪票</td></tr>
+    <tr><td><b>深南电路</b></td><td>383.30 / 360.824</td><td class="up"><b>+6.23%</b></td><td>PCB，乖离过大</td></tr>
+    <tr><td><b>华工科技</b></td><td>108.79 / 101.162</td><td class="up"><b>+7.54%</b></td><td>光博会最强（换手 10.07%、量比 2.97），但已 +8.22%，只作风向标</td></tr>
+    <tr><td><b>招商轮船</b></td><td>20.99 / 19.452</td><td class="up"><b>+7.91%</b></td><td><b>涨停 1695 亿市值</b>，绝对龙头但今日不可追，等回踩 19.5-20.0</td></tr>
+    <tr><td><b>亚盛集团</b></td><td>5.71 / —</td><td class="up"><b>极高</b></td><td>换手 <b>40.55%</b>、开板、量比 5.85 → 龙头见顶，农业链清仓信号</td></tr>
+    <tr><td><b>红棉股份</b></td><td>4.36 / —</td><td class="up"><b>一字板</b></td><td>换手 0.28%，买不进，白糖末端</td></tr>
+  </table>
+</div>
+
+<!-- ============ 价位标尺 ============ -->
+<div class="card">
+  <h2>沪指价位标尺（9/10 适用）</h2>
+  <div class="grid g2">
+    <div class="ladder">
+      <div class="rung"><span class="lv up">4001</span><span class="lb">BOLL 上轨</span><span class="rl r-s">极压</span></div>
+      <div class="rung"><span class="lv up">3999</span><span class="lb">MA120 · 未收复</span><span class="rl r-s">硬压力</span></div>
+      <div class="rung"><span class="lv up">3988</span><span class="lb">MA250（年线）· 未收复</span><span class="rl r-s">硬压力</span></div>
+      <div class="rung"><span class="lv nu">3970</span><span class="lb">前期密集成交区</span><span class="rl r-n">压力</span></div>
+      <div class="rung"><span class="lv nu">3958</span><span class="lb">9/9 最高 3958.12</span><span class="rl r-n">首压</span></div>
+      <div class="rung"><span class="lv pn"><b>3951.51</b></span><span class="lb"><b>9/9 收盘 · MA10（9/10 ≈ 3951）</b></span><span class="rl r-n">中枢</span></div>
+      <div class="rung"><span class="lv pn">3948</span><span class="lb">MA60 · 昨日刚站上</span><span class="rl r-r">生死</span></div>
+      <div class="rung"><span class="lv pn"><b>3941</b></span><span class="lb"><b>MA5（9/10 门槛）</b></span><span class="rl r-r">生死</span></div>
+      <div class="rung"><span class="lv pn"><b>3937</b></span><span class="lb"><b>MA20 / BOLL 中轨</b></span><span class="rl r-r">生死下沿</span></div>
+      <div class="rung"><span class="lv dn">3929</span><span class="lb">SAR 翻转位</span><span class="rl r-r">支撑</span></div>
+      <div class="rung"><span class="lv dn">3920</span><span class="lb">MA30</span><span class="rl r-r">支撑</span></div>
+      <div class="rung"><span class="lv dn">3871</span><span class="lb">BOLL 下轨</span><span class="rl r-r">清仓线</span></div>
+    </div>
+    <div>
+      <div class="alert a-blu" style="margin-top:0"><b>技术面：9 月以来最好的一天</b><br>
+      9/9 收 3951.51，<b>同时站上 MA5(3939.39) / MA10(3951.33) / MA20(3936.39) / MA30(3918.76) / MA60(3947.99) 五线</b>，为 9 月首次。<br>
+      MACD：DIF 7.37 &gt; DEA 6.31，<b>红柱 1.55 → 2.13（扩大）</b>。<br>
+      RSI6 57.34（中性偏强）｜CCI 40.78｜PSY 66.67。</div>
+      <div class="alert a-red"><b>但有三个未解问题</b><br>
+      ① <b>KDJ 仍死叉</b>：K 48.95 &lt; D 55.72，J 35.40 低位 —— 短线未转强；<br>
+      ② <b>MA120(3998.77) 与 MA250(3988.09) 未收复</b>，中长期趋势画像仍为"弱势下跌（均线空头排列）"；<br>
+      ③ <b>DMI：PDI 17.41 &lt; MDI 20.64</b>，空头仍占优，ADX 12.71（无趋势）。</div>
+      <div class="alert a-yel"><b>今日判定</b><br>
+      站稳 <b>3941（MA5）</b> = 偏多延续；失守 <b>3937（MA20/BOLL 中轨）</b> = 转弱；破 <b>3920（MA30）</b> = 五连阳结束、降仓。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 交易计划 ============ -->
+<div class="card">
+  <h2>盘前交易计划 · 四批建仓法（总仓位 45%）</h2>
+  <div class="alert a-blu" style="margin-top:0">
+    <b>今日两个特殊时点：</b>① <b>15:00 国新办金融强国发布会</b>（收盘后，影响明日）—— 盘中 14:30 后可能有资金抢跑大金融，但<b>不建议为发布会留重仓过夜</b>，因为 9/11 20:30 美国 CPI 是更大的变量；② <b>苹果折叠屏 + DeepSeek V4.1</b> 双双落地，消费电子 / AI 应用高开概率大，<b>高开一律不追</b>。
+  </div>
+  <table>
+    <tr><th style="width:12%">时段</th><th style="width:16%">触发条件</th><th style="width:14%">仓位动作</th><th style="width:58%">具体执行</th></tr>
+    <tr>
+      <td><b>09:30-09:45</b><br><span class="mini">试盘</span></td>
+      <td>平开/低开 且 沪指站稳 <b>3941</b></td>
+      <td class="dn"><b>建 1/3 ≈ 15%</b></td>
+      <td>买点优先级：<b>① 中国神华 47.0-47.4（煤炭，乖离 +0.65%）② 紫金矿业 34.2-34.5 ③ 江波龙 343-350（存储超跌）④ 澜起科技 193-196</b>。<br><b class="up">高开 &gt;1% 不买；铜/煤炭个股高开 &gt;3% 一律放弃</b>，等回踩。</td>
+    </tr>
+    <tr>
+      <td><b>10:00-11:00</b><br><span class="mini">验证</span></td>
+      <td>站稳 <b>3948（MA60）</b> 且放量</td>
+      <td class="dn"><b>加至 2/3 ≈ 30%</b></td>
+      <td>加仓方向：<b>洛阳钼业 18.9-19.1、兖矿能源 21.9-22.2、新易盛 410-416、中际旭创 880-895</b>。<br><b class="up">跌破 3937（MA20/BOLL中轨）→ 当日停手，并把仓位降回 1/4</b>。</td>
+    </tr>
+    <tr>
+      <td><b>13:00-14:00</b><br><span class="mini">确认</span></td>
+      <td>13:30 前成交 ≥1.3 万亿 + 站上 <b>3958</b> + 通信设备/元件翻红</td>
+      <td class="dn"><b>加满 45%</b></td>
+      <td>三条件<b>必须同时满足</b>。补 <b>江西铜业 48.5-49.6、中远海能 20.6-21.0（回踩才买）</b>。<br>任一不满足 → 维持 30%，不再加。</td>
+    </tr>
+    <tr>
+      <td><b>14:30-15:00</b><br><span class="mini">决断</span></td>
+      <td>—</td>
+      <td class="nu"><b>只减不加</b></td>
+      <td>收盘在 <b>3941 上方</b> → 持仓过夜；<b>3941 下方</b> → <b>减半过夜</b>。<br>不为 15:00 发布会留重仓（9/11 美国 CPI 风险更大）。<b class="up">周五（9/11）全天只减不加。</b></td>
+    </tr>
+  </table>
+
+  <h3>仓位配置（45%）</h3>
+  <div id="chPos" class="chart" style="height:300px"></div>
+  <table>
+    <tr><th style="width:22%">方向</th><th style="width:12%">仓位</th><th style="width:36%">标的</th><th style="width:30%">定位</th></tr>
+    <tr><td><b>资源·铜</b></td><td class="dn"><b>10%</b></td><td>紫金矿业 / 江西铜业 / 洛阳钼业</td><td>核心配置，商品新高 + 股价滞后的补涨</td></tr>
+    <tr><td><b>资源·煤炭</b></td><td class="dn"><b>8%</b></td><td>中国神华 / 兖矿能源</td><td>PPI 环比转正最直接受益，乖离最小</td></tr>
+    <tr><td><b>AI 算力·存储+光</b></td><td class="dn"><b>12%</b></td><td>江波龙 / 澜起科技 / 新易盛 / 中际旭创</td><td>资金实、位置低，外盘存储暴动催化</td></tr>
+    <tr><td><b>黄金·锑</b></td><td class="nu"><b>5%</b></td><td>山东黄金 / 紫金矿业（兼）</td><td>黄金 ETF 历史第二大流入，防守仓</td></tr>
+    <tr><td><b>航运油运</b></td><td class="nu"><b>0%（观察）</b></td><td>招商轮船 / 中远海能</td><td>爆发首日乖离过大，<b>只做回踩不追板</b></td></tr>
+    <tr><td><b>机动现金</b></td><td class="nu"><b>10%</b></td><td>—</td><td>留给 9/11 CPI 落地后的方向</td></tr>
+    <tr><td><b>总现金</b></td><td class="nu"><b>55%</b></td><td>—</td><td>转攻条件 0/5 未满足，不加到 60%</td></tr>
+  </table>
+</div>
+
+<!-- ============ 风控 ============ -->
+<div class="card">
+  <h2>风控清单</h2>
+  <div class="grid g2">
+    <div>
+      <h3>指数级止损</h3>
+      <ul>
+        <li>失守 <b>3937</b>（MA20/BOLL 中轨）→ 仓位 45% → <b>30%</b></li>
+        <li>破 <b>3929</b>（SAR）→ <b>20%</b></li>
+        <li>破 <b>3920</b>（MA30）→ <b>10%</b></li>
+        <li>破 <b>3871</b>（BOLL 下轨）→ <b>清仓</b></li>
+        <li>冲高 <b>3970-3988</b> 不放量 → 高抛一半</li>
+      </ul>
+      <h3>个股级止损</h3>
+      <ul>
+        <li>单票 <b>-7%</b> 无条件止损｜ETF <b>-5%</b></li>
+        <li>单票仓位上限 <b>8%</b>，单条主线上限 <b>18%</b></li>
+      </ul>
+    </div>
+    <div>
+      <h3>主线级熔断</h3>
+      <ul>
+        <li><b>铜链</b>：LME 铜单日回落 &gt;3% 或失守 14300 → 铜链减半</li>
+        <li><b>煤炭链</b>：焦煤/动力煤期货跌停 → 煤炭减半</li>
+        <li><b>油气/航运</b>：布油回落至 98 下方或中东局势缓和 → 清仓</li>
+        <li><b>算力链</b>：中际旭创跌破 <b>850</b> → 算力全弃</li>
+        <li><b>农业链</b>：亚盛集团跌停 → 农业全弃（已触发减仓条件）</li>
+        <li><b>黄金链</b>：伦敦金失守 4300 → 减半</li>
+      </ul>
+      <h3>一票否决（今日绝不碰）</h3>
+      <ul>
+        <li class="up">连板高标与独食票（亚盛、红棉、中粮科技）</li>
+        <li class="up">解禁股：沐曦股份（超千万股）、摩尔线程、中巨芯、中瓷电子</li>
+        <li class="up">农业高位股（20 股风险提示名单）</li>
+        <li class="up">国产 GPU（沐曦解禁 + 摩尔线程前期 -20%）</li>
+        <li class="up">纯题材脉冲且无资金：橡胶、黄酒、培育钻石、航海装备</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 转攻条件 ============ -->
+<div class="card">
+  <h2>转攻条件（加仓至 60% 的门槛）</h2>
+  <table>
+    <tr><th style="width:6%">#</th><th style="width:52%">条件</th><th style="width:16%">当前值</th><th style="width:12%">目标</th><th style="width:14%">状态</th></tr>
+    <tr><td>1</td><td>沪指站上 MA250（年线）且成交 ≥2.0 万亿</td><td>3951.51 / 1.8556 万亿</td><td>3988 / 2.0 万亿</td><td class="up">未满足（差 36.5 点）</td></tr>
+    <tr><td>2</td><td>涨停家数回到 80+ 且跌停 ≤2</td><td>49 / 9</td><td>80 / ≤2</td><td class="up">未满足（差距大）</td></tr>
+    <tr><td>3</td><td>全市场上涨占比 &gt;55%</td><td>32%</td><td>&gt;55%</td><td class="up">未满足</td></tr>
+    <tr><td>4</td><td>美国 8 月 CPI（9/11 20:30）低于预期</td><td>待公布</td><td>低于预期</td><td class="nu">待周五</td></tr>
+    <tr><td>5</td><td>成交额连续 2 日 ≥2.0 万亿</td><td>1.8556 万亿（缩量）</td><td>≥2.0 万亿</td><td class="up">未满足</td></tr>
+  </table>
+  <div class="alert a-yel"><b>达成 0 / 5 → 维持 45%，不加到 60%。</b>第 1、3、5 项本质是同一个问题：<b>当前是权重拉指数的"缩量分化"行情，不是增量资金推动的普涨行情</b>。在赚钱效应（涨停数、上涨占比）修复之前，任何加仓都是在赌方向而非跟随趋势。</div>
+</div>
+
+<!-- ============ 消息面 ============ -->
+<div class="card">
+  <h2>消息面（9/9 盘后 — 9/10 早间）</h2>
+  <div class="grid g2">
+    <div>
+      <h3 class="dn">利好</h3>
+      <ul>
+        <li><b>中国 8 月 CPI +0.8%</b>（7 月 +0.5%），环比 +0.4%（由 -0.1% 转正）；<b>核心 CPI +1.0%</b>，连续第 4 个月扩大</li>
+        <li><b>8 月 PPI +3.8%</b>（7 月 +3.5%），<b>环比 +0.4%（8 个月来首次转正）</b>；工业生产者购进价格 +5.8%</li>
+        <li>PPI 结构：能源 +4.1%（汽油 +9.3%）、<b>金饰 +33.6%</b>、平板 +21.5%、计算机 +19.6%、手机 +11.0%</li>
+        <li><b>国新办 9/10 15:00</b>「金融强国」发布会：央行陆磊、金融监管总局丛林、证监会李超、外汇局李斌</li>
+        <li><b>苹果首款折叠屏 iPhone Duo</b> 发布，15999 元起、2TB 顶配 <b>26499 元</b>，10/23 发售；同步发布 iPhone 18 Pro / Pro Max</li>
+        <li><b>DeepSeek 计划 9/10 前后发布 V4.1 Flash 模型</b></li>
+        <li><b>CIOE 光博会 9/9-11 深圳</b>（今日第 2 天）+ 高盛上调光模块 TAM</li>
+        <li><b>世界黄金协会</b>：8 月全球黄金 ETF 吸金 <b>180 亿美元</b>（历史第二大单月），AUM 6150 亿美元，持仓 4189 吨创新高</li>
+        <li>北京发布「十五五」高精尖产业规划 + 数字经济规划（商业航天、RISC-V、十万卡集群）</li>
+        <li>外盘存储链：<b>SK 海力士 +7.05% 创历史新高</b>、美光 +2.75%、闪迪 +1.51%、康宁 +1.51%、英特尔 +1.69%；Meta +6.55%</li>
+        <li>商务部回应美指责中国 AI 企业蒸馏：是科技霸权行径</li>
+        <li>军工板块悄然拉升</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="up">利空</h3>
+      <ul>
+        <li><b>美股三连跌</b>：道指 -0.77%、纳指 -0.64%、标普 -0.48%，通胀数据前夕避险</li>
+        <li><b>美债风暴</b>：财政部长债回购上限 60 亿美元<b>不及市场预期</b> → 长债遭抛售、收益率飙升，「加息旋律突袭全球」</li>
+        <li><b>超 20 只 A 股集中提示风险</b>，涉及农业、科技等题材</li>
+        <li>沐曦股份超千万股解禁上市（国产 GPU 承压）</li>
+        <li>本周解禁高位科技股：中巨芯约 193 亿、摩尔线程约 134 亿、中瓷电子约 126 亿</li>
+        <li>LME 铜 14773.6（+0.04%）高位钝化；布油 101.37 破百后动能减弱</li>
+        <li>英伟达 -0.91%、苹果 -0.28%（发布会前）</li>
+      </ul>
+      <h3 class="nu">中性 / 需观察</h3>
+      <ul>
+        <li>中东局势升级，欧洲天然气价格大幅飙升（利好油气，利空成本端）</li>
+        <li>黄金白银深夜直线拉升后回落，伦敦金 4395.07（-0.15%）</li>
+        <li>第七批高值医用耗材集采 9/10 天津开标</li>
+        <li>燧原科技 9/11 科创板上市，发行价 142.18 元</li>
+        <li>中塑股份 9/10 申购（55.28 元，PE 22.20）</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 日历 ============ -->
+<div class="card">
+  <h2>本周日历</h2>
+  <table>
+    <tr><th style="width:16%">日期</th><th style="width:84%">事件</th></tr>
+    <tr><td><b>9/10（今日）</b></td><td><b>15:00 国新办金融强国发布会</b>（央行/金融监管总局/证监会/外汇局）｜CIOE 光博会第 2 天｜DeepSeek V4.1 Flash 发布｜中塑股份申购｜第七批高值耗材集采开标｜热轧卷板/不锈钢/低硫燃料油期权挂牌</td></tr>
+    <tr><td class="up"><b>9/11（周五）</b></td><td><b class="up">20:30 美国 8 月 CPI —— 全周最关键</b>｜燧原科技科创板上市（142.18 元）｜<b>本日 A 股全天只减不加</b></td></tr>
+    <tr><td>9/15（下周一）</td><td>中金 / 东兴 / 信达停牌｜8 月经济数据（工增/投资/社零/能源生产）</td></tr>
+    <tr><td class="up">9/15-16</td><td><b class="up">美联储 FOMC 会议</b>（当前加息概率约 60%）</td></tr>
+    <tr><td>9/18</td><td>富时 A50 指数调仓</td></tr>
+  </table>
+</div>
+
+<!-- ============ 归因 ============ -->
+<div class="card">
+  <h2>信号归因</h2>
+  <div class="grid g2">
+    <div id="chRadar" class="chart"></div>
+    <div>
+      <table>
+        <tr><th style="width:20%">维度</th><th style="width:12%">权重</th><th>核心依据</th></tr>
+        <tr><td><b>技术面</b></td><td>25%</td><td>站上 MA5/10/20/30/60 五线（+）｜MACD 红柱 1.55→2.13（+）｜KDJ 死叉未修（-）｜MA120/MA250 未收复（-）｜缩量 1047 亿（-）</td></tr>
+        <tr><td><b>消息面</b></td><td>35%</td><td>PPI 环比转正 + CPI 0.8%（强+）｜国新办发布会（+）｜苹果折叠屏 + DeepSeek V4.1（+）｜黄金 ETF 历史第二（+）vs 美股三连跌（-）｜美债风暴加息（-）｜20 股风险提示（-）</td></tr>
+        <tr><td><b>资金面</b></td><td>15%</td><td>通信设备 +57.14 亿（5 日 +193 亿，行业第 1）｜元件 +49.31 亿（5 日 +163.8 亿，第 2）｜但全市场缩量、涨停腰斩（-）</td></tr>
+        <tr><td><b>环境面</b></td><td>25%</td><td>上涨占比仅 32%（-）｜涨停 49 / 跌停 9（-）｜9/11 美国 CPI + 9/16 FOMC 双悬顶（-）｜PE 分位 70-90% 偏高（-）</td></tr>
+      </table>
+      <div class="alert a-blu" style="margin-top:12px"><b>一句话总结：</b>基本面（PPI 转正）与技术面（站上五线）同时转好，但赚钱效应（涨停腰斩、32% 上涨占比）与量能（缩量 1047 亿）在恶化。<b>这是"好指数、坏情绪"的组合</b> —— 适合配置基本面确定的资源股与资金潜伏的算力股，<b>不适合做题材接力</b>。</div>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  盘前计划 v58.0 · 生成于 2026-09-10 08:30 · 数据源：腾讯自选股行情接口 + 公开财经资讯<br>
+  本文档为交易纪律执行工具，不构成投资建议。市场有风险，决策需谨慎。
+</div>
+
+<script>
+(function(){
+  var tx='#e2e8f0', tx2='#94a3b8', bd='#2d2d44';
+  function base(){return{backgroundColor:'transparent',textStyle:{color:tx,fontFamily:'PingFang SC,Microsoft YaHei'}}}
+
+  // 评分环
+  var s=echarts.init(document.getElementById('chScore'));
+  s.setOption(Object.assign(base(),{
+    series:[
+      {type:'pie',radius:['72%','88%'],center:['50%','50%'],silent:true,label:{show:false},
+       data:[{value:62,itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,1,[{offset:0,color:'#667eea'},{offset:1,color:'#00d4aa'}])}},
+             {value:38,itemStyle:{color:'#20203a'}}]},
+      {type:'pie',radius:['0%','60%'],center:['50%','50%'],silent:true,label:{show:false},
+       data:[{value:1,itemStyle:{color:'rgba(102,126,234,.08)'}}]}
+    ],
+    graphic:[{type:'text',left:'center',top:'42%',style:{text:'62',fill:'#a5b4fc',fontSize:'42px',fontWeight:'700'}},
+             {type:'text',left:'center',top:'60%',style:{text:'偏多',fill:tx2,fontSize:'15px'}}]
+  }));
+
+  // 板块
+  var b=echarts.init(document.getElementById('chSector'));
+  var secName=['橡胶','航运港口','煤炭开采','农产品加工','元件','工业金属','种植业','电力','通信设备','铜概念','石油石化','燃气Ⅱ','电网设备','半导体'];
+  var secChg=[4.07,3.86,3.04,2.98,2.04,2.01,1.50,0.85,0.79,1.18,0.28,0.20,1.09,-0.69];
+  var secFund=[0,0,0,0,49.31,0,0,12.69,57.14,0,0,0,0,0];
+  b.setOption(Object.assign(base(),{
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+    legend:{data:['涨跌幅 %','主力净流入(亿)'],textStyle:{color:tx2},top:0},
+    grid:{left:60,right:70,top:40,bottom:70},
+    xAxis:{type:'category',data:secName,axisLabel:{color:tx2,interval:0,rotate:35,fontSize:11},axisLine:{lineStyle:{color:bd}}},
+    yAxis:[{type:'value',name:'涨跌幅 %',nameTextStyle:{color:tx2},axisLabel:{color:tx2,formatter:'{value}%'},splitLine:{lineStyle:{color:bd}}},
+           {type:'value',name:'资金(亿)',nameTextStyle:{color:tx2},axisLabel:{color:tx2},splitLine:{show:false}}],
+    series:[
+      {name:'涨跌幅 %',type:'bar',data:secChg.map(function(v){return{value:v,itemStyle:{color:v>=0?'#ff6b7a':'#00d4aa'}}}),barWidth:'48%'},
+      {name:'主力净流入(亿)',type:'bar',yAxisIndex:1,data:secFund,barWidth:'48%',itemStyle:{color:'#667eea'}}
+    ]
+  }));
+
+  // 乖离
+  var c=echarts.init(document.getElementById('chBias'));
+  var bName=['中国神华','江波龙','澜起科技','紫金矿业','洛阳钼业','新易盛','兖矿能源','江西铜业','中际旭创','中远海能','湖南黄金','沪电股份','深南电路','华工科技','招商轮船'];
+  var bVal=[0.65,-1.78,1.04,2.51,2.51,2.72,2.79,4.64,4.79,4.97,5.68,5.76,6.23,7.54,7.91];
+  c.setOption(Object.assign(base(),{
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){return p[0].name+'<br/>MA5乖离 '+p[0].value+'%'}},
+    grid:{left:80,right:60,top:20,bottom:36},
+    xAxis:{type:'value',axisLabel:{color:tx2,formatter:'{value}%'},splitLine:{lineStyle:{color:bd}}},
+    yAxis:{type:'category',data:bName,axisLabel:{color:tx2,fontSize:12},axisLine:{lineStyle:{color:bd}}},
+    series:[{type:'bar',data:bVal.map(function(v){return{value:v,itemStyle:{color:v<0?'#00d4aa':(v<5?'#00d4aa':(v<5.5?'#ffa502':'#ff6b7a'))}}}),
+      markLine:{symbol:'none',data:[{xAxis:5,label:{formatter:'5% 严进线',color:'#ffa502',fontSize:11},lineStyle:{color:'#ffa502',type:'dashed'}}]},
+      label:{show:true,position:'right',color:tx2,fontSize:11,formatter:'{c}%'}}]
+  }));
+
+  // 仓位
+  var p=echarts.init(document.getElementById('chPos'));
+  p.setOption(Object.assign(base(),{
+    tooltip:{trigger:'item',formatter:'{b}: {c}%'},
+    legend:{bottom:0,textStyle:{color:tx2,fontSize:11}},
+    series:[{type:'pie',radius:['42%','68%'],center:['50%','44%'],
+      itemStyle:{borderColor:'#1a1a2e',borderWidth:2},
+      label:{color:tx2,fontSize:11,formatter:'{b}\n{c}%'},
+      data:[
+        {value:10,name:'资源·铜',itemStyle:{color:'#00d4aa'}},
+        {value:8,name:'资源·煤炭',itemStyle:{color:'#2dd4bf'}},
+        {value:12,name:'AI算力·存储光',itemStyle:{color:'#667eea'}},
+        {value:5,name:'黄金·锑',itemStyle:{color:'#ffa502'}},
+        {value:10,name:'机动',itemStyle:{color:'#94a3b8'}},
+        {value:55,name:'现金',itemStyle:{color:'#2d2d44'}}
+      ]}]
+  }));
+
+  // 雷达
+  var r=echarts.init(document.getElementById('chRadar'));
+  r.setOption(Object.assign(base(),{
+    tooltip:{},
+    legend:{data:['v58.0 (9/10)','v57.0 (9/9)'],textStyle:{color:tx2},bottom:0},
+    radar:{indicator:[{name:'技术 25',max:25},{name:'消息 35',max:35},{name:'资金 15',max:15},{name:'环境 25',max:25}],
+      center:['50%','48%'],radius:'62%',axisName:{color:tx2,fontSize:12},splitLine:{lineStyle:{color:bd}},splitArea:{areaStyle:{color:['rgba(102,126,234,.03)','transparent']}},axisLine:{lineStyle:{color:bd}}},
+    series:[{type:'radar',data:[
+      {value:[16,25,11,10],name:'v58.0 (9/10)',itemStyle:{color:'#667eea'},areaStyle:{color:'rgba(102,126,234,.25)'}},
+      {value:[13,22,12,15],name:'v57.0 (9/9)',itemStyle:{color:'#94a3b8'},areaStyle:{color:'rgba(148,163,184,.12)'}}
+    ]}]
+  }));
+
+  window.addEventListener('resize',function(){[s,b,c,p,r].forEach(function(x){x.resize()})});
+})();
+</script>
+</body>
+</html>
