@@ -1,5 +1,5 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-10 12:45:50",
+  "generatedAt": "2026-09-10 15:46:10",
   "total": 273,
   "categories": [
     {
@@ -828,8 +828,8 @@ window.SITE_DATA = {
           "date": "20260910",
           "dateLabel": "2026-09-10（周四）",
           "file": "reports/close/close_20260910.html",
-          "title": "A股复盘 · 2026-09-10（周四）盘前版",
-          "size": 54211
+          "title": "A股复盘 · 2026-09-10（周四）收盘版",
+          "size": 53460
         },
         {
           "date": "20260909",
