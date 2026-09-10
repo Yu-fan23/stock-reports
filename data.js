@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-10 08:53:12",
-  "total": 272,
+  "generatedAt": "2026-09-10 12:45:50",
+  "total": 273,
   "categories": [
     {
       "key": "panqian",
@@ -15,8 +15,8 @@ window.SITE_DATA = {
           "date": "20260910",
           "dateLabel": "2026-09-10（周四）",
           "file": "reports/panqian/panqian_20260910.html",
-          "title": "盘前计划 v58.0 · 2026-09-10（周四 适用当日）",
-          "size": 43720
+          "title": "盘前计划 v58.1 · 2026-09-10（周四 适用当日）",
+          "size": 48435
         },
         {
           "date": "20260909",
@@ -404,9 +404,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 57,
-      "latest": "20260909",
+      "count": 58,
+      "latest": "20260910",
       "reports": [
+        {
+          "date": "20260910",
+          "dateLabel": "2026-09-10（周四）",
+          "file": "reports/noon/noon_20260910.html",
+          "title": "A股午间复盘 · 2026-09-10（周四）",
+          "size": 53696
+        },
         {
           "date": "20260909",
           "dateLabel": "2026-09-09（周三）",
