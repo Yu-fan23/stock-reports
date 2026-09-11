@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盘前计划 v60.0 · 2026-09-12（适用 9/14 周一）</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0f0f23;color:#e2e8f0;font-family:"PingFang SC","Microsoft YaHei",-apple-system,sans-serif;line-height:1.65;padding:16px}
+.wrap{max-width:1280px;margin:0 auto}
+h1{font-size:26px;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+h2{font-size:19px;color:#e2e8f0;margin:26px 0 12px;padding-left:11px;border-left:4px solid #667eea}
+h3{font-size:15px;color:#cbd5e1;margin:14px 0 8px}
+.card{background:#1a1a2e;border:1px solid #2d2d44;border-radius:12px;padding:18px;margin:14px 0}
+.hdr{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px;padding:18px;background:linear-gradient(135deg,#1a1a2e,#232342);border:1px solid #2d2d44;border-radius:14px}
+.tag{display:inline-block;padding:3px 11px;border-radius:20px;font-size:12px;font-weight:600}
+.t-buy{background:rgba(0,212,170,.16);color:#00d4aa;border:1px solid #00d4aa}
+.t-sell{background:rgba(255,71,87,.16);color:#ff4757;border:1px solid #ff4757}
+.t-hold{background:rgba(255,165,2,.16);color:#ffa502;border:1px solid #ffa502}
+.t-neu{background:rgba(148,163,184,.14);color:#94a3b8;border:1px solid #475569}
+.t-hot{background:rgba(102,126,234,.18);color:#8b9dff;border:1px solid #667eea}
+.grid{display:grid;gap:14px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:900px){.g3,.g2,.g4{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+th{background:#232342;color:#94a3b8;padding:9px 8px;text-align:left;font-weight:600;border-bottom:1px solid #2d2d44;white-space:nowrap}
+td{padding:8px;border-bottom:1px solid #232342;vertical-align:top}
+tr:hover td{background:#1f1f38}
+.up{color:#ff6b7a}.dn{color:#00d4aa}.mut{color:#94a3b8}.hl{color:#ffa502;font-weight:600}
+.chart{width:100%;height:340px}
+.bar{height:9px;background:#232342;border-radius:5px;overflow:hidden;margin-top:5px}
+.bar>i{display:block;height:100%;border-radius:5px}
+.warn{background:rgba(255,71,87,.09);border-left:3px solid #ff4757;padding:11px 14px;border-radius:7px;margin:9px 0;font-size:13.5px}
+.good{background:rgba(0,212,170,.09);border-left:3px solid #00d4aa;padding:11px 14px;border-radius:7px;margin:9px 0;font-size:13.5px}
+.info{background:rgba(102,126,234,.09);border-left:3px solid #667eea;padding:11px 14px;border-radius:7px;margin:9px 0;font-size:13.5px}
+.ruler{position:relative;height:26px;background:linear-gradient(90deg,#ff4757 0%,#ff4757 18%,#ffa502 18%,#ffa502 42%,#00d4aa 42%,#00d4aa 100%);border-radius:6px;margin:16px 0 6px}
+.ruler-mark{position:absolute;top:-6px;transform:translateX(-50%);font-size:11px;color:#e2e8f0;white-space:nowrap;background:#0f0f23;padding:1px 5px;border-radius:3px;border:1px solid #2d2d44}
+.ruler-mark::after{content:"";position:absolute;left:50%;top:100%;width:1px;height:26px;background:#e2e8f0}
+.kv{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed #2d2d44;font-size:13.5px}
+.kv:last-child{border:none}
+ul{margin:6px 0 6px 20px;font-size:13.5px}
+li{margin:4px 0}
+.small{font-size:12px;color:#94a3b8}
+.ring-wrap{display:flex;align-items:center;justify-content:center;gap:22px;flex-wrap:wrap}
+.foot{margin-top:28px;padding:16px;background:#1a1a2e;border:1px solid #2d2d44;border-radius:10px;font-size:12px;color:#64748b;text-align:center}
+.chg{display:flex;gap:8px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed #2d2d44;font-size:13.5px}
+.chg b{color:#8b9dff;min-width:34px;display:inline-block}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hdr">
+  <div>
+    <h1>盘前计划 v60.0 · 三问版</h1>
+    <div class="small" style="margin-top:6px">生成时间：2026-09-12（周六）06:55 ｜ 数据基准：9/11（周五）收盘 + 9/11 盘后—9/12 早间消息面</div>
+    <div class="small">适用交易日：<b style="color:#ffa502">2026-09-14（周一）</b>　上一版本：v59.0（9/11）评分 42 → 本期 <b style="color:#ffa502">52</b></div>
+  </div>
+  <div style="text-align:right">
+    <div style="font-size:38px;font-weight:800;letter-spacing:1px"><span class="t-hold">HOLD</span></div>
+    <div class="small">结构性低吸 · 偏多 · 中性区上沿</div>
+  </div>
+</div>
+
+<!-- ============ 三问三答 ============ -->
+<h2>📌 三问三答（核心结论）</h2>
+
+<div class="card">
+  <h3>❶ 当下主流题材是什么？（至多 3 个）</h3>
+  <table>
+    <tr><th style="width:60px">排序</th><th style="width:220px">题材</th><th>核心逻辑（政策 / 资金 / 产业）</th><th style="width:110px">阶段</th></tr>
+    <tr>
+      <td><span class="tag t-hot">NO.1</span></td>
+      <td><b style="color:#00d4aa">AI 算力硬件 · "AI 涨价链"</b><br><span class="small">光纤光缆 / 光模块 / PCB·覆铜板 / MLCC / 铜连接</span></td>
+      <td><b>四重共振，全市场唯一。</b>① 政策：9/11 国常会专题研究<b>算力网建设</b>（骨干光纤网络 / 算电协同 / 算网融合）+ 工信部《信息通信业"十五五"规划》（5 年投资 3.8 万亿、智算 1590→9800 EFLOPS、400G 高速传输、光纤直达链路）；② 资金：申万一级仅通信 <span class="up">+1.41%</span>、建材 <span class="up">+0.13%</span> 上涨，<b>通信主力净流入 52.78 亿居首，本周 +213.16 亿全行业第一、电子 +135.62 亿第二</b>；③ 产业：CCL 年内第七轮涨价落地、7628 电子布连涨 3 个月加速、村田停产消费级/车规 MLCC、高盛上调光模块 TAM（2028 年 1485 亿美元，+115%）；④ 业绩：中信证券确认半导体/通信设备/计算机设备兑现度最高。</td>
+      <td><b class="hl">政策第二波<br>主升中段偏早</b></td>
+    </tr>
+    <tr>
+      <td><span class="tag t-hot">NO.2</span></td>
+      <td><b style="color:#00d4aa">算电协同 · 电力/电网/绿电直连·源网荷储</b><br><span class="small">新晋主线（v59 未列）</span></td>
+      <td><b>国常会直接点名的增量。</b>会议明确"推动算电协同、算网融合…<b>加快绿电直连、源网荷储等项目落地</b>"，叠加 CPE 2026 国际算电协同产业大会近期开幕。9/11 智能电网 5 只涨停（闽东电力 3 板 / 鼎信通讯 3 板 / 通达股份 / 杭州热电 / 江苏新能），在全市场 4870 只下跌中逆势成建制。属性=低位+小市值+防守，弱势环境资金避风港。</td>
+      <td><b class="hl">启动第 1-2 天<br>政策首日试错</b></td>
+    </tr>
+    <tr>
+      <td><span class="tag t-neu">NO.3</span></td>
+      <td><b>国防军工 · 兵装重组/军工电子</b></td>
+      <td>9/11 国防军工主力净流入 <b>5.25 亿（全市场第 2）</b>，光电股份、内蒙一机、银河电子涨停，博云新材 +7.44%（主力 +6.14 亿）；中报体现行业景气上行。属补位支线，无完整连板梯队，规模有限。</td>
+      <td><b>事件驱动<br>发酵期</b></td>
+    </tr>
+  </table>
+
+  <div class="warn"><b>🚫 已出局 / 一票否决（v59 的 NO.1 能源链被证伪）：</b>
+  <b>① 能源地缘链</b>——IEA 大幅下调今年全球石油需求（降幅扩至 250 万桶/日，2020 年来最大），9/11 布油 <span class="dn">-2.81%</span> 收 104.61、WTI <span class="dn">-2.37%</span> 收 100.05，A 股石油化工同步调整，v59"油价破百未被 A 股定价"的缺口已被证伪；
+  <b>② 有色/贵金属</b>——有色 <span class="dn">-3.98%</span> 领跌、净流出 39.75~69.73 亿，北方铜业跌停，加息概率 86.5% + 10 年美债 4.97%（2023/10 来新高）双杀；
+  <b>③ 农业</b>——亚盛集团、新赛股份、百大集团批量跌停，农牧饲渔领跌；
+  <b>④ 大金融/金融软件</b>——非银净流出居前，新力金融、翠微股份跌停，财富趋势 -10%、大智慧 -7%、指南针 -6%、东方财富 -11.73 亿；
+  <b>⑤ 近端次新</b>——宇树科技腰斩后破 2000 亿、摩尔线程/沐曦创新低、天博智能上市第 5 日破发。</div>
+</div>
+
+<div class="card">
+  <h3>❷ 主流题材的核心是谁？</h3>
+  <div class="grid g3">
+    <div>
+      <h3 style="color:#00d4aa">① 算力·光通信/光纤（中军）</h3>
+      <table>
+        <tr><th>标的</th><th>收盘</th><th>当日</th><th>9日区间</th></tr>
+        <tr><td><b>中际旭创</b> 300308</td><td>926.00</td><td class="up">+4.03%</td><td class="up">+8.70%</td></tr>
+        <tr><td>新易盛 300502</td><td>423.00</td><td class="up">+2.94%</td><td class="mut">—</td></tr>
+        <tr><td><b>长飞光纤</b> 601869</td><td>473.99</td><td class="up">+8.78%</td><td class="up">+13.24%</td></tr>
+        <tr><td>亨通光电 600487</td><td>65.24</td><td class="up">+2.08%</td><td class="mut">—</td></tr>
+        <tr><td>天孚通信 300394</td><td>261.96</td><td class="dn">-2.62%</td><td class="mut">掉队</td></tr>
+        <tr><td>长盈通 688143</td><td>195.00</td><td class="up">+15.49%</td><td class="up">+21.13%</td></tr>
+        <tr><td>兆龙互连 300913</td><td>—</td><td class="up">+8.63%</td><td class="up">+19.09%</td></tr>
+      </table>
+      <div class="small" style="margin-top:6px">资金：中际旭创主力 <b>+31.83 亿（全市场第 1）</b>、本周 +105.04 亿第 1；新易盛 +21.34 亿、本周 +52.41 亿。<b>天孚通信 -7.43 亿掉队</b>（但本周仍 +26.21 亿）。</div>
+    </div>
+    <div>
+      <h3 style="color:#00d4aa">② 算力·PCB / MLCC（弹性）</h3>
+      <table>
+        <tr><th>标的</th><th>收盘</th><th>当日</th><th>9日区间</th></tr>
+        <tr><td><b>风华高科</b> 000636</td><td>55.99</td><td class="up">+10.00%</td><td class="mut">年内+244%</td></tr>
+        <tr><td>三环集团 300408</td><td>124.36</td><td class="up">+5.66%</td><td class="up">+8.14%</td></tr>
+        <tr><td>昀冢科技 688260</td><td>109.90</td><td class="up">+18.68%</td><td class="up">+6.37%</td></tr>
+        <tr><td>双星新材 002585</td><td>9.96</td><td class="up">+10.06%</td><td class="mut">—</td></tr>
+        <tr><td><b>超声电子</b> 000823</td><td>20.57</td><td class="up">+10.00%</td><td class="up">+30.03%</td></tr>
+        <tr><td>崇达技术 002815</td><td>20.08</td><td class="up">+10.03%</td><td class="up">+36.14%</td></tr>
+        <tr><td>博敏电子 603936</td><td>20.88</td><td class="up">+10.01%</td><td class="up">+13.85%</td></tr>
+        <tr><td>嘉立创 001232</td><td>182.48</td><td class="up">+10.00%</td><td class="mut">—</td></tr>
+        <tr><td>金安国纪 002636</td><td>82.46</td><td class="up">+7.86%</td><td class="dn">主力-2.89亿</td></tr>
+        <tr><td>神宇股份 300563</td><td>27.92</td><td class="up">+20.00%</td><td class="mut">224G铜缆</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3 style="color:#ffa502">③ 算电协同 / 军工</h3>
+      <table>
+        <tr><th>标的</th><th>收盘/板</th><th>看点</th></tr>
+        <tr><td><b>闽东电力</b> 000993</td><td>13.88 / 3板</td><td>09:25 一字级封板，换手 10.47%</td></tr>
+        <tr><td><b>鼎信通讯</b> 603421</td><td>3板</td><td>低开高走爆量晋级，智能电网+芯片</td></tr>
+        <tr><td>通达股份 002560</td><td>首板</td><td>特高压导线龙头</td></tr>
+        <tr><td>杭州热电 605011</td><td>首板</td><td>工业园区热电联产</td></tr>
+        <tr><td>江苏新能 603693</td><td>首板</td><td>江苏国资，风光生物质</td></tr>
+        <tr><td>光电股份 600184</td><td>19.98 首板</td><td>兵工唯一光电平台+光隔离器 GP 材料</td></tr>
+        <tr><td>内蒙一机 600967</td><td>首板</td><td>唯一主战坦克/中重型轮式装甲</td></tr>
+        <tr><td>博云新材 002297</td><td>23.53 +7.44%</td><td>主力净流入 6.14 亿</td></tr>
+      </table>
+      <div class="small" style="margin-top:6px"><b>ETF 通道</b>（比个股安全）：通信ETF国泰 515880（规模 432.8 亿 / 5日 +5.63%）、通信ETF华夏 515050、通信ETF银华 159994、通信ETF富国 159583。</div>
+    </div>
+  </div>
+  <div class="info" style="margin-top:12px"><b>严进策略筛选（乖离 &lt; 5% 才买，此处以"9/1–9/11 区间涨幅"作代理指标）：</b>
+  <b style="color:#00d4aa">可买区（9日 &lt; 10%）</b>：中际旭创 +8.70% / 三环集团 +8.14% / 光电股份 +9.48% / 兴森科技 +9.22% / 特发信息 +8.95% / 意华股份 +8.17% / 长江通信 +7.63% / 广合科技 +7.54% / 东田微 +7.54% / 世运电路 +7.24% / 昀冢科技 +6.37% / 源杰科技 +10.96%（临界）。
+  <b style="color:#ff4757">禁止追高（9日 &gt; 20%）</b>：迅捷兴 +38.53% / 四会富仕 +38.43% / 崇达技术 +36.14% / 超声电子 +30.03% / 明阳电路 +21.62% / 长盈通 +21.13% / 长飞光纤 +13.24%（&gt;10% 需回踩）。
+  <b style="color:#ffa502">另：兆龙互连年内仍 -18%（年线下方）属低位反弹，是"低位补涨"而非高位接力。</b></div>
+</div>
+
+<div class="card">
+  <h3>❸ 走到哪个阶段了？能不能买？</h3>
+  <div class="grid g3">
+    <div class="card" style="background:#232342;margin:0">
+      <div style="font-size:13px;color:#94a3b8">AI 算力 · 涨价链</div>
+      <div style="font-size:17px;font-weight:700;color:#00d4aa;margin:4px 0">政策第二波 · 主升中段偏早</div>
+      <div class="small">时间轴：9/7 工信部规划（D1 爆发）→ 9/9–9/10 分歧 → <b>9/11 逆势独立日</b>（4800 只下跌中通信唯一 +1.41%）→ 9/11 晚国常会算力网（<b style="color:#ffa502">未定价</b>）。<br>
+      <b>位置证据</b>：CPO 板块 9/1–9/11 区间 <b>仅 -0.77%</b>、光纤概念 +0.24%、MLCC -3.88% —— <b>9 个交易日资金猛进但股价原地 = 典型吸筹状态，不是出货形态</b>。<br>
+      <b>判断：能买，但只买"回踩/平开"，绝不追高开。</b></div>
+    </div>
+    <div class="card" style="background:#232342;margin:0">
+      <div style="font-size:13px;color:#94a3b8">算电协同 · 电力电网</div>
+      <div style="font-size:17px;font-weight:700;color:#ffa502;margin:4px 0">启动第 1-2 天 · 政策首日</div>
+      <div class="small">国常会原文点名"绿电直连、源网荷储"，属于<b>全新政策增量、无套牢盘</b>。<br>
+      风险：当前连板高度被压在 <b>4 板</b>（瑞尔特），闽东电力/鼎信通讯已 3 板，<b>周一能否突破 4 板压制是生死线</b>；3 板在退潮期已属不低。<br>
+      <b>判断：可小仓位试错（≤8%），打板不参与，只做低位首板与中军。</b></div>
+    </div>
+    <div class="card" style="background:#232342;margin:0">
+      <div style="font-size:13px;color:#94a3b8">国防军工</div>
+      <div style="font-size:17px;font-weight:700;color:#94a3b8;margin:4px 0">事件发酵 · 无梯队</div>
+      <div class="small">资金第 2（+5.25 亿）但涨停仅 2 只，<b>缺连板梯队、缺带队龙头</b>。<br>
+      <b>判断：观察为主，仅作机动仓（≤4%）；若周一出现 2 板以上带队股再升级。</b></div>
+    </div>
+  </div>
+  <div class="good" style="margin-top:12px"><b>✅ 能不能买 —— 结论：能买，但是"结构性、低吸式、小步快跑"，不是全面进攻。</b><br>
+  三条主线中<b>只有算力链具备"政策 + 资金 + 产业涨价 + 业绩"四重验证</b>，是唯一值得重仓的方向；算电协同是政策首日试错仓；军工仅观察。<br>
+  但指数层面<b>沪指 3888.11 已跌破 3900 与全部均线</b>，主力连续 4 日净流出（9/11 -410.49 亿），上涨占比仅 <b>11.57%</b>，情绪仍在退潮 —— 所以必须是<b>「选对方向 + 控制仓位 + 严格止损」</b>的组合，不能因为方向对就上满仓。</div>
+</div>
+
+<!-- ============ 核心变化 ============ -->
+<h2>🔄 相对 v59.0（9/11）的 9 项核心变化</h2>
+<div class="card">
+  <div class="chg"><b>1</b><div><b>沪指失守 3900</b>：9/11 收 <b>3888.11（-1.18%）</b>，盘中最低 3852.03（一度跌逾 2%），最低点已<b>击穿 BOLL 下轨 3871</b>，尾盘深 V 收回。v59 所设"破 3900→10%"的风控线被触发。</div></div>
+  <div class="chg"><b>2</b><div><b>v59 的 NO.1「能源地缘链」被证伪</b>：IEA 下调需求 + 油价周五回落 2.4~2.8% + A 股石油化工同步调整，"油价破百未被 A 股定价"的缺口不成立。能源链降级出局。</div></div>
+  <div class="chg"><b>3</b><div><b>算力链由第 2 升至绝对第 1</b>：全市场 4870 只下跌中，申万一级<b>仅通信（+1.41%）与建材（+0.13%）上涨</b>；通信主力净流入 52.78 亿居首、本周 +213.16 亿全行业第一。</div></div>
+  <div class="chg"><b>4</b><div><b>国常会专题研究算力网建设（9/11 晚，A 股未定价）</b>：明确"算力网是人工智能发展的基础支撑"，点名<b>骨干光纤网络建设、算电协同、算网融合、绿电直连、源网荷储</b>。这是本期最大的新增变量。</div></div>
+  <div class="chg"><b>5</b><div><b>算电协同/电力成为新晋第 2 主线</b>：智能电网 5 只涨停（闽东电力 3 板 / 鼎信通讯 3 板），是国常会点名方向的盘面先行验证。</div></div>
+  <div class="chg"><b>6</b><div><b>资源通胀链彻底崩塌</b>：有色 <span class="dn">-3.98%</span> 领跌、基础化工 -2.98%、北方铜业跌停、贵金属续跌。v58 押注的"再通胀做多资源"路径被加息预期彻底打掉。</div></div>
+  <div class="chg"><b>7</b><div><b>美国 8 月 CPI 落地</b>：同比 3.4%（符合预期）、环比 +0.4%；核心 CPI 同比 <span class="dn">2.4%</span>（前值 2.5%，2021/3 来最低）、环比 +0.3%（超预期）。CME <b>9 月加息概率升至 86.5%~90%</b>，市场已完全计入年底前<b>加息两次</b>。美股反而反弹（道 +0.98% / 标普 +0.86% / 纳 +0.96%，费半 +1.81%）——<b>利空出尽式反应</b>。</div></div>
+  <div class="chg"><b>8</b><div><b>情绪继续退潮但出现"宽度修复"信号</b>：涨停 40 / 跌停 21（跌停翻倍）、炸板率 31%、晋级率 33.33%、最高板压至 <b>4 板</b>；但首板由 33 只略增、连板梯队收缩，资金"打宽度不打高度"。5 日市场温度 60→23。</div></div>
+  <div class="chg"><b>9</b><div><b>9/14 周一两只票复牌</b>：龙版传媒（7 天 6 板、8/31 以来 +93.47%、H1 净利 -34.46%）停牌核查完成复牌；有研硅（重大资产重组，收购山东有研艾斯 71.89% + 山东有研半导体 14.98%）复牌。华锡有色筹划控制权变更停牌。</div></div>
+</div>
+
+<!-- ============ 评分 ============ -->
+<h2>🎯 综合评分与仓位</h2>
+<div class="card">
+  <div class="ring-wrap">
+    <div id="ring" style="width:230px;height:230px"></div>
+    <div style="flex:1;min-width:300px">
+      <div class="kv"><span>技术面（25 分）<span class="small">破 3900、六线之下，但长下影深 V 收回</span></span><b class="hl">11 / 25</b></div>
+      <div class="bar"><i style="width:44%;background:linear-gradient(90deg,#ff4757,#ffa502)"></i></div>
+      <div class="kv" style="margin-top:10px"><span>消息面（35 分）<span class="small">国常会算力网 + 美股反弹 + 油价回落 vs 加息 86.5%</span></span><b class="hl">24 / 35</b></div>
+      <div class="bar"><i style="width:69%;background:linear-gradient(90deg,#ffa502,#00d4aa)"></i></div>
+      <div class="kv" style="margin-top:10px"><span>资金面（15 分）<span class="small">通信 +52.78 亿居首、本周 +213 亿；但全市场 -410 亿</span></span><b class="hl">10 / 15</b></div>
+      <div class="bar"><i style="width:67%;background:linear-gradient(90deg,#ffa502,#00d4aa)"></i></div>
+      <div class="kv" style="margin-top:10px"><span>市场环境（25 分）<span class="small">上涨占比 11.57%、FOMC 悬顶、情绪退潮</span></span><b class="hl">7 / 25</b></div>
+      <div class="bar"><i style="width:28%;background:linear-gradient(90deg,#ff4757,#ffa502)"></i></div>
+      <div class="kv" style="margin-top:12px;font-size:15px"><span><b>综合评分</b></span><b style="color:#ffa502;font-size:20px">52</b></div>
+      <div class="small" style="margin-top:4px">v56: 58 → v57: 56 → v58: 62 → <b>v59: 42</b> → <b style="color:#ffa502">v60: 52（+10）</b>，落 <b>45-54 中性区上沿</b></div>
+    </div>
+  </div>
+  <div class="grid g4" style="margin-top:18px">
+    <div class="card" style="background:#232342;margin:0;text-align:center"><div class="small">信号</div><div style="font-size:20px;font-weight:700;color:#ffa502">HOLD 偏多</div><div class="small">结构性低吸</div></div>
+    <div class="card" style="background:#232342;margin:0;text-align:center"><div class="small">建议总仓位</div><div style="font-size:20px;font-weight:700;color:#00d4aa">35%</div><div class="small">v59 为 30%</div></div>
+    <div class="card" style="background:#232342;margin:0;text-align:center"><div class="small">现金</div><div style="font-size:20px;font-weight:700;color:#94a3b8">65%</div><div class="small">过 FOMC</div></div>
+    <div class="card" style="background:#232342;margin:0;text-align:center"><div class="small">转攻条件</div><div style="font-size:20px;font-weight:700;color:#ff4757">0 / 5</div><div class="small">未满足，不加至 60%</div></div>
+  </div>
+</div>
+
+<div class="grid g2">
+  <div class="card"><h3>仓位配置（总 35%）</h3><div id="pie" class="chart" style="height:300px"></div></div>
+  <div class="card"><h3>信号归因（四维雷达）</h3><div id="radar" class="chart" style="height:300px"></div></div>
+</div>
+
+<!-- ============ 数据透视 ============ -->
+<h2>📊 数据透视：板块与资金（9/11）</h2>
+<div class="card"><div id="secflow" class="chart" style="height:360px"></div>
+<div class="small" style="margin-top:6px">口径：证券时报主力资金（全市场净流出 410.49 亿，连续 4 日）。东财口径为净流出 231.47 亿、通信 +38.46 亿，趋势一致。</div></div>
+
+<div class="grid g2">
+  <div class="card"><h3>本周（9/7–9/11）主力资金 · 申万行业</h3><div id="wkflow" class="chart" style="height:300px"></div>
+  <div class="small" style="margin-top:6px">通信 +213.16 亿、电子 +135.62 亿、建材 +19.58 亿；计算机 -154.99 亿、传媒 -64.53 亿、医药 -43.94 亿。<b>资金已从"计算机/传媒（AI 应用）"彻底切向"通信/电子（AI 硬件）"。</b></div></div>
+  <div class="card"><h3>情绪指标：5 日退潮轨迹</h3><div id="emo" class="chart" style="height:300px"></div>
+  <div class="small" style="margin-top:6px">涨停 92→40、昨涨停今均收益 4.79%→0.57%、市场温度 60→23。9/11 首板略增至 33、跌停 21、炸板率 31%。</div></div>
+</div>
+
+<!-- ============ 技术面 ============ -->
+<h2>📉 沪指技术面与价位标尺</h2>
+<div class="card">
+  <div class="grid g4">
+    <div><div class="small">收盘</div><div style="font-size:22px;font-weight:700" class="up">3888.11</div><div class="small">-1.18%（放量 +3248 亿）</div></div>
+    <div><div class="small">最低 / 最高</div><div style="font-size:22px;font-weight:700">3852.03 / 3912.32</div><div class="small">长下影深 V</div></div>
+    <div><div class="small">成交</div><div style="font-size:22px;font-weight:700">1.99 万亿</div><div class="small">放量下跌，连续 5 日 &lt; 2 万亿</div></div>
+    <div><div class="small">涨跌家数</div><div style="font-size:22px;font-weight:700"><span class="up">643</span> / <span class="dn">4870</span></div><div class="small">上涨占比 <b class="hl">11.57%</b></div></div>
+  </div>
+  <h3 style="margin-top:18px">价位标尺（9/14 周一）</h3>
+  <div class="ruler">
+    <div class="ruler-mark" style="left:8%">3944 MA60</div>
+    <div class="ruler-mark" style="left:24%">3935 MA20</div>
+    <div class="ruler-mark" style="left:40%">3929 MA5</div>
+    <div class="ruler-mark" style="left:58%">3900 关口</div>
+    <div class="ruler-mark" style="left:76%;color:#ffa502">3888 收盘</div>
+    <div class="ruler-mark" style="left:92%">3852 生死</div>
+  </div>
+  <div class="small">左→右：3944（MA60）｜3940（MA10）｜3935（MA20/BOLL 中轨）｜3929（MA5）｜3921（MA30）｜3900（整数关口 / <b>多空分水岭</b>）｜3888.11（收盘）｜3871（原 BOLL 下轨，9/11 盘中已破）｜3860（新下轨）｜<b>3852（9/11 最低，破位清仓线）</b></div>
+  <div class="warn" style="margin-top:12px"><b>⚠️ 技术面最大风险：</b>沪指 9/11 收在 <b>MA5(3929)/MA10(3940)/MA20(3935)/MA30(3921)/MA60(3944)/MA120(3998)/MA250(3987) 全部七条均线之下</b>，为连续第 2 日破位。MACD 红柱濒临转绿、KDJ 死叉、SAR 压顶。<b>唯一的多头证据是 9/11 的放量长下影（3852→3888）与国常会利好未定价。</b></div>
+</div>
+
+<!-- ============ 作战计划 ============ -->
+<h2>⚔️ 作战计划：9/14（周一）四批建仓</h2>
+<div class="card">
+  <div class="info"><b>周一的核心矛盾：</b>国常会算力网利好 + 美股反弹（费半 +1.81%）<b>大概率导致高开</b>，但 FOMC（9/15-16）加息 86.5% 悬顶 + 情绪退潮未结束。<b>基准情景 = 高开冲高 → 埋伏资金兑现 → 冲高回落。</b>因此纪律是：<b style="color:#ff4757">高开一律不追，平/低开才建仓。</b></div>
+  <table>
+    <tr><th style="width:130px">时段</th><th style="width:130px">动作</th><th>触发条件（必须全部满足）</th><th style="width:90px">仓位</th></tr>
+    <tr>
+      <td><b>09:30–09:45</b><br><span class="small">试盘批</span></td>
+      <td><span class="tag t-hold">建 1/3</span></td>
+      <td>① <b>高开 &gt; 1.5% 一律不买</b>；② 平开/低开且开盘 15 分钟内站上 <b>3888</b>；③ 通信板块翻红、中际旭创红盘。<br>买点：通信 ETF（515880/515050）为主 + 中际旭创/三环集团回踩。</td>
+      <td><b>12%</b></td>
+    </tr>
+    <tr>
+      <td><b>10:00–11:00</b><br><span class="small">验证批</span></td>
+      <td><span class="tag t-buy">加至 2/3</span></td>
+      <td>① 站稳 <b>3900</b> 整数关口不破；② 通信板块涨幅扩大 &gt; 1.5%；③ 光通信/PCB 有 1 只以上 1 进 2 晋级。<br><b>反向</b>：回落跌破 <b>3871</b> → 当日停手，仓位降回 1/4（≈9%）。</td>
+      <td><b>24%</b></td>
+    </tr>
+    <tr>
+      <td><b>13:00–14:00</b><br><span class="small">确认批</span></td>
+      <td><span class="tag t-buy">加满</span></td>
+      <td>① 13:30 前成交 ≥ <b>1.3 万亿</b>；② 站上 <b>3929（MA5）</b>；③ 涨停数 ≥ 50 且跌停 &lt; 15；④ 算力主线未出现集体炸板。<br>四项不全 → 维持 24% 不加。</td>
+      <td><b>35%</b></td>
+    </tr>
+    <tr>
+      <td><b>14:30–15:00</b><br><span class="small">决断批</span></td>
+      <td><span class="tag t-sell">只减不加</span></td>
+      <td>① 收盘 &lt; 3900 → <b>减半过夜</b>（FOMC 周二周三）；② 冲高 3929–3944 不放量 → 高抛 1/3；③ 尾盘不新开仓。<br><b>周一绝不留重仓过 FOMC。</b></td>
+      <td><b>≤18%</b></td>
+    </tr>
+  </table>
+</div>
+
+<div class="grid g2">
+  <div class="card">
+    <h3>🎯 狙击点（9/14 可执行价位）</h3>
+    <table>
+      <tr><th>标的</th><th>9/11 收盘</th><th>理想买点</th><th>止损</th><th>目标</th></tr>
+      <tr><td><b>通信ETF 515880</b></td><td>0.675</td><td>0.660–0.672</td><td>0.641（-5%）</td><td>0.715</td></tr>
+      <tr><td><b>中际旭创</b> 300308</td><td>926.00</td><td>880–905 回踩</td><td>850</td><td>1000</td></tr>
+      <tr><td>三环集团 300408</td><td>124.36</td><td>118–122</td><td>113</td><td>135</td></tr>
+      <tr><td>兴森科技 002436</td><td>—</td><td>回踩 MA5</td><td>-7%</td><td>—</td></tr>
+      <tr><td>特发信息 000070</td><td>—</td><td>回踩 MA5</td><td>-7%</td><td>—</td></tr>
+      <tr><td>新易盛 300502</td><td>423.00</td><td>400–415</td><td>385</td><td>465</td></tr>
+      <tr><td><b>长飞光纤</b> 601869</td><td>473.99</td><td>440–458（9日+13%需回踩）</td><td>420</td><td>520</td></tr>
+      <tr><td>风华高科 000636</td><td>55.99</td><td>52–54（不追涨停）</td><td>48</td><td>62</td></tr>
+      <tr><td>光电股份 600184</td><td>19.98</td><td>19.0–19.6</td><td>18.0</td><td>22.5</td></tr>
+      <tr><td>江苏新能 / 杭州热电</td><td>—</td><td>低开回踩 MA5</td><td>-7%</td><td>—</td></tr>
+    </table>
+    <div class="small" style="margin-top:6px">原则：所有个股<b>必须等回踩</b>，开盘直接封板或高开 &gt;3% 一律放弃当日机会。<b>ETF 优先于个股</b>（规避个股黑天鹅与停牌风险）。</div>
+  </div>
+  <div class="card">
+    <h3>🛡️ 风险控制清单（硬性）</h3>
+    <ul>
+      <li>沪指跌破 <b>3871</b> → 总仓降至 <b>25%</b></li>
+      <li>沪指跌破 <b>3852</b>（9/11 最低）→ 总仓降至 <b>15%</b></li>
+      <li>沪指跌破 <b>3830</b> → <b>清仓观望</b></li>
+      <li>单票 <b>-7%</b> / ETF <b>-5%</b> 无条件止损</li>
+      <li>冲高 3929–3944 不放量 → 高抛 1/3</li>
+      <li><b>中际旭创跌破 850</b> → 光通信线减半</li>
+      <li><b>超声电子不能晋级</b>（5 天 3 板后断板）→ PCB 高位股只减不加</li>
+      <li><b>闽东电力 / 鼎信通讯不能上 4 板</b> → 算电协同整条线放弃</li>
+      <li><b>龙版传媒复牌跌停</b> → 视为情绪二次恶化信号，总仓再降 5–10%</li>
+      <li>有色/贵金属/农业/能源/大金融/金融软件/次新破发股 —— <b>一票否决，不碰</b></li>
+      <li>连板高标（瑞尔特 4 板、金安国纪等）—— <b>只看不买</b></li>
+    </ul>
+    <h3 style="margin-top:14px">🔼 转攻条件（当前 0/5，全满足才加至 60%）</h3>
+    <table>
+      <tr><th style="width:44px">#</th><th>条件</th><th style="width:80px">状态</th></tr>
+      <tr><td>1</td><td>沪指站上 3929（MA5）并连续 2 日收在其上</td><td class="dn">✗ 0</td></tr>
+      <tr><td>2</td><td>成交额回升至 2.2 万亿以上</td><td class="dn">✗ 1.99 万亿</td></tr>
+      <tr><td>3</td><td>连板高度突破 4 板、晋级率 ≥ 50%</td><td class="dn">✗ 4 板 / 33.33%</td></tr>
+      <tr><td>4</td><td>涨停 ≥ 60 家且跌停 &lt; 10 家</td><td class="dn">✗ 40 / 21</td></tr>
+      <tr><td>5</td><td>FOMC 落地且按兵不动或"鸽派加息"</td><td class="mut">未发生</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============ 消息面 ============ -->
+<h2>📰 消息面（9/11 盘后 — 9/12 早间）</h2>
+<div class="grid g2">
+  <div class="card">
+    <h3 style="color:#00d4aa">✅ 积极催化</h3>
+    <ul>
+      <li><b>【最高权重】国常会研究算力网建设</b>：算力网是 AI 发展的基础支撑；完善算力基础设施、构建多层次网络化算力体系；<b>推动算电协同、算网融合，加强算力资源监测调度和骨干光纤网络建设</b>；加快绿电直连、源网荷储项目落地。→ <b>A 股尚未定价</b></li>
+      <li><b>美股止跌反弹</b>：道 +0.98%、标普 +0.86%、纳 +0.96%（结束四连跌），<b>费半 +1.81%</b>，安森美 +8.51%、ARM +4.17%、英特尔 +2.61%、AMD +2.49%；<b>戴尔 +11.95% 创历史新高</b>（市值破 3600 亿美元，年内 +350%）</li>
+      <li><b>油价回落</b>：WTI <span class="dn">-2.37%</span> 报 100.05、布油 <span class="dn">-2.81%</span> 报 104.61 → 缓解通胀与成本压力（但利空能源链）</li>
+      <li><b>核心 CPI 同比回落至 2.4%</b>（2021/3 来最低），加息"符合预期"式落地</li>
+      <li><b>产业涨价确认</b>：CCL 年内第七轮涨价落地、7628 电子布连续第 3 个月加速；村田停产部分消费级/车规 MLCC → 国产订单溢出；光博会反馈保偏光纤/G.654.E/超高芯数光缆需求升温</li>
+      <li><b>长鑫存储 Q2 EBIT 利润率 82%</b>，超过 SK 海力士（76%）与三星（70%），全球第一；营收同比约 +10 倍</li>
+      <li>宁德时代 9/11 首次回购 60.43 万股（约 2 亿元，330.15–331.61 元）</li>
+      <li>微软计划 2032 年将数据中心容量从 12GW 扩至 38GW；甲骨文云基础设施营收同比翻倍至 74 亿美元、RPO 6640 亿美元</li>
+      <li>九部门《智能网联新能源汽车"十五五"规划》：2030 年新能源乘用车/商用车占新车销量 70%/40%</li>
+      <li>融资买入前三：<b>中际旭创 18.40 亿、天孚通信 16.90 亿、亨通光电 10.37 亿</b> —— 杠杆资金也在算力链</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3 style="color:#ff4757">⚠️ 风险警报</h3>
+    <ul>
+      <li><b>【最高权重】加息概率 86.5%~90%</b>：市场已<b>完全计入年底前加息两次</b>；10 年美债收益率亚洲时段破 <b>4.97%</b>（2023/10 来新高）、30 年 5.34%（2007 来最高）→ 压制所有高估值资产</li>
+      <li><b>FOMC 9/15–16</b>：周一（9/14）是会议前最后一个完整交易日，机构倾向减仓避险</li>
+      <li><b>情绪退潮未结束</b>：跌停 21（翻倍）、炸板率 31%、最高板压至 4 板、温度 60→23；捷荣技术 3 连跌停、深中华A/千金药业 2 连跌停、桂林旅游 5 板炸板巨量阴线</li>
+      <li><b>主力连续 4 日净流出</b>，9/11 全天 -410.49 亿（沪深 300 成份 -160.05 亿）</li>
+      <li><b>IEA 下调石油需求</b>：今年降幅预期扩至 250 万桶/日（2020 年来最大）→ 能源链逻辑受损</li>
+      <li><b>9/14 龙版传媒复牌</b>（8/31 以来 +93.47%、H1 净利 -34.46%）→ 大概率补跌，可能带崩传媒与整体情绪</li>
+      <li>监管高压：*ST 卓然财务造假强制退市（罚 4830 万 + 实控人 10 年禁入）；证监会对编造税率谣言者 5 年禁入；上交所对 53 起异常交易采取监管措施</li>
+      <li>存储板块海外走弱：希捷 -3.73%、闪迪 -3.50%、西数 -2.98%、美光 -0.22% → 存储分支需回避</li>
+      <li>本周解禁与次新负反馈：宇树科技腰斩后破 2000 亿、摩尔线程/沐曦创新低、天博智能上市第 5 日破发</li>
+      <li>华锡有色 9/14 停牌（筹划控制权变更，涉中国五矿）</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============ 日历 ============ -->
+<h2>📅 关键日历</h2>
+<div class="card">
+  <table>
+    <tr><th style="width:110px">日期</th><th>事件</th><th style="width:150px">影响</th></tr>
+    <tr><td><b style="color:#ffa502">9/14 周一</b></td><td><b>龙版传媒复牌</b>（7 天 6 板核查完成）、<b>有研硅复牌</b>（重大资产重组）、华锡有色停牌；国常会算力网利好首次定价</td><td><b class="hl">本周最大变量</b></td></tr>
+    <tr><td>9/15 周二</td><td><b>FOMC 会议第一天</b>；中金/东兴/信达停牌；中国 8 月经济数据（社零/工业增加值/固投）</td><td>加息前夜</td></tr>
+    <tr><td><b style="color:#ff4757">9/16 周三</b></td><td><b>FOMC 利率决议</b>（加息 25bp 概率 86.5%）+ 鲍威尔发布会</td><td><b class="up">全周最关键</b></td></tr>
+    <tr><td>9/17 周四</td><td>英国央行、日本央行议息；华为全联接大会</td><td>外围扰动</td></tr>
+    <tr><td>9/18 周五</td><td><b>富时 A50 指数季度调仓</b>（纳入中微/生益，剔除牧原/万华）；股指期货交割</td><td>被动资金流动</td></tr>
+    <tr><td>近期</td><td>CPE 2026 国际算电协同产业大会；CIOE 光博会（9/9–11 已开幕）；苹果 iPhone Duo 发售</td><td>算力/算电催化</td></tr>
+  </table>
+</div>
+
+<!-- ============ 归因 ============ -->
+<h2>🧭 信号归因</h2>
+<div class="card">
+  <div class="grid g2">
+    <div>
+      <div class="kv"><span>技术面贡献</span><b>25%</b><div class="small">跌破 3900 与全部均线、MACD 濒临死叉、KDJ 死叉；但放量长下影 3852→3888 为唯一多头证据</div></div>
+      <div class="kv"><span>新闻消息贡献</span><b>35%</b><div class="small">最强：国常会算力网建设（未定价）；次强：美股反弹 + 费半 +1.81% + 油价回落；负面：加息 86.5% + 美债 4.97%</div></div>
+      <div class="kv"><span>基本面/产业贡献</span><b>20%</b><div class="small">CCL 第七轮涨价、电子布连涨 3 月、村田停产 MLCC、高盛上调光模块 TAM、长鑫 EBIT 82%、中信确认算力链业绩兑现</div></div>
+      <div class="kv"><span>市场环境贡献</span><b>20%</b><div class="small">主力连续 4 日净流出 410 亿、上涨占比 11.57%、跌停 21、连板压至 4 板、FOMC 悬顶</div></div>
+    </div>
+    <div>
+      <div class="good"><b>💪 最强看多信号：</b>全市场 4870 只下跌中，<b>通信是唯一上涨的行业（+1.41%）且主力净流入 52.78 亿居首、本周 +213 亿第一</b>；叠加 9/11 晚国常会专题研究算力网并点名"骨干光纤网络 + 算电协同"，<b>资金与政策形成 A 股尚未定价的双击</b>。</div>
+      <div class="warn"><b>⚠️ 最强看空信号：</b>FOMC 加息概率 <b>86.5%~90%</b> 且市场已完全计入年底前加息两次，<b>10 年美债收益率破 4.97%（2023/10 来新高）</b>——这对所有高估值成长资产（包括算力链）构成估值天花板；同时沪指已跌破 3900 与全部七条均线。</div>
+      <div class="info"><b>📌 操作本质：</b>这是一个<b>"方向对、位置差"</b>的组合 —— 主线（算力涨价链）清晰且有政策+资金+产业三重验证，但指数与情绪仍在退潮、FOMC 未落地。<b>正确做法是：用 ETF + 龙头回踩做方向，用 35% 仓位和硬性止损控制回撤，等 FOMC 落地后再决定是否加到 60%。</b></div>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  分析时间：2026-09-12 06:55（周六）｜ 数据基准：9/11 收盘 + 9/11 盘后—9/12 早间消息面 ｜ 版本：v60.0<br>
+  数据来源：证券时报、新华财经、中国证券报、财联社、东方财富、同花顺、CME FedWatch、公开行情数据<br>
+  <b style="color:#94a3b8">本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有分析结论均基于历史数据和技术模型，不保证未来表现。</b>
+</div>
+
+</div>
+
+<script>
+// 评分环
+var ring = echarts.init(document.getElementById('ring'));
+ring.setOption({
+  series:[
+    {type:'pie',radius:['72%','88%'],silent:true,label:{show:false},data:[
+      {value:52,itemStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'#667eea'},{offset:1,color:'#764ba2'}])}},
+      {value:48,itemStyle:{color:'#232342'}}
+    ]},
+    {type:'pie',radius:['0%','0%'],label:{show:false},data:[]}
+  ],
+  graphic:[
+    {type:'text',left:'center',top:'42%',style:{text:'52',fill:'#ffa502',font:'bold 46px sans-serif'}},
+    {type:'text',left:'center',top:'62%',style:{text:'综合评分',fill:'#94a3b8',font:'13px sans-serif'}},
+    {type:'text',left:'center',top:'72%',style:{text:'HOLD · 中性偏多',fill:'#e2e8f0',font:'12px sans-serif'}}
+  ]
+});
+
+// 仓位饼
+var pie = echarts.init(document.getElementById('pie'));
+pie.setOption({
+  tooltip:{trigger:'item',formatter:'{b}: {c}% ({d}%)'},
+  legend:{bottom:0,textStyle:{color:'#94a3b8',fontSize:11}},
+  series:[{type:'pie',radius:['42%','68%'],center:['50%','44%'],
+    label:{color:'#e2e8f0',formatter:'{b}\n{c}%'},
+    data:[
+      {value:18,name:'AI算力·涨价链',itemStyle:{color:'#00d4aa'}},
+      {value:8,name:'算电协同·电力',itemStyle:{color:'#667eea'}},
+      {value:4,name:'国防军工',itemStyle:{color:'#ffa502'}},
+      {value:5,name:'机动/现金替代',itemStyle:{color:'#764ba2'}},
+      {value:65,name:'现金',itemStyle:{color:'#2d2d44'}}
+    ]}]
+});
+
+// 归因雷达
+var radar = echarts.init(document.getElementById('radar'));
+radar.setOption({
+  tooltip:{},
+  legend:{bottom:0,textStyle:{color:'#94a3b8',fontSize:11}},
+  radar:{indicator:[
+    {name:'技术面',max:25},{name:'消息面',max:35},{name:'资金面',max:15},{name:'市场环境',max:25}
+  ],axisName:{color:'#94a3b8',fontSize:11},splitLine:{lineStyle:{color:'#2d2d44'}},
+   splitArea:{areaStyle:{color:['#1a1a2e','#1f1f38']}},axisLine:{lineStyle:{color:'#2d2d44'}}},
+  series:[{type:'radar',data:[
+    {value:[11,24,10,7],name:'v60.0 (9/12)',areaStyle:{color:'rgba(0,212,170,.22)'},lineStyle:{color:'#00d4aa'},itemStyle:{color:'#00d4aa'}},
+    {value:[9,18,8,7],name:'v59.0 (9/11)',areaStyle:{color:'rgba(255,71,87,.16)'},lineStyle:{color:'#ff4757'},itemStyle:{color:'#ff4757'}},
+    {value:[16,25,11,10],name:'v58.0 (9/10)',lineStyle:{color:'#667eea'},itemStyle:{color:'#667eea'}}
+  ]}]
+});
+
+// 板块涨跌 vs 资金流
+var secflow = echarts.init(document.getElementById('secflow'));
+secflow.setOption({
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+  legend:{data:['涨跌幅(%)','主力净流入(亿)'],textStyle:{color:'#94a3b8'},top:0},
+  grid:{left:50,right:60,top:40,bottom:70},
+  xAxis:{type:'category',data:['通信','建筑材料','国防军工','煤炭','电子','机械设备','基础化工','有色金属','房地产','非银金融'],
+    axisLabel:{color:'#94a3b8',rotate:30,fontSize:11},axisLine:{lineStyle:{color:'#2d2d44'}}},
+  yAxis:[
+    {type:'value',name:'涨跌幅%',nameTextStyle:{color:'#94a3b8'},axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#232342'}}},
+    {type:'value',name:'净流入亿',nameTextStyle:{color:'#94a3b8'},axisLabel:{color:'#94a3b8'},splitLine:{show:false}}
+  ],
+  series:[
+    {name:'涨跌幅(%)',type:'bar',data:[
+      {value:1.41,itemStyle:{color:'#ff4757'}},
+      {value:0.13,itemStyle:{color:'#ff6b7a'}},
+      {value:-0.43,itemStyle:{color:'#00d4aa'}},
+      {value:-0.30,itemStyle:{color:'#00d4aa'}},
+      {value:-0.81,itemStyle:{color:'#00d4aa'}},
+      {value:-1.50,itemStyle:{color:'#00d4aa'}},
+      {value:-2.98,itemStyle:{color:'#00c9a0'}},
+      {value:-3.98,itemStyle:{color:'#00b894'}},
+      {value:-2.93,itemStyle:{color:'#00c9a0'}},
+      {value:-2.20,itemStyle:{color:'#00c9a0'}}
+    ]},
+    {name:'主力净流入(亿)',type:'line',yAxisIndex:1,smooth:true,symbolSize:9,
+      lineStyle:{color:'#ffa502',width:3},itemStyle:{color:'#ffa502'},
+      data:[52.78,0.5,5.25,2.49,-70.46,-44.96,-25.0,-69.73,-12.0,-35.0]}
+  ]
+});
+
+// 本周行业资金
+var wkflow = echarts.init(document.getElementById('wkflow'));
+wkflow.setOption({
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+  grid:{left:70,right:30,top:20,bottom:40},
+  xAxis:{type:'value',axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#232342'}}},
+  yAxis:{type:'category',data:['医药生物','传媒','计算机','建筑材料','电子','通信'],
+    axisLabel:{color:'#94a3b8',fontSize:11},axisLine:{lineStyle:{color:'#2d2d44'}}},
+  series:[{type:'bar',data:[
+    {value:-43.94,itemStyle:{color:'#00d4aa'}},
+    {value:-64.53,itemStyle:{color:'#00d4aa'}},
+    {value:-154.99,itemStyle:{color:'#00b894'}},
+    {value:19.58,itemStyle:{color:'#ff6b7a'}},
+    {value:135.62,itemStyle:{color:'#ff4757'}},
+    {value:213.16,itemStyle:{color:'#ff3344'}}
+  ],label:{show:true,position:'right',color:'#e2e8f0',fontSize:11}}]
+});
+
+// 情绪
+var emo = echarts.init(document.getElementById('emo'));
+emo.setOption({
+  tooltip:{trigger:'axis'},
+  legend:{data:['涨停家数','跌停家数','市场温度'],textStyle:{color:'#94a3b8'},top:0},
+  grid:{left:50,right:50,top:40,bottom:40},
+  xAxis:{type:'category',data:['9/7','9/8','9/9','9/10','9/11'],axisLabel:{color:'#94a3b8'},axisLine:{lineStyle:{color:'#2d2d44'}}},
+  yAxis:[{type:'value',axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#232342'}}},
+         {type:'value',max:100,axisLabel:{color:'#94a3b8'},splitLine:{show:false}}],
+  series:[
+    {name:'涨停家数',type:'bar',data:[95,74,49,35,40],itemStyle:{color:'#ff4757'}},
+    {name:'跌停家数',type:'bar',data:[2,1,9,11,21],itemStyle:{color:'#00d4aa'}},
+    {name:'市场温度',type:'line',yAxisIndex:1,smooth:true,data:[60,52,40,30,23],
+      lineStyle:{color:'#ffa502',width:3},itemStyle:{color:'#ffa502'}}
+  ]
+});
+
+window.addEventListener('resize',function(){[ring,pie,radar,secflow,wkflow,emo].forEach(function(c){c.resize();});});
+</script>
+</body>
+</html>
