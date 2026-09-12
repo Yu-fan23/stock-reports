@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-12 16:45:46",
-  "total": 284,
+  "generatedAt": "2026-09-13 07:45:49",
+  "total": 285,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 57,
-      "latest": "20260912",
+      "count": 58,
+      "latest": "20260913",
       "reports": [
+        {
+          "date": "20260913",
+          "dateLabel": "2026-09-13（周日）",
+          "file": "reports/panqian/panqian_20260913.html",
+          "title": "盘前计划 v61.0 · 2026-09-13（适用 9/14 周一）",
+          "size": 53914
+        },
         {
           "date": "20260912",
           "dateLabel": "2026-09-12（周六）",
