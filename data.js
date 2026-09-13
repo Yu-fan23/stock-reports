@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-13 15:45:36",
-  "total": 288,
+  "generatedAt": "2026-09-13 16:45:45",
+  "total": 289,
   "categories": [
     {
       "key": "panqian",
@@ -1308,9 +1308,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 56,
-      "latest": "20260912",
+      "count": 57,
+      "latest": "20260913",
       "reports": [
+        {
+          "date": "20260913",
+          "dateLabel": "2026-09-13（周日）",
+          "file": "reports/limitup/limitup_20260913.html",
+          "title": "涨停梯队复盘 · 2026-09-13（周日 · 休市 · 沿用 9/11 收盘 · 周末最终定稿）",
+          "size": 99490
+        },
         {
           "date": "20260912",
           "dateLabel": "2026-09-12（周六）",
