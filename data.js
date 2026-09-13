@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-13 12:45:35",
-  "total": 287,
+  "generatedAt": "2026-09-13 15:45:36",
+  "total": 288,
   "categories": [
     {
       "key": "panqian",
@@ -863,9 +863,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 61,
-      "latest": "20260912",
+      "count": 62,
+      "latest": "20260913",
       "reports": [
+        {
+          "date": "20260913",
+          "dateLabel": "2026-09-13（周日）",
+          "file": "reports/close/close_20260913.html",
+          "title": "A股周日战略展望 · 2026-09-13",
+          "size": 44153
+        },
         {
           "date": "20260912",
           "dateLabel": "2026-09-12（周六）",
