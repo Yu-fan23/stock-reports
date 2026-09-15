@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-15 07:45:43",
-  "total": 295,
+  "generatedAt": "2026-09-15 15:46:10",
+  "total": 297,
   "categories": [
     {
       "key": "panqian",
@@ -439,9 +439,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 62,
-      "latest": "20260914",
+      "count": 63,
+      "latest": "20260915",
       "reports": [
+        {
+          "date": "20260915",
+          "dateLabel": "2026-09-15（周二）",
+          "file": "reports/noon/noon_20260915.html",
+          "title": "A股午间复盘 · 2026-09-15",
+          "size": 44366
+        },
         {
           "date": "20260914",
           "dateLabel": "2026-09-14（周一）",
@@ -1753,9 +1760,16 @@ window.SITE_DATA = {
       "time": "08:00",
       "icon": "🌐",
       "color": "#7c5cff",
-      "count": 52,
-      "latest": "20260914",
+      "count": 53,
+      "latest": "20260915",
       "reports": [
+        {
+          "date": "20260915",
+          "dateLabel": "2026-09-15（周二）",
+          "file": "reports/global/global_20260915.html",
+          "title": "全球资本市场十大热点 · 2026-09-15（周二）",
+          "size": 34851
+        },
         {
           "date": "20260914",
           "dateLabel": "2026-09-14（周一）",
