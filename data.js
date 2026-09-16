@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-16 15:41:01",
-  "total": 302,
+  "generatedAt": "2026-09-16 15:46:16",
+  "total": 303,
   "categories": [
     {
       "key": "panqian",
@@ -905,9 +905,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 64,
-      "latest": "20260915",
+      "count": 65,
+      "latest": "20260916",
       "reports": [
+        {
+          "date": "20260916",
+          "dateLabel": "2026-09-16（周三）",
+          "file": "reports/close/close_20260916.html",
+          "title": "A股复盘 · 2026-09-16 | 决策仪表盘",
+          "size": 40992
+        },
         {
           "date": "20260915",
           "dateLabel": "2026-09-15（周二）",
