@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-17 12:45:57",
-  "total": 307,
+  "generatedAt": "2026-09-17 15:45:51",
+  "total": 308,
   "categories": [
     {
       "key": "panqian",
@@ -919,9 +919,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 65,
-      "latest": "20260916",
+      "count": 66,
+      "latest": "20260917",
       "reports": [
+        {
+          "date": "20260917",
+          "dateLabel": "2026-09-17（周四）",
+          "file": "reports/close/close_20260917.html",
+          "title": "A股复盘 · 2026-09-17 | 美联储鹰派加息落地，赚钱效应急速退潮",
+          "size": 46945
+        },
         {
           "date": "20260916",
           "dateLabel": "2026-09-16（周三）",
