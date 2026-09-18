@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-18 12:45:43",
-  "total": 312,
+  "generatedAt": "2026-09-18 15:46:21",
+  "total": 313,
   "categories": [
     {
       "key": "panqian",
@@ -933,9 +933,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 66,
-      "latest": "20260917",
+      "count": 67,
+      "latest": "20260918",
       "reports": [
+        {
+          "date": "20260918",
+          "dateLabel": "2026-09-18（周五）",
+          "file": "reports/close/close_20260918.html",
+          "title": "A股复盘 2026-09-18 | 放量普涨 科技主线回归",
+          "size": 42606
+        },
         {
           "date": "20260917",
           "dateLabel": "2026-09-17（周四）",
