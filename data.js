@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-19 07:56:01",
-  "total": 316,
+  "generatedAt": "2026-09-19 12:45:57",
+  "total": 317,
   "categories": [
     {
       "key": "panqian",
@@ -467,9 +467,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 66,
-      "latest": "20260918",
+      "count": 67,
+      "latest": "20260919",
       "reports": [
+        {
+          "date": "20260919",
+          "dateLabel": "2026-09-19（周六）",
+          "file": "reports/noon/noon_20260919.html",
+          "title": "A股周度复盘 · 2026.09.14–09.18（周六·休市）· 先抑后扬·科技独舞·缺口未补·节前控回撤",
+          "size": 44042
+        },
         {
           "date": "20260918",
           "dateLabel": "2026-09-18（周五）",
