@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-19 12:52:16",
-  "total": 317,
+  "generatedAt": "2026-09-21 08:36:22",
+  "total": 319,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 64,
-      "latest": "20260919",
+      "count": 65,
+      "latest": "20260921",
       "reports": [
+        {
+          "date": "20260921",
+          "dateLabel": "2026-09-21（周一）",
+          "file": "reports/panqian/panqian_20260921.html",
+          "title": "盘前计划 v68.0 · 2026-09-21（周一）",
+          "size": 36584
+        },
         {
           "date": "20260919",
           "dateLabel": "2026-09-19（周六）",
@@ -1872,9 +1879,16 @@ window.SITE_DATA = {
       "time": "08:00",
       "icon": "🌐",
       "color": "#7c5cff",
-      "count": 57,
-      "latest": "20260919",
+      "count": 58,
+      "latest": "20260921",
       "reports": [
+        {
+          "date": "20260921",
+          "dateLabel": "2026-09-21（周一）",
+          "file": "reports/global/global_20260921.html",
+          "title": "全球资本市场十大热点 | 2026-09-21（周一）",
+          "size": 20978
+        },
         {
           "date": "20260919",
           "dateLabel": "2026-09-19（周六）",
