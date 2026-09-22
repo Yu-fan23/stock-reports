@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-22 12:51:26",
-  "total": 325,
+  "generatedAt": "2026-09-22 15:50:39",
+  "total": 326,
   "categories": [
     {
       "key": "panqian",
@@ -975,9 +975,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 68,
-      "latest": "20260921",
+      "count": 69,
+      "latest": "20260922",
       "reports": [
+        {
+          "date": "20260922",
+          "dateLabel": "2026-09-22（周二）",
+          "file": "reports/close/close_20260922.html",
+          "title": "A股复盘 2026-09-22 | 放量滞涨 高位分歧",
+          "size": 32914
+        },
         {
           "date": "20260921",
           "dateLabel": "2026-09-21（周一）",
