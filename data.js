@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-22 15:50:39",
-  "total": 326,
+  "generatedAt": "2026-09-22 16:50:50",
+  "total": 327,
   "categories": [
     {
       "key": "panqian",
@@ -1469,9 +1469,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 63,
-      "latest": "20260921",
+      "count": 64,
+      "latest": "20260922",
       "reports": [
+        {
+          "date": "20260922",
+          "dateLabel": "2026-09-22（周二）",
+          "file": "reports/limitup/limitup_20260922.html",
+          "title": "涨停梯队复盘 · 2026-09-22",
+          "size": 72490
+        },
         {
           "date": "20260921",
           "dateLabel": "2026-09-21（周一）",
