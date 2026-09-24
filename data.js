@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-24 12:52:07",
-  "total": 335,
+  "generatedAt": "2026-09-24 15:44:57",
+  "total": 336,
   "categories": [
     {
       "key": "panqian",
@@ -1003,9 +1003,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 70,
-      "latest": "20260923",
+      "count": 71,
+      "latest": "20260924",
       "reports": [
+        {
+          "date": "20260924",
+          "dateLabel": "2026-09-24（周四）",
+          "file": "reports/close/close_20260924.html",
+          "title": "A股复盘 2026-09-24 | 全面退潮 主线真空",
+          "size": 39432
+        },
         {
           "date": "20260923",
           "dateLabel": "2026-09-23（周三）",
