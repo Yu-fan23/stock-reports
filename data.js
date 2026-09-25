@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-25 16:50:32",
-  "total": 342,
+  "generatedAt": "2026-09-26 07:52:15",
+  "total": 343,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 69,
-      "latest": "20260925",
+      "count": 70,
+      "latest": "20260926",
       "reports": [
+        {
+          "date": "20260926",
+          "dateLabel": "2026-09-26（周六）",
+          "file": "reports/panqian/panqian_20260926.html",
+          "title": "盘前计划 · 2026-09-26（中秋假期 · 9/28 节前最后3个交易日作战版）",
+          "size": 48008
+        },
         {
           "date": "20260925",
           "dateLabel": "2026-09-25（周五）",
