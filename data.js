@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-26 12:51:30",
-  "total": 345,
+  "generatedAt": "2026-09-26 15:38:33",
+  "total": 346,
   "categories": [
     {
       "key": "panqian",
@@ -1031,9 +1031,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 72,
-      "latest": "20260925",
+      "count": 73,
+      "latest": "20260926",
       "reports": [
+        {
+          "date": "20260926",
+          "dateLabel": "2026-09-26（周六）",
+          "file": "reports/close/close_20260926.html",
+          "title": "A股复盘 · 2026-09-26（中秋假期特刊第2期）",
+          "size": 43314
+        },
         {
           "date": "20260925",
           "dateLabel": "2026-09-25（周五）",
