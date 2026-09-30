@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盘前计划 · 2026-10-01（10/8 节后开盘作战版 · 三问三答）</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0f0f23;color:#e2e8f0;font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;line-height:1.6;padding:16px}
+.wrap{max-width:1280px;margin:0 auto}
+.hero{background:linear-gradient(135deg,#1a1a2e 0%,#252550 100%);border:1px solid #2d2d44;border-radius:16px;padding:26px;margin-bottom:18px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#ffa502,#667eea,#00d4aa)}
+.hero h1{font-size:22px;color:#fff;margin-bottom:6px;letter-spacing:.5px}
+.hero .sub{color:#94a3b8;font-size:13px;margin-bottom:18px}
+.verdict{background:rgba(255,165,2,.10);border-left:4px solid #ffa502;border-radius:8px;padding:14px 18px;margin-bottom:18px;font-size:15.5px;color:#fff}
+.verdict b{color:#ffc14d;font-size:16px}
+.scorebar{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.ring{width:120px;height:120px;flex-shrink:0}
+.ring .num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring .num b{font-size:30px;color:#ffa502;line-height:1}
+.ring .num span{font-size:11px;color:#94a3b8;margin-top:3px}
+.kv{flex:1;min-width:240px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.kv div{background:rgba(255,255,255,.035);border:1px solid #2d2d44;border-radius:9px;padding:9px 13px}
+.kv .l{font-size:11px;color:#94a3b8;display:block}
+.kv .v{font-size:16px;color:#e2e8f0;font-weight:600}
+.sig{display:inline-block;background:linear-gradient(135deg,#ffa502,#e08e00);color:#1a1a2e;font-weight:800;font-size:15px;padding:7px 20px;border-radius:22px;letter-spacing:1px}
+h2{font-size:17px;color:#fff;margin:26px 0 12px;padding-left:11px;border-left:4px solid #667eea}
+h3{font-size:14px;color:#c7d2fe;margin:14px 0 8px}
+.card{background:#1a1a2e;border:1px solid #2d2d44;border-radius:13px;padding:18px;margin-bottom:14px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:14px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(430px,1fr));gap:14px}
+.topic{background:#1a1a2e;border:1px solid #2d2d44;border-radius:13px;padding:18px;margin-bottom:14px;position:relative;overflow:hidden}
+.topic::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%}
+.t1::before{background:linear-gradient(180deg,#00d4aa,#0f9b7a)}
+.t2::before{background:linear-gradient(180deg,#667eea,#764ba2)}
+.t3::before{background:linear-gradient(180deg,#ffa502,#e08e00)}
+.topic .hd{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.topic .rank{display:inline-block;background:rgba(102,126,234,.18);color:#a5b4fc;font-size:11px;padding:3px 10px;border-radius:11px;border:1px solid rgba(102,126,234,.35)}
+.topic h4{font-size:16px;color:#fff}
+.stage{display:inline-block;font-size:11px;padding:3px 10px;border-radius:11px;font-weight:600}
+.s-buy{background:rgba(0,212,170,.15);color:#00d4aa;border:1px solid rgba(0,212,170,.35)}
+.s-mid{background:rgba(102,126,234,.15);color:#a5b4fc;border:1px solid rgba(102,126,234,.35)}
+.s-wait{background:rgba(255,165,2,.15);color:#ffa502;border:1px solid rgba(255,165,2,.35)}
+.s-bad{background:rgba(255,71,87,.15);color:#ff6b7a;border:1px solid rgba(255,71,87,.35)}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:8px}
+th{background:rgba(102,126,234,.12);color:#a5b4fc;text-align:left;padding:8px 10px;font-weight:600;border-bottom:1px solid #2d2d44;white-space:nowrap}
+td{padding:7px 10px;border-bottom:1px solid #23233a;color:#cbd5e1}
+td.n{color:#fff;font-weight:600;white-space:nowrap}
+.up{color:#ff6b7a;font-weight:600}
+.dn{color:#00d4aa;font-weight:600}
+.mut{color:#94a3b8}
+.warn{background:rgba(255,71,87,.09);border:1px solid rgba(255,71,87,.3);border-radius:10px;padding:12px 15px;margin-top:10px;font-size:13px;color:#ffc9ce}
+.warn b{color:#ff4757}
+.good{background:rgba(0,212,170,.09);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:12px 15px;margin-top:10px;font-size:13px;color:#b8f5e6}
+.good b{color:#00d4aa}
+.note{background:rgba(102,126,234,.09);border:1px solid rgba(102,126,234,.28);border-radius:10px;padding:12px 15px;margin-top:10px;font-size:13px;color:#c7d2fe}
+.note b{color:#a5b4fc}
+.chart{width:100%;height:340px}
+.chart-sm{width:100%;height:280px}
+ul{margin:6px 0 0 18px;font-size:13px}
+li{margin-bottom:5px;color:#cbd5e1}
+li b{color:#fff}
+.qa{background:linear-gradient(135deg,#1a1a2e,#222247);border:1px solid #2d2d44;border-radius:12px;padding:16px 18px;margin-bottom:12px}
+.qa .q{color:#a5b4fc;font-size:14px;font-weight:700;margin-bottom:8px}
+.qa .a{font-size:13.5px;color:#e2e8f0}
+.ruler{position:relative;height:56px;margin:16px 0 8px}
+.ruler .track{position:absolute;top:26px;left:0;right:0;height:6px;background:linear-gradient(90deg,#ff4757 0%,#ffa502 45%,#00d4aa 100%);border-radius:3px}
+.ruler .pt{position:absolute;top:0;transform:translateX(-50%);text-align:center}
+.ruler .pt i{display:block;width:2px;height:14px;background:#fff;margin:20px auto 0}
+.ruler .pt span{font-size:10.5px;color:#94a3b8;white-space:nowrap;display:block;margin-top:2px}
+.ruler .pt b{font-size:11px;color:#fff;display:block}
+.footer{text-align:center;color:#64748b;font-size:11.5px;padding:22px 0 8px;border-top:1px solid #2d2d44;margin-top:22px}
+@media(max-width:640px){.kv{grid-template-columns:1fr}.chart{height:280px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hero">
+  <h1>盘前计划 · 2026-10-01（周四 · 国庆休市第 1 天）</h1>
+  <div class="sub">数据基准：<b>9/30 A股收盘</b>（节前最后交易日）+ <b>9/30 美股收盘</b> + <b>10/1 凌晨美光财报</b> + 9/29–9/30 政策/消息面　|　下一交易日 <b style="color:#ffc14d">10/8（周四）</b>　|　假期 10/1–10/7 共 <b style="color:#ff6b7a">8 天</b>，A股信息真空，但港股 10/2、10/5、10/6、10/7 正常开市（4 个交易日）、美股 5 个交易日</div>
+
+  <div class="verdict">
+    <b>一句话结论：</b>节前最后一天市场完成了一次干净利落的<b>「科技 → 医药」高低切换</b>（医药生物主力净流入 &gt;127 亿 vs 电子净流出 142 亿），创新药以四重产业催化接棒成为新主线第 1 天；但沪指仍在<b>全部均线之下</b>空头排列、MACD 死叉，且 8 天长假不可控 —— 节后 10/8 定性为<b>「中性偏多·结构战」</b>：现金 ≥60%，只做医药中军低吸 + 低位消费防御腿，地产链政策兑现日高开即减，半导体/存储全面回避。
+  </div>
+
+  <div class="scorebar">
+    <div class="ring" id="ringScore" style="position:relative"></div>
+    <div class="kv">
+      <div><span class="l">综合评分</span><span class="v">52 <span class="mut" style="font-size:12px">（v73=43，+9）</span></span></div>
+      <div><span class="l">信号</span><span class="v"><span class="sig">WATCH · 中性偏多</span></span></div>
+      <div><span class="l">建议仓位</span><span class="v">40%　<span class="mut" style="font-size:12px">现金 ≥60%</span></span></div>
+      <div><span class="l">作战日期</span><span class="v">10/8（周四）</span></div>
+      <div><span class="l">生死线</span><span class="v" style="color:#ff6b7a">3821.74 <span class="mut" style="font-size:11px">BOLL下轨</span></span></div>
+      <div><span class="l">清仓线</span><span class="v" style="color:#ff4757">3806.67 <span class="mut" style="font-size:11px">9/28低点</span></span></div>
+    </div>
+  </div>
+</div>
+
+<h2>一、三问三答（直接回答）</h2>
+
+<div class="qa">
+  <div class="q">Q1 · 当下的主流题材是什么？（至多 3 个）</div>
+  <div class="a">
+    ① <b style="color:#00d4aa">创新药 / 生物医药 / CRO</b>（最强，资金+涨停+催化三重共振）<br>
+    ② <b style="color:#a5b4fc">地产链 / 房贷贴息</b>（20日资金唯一持续流入，但已是政策兑现日）<br>
+    ③ <b style="color:#ffc14d">低位消费（白酒 / 食饮 / 个护）</b>（防御承接，白酒 19/19 全红）<br>
+    <span class="mut">—— 原主线 半导体/存储/CPO/元件 已明确降级为「回避」：半导体 9/30 主力净流出 98.74 亿（全市场最大），20 日累计流出 564.52 亿。</span>
+  </div>
+</div>
+
+<div class="qa">
+  <div class="q">Q2 · 主流题材的核心是谁？</div>
+  <div class="a">
+    <b>① 创新药：</b>情绪核心 <b>康希诺（688185）102.64 元 +20%</b>（开盘 9 分钟封 20cm，封单峰值超 8 亿，换手 9.32%）；权重中军 <b>恒瑞医药（600276）47.20 +3.46%</b>、<b>药明康德（603259）167.34 +4.16%</b>；CRO 先锋 <b>昭衍新药（603127）49.30 涨停</b>、<b>南模生物（688265）+19.87%</b>；低位补涨 <b>药康生物（688046）37.94 +8.46%</b>、<b>智飞生物（300122）13.98 +6.88%</b>。<br>
+    <b>② 地产链：</b>情绪核心 <b>深物业A（000011）12.24 +9.97%</b>（跌停→涨停「地天板」，换手 17.07%）、<b>陆家嘴（600663）10.11 涨停</b>（换手仅 0.93%，最健康）；板块中军/风向标 <b>万科A（000002）4.26 +4.41%</b>（20 日 +34.81%，节前 6 天 3 板）；基本面优选 <b>滨江集团（002244）10.14 +7.19%</b>。<br>
+    <b>③ 低位消费：</b><b>古越龙山（600059）12.27 +10.04%</b>（黄酒概念当日/5日/20日资金三项全正，20 日 +46%）、<b>九阳股份（002242）12.50 +10.04%</b>（20 日 +45%）、<b>金徽酒（603919）17.40 +9.99%</b>。
+  </div>
+</div>
+
+<div class="qa">
+  <div class="q">Q3 · 主流题材走到哪个阶段了，能不能买？</div>
+  <div class="a">
+    <b>① 创新药 —— 超跌反弹第 1 天（资金切换首日）→ <span style="color:#00d4aa">能买，但只买中军与低位，不追 20cm 高标</span></b><br>
+    　依据：当日资金极猛（生物医药 +51.14 亿居全市场第 1、创新药 +43.43 亿、CRO +23.77 亿），但 <b>5 日/20 日资金仍为净流出</b>（生物医药 5日 -45.72 亿 / 20日 -104.37 亿）—— 说明这是<b>第一天的高低切换，不是已经走了两周的趋势</b>，位置低、赔率好，但持续性需 10/8–10/10 二次放量确认。<br>
+    <b>② 地产链 —— 主升后段 / 政策兑现日（第 3–4 天）→ <span style="color:#ffa502">不追高，高开即减，只做低位补涨</span></b><br>
+    　依据：<b>20 日资金持续净流入</b>（房屋租赁 +20.20 亿、房地产开发概念 +18.37 亿、租售同权 +17.64 亿）证明是真趋势，但 9/30 当日<b>全线净流出</b>（-3.7 至 -7.2 亿）= 分歧已现；且政策 10/1 <b>正式生效 = 兑现日</b>，万科 20 日已涨 34.81%，10 家样本房企 H1 合计亏损 218.8 亿（同比扩大 60%），10 月底三季报是硬检验。<br>
+    <b>③ 低位消费 —— 补涨启动第 1–2 天 → <span style="color:#00d4aa">可低吸，作防御腿</span></b><br>
+    　依据：白酒 Ⅱ <b>19/19 全红</b>、板块效应 100%；个护用品 20 日 +30.76 亿（行业第 1）、非白酒 5日+20日双正。<br>
+    <b style="color:#ff6b7a">④ 半导体/存储 —— 主跌中段 → 一律回避</b>：美光财报营收/指引全面超预期，但 <b>Q1 毛利率指引 86.25% 低于预期 86.7%、低于本季 87%</b>，盘后先涨后跌；摩根士丹利点破关键 —— 市场关注点已从「景气度能有多高」转向「能维持多久」。A 股存储链 9/30 已提前大跌（中芯 -4.7%、澜起 -4.84%、兆易 -3.72%），节后大概率高开低走。
+  </div>
+</div>
+
+<h2>二、三大主线拆解</h2>
+
+<div class="topic t1">
+  <div class="hd">
+    <div><span class="rank">主线 ①</span> <h4 style="display:inline">创新药 / 生物医药 / CRO</h4></div>
+    <span class="stage s-buy">超跌反弹第 1 天 · 可买（低吸）</span>
+  </div>
+  <div class="grid2">
+    <div>
+      <h3>资金（万元 → 亿元）</h3>
+      <table>
+        <tr><th>板块</th><th>涨跌</th><th>当日</th><th>5日</th><th>20日</th></tr>
+        <tr><td class="n">生物医药</td><td class="up">+2.39%</td><td class="up">+51.14亿</td><td class="dn">-45.72亿</td><td class="dn">-104.37亿</td></tr>
+        <tr><td class="n">创新药</td><td class="up">+2.49%</td><td class="up">+43.43亿</td><td class="dn">-42.73亿</td><td class="dn">-78.24亿</td></tr>
+        <tr><td class="n">CRO</td><td class="up">+3.79%</td><td class="up">+23.77亿</td><td class="dn">-10.88亿</td><td class="up">+36.17亿</td></tr>
+        <tr><td class="n">细胞免疫治疗</td><td class="up">+3.37%</td><td class="up">+23.58亿</td><td class="up">+1.20亿</td><td class="dn">-31.59亿</td></tr>
+        <tr><td class="n">减肥药</td><td class="up">+2.67%</td><td class="up">+17.01亿</td><td class="dn">-1.53亿</td><td class="dn">-38.76亿</td></tr>
+      </table>
+      <div class="note"><b>读法：</b>单日流入最猛、5/20 日仍负 = 典型的「超跌 + 催化」反弹起点。CRO 是唯一 20 日资金为正的细分（+36.17 亿），中期逻辑最扎实（昭衍、南模、药康走强 = 投融资回暖前瞻信号）。</div>
+    </div>
+    <div>
+      <h3>四重催化（9/18–9/29 密集落地）</h3>
+      <ul>
+        <li><b>9/18</b> 工信部等十部门《医药工业发展"十五五"规划》：2030 年规上医药工业营收超 3.5 万亿，创新药产业规模增速年均 20%+</li>
+        <li><b>9/29</b> 阿斯利康出资 <b>20 亿美元</b>战略入股 Summit，主导推进康方依沃西（PD-1/VEGF 双抗）联合临床 —— 最直接导火索</li>
+        <li><b>9/29</b> 恒瑞医药 HRS-1596 授权诺和诺德：首付 3 亿美元 + 里程碑最高 23 亿，总额 <b>26 亿美元</b></li>
+        <li><b>产业趋势</b> 2026H1 国内 License-out 总额约 <b>1100 亿美元</b>（已达 2025 全年 80%），ADC/双抗管线全球领先；mRNA 从传染病预防向肿瘤治疗扩展（肿瘤疫苗概念 +9.67% 居全市场第 1）</li>
+        <li><b>前瞻</b> ESMO 大会临近（10 月中下旬），多项关键临床数据读出</li>
+      </ul>
+      <div class="good"><b>看多最强信号：</b>医药生物行业主力净流入 &gt;127 亿，同期申万电子净流出 142 亿、半导体净流出 99 亿 —— 这不是防御性避险，是<b>有产业预期支撑的资金再定价</b>。</div>
+    </div>
+  </div>
+  <h3>作战标的（10/8 ）</h3>
+  <table>
+    <tr><th>标的</th><th>9/30收盘</th><th>涨跌</th><th>5日</th><th>20日</th><th>定位</th><th>低吸区间</th><th>止损</th><th>目标</th><th>仓位</th></tr>
+    <tr><td class="n">药明康德 603259</td><td>167.34</td><td class="up">+4.16%</td><td class="dn">-0.30%</td><td class="up">+8.74%</td><td>CRO 权重中军</td><td>163–167</td><td>158.0</td><td>185</td><td>6%</td></tr>
+    <tr><td class="n">恒瑞医药 600276</td><td>47.20</td><td class="up">+3.46%</td><td class="up">+3.24%</td><td class="up">+2.10%</td><td>创新药龙头/BD直接受益</td><td>45.5–47.2</td><td>44.0</td><td>52.0</td><td>5%</td></tr>
+    <tr><td class="n">药康生物 688046</td><td>37.94</td><td class="up">+8.46%</td><td class="up">+0.56%</td><td class="up">+21.72%</td><td>实验动物·相对低位</td><td>36.0–38.0</td><td>34.5</td><td>44.0</td><td>4%</td></tr>
+    <tr><td class="n">昭衍新药 603127</td><td>49.30</td><td class="up">+10.00%</td><td class="up">+6.90%</td><td class="up">+9.12%</td><td>CRO 先锋（涨停）</td><td>46.0–48.5</td><td>44.5</td><td>57.0</td><td>3%</td></tr>
+    <tr><td class="n">智飞生物 300122</td><td>13.98</td><td class="up">+6.88%</td><td class="up">+4.72%</td><td class="dn">-0.99%</td><td>疫苗·低位补涨</td><td>13.4–14.0</td><td>12.8</td><td>15.8</td><td>2%</td></tr>
+    <tr><td class="n">康希诺 688185</td><td>102.64</td><td class="up">+20.00%</td><td class="up">+28.72%</td><td class="up">+35.41%</td><td>情绪核心·<b style="color:#ff6b7a">只观察不追高</b></td><td>95–100（回踩）</td><td>92.0</td><td>—</td><td>≤2% 试错</td></tr>
+  </table>
+  <div class="warn"><b>纪律：</b>康希诺 20cm 一字/高开 &gt;8% 一律放弃；5 日已 +28.72%、20 日 +35.41%，追高的赔率极差。本主线<b>仓位主力放在药明康德 + 恒瑞医药两只中军</b>（合计 11%），弹性腿只做回踩。</div>
+</div>
+
+<div class="topic t2">
+  <div class="hd">
+    <div><span class="rank">主线 ②</span> <h4 style="display:inline">地产链 / 房贷贴息</h4></div>
+    <span class="stage s-wait">主升后段 · 政策兑现日 · 不追高</span>
+  </div>
+  <div class="grid2">
+    <div>
+      <h3>政策：财金〔2026〕95 号（9/29 印发，10/1 起施行）</h3>
+      <ul>
+        <li>财政部 + 央行 + 金融监管总局联合发文，<b>中央财政首次对商业性个人住房贷款贴息</b></li>
+        <li>范围：首套（含二手）、建筑面积 ≤120㎡、总价 ≤150 万元；贴息 <b>1 个百分点</b>，单笔贷款最高 100 万，期限最长 5 年，政策期暂定 1 年</li>
+        <li>中金测算：每年支持约 <b>1.8 万亿元</b>贷款（占新发放 30%–40%），每年减少居民利息支出约 182 亿元</li>
+        <li>配套：9/28 国常会「研究出台稳定房地产市场的增量政策」、上海 828 新政细则、广州 9/30 现房销售细则、六大行 9/30 公告落实</li>
+      </ul>
+      <div class="warn"><b>三大减分项（决定不追高）：</b><br>① <b>兑现日风险</b>：政策 10/1 正式生效，9/30 已地天板抢跑，10/8 是「利好落地」的第一个交易日；<br>② <b>涨幅透支</b>：万科A 20 日 <b>+34.81%</b>（节前 6 天 3 板，9 个交易日一度涨超 35%）；深物业A 20 日 +33.62%、单日换手 17.07%；金地集团 20 日 +18.61%、单日振幅 20%；<br>③ <b>基本面不配合</b>：样本 10 家房企 H1 归母合计亏损 <b>218.8 亿元</b>，同比扩大约 60%；贴息精准补贴低总价刚需（中低能级城市约 50% 新房/70% 二手房符合，而北上深仅约 2% 新房/14% 二手房符合），对聚焦一二线的上市房企<b>直接增量有限</b>。10 月底三季报是硬检验。</div>
+    </div>
+    <div>
+      <h3>资金（5日/20日唯一持续流入的方向）</h3>
+      <table>
+        <tr><th>板块</th><th>9/30</th><th>当日</th><th>5日</th><th>20日</th></tr>
+        <tr><td class="n">房屋租赁</td><td class="up">+0.85%</td><td class="dn">-3.71亿</td><td class="up">+7.51亿</td><td class="up">+20.20亿</td></tr>
+        <tr><td class="n">房地产开发（概念）</td><td class="up">+0.60%</td><td class="dn">-3.99亿</td><td class="dn">-3.06亿</td><td class="up">+18.37亿</td></tr>
+        <tr><td class="n">租售同权</td><td class="up">+0.20%</td><td class="dn">-5.05亿</td><td class="up">+6.38亿</td><td class="up">+17.64亿</td></tr>
+        <tr><td class="n">房地产服务（行业）</td><td class="dn">-1.04%</td><td class="dn">-0.86亿</td><td class="up">+0.76亿</td><td class="up">+11.85亿</td></tr>
+        <tr><td class="n">房地产开发（行业）</td><td class="up">+0.79%</td><td class="dn">-4.85亿</td><td class="up">+7.16亿</td><td class="up">+10.27亿</td></tr>
+        <tr><td class="n">物业管理概念</td><td class="up">+0.27%</td><td class="dn">-7.20亿</td><td class="dn">-2.93亿</td><td class="dn">-2.69亿</td></tr>
+      </table>
+      <div class="note"><b>读法：</b>20 日资金全正（真趋势），但 9/30 当日全线净流出（分歧日）。趋势未破、节奏已到「高波动博弈段」—— 属于<b>持股者的减仓窗口，不是持币者的买点</b>。</div>
+    </div>
+  </div>
+  <h3>作战标的（10/8，总仓位上限 5%，且必须低开或平开才做）</h3>
+  <table>
+    <tr><th>标的</th><th>9/30收盘</th><th>涨跌</th><th>换手</th><th>5日</th><th>20日</th><th>定位</th><th>低吸区间</th><th>止损</th><th>仓位</th></tr>
+    <tr><td class="n">滨江集团 002244</td><td>10.14</td><td class="up">+7.19%</td><td>6.50%</td><td class="up">+15.89%</td><td class="up">+21.29%</td><td>区域龙头·基本面最优</td><td>9.6–10.0</td><td>9.20</td><td>3%</td></tr>
+    <tr><td class="n">陆家嘴 600663</td><td>10.11</td><td class="up">+10.01%</td><td><b>0.93%</b></td><td class="up">+14.24%</td><td class="up">+10.13%</td><td>换手极低·筹码最稳</td><td>9.6–10.0</td><td>9.30</td><td>2%</td></tr>
+    <tr><td class="n">万科A 000002</td><td>4.26</td><td class="up">+4.41%</td><td>13.48%</td><td class="up">+11.81%</td><td class="up">+34.81%</td><td><b>板块风向标·只观察</b></td><td>—</td><td>破 4.00 全线减</td><td>0%</td></tr>
+    <tr><td class="n">深物业A 000011</td><td>12.24</td><td class="up">+9.97%</td><td><b>17.07%</b></td><td class="up">+27.23%</td><td class="up">+33.62%</td><td>地天板·<b style="color:#ff6b7a">换手过高，回避</b></td><td>—</td><td>—</td><td>0%</td></tr>
+  </table>
+  <div class="warn"><b>一票否决：</b>万科A 竞价低开 &gt;2% 或开盘 30 分钟内翻绿，或深物业A / 陆家嘴炸板翻绿 → <b>地产链当日全部放弃，已持有一律减半</b>。</div>
+</div>
+
+<div class="topic t3">
+  <div class="hd">
+    <div><span class="rank">主线 ③</span> <h4 style="display:inline">低位消费（白酒 / 食饮 / 个护 / 小家电）</h4></div>
+    <span class="stage s-buy">补涨启动第 1–2 天 · 可低吸（防御腿）</span>
+  </div>
+  <div class="grid2">
+    <div>
+      <h3>板块效应：白酒 Ⅱ <span class="up">19/19 全红</span></h3>
+      <table>
+        <tr><th>行业 / 概念</th><th>涨跌</th><th>当日</th><th>5日</th><th>20日</th></tr>
+        <tr><td class="n">白酒Ⅱ</td><td class="up">+2.19%</td><td class="up">+9.62亿</td><td class="up">+0.69亿</td><td class="dn">-37.09亿</td></tr>
+        <tr><td class="n">非白酒（黄酒等）</td><td class="up">+2.18%</td><td class="up">+3.72亿</td><td class="up">+6.32亿</td><td class="up">+12.82亿</td></tr>
+        <tr><td class="n">个护用品</td><td class="up">+1.60%</td><td class="up">+2.89亿</td><td class="up">+14.21亿</td><td class="up"><b>+30.76亿</b></td></tr>
+        <tr><td class="n">饮料乳品</td><td class="up">+0.67%</td><td class="up">+1.32亿</td><td class="up">+4.90亿</td><td class="up">+5.72亿</td></tr>
+        <tr><td class="n">小家电</td><td class="up">+1.84%</td><td class="up">+0.01亿</td><td class="up">+0.92亿</td><td class="up">+0.85亿</td></tr>
+        <tr><td class="n">黄酒概念（三项全正）</td><td class="up">+3.83%</td><td class="up">+3.42亿</td><td class="up">+5.80亿</td><td class="up">+13.63亿</td></tr>
+      </table>
+      <div class="note"><b>全市场仅 14 个概念做到「当日+5日+20日」资金三项全正</b>，黄酒概念位列其中（+3.42 / +5.80 / +13.63 亿），是少数兼具趋势与当日强度的品种。</div>
+    </div>
+    <div>
+      <h3>作战标的（10/8，合计 ≤10%）</h3>
+      <table>
+        <tr><th>标的</th><th>9/30收盘</th><th>涨跌</th><th>5日</th><th>20日</th><th>低吸区间</th><th>止损</th><th>目标</th><th>仓位</th></tr>
+        <tr><td class="n">古越龙山 600059</td><td>12.27</td><td class="up">+10.04%</td><td class="up">+13.72%</td><td class="up">+46.07%</td><td>11.5–12.0</td><td>11.00</td><td>14.0</td><td>4%</td></tr>
+        <tr><td class="n">九阳股份 002242</td><td>12.50</td><td class="up">+10.04%</td><td class="up">+31.03%</td><td class="up">+45.18%</td><td>11.8–12.3</td><td>11.30</td><td>14.2</td><td>3%</td></tr>
+        <tr><td class="n">金徽酒 603919</td><td>17.40</td><td class="up">+9.99%</td><td class="up">+4.13%</td><td class="dn">-0.63%</td><td>16.5–17.3</td><td>15.80</td><td>19.5</td><td>3%</td></tr>
+      </table>
+      <div class="good"><b>为什么配这条腿：</b>8 天长假后开盘，若科技继续杀跌、地产兑现回调，<b>低位消费是唯一能承接资金的洼地</b>（白酒 19/19 全红、个护 20 日 +30.76 亿居行业第 1）。它的作用不是赚弹性，是<b>让组合在指数跳空低开时不至于被动</b>。</div>
+      <div class="warn"><b>注意：</b>古越龙山 20 日 +46.07%、九阳 20 日 +45.18%，均非低位，<b>只能回踩买、不能追高开</b>；金徽酒 20 日 -0.63% 才是真低位。</div>
+    </div>
+  </div>
+</div>
+
+<h2>三、大盘环境（9/30 收盘定格）</h2>
+
+<div class="card">
+  <div class="grid2">
+    <div>
+      <div id="kline" class="chart"></div>
+    </div>
+    <div>
+      <div id="dist" class="chart"></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="grid2">
+    <div>
+      <h3>指数表现（9/30）</h3>
+      <table>
+        <tr><th>指数</th><th>收盘</th><th>涨跌</th><th>5日</th><th>20日</th></tr>
+        <tr><td class="n">上证指数</td><td>3842.19</td><td class="up">+0.31%</td><td class="dn">-2.78%</td><td class="dn">-3.46%</td></tr>
+        <tr><td class="n">深证成指</td><td>12887.62</td><td class="dn">-0.11%</td><td class="dn">-4.71%</td><td class="dn">-6.09%</td></tr>
+        <tr><td class="n">创业板指</td><td>3135.28</td><td class="dn">-0.23%</td><td class="dn">-3.47%</td><td class="dn">-7.78%</td></tr>
+        <tr><td class="n">科创50</td><td>1530.01</td><td class="dn"><b>-2.51%</b></td><td class="dn">-7.13%</td><td class="dn">-8.11%</td></tr>
+        <tr><td class="n">沪深300</td><td>4357.62</td><td class="up">+0.29%</td><td class="dn">-2.08%</td><td class="dn">-4.11%</td></tr>
+        <tr><td class="n">中证500</td><td>7435.16</td><td class="dn">-0.06%</td><td class="dn">-5.03%</td><td class="dn">-5.39%</td></tr>
+        <tr><td class="n">北证50</td><td>1039.61</td><td class="up">+0.70%</td><td class="dn">-0.69%</td><td class="dn">-3.70%</td></tr>
+      </table>
+      <div class="warn"><b>结构失衡极其明显：</b>上证 +0.31%、沪深300 +0.29% 翻红，而 <b>科创50 -2.51%</b>、创业板 -0.23% —— 权重（银行/白酒/地产）托指数，科技成长杀跌。这正是「科技 → 医药 + 低位权重」切换的指数投影。</div>
+    </div>
+    <div>
+      <h3>技术指标（上证指数）</h3>
+      <table>
+        <tr><th>指标</th><th>数值</th><th>判读</th></tr>
+        <tr><td class="n">收盘 / MA5</td><td>3842.19 / 3864.23</td><td class="dn">在 MA5 之下</td></tr>
+        <tr><td class="n">MA10 / MA20</td><td>3890.23 / 3905.64</td><td class="dn">全部跌破</td></tr>
+        <tr><td class="n">MA60 / MA120 / MA250</td><td>3904.04 / 3995.72 / 3990.89</td><td class="dn">空头排列（六线之下）</td></tr>
+        <tr><td class="n">BOLL 下/中/上</td><td>3821.74 / 3905.64 / 3989.54</td><td class="mut">贴近下轨</td></tr>
+        <tr><td class="n">MACD（DIF/DEA/柱）</td><td>-17.81 / -8.63 / -18.35</td><td class="dn">死叉未修复</td></tr>
+        <tr><td class="n">KDJ（K/D/J）</td><td>29.58 / 40.58 / <b style="color:#ff6b7a">7.59</b></td><td class="up">J 值极度超卖（反弹动能）</td></tr>
+        <tr><td class="n">RSI 6 / 12 / 24</td><td>34.04 / 39.16 / 43.58</td><td class="up">偏弱但未极端恐慌</td></tr>
+        <tr><td class="n">两市成交</td><td>14379.89 亿（+287.92 亿）</td><td class="mut">节前微放量</td></tr>
+      </table>
+      <div class="good"><b>三个止跌信号：</b>① 低点连续 3 日抬升 —— 9/28 低 3806.67 → 9/29 低 3810.81 → 9/30 低 3833.09；② J 值 7.59 进入极度超卖区（&lt;10）；③ 指数连续两日小幅收阳（+0.18%、+0.31%）。<b>但空头排列 + MACD 死叉未修复 = 只能定性为「超卖反弹」，不是趋势反转。</b></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h3>市场情绪与资金（9/30）</h3>
+  <div class="grid2">
+    <div>
+      <table>
+        <tr><th>项目</th><th>数值</th><th>项目</th><th>数值</th></tr>
+        <tr><td class="n">上涨家数</td><td class="up">2567（46%）</td><td class="n">下跌家数</td><td class="dn">2824</td></tr>
+        <tr><td class="n">涨停</td><td class="up">56</td><td class="n">跌停</td><td class="dn">13</td></tr>
+        <tr><td class="n">涨幅 &gt;7%</td><td class="up">41</td><td class="n">跌幅 &gt;7%</td><td class="dn">31</td></tr>
+        <tr><td class="n">平盘</td><td class="mut">181</td><td class="n">停牌</td><td class="mut">11</td></tr>
+      </table>
+      <div class="note"><b>情绪读数：</b>上涨占比仅 46%（偏弱），但涨停 56 家 vs 跌停 13 家（4.3:1）说明<b>结构性赚钱效应尚可</b>——资金在少数题材里抱团（医药 + 地产 + 消费），而非全面退潮。</div>
+    </div>
+    <div>
+      <div id="flow" class="chart-sm"></div>
+    </div>
+  </div>
+</div>
+
+<h2>四、回避清单（利空一票否决）</h2>
+<div class="card">
+  <table>
+    <tr><th>方向</th><th>9/30 涨跌</th><th>当日主力</th><th>5日</th><th>20日</th><th>回避理由</th></tr>
+    <tr><td class="n">半导体</td><td class="dn">-2.99%</td><td class="dn">-98.74亿</td><td class="dn">-378.78亿</td><td class="dn"><b>-564.52亿</b></td><td>全市场最大流出；美光毛利率指引见顶，景气度持续性遭质疑</td></tr>
+    <tr><td class="n">元件 / PCB</td><td class="dn">-2.60%</td><td class="dn">-37.44亿</td><td class="dn">-191.92亿</td><td class="dn">-55.80亿</td><td>覆铜板 -3.09%，涨价链退潮</td></tr>
+    <tr><td class="n">存储 / HBM</td><td class="dn">-2.74% / -3.12%</td><td class="dn">-98.02亿 / -27.91亿</td><td class="dn">-374.19亿</td><td class="dn">-598.10亿</td><td>长鑫存储概念 -3.23%、18 只全绿；中芯 -4.70%、澜起 -4.84%、兆易 -3.72%</td></tr>
+    <tr><td class="n">通信设备</td><td class="dn">-0.53%</td><td class="dn">-3.97亿</td><td class="dn">-333.21亿</td><td class="dn">-181.78亿</td><td>CPO / 光通信中期资金持续撤离</td></tr>
+    <tr><td class="n">证券Ⅱ</td><td class="up">+0.37%</td><td class="dn">-3.99亿</td><td class="dn">-59.85亿</td><td class="dn">-180.22亿</td><td>9/24 单日 25 张罚单余波，板块无资金</td></tr>
+    <tr><td class="n">消费电子</td><td class="dn">-0.97%</td><td class="dn">-6.48亿</td><td class="dn">-88.34亿</td><td class="dn">-173.23亿</td><td>20 日大幅失血</td></tr>
+    <tr><td class="n">IT服务 / 软件开发</td><td class="dn">-1.11% / -1.13%</td><td class="dn">-9.39亿 / -10.27亿</td><td class="dn">-59.41亿 / -45.15亿</td><td class="dn">-148.71亿 / -118.41亿</td><td>科技成长整体资金撤离</td></tr>
+  </table>
+  <div class="warn"><b>关于美光（10/1 凌晨财报）：</b>营收 542.29 亿美元（同比 +379%，超预期 514.9 亿）、Q1 指引 615 亿（超预期 570.2 亿）、EPS 38.15 美元（超预期 35.40），<b>三项全超</b>；但 <b>Q1 毛利率指引 86.25% 低于预期 86.7%、低于本季 87%</b>，股价盘后先涨后跌。管理层称 Q1 是 2027 财年毛利率低点、2027–2028 供需更紧。<br><b>对 A 股的净影响判定为「利好出尽」：营收超预期早已被 9 月行情price in（长鑫存储概念 20 日 -233.84 亿就是证据），毛利率见顶是新增边际利空。若 10/8 存储链因财报高开，一律视为减仓/出货机会，不是买点。</b></div>
+</div>
+
+<h2>五、10/8 盘前交易计划</h2>
+
+<div class="card">
+  <h3>关键价位标尺（上证指数）</h3>
+  <div class="ruler">
+    <div class="track"></div>
+    <div class="pt" style="left:2%"><b>3806.67</b><i></i><span>清仓线<br>9/28低点</span></div>
+    <div class="pt" style="left:16%"><b>3821.74</b><i></i><span>生死线<br>BOLL下轨</span></div>
+    <div class="pt" style="left:38%"><b>3842.19</b><i></i><span>9/30收盘</span></div>
+    <div class="pt" style="left:58%"><b>3864.23</b><i></i><span>第一压力<br>MA5</span></div>
+    <div class="pt" style="left:78%"><b>3890.23</b><i></i><span>第二压力<br>MA10</span></div>
+    <div class="pt" style="left:96%"><b>3905.64</b><i></i><span>反转确认<br>MA20/MA60</span></div>
+  </div>
+
+  <h3>分批建仓 / 减仓表（10/8 当日）</h3>
+  <table>
+    <tr><th>时点</th><th>触发条件</th><th>动作</th><th>目标仓位</th></tr>
+    <tr><td class="n">集合竞价<br>09:15–09:25</td><td>观察三组信号：① 康希诺竞价涨幅（&gt;8% 放弃弹性腿）② 万科A 竞价（低开 &gt;2% 放弃地产）③ 存储链是否因美光高开</td><td>不下单，只记录</td><td>0%</td></tr>
+    <tr><td class="n">开盘 09:30–10:00</td><td>沪指不破 3821.74 <b>且</b> 药明康德 / 恒瑞医药 未翻绿</td><td>建医药中军：药明康德 163–167 建 6%、恒瑞 45.5–47.2 建 5%</td><td>11%</td></tr>
+    <tr><td class="n">10:00–10:30</td><td>沪指站上 3864.23（MA5）<b>且</b> 医药板块维持红盘</td><td>加药康生物 4%、昭衍新药 3%、智飞生物 2%</td><td>20%</td></tr>
+    <tr><td class="n">10:30–11:30</td><td>低位消费回踩到位、指数未走弱</td><td>建古越龙山 4%、九阳股份 3%、金徽酒 3%</td><td>30%</td></tr>
+    <tr><td class="n">13:00–14:00</td><td>地产链<b>低开或平开</b>（非高开）且万科A 未破 4.00</td><td>试仓滨江集团 3%、陆家嘴 2%（上限 5%，高开则放弃）</td><td>35%</td></tr>
+    <tr><td class="n">14:00–14:30</td><td>沪指放量站稳 3864.23 且两市成交 ≥1.6 万亿</td><td>机动仓 5%：康希诺回踩 95–100 试错，或加药明康德</td><td>40%</td></tr>
+    <tr><td class="n">14:30 后</td><td>沪指跌破 3821.74 且 30 分钟不收回</td><td><b>降仓至 20%</b>：先砍地产链、再砍消费腿，保留医药中军</td><td>20%</td></tr>
+    <tr><td class="n">14:30 后</td><td>沪指跌破 3806.67</td><td><b>清仓全部超短</b>，仅留医药中军 10% 过夜</td><td>10%</td></tr>
+  </table>
+
+  <h3>止损 / 止盈规则</h3>
+  <table>
+    <tr><th>类型</th><th>规则</th></tr>
+    <tr><td class="n">个股止损</td><td>买入价 -5% 或跌破表中止损位（先到先执行），<b>机械执行不留情</b></td></tr>
+    <tr><td class="n">医药线止盈</td><td>药明康德 ≥185（+10.6%）、恒瑞 ≥52（+10.2%）分批减半；药康生物 ≥44（+16%）、昭衍 ≥57（+15.6%）全出</td></tr>
+    <tr><td class="n">地产线止盈</td><td>高开 &gt;3% 即减半，&gt;5% 全出（兑现日不做隔夜）</td></tr>
+    <tr><td class="n">消费线止盈</td><td>古越龙山 ≥14（+14%）、九阳 ≥14.2（+13.6%）、金徽酒 ≥19.5（+12%）分批</td></tr>
+    <tr><td class="n">时间止损</td><td>10/10（周五）收盘前，任何浮盈 &lt;3% 的仓位一律平掉，不带进下周年报季</td></tr>
+  </table>
+</div>
+
+<h2>六、一票否决清单（10/8 触发即执行，无例外）</h2>
+<div class="card">
+  <ol style="margin-left:18px;font-size:13.5px">
+    <li><b>沪指 30 分钟内跌破 3821.74（BOLL 下轨）不收回</b> → 仓位降至 20%，砍地产 + 消费，只留医药中军</li>
+    <li><b>沪指跌破 3806.67（9/28 低点）</b> → 全面清仓超短，总仓位 ≤10%</li>
+    <li><b>康希诺竞价高开 &gt;8% 或开盘 30 分钟翻绿</b> → 放弃医药弹性腿，本主线只保留药明康德 + 恒瑞</li>
+    <li><b>药明康德 / 恒瑞医药 高开 &gt;3% 后回落翻绿</b> → 医药线当日<b>停止一切买入</b>，已建仓位减半</li>
+    <li><b>万科A 竞价低开 &gt;2%，或深物业A / 陆家嘴炸板翻绿</b> → 地产链全部放弃，已持有减半</li>
+    <li><b>存储 / 半导体因美光财报高开后，30 分钟内翻绿</b> → 确认「利好出尽」，该方向列入永久回避直至 20 日资金转正</li>
+    <li><b>节中（10/2–10/7）恒生科技累计跌幅 &gt;4%，或纳指累计跌幅 &gt;4%</b> → 10/8 一律不追高开，总仓位压至 20%</li>
+    <li><b>节中出现重大地缘/政策黑天鹅</b>（霍尔木兹海峡局势升级、美联储 10 月加息概率大幅上修）→ 开盘直接降至 15%，只留医药</li>
+    <li><b>反向加仓条件：沪指放量站稳 3864.23（MA5）且两市成交 ≥1.6 万亿、上涨家数 &gt;60%</b> → 可加至 55%</li>
+  </ol>
+</div>
+
+<h2>七、节中监控清单（10/1–10/7，A股休市但外盘不停）</h2>
+<div class="card">
+  <table>
+    <tr><th>日期</th><th>市场</th><th>监控项</th><th>对 10/8 的含义</th></tr>
+    <tr><td class="n">10/2（五）</td><td>港股 + 美股</td><td>恒生科技、港股医药板块；美国 9 月非农就业</td><td>港股医药若大涨 → 10/8 医药高开概率高，需等回踩</td></tr>
+    <tr><td class="n">10/5（一）</td><td>港股 + 美股</td><td>恒指、恒生科技；内房股（港股地产）</td><td>内房股是 A 股地产链最好的领先指标</td></tr>
+    <tr><td class="n">10/6（二）</td><td>港股 + 美股</td><td>费城半导体指数、美光后续走势</td><td>费半连跌 → 10/8 存储链继续杀，强化回避</td></tr>
+    <tr><td class="n">10/7（三）</td><td>港股 + 美股</td><td>假期最后一日外围定调、A50 期货</td><td><b>最关键</b>：富时中国 A50 假期累计涨跌幅 = 10/8 开盘缺口方向</td></tr>
+    <tr><td class="n">全期</td><td>消息面</td><td>① 10/1 房贷贴息正式生效后的成交反馈 ② ESMO 大会预热/摘要 ③ 创新药新 BD 交易 ④ 霍尔木兹海峡/油价 ⑤ 三季报预告（10 月中旬启动）</td><td>新 BD 是医药线最好的二波催化；三季报是地产线的硬检验</td></tr>
+  </table>
+  <div class="note"><b>已确认的节前利多（对冲项）：</b>央行 <b>12000 亿买断式逆回购</b>（流动性宽松）；美国通胀数据不及预期 → <b>加息担忧缓解</b>（美股、黄金集体拉升）；英伟达创纪录回购。<br><b>已确认的节前利空：</b>霍尔木兹海峡突发消息 → <b>油价直线拉升</b>（输入性通胀压力）；美股 9/30 <b>道指 -0.86%（-443.87 点）收在当日最低</b>、纳指 +0.24% 亦收在最低（high 27108.2 → close 26861.06，冲高回落）。</div>
+</div>
+
+<h2>八、信号归因</h2>
+<div class="card">
+  <div class="grid2">
+    <div><div id="radar" class="chart"></div></div>
+    <div>
+      <table>
+        <tr><th>维度</th><th>贡献度</th><th>说明</th></tr>
+        <tr><td class="n">新闻情绪</td><td><b>35%</b></td><td><span class="up">+</span> 医药四重催化（AZ 20 亿美元入股 Summit、恒瑞 26 亿美元 BD、十五五规划、mRNA 肿瘤）；<span class="dn">−</span> 房贷贴息兑现；<span class="dn">−</span> 美光毛利率见顶</td></tr>
+        <tr><td class="n">技术指标</td><td><b>25%</b></td><td><span class="dn">−</span> 六线之下空头排列、MACD 死叉；<span class="up">+</span> J 值 7.59 极度超卖、低点连续 3 日抬升</td></tr>
+        <tr><td class="n">市场环境</td><td><b>25%</b></td><td><span class="dn">−</span> 8 天长假信息真空、道指 -0.86%、油价拉升；<span class="up">+</span> 央行 1.2 万亿放水、加息预期缓解、港股企稳（恒指 +0.37%）</td></tr>
+        <tr><td class="n">基本面</td><td><b>15%</b></td><td><span class="up">+</span> 创新药 H1 License-out 约 1100 亿美元、CRO 20 日资金 +36.17 亿；<span class="dn">−</span> 样本房企 H1 亏损 218.8 亿、科技股估值高位</td></tr>
+      </table>
+      <div class="good"><b>最强看多信号：</b>医药生物主力净流入 &gt;127 亿 vs 电子净流出 142 亿 —— <b>高低切换的资金共识在节前最后一天已经形成</b>，创新药是明确的承接方，且 5/20 日资金仍为负说明位置不高。</div>
+      <div class="warn"><b>最强看空信号：</b>半导体 20 日主力净流出 <b>564.52 亿</b>、9/30 单日再流出 98.74 亿，叠加美光毛利率指引见顶引发「高景气能维持多久」的质疑 —— <b>科技主线中期受损，指数难有系统性行情</b>，只能做结构、不能做指数。</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  分析时间：2026-10-01 07:00（国庆假期）　|　数据基准：9/30 A股收盘 + 9/30 美股收盘 + 10/1 凌晨美光财报　|　适用交易日：2026-10-08（周四）<br>
+  数据源：westock 行情/板块/资金/龙虎榜/涨跌分布接口 + 公开新闻（券商中国、金融界、21世纪经济报道、华尔街见闻）<br>
+  <b>免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论均基于历史数据与技术模型，不保证未来表现。</b>
+</div>
+
+</div>
+
+<script>
+var KD=["08-19","08-20","08-21","08-24","08-25","08-26","08-27","08-28","08-31","09-01","09-02","09-03","09-04","09-07","09-08","09-09","09-10","09-11","09-14","09-15","09-16","09-17","09-18","09-21","09-22","09-23","09-24","09-28","09-29","09-30"];
+var KO=[3952.12,3907.21,3891.18,3902.7,3863.37,3881.74,3911.89,3950.24,3926.53,3979.88,3963.07,3952.79,3955.55,3942.51,3935.55,3943.92,3939.09,3910.92,3867.02,3879.73,3861.75,3877.0,3891.96,3920.27,3963.81,3951.37,3925.32,3878.41,3816.15,3839.25];
+var KC=[3894.42,3903.72,3905.2,3882.01,3889.44,3912.52,3956.57,3952.18,3986.3,3979.89,3941.39,3942.09,3930.12,3932.7,3940.55,3951.51,3934.4,3888.11,3885.33,3864.28,3891.6,3875.6,3911.87,3949.91,3952.13,3936.52,3888.37,3823.62,3830.45,3842.19];
+var KL=[3879.58,3888.1,3883.79,3855.35,3850.86,3881.74,3909.31,3947.8,3926.5,3976.47,3932.25,3930.45,3915.22,3916.49,3925.72,3933.47,3927.35,3852.03,3867.02,3858.15,3842.72,3866.89,3888.5,3918.13,3945.42,3934.46,3888.37,3806.67,3810.81,3833.09];
+var KH=[3961.14,3925.06,3912.13,3910.24,3896.21,3926.44,3958.03,3970.31,3986.3,3995.18,3965.81,3968.11,3980.2,3948.42,3951.32,3958.12,3949.25,3912.32,3895.51,3891.62,3894.66,3898.84,3919.67,3950.94,3967.68,3951.52,3930.5,3878.41,3843.84,3851.22];
+var AMT=[12181,10186,8834,9520,8589,8572,10102,9704,10143,9443,8354,8199,9383,8979,9156,8737,7797,9582,7793,7640,8711,8688,9942,9468,10080,8341,7836,8045,6617,6794];
+var M5=[null,null,null,null,3894.96,3898.58,3909.15,3918.54,3939.4,3957.49,3963.27,3960.37,3955.96,3945.24,3937.37,3939.39,3937.86,3929.45,3919.98,3904.73,3892.74,3880.98,3885.74,3898.65,3916.22,3925.21,3927.76,3910.11,3886.22,3864.23];
+var M10=[null,null,null,null,null,null,null,null,null,3926.22,3930.92,3934.76,3937.25,3942.32,3947.43,3951.33,3949.11,3942.71,3932.61,3921.05,3916.07,3909.42,3907.59,3909.32,3910.47,3908.97,3904.37,3897.92,3892.43,3890.23];
+var M20=[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,3923.64,3923.5,3922.09,3922.42,3925.82,3928.95,3930.15,3926.74,3920.31,3912.52,3905.64];
+
+echarts.init(document.getElementById('ringScore')).setOption({
+  series:[{type:'gauge',startAngle:90,endAngle:-270,radius:'100%',min:0,max:100,
+    axisLine:{lineStyle:{width:10,color:[[0.35,'#ff4757'],[0.55,'#ffa502'],[0.8,'#667eea'],[1,'#00d4aa']]}},
+    pointer:{show:false},
+    axisTick:{show:false},splitLine:{show:false},axisLabel:{show:false},
+    detail:{formatter:'{value}',fontSize:30,color:'#ffa502',fontWeight:'bold',offsetCenter:[0,'-5%']},
+    title:{show:true,offsetCenter:[0,'32%'],fontSize:11,color:'#94a3b8'},
+    data:[{value:52,name:'综合评分'}]}]
+});
+
+echarts.init(document.getElementById('kline')).setOption({
+  backgroundColor:'transparent',
+  title:{text:'上证指数 · 近 30 日 K 线与均线',textStyle:{color:'#e2e8f0',fontSize:13},left:8,top:4},
+  tooltip:{trigger:'axis',axisPointer:{type:'cross'},backgroundColor:'#1a1a2e',borderColor:'#2d2d44',textStyle:{color:'#e2e8f0'}},
+  legend:{data:['K线','MA5','MA10','MA20'],textStyle:{color:'#94a3b8',fontSize:10},top:4,right:8},
+  grid:{left:52,right:16,top:38,bottom:52},
+  xAxis:{type:'category',data:KD,axisLine:{lineStyle:{color:'#2d2d44'}},axisLabel:{color:'#94a3b8',fontSize:9,interval:3}},
+  yAxis:{scale:true,axisLine:{lineStyle:{color:'#2d2d44'}},axisLabel:{color:'#94a3b8',fontSize:10},splitLine:{lineStyle:{color:'#23233a'}}},
+  dataZoom:[{type:'inside',start:40,end:100}],
+  series:[
+    {name:'K线',type:'candlestick',data:KD.map(function(d,i){return [KO[i],KC[i],KL[i],KH[i]]}),
+      itemStyle:{color:'#ff4757',color0:'#00d4aa',borderColor:'#ff4757',borderColor0:'#00d4aa'}},
+    {name:'MA5',type:'line',data:M5,smooth:true,symbol:'none',lineStyle:{width:1.4,color:'#ffa502'}},
+    {name:'MA10',type:'line',data:M10,smooth:true,symbol:'none',lineStyle:{width:1.4,color:'#667eea'}},
+    {name:'MA20',type:'line',data:M20,smooth:true,symbol:'none',lineStyle:{width:1.4,color:'#00d4aa'}},
+    {name:'MA5',type:'line',data:M5,symbol:'none',lineStyle:{width:0},
+      markLine:{silent:true,symbol:'none',data:[{yAxis:3821.74,lineStyle:{color:'#ff4757',type:'dashed',width:1},label:{formatter:'生死线 3821.74',color:'#ff6b7a',fontSize:9,position:'insideEndTop'}},
+        {yAxis:3864.23,lineStyle:{color:'#ffa502',type:'dashed',width:1},label:{formatter:'MA5 3864.23',color:'#ffa502',fontSize:9,position:'insideEndTop'}}]}}
+  ]
+});
+
+echarts.init(document.getElementById('dist')).setOption({
+  backgroundColor:'transparent',
+  title:{text:'9/30 涨跌幅区间分布（家数）',textStyle:{color:'#e2e8f0',fontSize:13},left:8,top:4},
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'},backgroundColor:'#1a1a2e',borderColor:'#2d2d44',textStyle:{color:'#e2e8f0'}},
+  grid:{left:60,right:18,top:38,bottom:60},
+  xAxis:{type:'category',data:['涨停','>7%','7~5%','5~2%','2~0%','平','0~2%','2~5%','5~7%','>7%','跌停'],axisLine:{lineStyle:{color:'#2d2d44'}},axisLabel:{color:'#94a3b8',fontSize:9,interval:0,rotate:38}},
+  yAxis:{type:'value',axisLine:{lineStyle:{color:'#2d2d44'}},axisLabel:{color:'#94a3b8',fontSize:10},splitLine:{lineStyle:{color:'#23233a'}}},
+  series:[{type:'bar',data:[
+    {value:56,itemStyle:{color:'#ff4757'}},{value:41,itemStyle:{color:'#ff6b7a'}},{value:51,itemStyle:{color:'#ff8f9c'}},
+    {value:545,itemStyle:{color:'#ffb3bd'}},{value:1874,itemStyle:{color:'#ffd6db'}},{value:181,itemStyle:{color:'#94a3b8'}},
+    {value:1841,itemStyle:{color:'#b8f5e6'}},{value:852,itemStyle:{color:'#7fe9d0'}},{value:87,itemStyle:{color:'#00d4aa'}},
+    {value:31,itemStyle:{color:'#0f9b7a'}},{value:13,itemStyle:{color:'#0a7a5f'}}],
+    barWidth:'58%',itemStyle:{borderRadius:[3,3,0,0]}}]
+});
+
+echarts.init(document.getElementById('flow')).setOption({
+  backgroundColor:'transparent',
+  title:{text:'主力资金：流入 TOP5 vs 流出 TOP5（亿元）',textStyle:{color:'#e2e8f0',fontSize:13},left:8,top:4},
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'},backgroundColor:'#1a1a2e',borderColor:'#2d2d44',textStyle:{color:'#e2e8f0'}},
+  grid:{left:96,right:24,top:38,bottom:26},
+  xAxis:{type:'value',axisLine:{lineStyle:{color:'#2d2d44'}},axisLabel:{color:'#94a3b8',fontSize:10},splitLine:{lineStyle:{color:'#23233a'}}},
+  yAxis:{type:'category',data:['半导体','IT服务Ⅱ','元件','软件开发','通信设备','光伏概念*','饮料乳品','非白酒','创新药','生物医药'],
+    axisLine:{lineStyle:{color:'#2d2d44'}},axisLabel:{color:'#cbd5e1',fontSize:10}},
+  series:[{type:'bar',data:[
+    {value:-98.74,itemStyle:{color:'#ff4757'}},{value:-9.39,itemStyle:{color:'#ff6b7a'}},{value:-37.44,itemStyle:{color:'#ff6b7a'}},
+    {value:-10.27,itemStyle:{color:'#ff8f9c'}},{value:-3.97,itemStyle:{color:'#ff8f9c'}},
+    {value:10.69,itemStyle:{color:'#7fe9d0'}},{value:1.32,itemStyle:{color:'#00d4aa'}},{value:3.72,itemStyle:{color:'#00d4aa'}},
+    {value:43.43,itemStyle:{color:'#00d4aa'}},{value:51.14,itemStyle:{color:'#00d4aa'}}],
+    barWidth:'60%',itemStyle:{borderRadius:3},
+    label:{show:true,position:'right',color:'#cbd5e1',fontSize:9,formatter:function(p){return p.value+'亿'}}}]
+});
+
+echarts.init(document.getElementById('radar')).setOption({
+  backgroundColor:'transparent',
+  title:{text:'信号归因（四维贡献度）',textStyle:{color:'#e2e8f0',fontSize:13},left:8,top:4},
+  tooltip:{backgroundColor:'#1a1a2e',borderColor:'#2d2d44',textStyle:{color:'#e2e8f0'}},
+  radar:{indicator:[{name:'新闻情绪',max:40},{name:'技术指标',max:40},{name:'市场环境',max:40},{name:'基本面',max:40}],
+    radius:'62%',center:['50%','56%'],
+    axisName:{color:'#cbd5e1',fontSize:11},
+    splitLine:{lineStyle:{color:'#2d2d44'}},
+    splitArea:{areaStyle:{color:['rgba(102,126,234,.04)','rgba(102,126,234,.08)']}},
+    axisLine:{lineStyle:{color:'#2d2d44'}}},
+  series:[{type:'radar',data:[
+    {value:[35,25,25,15],name:'贡献度(%)',
+      areaStyle:{color:'rgba(102,126,234,.35)'},lineStyle:{color:'#667eea',width:2},itemStyle:{color:'#667eea'},
+      label:{show:true,color:'#fff',fontSize:11,formatter:function(p){return p.value+'%'}}}]}]
+});
+</script>
+</body>
+</html>

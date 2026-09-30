@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-09-26 15:50:56",
-  "total": 346,
+  "generatedAt": "2026-10-01 07:52:31",
+  "total": 347,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 70,
-      "latest": "20260926",
+      "count": 71,
+      "latest": "20261001",
       "reports": [
+        {
+          "date": "20261001",
+          "dateLabel": "2026-10-01（周四）",
+          "file": "reports/panqian/panqian_20261001.html",
+          "title": "盘前计划 · 2026-10-01（10/8 节后开盘作战版 · 三问三答）",
+          "size": 48870
+        },
         {
           "date": "20260926",
           "dateLabel": "2026-09-26（周六）",
