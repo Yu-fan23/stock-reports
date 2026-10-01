@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-01 07:58:13",
-  "total": 348,
+  "generatedAt": "2026-10-01 12:52:07",
+  "total": 349,
   "categories": [
     {
       "key": "panqian",
@@ -516,9 +516,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 73,
-      "latest": "20260926",
+      "count": 74,
+      "latest": "20261001",
       "reports": [
+        {
+          "date": "20261001",
+          "dateLabel": "2026-10-01（周四）",
+          "file": "reports/noon/noon_20261001.html",
+          "title": "A股国庆假期特辑 · 2026-10-01（9/28–9/30 收官复盘 + 外围追踪 + 10/8 复市作战手册）",
+          "size": 46912
+        },
         {
           "date": "20260926",
           "dateLabel": "2026-09-26（周六）",
