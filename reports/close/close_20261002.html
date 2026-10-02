@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股复盘 · 2026-10-02（国庆休市特刊 第2期）</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+:root{
+  --bg:#0f0f23; --card:#1a1a2e; --card2:#16162a; --bd:#2d2d44;
+  --txt:#e2e8f0; --txt2:#94a3b8; --txt3:#64748b;
+  --up:#ff4757; --down:#00d4aa; --warn:#ffa502; --acc:#667eea; --acc2:#764ba2;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:"PingFang SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;line-height:1.7;padding:18px}
+.wrap{max-width:1280px;margin:0 auto}
+.hd{background:linear-gradient(135deg,#1a1a2e 0%,#252550 60%,#2d1b4e 100%);border:1px solid var(--bd);border-radius:16px;padding:26px 28px;margin-bottom:18px;position:relative;overflow:hidden}
+.hd:after{content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;background:radial-gradient(circle,rgba(102,126,234,.28),transparent 70%)}
+.hd h1{font-size:26px;font-weight:800;letter-spacing:.5px;background:linear-gradient(90deg,#fff,#a5b4fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hd .sub{color:var(--txt2);font-size:13px;margin-top:6px}
+.banner{margin-top:14px;background:linear-gradient(90deg,rgba(255,71,87,.18),rgba(255,165,2,.12));border:1px solid rgba(255,71,87,.5);border-radius:10px;padding:11px 16px;font-size:13.5px;color:#ffd7dc;display:flex;gap:10px;align-items:flex-start}
+.banner b{color:#ff8a95}
+.tag{display:inline-block;padding:2px 9px;border-radius:5px;font-size:11.5px;font-weight:600;margin-right:6px}
+.t-red{background:rgba(255,71,87,.16);color:#ff6b7a;border:1px solid rgba(255,71,87,.4)}
+.t-green{background:rgba(0,212,170,.16);color:#00d4aa;border:1px solid rgba(0,212,170,.4)}
+.t-or{background:rgba(255,165,2,.16);color:#ffa502;border:1px solid rgba(255,165,2,.4)}
+.t-bl{background:rgba(102,126,234,.16);color:#8b9cf7;border:1px solid rgba(102,126,234,.4)}
+.t-gr{background:rgba(148,163,184,.14);color:#94a3b8;border:1px solid rgba(148,163,184,.3)}
+.concl{background:linear-gradient(135deg,rgba(255,71,87,.12),rgba(118,75,162,.12));border:1px solid rgba(255,71,87,.35);border-radius:14px;padding:20px 24px;margin-bottom:18px}
+.concl .lbl{font-size:12px;color:var(--txt2);letter-spacing:2px;margin-bottom:8px}
+.concl .txt{font-size:17px;font-weight:700;line-height:1.75}
+.concl .txt em{font-style:normal;color:#ff6b7a}
+.concl .txt i{font-style:normal;color:#00d4aa}
+.concl .txt u{text-decoration:none;color:#ffa502}
+.sec{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:20px 22px;margin-bottom:16px}
+.sec h2{font-size:17px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:9px}
+.sec h2 .n{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,var(--acc),var(--acc2));display:inline-flex;align-items:center;justify-content:center;font-size:13px;color:#fff;flex:0 0 auto}
+.sec .d{font-size:12.5px;color:var(--txt3);margin-bottom:14px;padding-left:35px}
+.grid{display:grid;gap:12px}
+.g6{grid-template-columns:repeat(6,1fr)}.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
+.idx{background:var(--card2);border:1px solid var(--bd);border-radius:10px;padding:13px 12px;text-align:center}
+.idx .nm{font-size:12.5px;color:var(--txt2);margin-bottom:5px}
+.idx .pv{font-size:19px;font-weight:800;letter-spacing:.3px}
+.idx .pc{font-size:13px;font-weight:700;margin-top:3px}
+.r{color:var(--up)}.g{color:var(--down)}.y{color:var(--warn)}.b{color:#8b9cf7}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:rgba(102,126,234,.1);color:var(--txt2);font-weight:600;padding:9px 8px;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap}
+td{padding:8px;border-bottom:1px solid rgba(45,45,68,.55)}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:rgba(102,126,234,.06)}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.chart{width:100%;height:330px;margin-top:6px}
+.chart-sm{width:100%;height:260px}
+.alert{border-radius:10px;padding:13px 16px;margin-top:12px;font-size:13.5px;line-height:1.75}
+.a-red{background:rgba(255,71,87,.09);border:1px solid rgba(255,71,87,.35);color:#ffc9cf}
+.a-grn{background:rgba(0,212,170,.09);border:1px solid rgba(0,212,170,.35);color:#b8f5e6}
+.a-yel{background:rgba(255,165,2,.09);border:1px solid rgba(255,165,2,.35);color:#ffe0ad}
+.a-blu{background:rgba(102,126,234,.09);border:1px solid rgba(102,126,234,.35);color:#c7d2fe}
+.alert b{display:block;margin-bottom:5px;font-size:13.5px}
+.kv{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.kv .i{background:var(--card2);border:1px solid var(--bd);border-radius:9px;padding:10px 14px;flex:1 1 150px}
+.kv .i .k{font-size:11.5px;color:var(--txt3)}
+.kv .i .v{font-size:16px;font-weight:700;margin-top:2px}
+.pos{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+.pos .b{border-radius:11px;padding:15px;text-align:center;border:1px solid}
+.pos .b .t{font-size:12.5px;color:var(--txt2)}
+.pos .b .v{font-size:26px;font-weight:800;margin:5px 0}
+.pos .b .s{font-size:11.5px;color:var(--txt3)}
+.p1{background:rgba(0,212,170,.08);border-color:rgba(0,212,170,.35)}
+.p2{background:rgba(255,165,2,.08);border-color:rgba(255,165,2,.35)}
+.p3{background:rgba(102,126,234,.08);border-color:rgba(102,126,234,.35)}
+.p4{background:rgba(148,163,184,.08);border-color:rgba(148,163,184,.3)}
+.bar{height:8px;border-radius:4px;background:rgba(255,255,255,.07);overflow:hidden;margin-top:7px}
+.bar>i{display:block;height:100%;border-radius:4px}
+.ft{text-align:center;color:var(--txt3);font-size:12px;padding:22px 0 8px;line-height:1.9}
+.scroll{overflow-x:auto}
+@media(max-width:900px){.g6{grid-template-columns:repeat(3,1fr)}.g4,.g3,.g2,.pos{grid-template-columns:repeat(2,1fr)}.hd h1{font-size:20px}}
+@media(max-width:560px){.g6{grid-template-columns:repeat(2,1fr)}.pos{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hd">
+  <h1>A股每日复盘 · 2026年10月2日（周五）</h1>
+  <div class="sub">国庆休市特刊 第 2 期 ｜ 数据截面：A股定格 2026-09-30 收盘 ｜ 外围截面：2026-10-02 15:35（北京时间）实时</div>
+  <div class="banner">
+    <span>🏮</span>
+    <div><b>休市提示</b>：沪深交易所 <b>10月1日—10月7日国庆节休市</b>（交易日历确认），<b>10月8日（周四）开市</b>。港股 10/1 休市、<b>10/2 已开市并大跌</b>；美股正常交易。本报告 = 节前最后交易日（9/30）定格复盘 ＋ 假期至今外围风向 ＋ 10/8 开盘作战方案。</div>
+  </div>
+</div>
+
+<div class="concl">
+  <div class="lbl">一 句 话 结 论</div>
+  <div class="txt">
+    假期空头信号集中兑现：<em>港股 10/2 恒指暴跌 -2.74%、恒生科技 -2.53%，A50 期货跌破 13790 且"增仓下跌"（日增仓 +5,087 手）</em>，
+    —— 10/1 设定的 <u>「A50 假期累计破 13800 → 10/8 开盘即减至 1.0 成」</u> 触发条件<b style="display:inline">已经兑现</b>。
+    仓位由 1.5 成 <em>下调至 1.0 成</em>，科技仓维持清零；对冲项仅有<i>美股期货亚市反弹 +0.3~0.4%、人民币升值、美元走弱</i>，
+    但美元 5/10/20 日仍全面升值，中期流动性未松，定性维持<u>「超卖反抽而非趋势反转」</u>，10/8 大概率低开击穿 3806.67。
+  </div>
+  <div class="kv">
+    <div class="i"><div class="k">综合评分</div><div class="v y">38 / 100</div></div>
+    <div class="i"><div class="k">信号</div><div class="v y">偏空 · WATCH</div></div>
+    <div class="i"><div class="k">建议仓位</div><div class="v g">1.0 成</div></div>
+    <div class="i"><div class="k">现金</div><div class="v b">9.0 成</div></div>
+    <div class="i"><div class="k">上期（10/1）</div><div class="v">44 分 / 1.5 成</div></div>
+  </div>
+</div>
+
+<!-- 模块一 -->
+<div class="sec">
+  <h2><span class="n">1</span>主要指数表现（A股定格 9/30 收盘）</h2>
+  <div class="d">数据源为节前最后交易日，10/1–10/7 无更新；下方标注 10/2 港股与 A50 的实时对照。</div>
+  <div class="grid g4">
+    <div class="idx"><div class="nm">上证指数</div><div class="pv r">3842.19</div><div class="pc r">+0.31%</div></div>
+    <div class="idx"><div class="nm">深证成指</div><div class="pv g">12887.62</div><div class="pc g">-0.11%</div></div>
+    <div class="idx"><div class="nm">创业板指</div><div class="pv g">3135.28</div><div class="pc g">-0.23%</div></div>
+    <div class="idx"><div class="nm">科创50</div><div class="pv g">1530.01</div><div class="pc g">-2.51%</div></div>
+    <div class="idx"><div class="nm">沪深300</div><div class="pv r">4357.62</div><div class="pc r">+0.29%</div></div>
+    <div class="idx"><div class="nm">中证1000</div><div class="pv g">7298.82</div><div class="pc g">-0.36%</div></div>
+    <div class="idx"><div class="nm">北证50</div><div class="pv r">1039.61</div><div class="pc r">+0.70%</div></div>
+    <div class="idx"><div class="nm" style="color:#ffa502">A50期货(10/2实时)</div><div class="pv g">13786.00</div><div class="pc g">-0.54%</div></div>
+  </div>
+  <div class="alert a-red"><b>⚠️ 结构特征：指数企稳但科创崩塌</b>
+    9/30 上证/沪深300 小幅翻红收出两连阳，但科创50 单日 -2.51%、振幅 3.32% 为全场最弱，创业板 -0.23%。
+    <b>「权重护盘、成长杀跌」的分化格局说明 9/29–9/30 的企稳是超卖反抽而非全面反转</b>——这一点在 10/2 港股科技股补跌（恒生科技 -2.53%）中得到确认。
+  </div>
+  <div id="c1" class="chart"></div>
+  <div id="c2" class="chart" style="height:280px"></div>
+</div>
+
+<!-- 模块二 -->
+<div class="sec">
+  <h2><span class="n">2</span>市场赚钱效应总结</h2>
+  <div class="d">9/30 截面：广度较 9/24 显著修复，但绝对水平仍偏低；涨停质量偏弱。</div>
+  <div class="grid g4">
+    <div class="idx"><div class="nm">上涨 / 下跌</div><div class="pv"><span class="r">2567</span> / <span class="g">2824</span></div><div class="pc">平盘 181 · 停牌 11</div></div>
+    <div class="idx"><div class="nm">涨停 / 跌停</div><div class="pv"><span class="r">56</span> / <span class="g">13</span></div><div class="pc">比值 4.3 : 1</div></div>
+    <div class="idx"><div class="nm">上涨占比</div><div class="pv y">46%</div><div class="pc">20%→46% 修复</div></div>
+    <div class="idx"><div class="nm">两市成交额</div><div class="pv">1.4380 万亿</div><div class="pc r">+287.9 亿 (+2.04%)</div></div>
+  </div>
+  <div class="pos">
+    <div class="b p2"><div class="t">情绪温度计</div><div class="v y">52</div><div class="s">中性偏冷（上期 50）</div><div class="bar"><i style="width:52%;background:linear-gradient(90deg,#ffa502,#ff6b7a)"></i></div></div>
+    <div class="b p1"><div class="t">涨停家数</div><div class="v r">56</div><div class="s">较 9/24 的 53 微增</div></div>
+    <div class="b p1"><div class="t">跌超 7%</div><div class="v g">31</div><div class="s">较 9/24 的 63 家腰斩</div></div>
+    <div class="b p3"><div class="t">成交额水位</div><div class="v b">低位</div><div class="s">距 9/22 高点 -32.6%</div></div>
+  </div>
+  <div id="c3" class="chart" style="height:300px"></div>
+  <div class="alert a-yel"><b>📌 赚钱效应定性：「广度修复，高度不足」</b>
+    上涨占比从 9/24 的 20% 回升至 46%、跌超 7% 从 63 家降至 31 家，恐慌确实缓解；但成交额仅 1.438 万亿（9/22 为 2.1356 万亿，-32.6%），
+    <b>缩量修复 = 抛压衰竭而非买盘进场</b>。涨停 56 家虽与前期持平，但集中在医药超跌反抽（善水科技 +20.01%、康希诺 +20.00%、泰诺麦博 +19.99%），
+    <b>缺乏板块性连板梯队，属于「个股脉冲」而非「主线赚钱效应」</b>。
+  </div>
+  <div class="alert a-red"><b>❗ 增量警报：10/2 港股赚钱效应崩塌</b>
+    恒指 -2.74% 创近期单日最大跌幅、恒生科技 -2.53%、国企指数 -2.50%、红筹 -2.10% —— <b>四大指数同步大跌 2% 以上，是全市场系统性抛售而非结构性调整</b>。
+    腾讯 -2.46%，仅中芯国际 -0.91% 相对抗跌。<b>该形态大概率在 10/8 传导至 A 股，科创50（9/30 已 -2.51%）首当其冲。</b>
+  </div>
+</div>
+
+<!-- 模块三 -->
+<div class="sec">
+  <h2><span class="n">3</span>资金流向分析</h2>
+  <div class="d">9/30 主力资金：28 个重点板块 11 流入 / 17 流出，多空资金比约 1 : 2.1（9/24 曾为 1 : 10）。</div>
+  <div class="grid g2">
+    <div><div id="c4" class="chart"></div></div>
+    <div><div id="c5" class="chart"></div></div>
+  </div>
+  <div class="scroll">
+  <table style="margin-top:14px">
+    <thead><tr><th>板块</th><th class="num">9/30 涨跌幅</th><th class="num">主力净流入(亿)</th><th>方向</th><th>解读</th></tr></thead>
+    <tbody>
+      <tr><td>医药生物</td><td class="num r">+2.73%</td><td class="num r">+60.24</td><td><span class="tag t-red">流入居首</span></td><td>唯一超 50 亿方向，但 5/20 日均负 = 首轮回补</td></tr>
+      <tr><td>电力设备</td><td class="num r">+0.62%</td><td class="num r">+12.00</td><td><span class="tag t-red">流入</span></td><td>风电 +3.67 亿，量价温和</td></tr>
+      <tr><td>电池</td><td class="num r">+1.09%</td><td class="num r">+10.69</td><td><span class="tag t-red">流入</span></td><td>储能链条跟随</td></tr>
+      <tr><td>食品饮料/白酒</td><td class="num r">+2.19%</td><td class="num r">+9.62</td><td><span class="tag t-red">流入</span></td><td>节前消费防御，外资同步买茅台</td></tr>
+      <tr><td>光学光电子</td><td class="num g">-0.25%</td><td class="num r">+8.35</td><td><span class="tag t-or">价跌资金进</span></td><td>逆势吸筹，观察能否延续</td></tr>
+      <tr><td>汽车零部件</td><td class="num r">+0.24%</td><td class="num r">+8.16</td><td><span class="tag t-red">流入</span></td><td>低位修复</td></tr>
+      <tr><td>银行</td><td class="num r">+1.47%</td><td class="num g">-0.72</td><td><span class="tag t-or">价涨资金出</span></td><td><b>典型被动护盘</b>，非主动配置</td></tr>
+      <tr><td>传媒</td><td class="num g">-0.53%</td><td class="num g">-13.22</td><td><span class="tag t-green">流出</span></td><td>9/22 曾 +29.78 亿，一日游闭环</td></tr>
+      <tr><td>AI算力芯片</td><td class="num g">-2.06%</td><td class="num g">-34.09</td><td><span class="tag t-green">流出</span></td><td><b>9/22 判定的核心主线正式证伪</b></td></tr>
+      <tr><td>CPO光模块</td><td class="num g">-1.99%</td><td class="num g">-56.83</td><td><span class="tag t-green">流出</span></td><td>9/24 曾 -224.67 亿，抛压延续未止</td></tr>
+      <tr><td>半导体</td><td class="num g">-2.99%</td><td class="num g">-98.74</td><td><span class="tag t-green">流出居首</span></td><td>振幅 5.07% 长上影，本轮杀跌主因</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="alert a-blu"><b>💰 杠杆资金：连续 4 日去杠杆，无被动反弹动能</b>
+    融资余额由 9/22 高点 <b>26263.36 亿</b> 降至 9/29 <b>25796.66 亿</b>，<b>4 个交易日累计 -466.70 亿</b>（9/24 -174.43 亿、9/28 -261.76 亿为最大单日）。
+    两融占流通市值 2.6168%；<b>平均维持担保比例由 281.02% 降至 268.86%（-12.16pct）</b>——仍远高于 130% 强平线，<b>既无踩踏风险，也不具备"超跌强制平仓后反弹"的动能</b>。
+    9/30 起两融暂停披露，节后首次披露为 <b>10月9日</b>。
+  </div>
+  <div class="alert a-grn"><b>🌏 北向（9/30 沪股通）</b>
+    成交额 1012.58 亿。十大活跃成交：<b>药明康德 23.72 亿 / 兆易创新 15.58 / 寒武纪 15.45 / 贵州茅台 15.45 / 澜起科技 10.84 / 生益科技 9.22 / 海光信息 9.17 / 招商银行 8.68 / 亨通光电 7.80 / 芯原股份 7.62</b>。
+    外资同样呈现「买医药、买消费、买卖科技并存」——<b>与内资主力方向一致，未见逆势抄底科技</b>。
+  </div>
+</div>
+
+<!-- 模块四 -->
+<div class="sec">
+  <h2><span class="n">4</span>题材主线与生命周期</h2>
+  <div class="d">本轮所有"主线"均被证实为 1–3 日存量高速轮动，无一条走出主升浪。</div>
+  <div id="c6" class="chart" style="height:300px"></div>
+  <div class="scroll">
+  <table style="margin-top:12px">
+    <thead><tr><th>日期</th><th>当日"最强主线"</th><th class="num">主力资金</th><th>后续验证</th><th>生命周期判定</th></tr></thead>
+    <tbody>
+      <tr><td>9/18</td><td>半导体 / CPO</td><td class="num r">+187.5 亿</td><td class="g">9/24 -94.84 亿</td><td><span class="tag t-green">证伪</span></td></tr>
+      <tr><td>9/21</td><td>医药生物</td><td class="num r">+65.2 亿</td><td class="g">9/23 -38.70 亿</td><td><span class="tag t-green">证伪</span></td></tr>
+      <tr><td>9/22</td><td>AI 算力芯片</td><td class="num r">+47.19 亿</td><td class="g">9/30 -34.09 亿</td><td><span class="tag t-green">证伪</span></td></tr>
+      <tr><td>9/24</td><td>卫星互联网（潜伏）</td><td class="num r">+16.20 亿</td><td class="g">9/30 -10.29 亿，价格 -0.65%</td><td><span class="tag t-green">证伪</span></td></tr>
+      <tr><td><b>9/30</b></td><td><b>医药生物（本轮第 2 次）</b></td><td class="num r">+60.24 亿</td><td class="y">待 10/8 验证</td><td><span class="tag t-or">启动期（存疑）</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="alert a-yel"><b>🔬 医药：形态最像主线，但周期数据不支持</b>
+    行业主力 TOP3：医疗服务 <b>+25.92 亿（+3.86%）</b>、化学制药 <b>+19.16 亿（+2.79%）</b>、生物制品 <b>+12.38 亿（+4.18%）</b>；
+    概念 TOP3：生物医药 <b>+51.14 亿</b>、健康中国 <b>+46.48 亿</b>、创新药 <b>+43.43 亿</b>。
+    <b>但三者 5 日 / 20 日主力全部为负</b>（生物医药 -45.72 / -104.37，健康中国 -74.43 / -219.27，创新药 -42.73 / -78.24，化学制药 20 日 -88.28）。
+    <b>定性：存量资金首轮回补的「启动期 / 超跌反抽」，尚未形成趋势性增量买盘。</b>若 10/8–10/10 医药能连续 3 日主力净流入且 5 日转正，方可升级为「主升期」。
+  </div>
+  <div class="alert a-red"><b>📉 科技链条：从「高位派发」进入「加速出清」</b>
+    半导体 9/30 -98.74 亿（价格 -2.99%、振幅 5.07%）＋ CPO -56.83 亿 ＋ AI算力芯片 -34.09 亿 ＋ 消费电子 -6.48 亿 ＋ 软件开发 -10.27 亿，
+    <b>科技链条单日合计流出超 200 亿</b>。叠加 10/2 恒生科技 -2.53%、中芯国际港股 -0.91%，
+    <b>10/8 A股科技板块（尤其科创50 权重股）大概率延续补跌，维持清零建议。</b>
+  </div>
+</div>
+
+<!-- 模块五 -->
+<div class="sec">
+  <h2><span class="n">5</span>假期外围风向（本期核心增量 · 10/2 15:35 实时）</h2>
+  <div class="d">A股休市期间，增量信息全部来自不休市市场。港股 10/1 休市、10/2 开市；美股 10/1 正常交易。</div>
+  <div class="grid g4">
+    <div class="idx" style="border-color:rgba(255,71,87,.5)"><div class="nm">恒生指数 (10/2)</div><div class="pv g">23938.62</div><div class="pc g">-2.74%</div></div>
+    <div class="idx" style="border-color:rgba(255,71,87,.5)"><div class="nm">恒生科技 (10/2)</div><div class="pv g">4146.19</div><div class="pc g">-2.53%</div></div>
+    <div class="idx"><div class="nm">国企指数 (10/2)</div><div class="pv g">8014.90</div><div class="pc g">-2.50%</div></div>
+    <div class="idx"><div class="nm">红筹指数 (10/2)</div><div class="pv g">3984.52</div><div class="pc g">-2.10%</div></div>
+  </div>
+  <div id="c7" class="chart" style="height:300px"></div>
+  <div class="scroll">
+  <table style="margin-top:12px">
+    <thead><tr><th>品种</th><th class="num">最新</th><th class="num">涨跌</th><th>时点</th><th>对 A 股含义</th></tr></thead>
+    <tbody>
+      <tr><td><b>富时A50 期货</b></td><td class="num">13786.00</td><td class="num g">-0.54%</td><td>10/2 15:35</td><td><span class="tag t-red">核心空头信号</span>日增仓 <b>+5,087 手</b>（增仓下跌=空头主动开仓），持仓 834,717 手，日内低点 13751</td></tr>
+      <tr><td>道琼斯 (10/1)</td><td class="num">50926.56</td><td class="num r">+0.04%</td><td>10/1 收盘</td><td>走平，无方向指引</td></tr>
+      <tr><td>标普500 (10/1)</td><td class="num">7666.45</td><td class="num r">+0.19%</td><td>10/1 收盘</td><td>微涨</td></tr>
+      <tr><td>纳斯达克 (.IXIC)</td><td class="num">26871.60</td><td class="num r">+0.04%</td><td>10/1 收盘</td><td>走平</td></tr>
+      <tr><td>英伟达 NVDA</td><td class="num">230.86</td><td class="num r">+1.09%</td><td>10/1 收盘</td><td><span class="tag t-bl">唯一偏多</span>AI 硬件未崩</td></tr>
+      <tr><td>苹果 AAPL</td><td class="num">330.32</td><td class="num g">-0.81%</td><td>10/1 收盘</td><td>消费电子承压</td></tr>
+      <tr><td>微软 MSFT / 特斯拉 TSLA</td><td class="num">512.80 / 354.11</td><td class="num">-0.02% / -0.20%</td><td>10/1 收盘</td><td>平稳</td></tr>
+      <tr><td>纳指100 期货 NQ</td><td class="num">30897.25</td><td class="num r">+0.44%</td><td>10/2 亚市</td><td><span class="tag t-bl">对冲项</span>风险偏好未失控</td></tr>
+      <tr><td>标普500 期货 ES / 道指期货 YM</td><td class="num">7745.75 / 51410</td><td class="num r">+0.28% / +0.33%</td><td>10/2 亚市</td><td>同上</td></tr>
+      <tr><td>伦敦金现货</td><td class="num">4216.60</td><td class="num r">+0.34%</td><td>10/2 15:23</td><td>较 9/30 的 4194 回升，<b>避险未极端升温</b></td></tr>
+      <tr><td>COMEX 黄金</td><td class="num">4215.50</td><td class="num r">+0.31%</td><td>10/2 03:23</td><td>日增仓 -1,136 手</td></tr>
+      <tr><td>美元指数</td><td class="num">101.88</td><td class="num g">-0.16%</td><td>10/2 15:33</td><td>当日走弱，但 <b>5日 +0.74% / 10日 +1.54% / 20日 +2.33% 仍全面升值</b></td></tr>
+      <tr><td>离岸人民币 CNH</td><td class="num">6.7014</td><td class="num r">-0.18%（升值）</td><td>10/2 15:33</td><td><span class="tag t-bl">对冲项</span>汇率端无压力</td></tr>
+      <tr><td>中国 10Y 国债</td><td class="num">1.6822%</td><td class="num">—</td><td>9/30</td><td>低位徘徊，宽货币预期未变</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="alert a-red"><b>🔴 最强看空单因子：A50「增仓下跌」＋港股四指数同步暴跌</b>
+    9/26 时 A50 日增仓曾由 -219,965 手转为 0（减仓止住，被视为偏多证据）；10/1 转为 +9,500 手；<b>10/2 进一步扩大至 +5,087 手且价格创新低 13751</b>。
+    <b>「增仓 + 下跌」= 空头主动建仓，而非多头止损离场</b>，这是假期期间最明确的偏空结构。
+  </div>
+  <div class="alert a-grn"><b>🟢 最强看多因子：美股期货亚市反弹 + 人民币升值 + 英伟达逆势走强</b>
+    尽管港股暴跌，美股三大期货在 10/2 亚洲时段全线上涨（NQ +0.44% / ES +0.28% / YM +0.33%），美元指数回落、离岸人民币升值至 6.7014，
+    英伟达 10/1 +1.09%。<b>说明港股下跌更可能是「A股 9/24–9/28 暴跌期间港股相对抗跌后的集中补跌」，而非全球系统性风险。</b>
+  </div>
+</div>
+
+<!-- 模块六 -->
+<div class="sec">
+  <h2><span class="n">6</span>仓位管理推荐 · 10/8 开盘作战方案</h2>
+  <div class="d">上期（10/1）设定：「A50 假期累计破 13800 → 10/8 开盘即减至 1.0 成」。当前 A50 = 13786，<b style="color:#ff6b7a">触发条件已兑现</b>。</div>
+  <div class="pos">
+    <div class="b p1"><div class="t">底仓（防御）</div><div class="v g">0.8 成</div><div class="s">银行 / 电力公用 / 必需消费</div></div>
+    <div class="b p2"><div class="t">进攻仓</div><div class="v y">0.2 成</div><div class="s">仅医药，设 -7% 硬止损</div></div>
+    <div class="b p3"><div class="t">科技仓</div><div class="v" style="color:#94a3b8">0 成</div><div class="s">清零，不参与左侧</div></div>
+    <div class="b p4"><div class="t">现金</div><div class="v b">9.0 成</div><div class="s">等待右侧信号</div></div>
+  </div>
+  <div class="alert a-yel"><b>📍 10/8 开盘情景推演（上证）</b>
+    A50 隐含 -0.54%，港股 -2.74% 按 0.4~0.5 传导系数测算 → <b>上证预计低开 -1.0% ~ -1.5%，对应 3785 ~ 3805，大概率击穿 9/28 低点 3806.67</b>。<br>
+    ① <b>低开高走、放量收复 3827.12（BOLL 下轨）</b> → 利空一次性出清，维持 1.0 成，可择机加至 1.5 成；<br>
+    ② <b>低开后横盘缩量于 3800 上方</b> → 维持 1.0 成不动，等 10/9 两融数据；<br>
+    ③ <b>低开低走放量破 3780</b> → 减至 0.5 成，下探目标 3730~3750；<br>
+    ④ <b>假期剩余期间（10/3–10/7）A50 跌破 13600 或恒指跌破 23500</b> → 10/8 直接低仓位观望，<b>不抄底</b>。
+  </div>
+  <div class="scroll">
+  <table style="margin-top:12px">
+    <thead><tr><th>触发条件（上证）</th><th class="num">目标仓位</th><th>动作</th></tr></thead>
+    <tbody>
+      <tr><td>站稳 MA5 <b>3864.23</b> 且成交 &gt; 1.6 万亿</td><td class="num b">2.0 成</td><td>底仓 1.2 + 进攻 0.8（医药/电力设备）</td></tr>
+      <tr><td>站稳 MA20 <b>3905.64</b> 且涨家 &gt; 3000</td><td class="num b">3.0 成</td><td>进攻扩至 1.5，可小仓位试科技超跌</td></tr>
+      <tr><td>站稳 SAR <b>3948.63</b>（翻多）且成交 &gt; 2.0 万亿</td><td class="num b">4.5 成</td><td>趋势修复确认，全面回补</td></tr>
+      <tr><td>跌破 BOLL 下轨 <b>3827.12</b></td><td class="num y">0.8 成</td><td>进攻仓清零，仅留防御底仓</td></tr>
+      <tr><td>跌破 9/28 低点 <b>3806.67</b></td><td class="num y">0.5 成</td><td>底仓减半</td></tr>
+      <tr><td>跌破 <b>3750</b></td><td class="num g">≤0.3 成</td><td>仅保留红利/国债 ETF</td></tr>
+      <tr><td>创业板跌破 <b>3100</b> 或 科创50 跌破 <b>1500</b></td><td class="num g">科技 0 成</td><td>严格执行，不抢反弹</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="alert a-blu"><b>🛡️ 风险控制清单</b>
+    ① 单一标的仓位 ≤ 总仓位 15%；② 进攻仓统一 -7% 硬止损、-10% 无条件清仓；③ 10/8–10/9 不加杠杆、不融资买入；
+    ④ 假期剩余 5 天（10/3–10/7）每日跟踪 A50 日增仓与恒指，若 A50 连续 3 日增仓下跌则 10/8 直接空仓过节后；
+    ⑤ 10 月为三季报密集披露期，规避前期涨幅大且无业绩支撑的科技标的；⑥ 现金优先配置货币基金 / 短债，保持随时可用。
+  </div>
+</div>
+
+<!-- 模块七 -->
+<div class="sec">
+  <h2><span class="n">7</span>技术面与风险提示</h2>
+  <div class="d">上证指数 9/30 全量技术指标（T 日口径已可取全）。</div>
+  <div class="kv">
+    <div class="i"><div class="k">MA5 / MA10 / MA20</div><div class="v g" style="font-size:14px">3864.23 / 3890.23 / 3905.64</div></div>
+    <div class="i"><div class="k">MA30 / MA60</div><div class="v g" style="font-size:14px">3912.50 / 3904.04</div></div>
+    <div class="i"><div class="k">MACD 柱（BAR）</div><div class="v g">-18.35</div></div>
+    <div class="i"><div class="k">DIF / DEA</div><div class="v g" style="font-size:14px">-17.81 / -8.63</div></div>
+    <div class="i"><div class="k">KDJ · J 值</div><div class="v y">7.59</div></div>
+    <div class="i"><div class="k">RSI / CCI</div><div class="v y" style="font-size:14px">34.04 / -99.71</div></div>
+    <div class="i"><div class="k">BOLL 下轨</div><div class="v">3827.12</div></div>
+    <div class="i"><div class="k">SAR（空头）</div><div class="v g">3948.63</div></div>
+    <div class="i"><div class="k">DMI +DI / -DI</div><div class="v g" style="font-size:14px">14.38 / 43.73</div></div>
+    <div class="i"><div class="k">BIAS</div><div class="v y">-1.17%</div></div>
+  </div>
+  <div class="alert a-red"><b>⚠️ 五线全失守 + MACD 柱连续扩大 + SAR 空头</b>
+    收盘 3842.19 <b>低于 MA5/MA10/MA20/MA30/MA60 全部五条均线</b>；MACD 柱 9/28 -11.60 → 9/29 -17.30 → 9/30 <b>-18.35 连续三日扩大</b>，DIF -17.81 深居零轴下；
+    DMI -DI 43.73 远超 +DI 14.38；<b>SAR 自 9/29 起由多翻空，现 3948.63（高于收盘 2.8%）</b>。中期趋势明确向下。
+  </div>
+  <div class="alert a-grn"><b>✅ 唯一支撑信号：短线超卖</b>
+    KDJ <b>J 值 7.59</b>（&lt;10 为极度超卖）、RSI 34.04、CCI -99.71、BIAS -1.17%。
+    这是 9/29–9/30 缩量两连阳的技术原因。<b>但超卖只提供反抽动能，不提供反转依据</b>——在 SAR 空头 + 港股补跌的双重压制下，反抽空间有限。
+  </div>
+  <div id="c8" class="chart" style="height:300px"></div>
+</div>
+
+<!-- 模块八 -->
+<div class="sec">
+  <h2><span class="n">8</span>信号归因</h2>
+  <div class="d">综合评分 38/100（上期 44），较上期下调 6 分，主因港股暴跌与 A50 增仓下跌。</div>
+  <div class="grid g2">
+    <div><div id="c9" class="chart"></div></div>
+    <div>
+      <div class="scroll">
+      <table>
+        <thead><tr><th>维度</th><th class="num">得分</th><th class="num">贡献度</th><th>主要依据</th></tr></thead>
+        <tbody>
+          <tr><td>技术面</td><td class="num g">22</td><td class="num">30%</td><td>五线全失守、MACD柱 -18.35 扩大、SAR 空头 3948.63；仅 J 值 7.59 超卖支撑</td></tr>
+          <tr><td>资金面</td><td class="num y">38</td><td class="num">25%</td><td>28 板块 11 流入/17 流出（1:2.1，较 9/24 的 1:10 改善）；融资 4 日 -466.70 亿</td></tr>
+          <tr><td>市场广度</td><td class="num y">52</td><td class="num">20%</td><td>上涨占比 46%、跌超7% 降至 31 家；但缩量修复、涨停无梯队</td></tr>
+          <tr><td>外围环境</td><td class="num g">25</td><td class="num">20%</td><td>恒指 -2.74%、A50 增仓下跌 +5,087 手；对冲：美股期货 +0.4%、人民币升值</td></tr>
+          <tr><td>估值/利率</td><td class="num b">62</td><td class="num">5%</td><td>10Y 国债 1.6822% 低位、宽货币预期未变</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="alert a-red" style="margin-top:12px"><b>最强看空信号</b><br>港股 10/2 恒指 -2.74% 四指数同步暴跌 + A50 期货增仓下跌（日增仓 +5,087 手、价格创 13751 新低）= 空头主动建仓。</div>
+      <div class="alert a-grn" style="margin-top:10px"><b>最强看多信号</b><br>上证 KDJ J 值 7.59 极度超卖 + 上涨占比由 20% 修复至 46% + 医药主力 +60.24 亿，恐慌情绪已明显释放。</div>
+    </div>
+  </div>
+</div>
+
+<div class="ft">
+  分析时间：2026-10-02 15:35（北京时间） ｜ 数据截面：A股 2026-09-30 收盘（国庆休市）／外围 10-02 15:35 实时<br>
+  策略：多头趋势 + 情绪周期 + 事件驱动 复合框架 ｜ 数据源：NeoData 金融数据服务<br>
+  <span style="color:#ff8a95">免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有分析结论均基于历史数据和技术模型，不保证未来表现。</span>
+</div>
+
+</div>
+
+<script>
+var AX={axisLine:{lineStyle:{color:'#2d2d44'}},axisLabel:{color:'#94a3b8',fontSize:11},splitLine:{lineStyle:{color:'rgba(45,45,68,.5)'}}};
+var BASE={backgroundColor:'transparent',textStyle:{color:'#e2e8f0',fontFamily:'PingFang SC,Microsoft YaHei,Arial'},
+  tooltip:{backgroundColor:'rgba(26,26,46,.96)',borderColor:'#2d2d44',textStyle:{color:'#e2e8f0',fontSize:12}},
+  legend:{textStyle:{color:'#94a3b8',fontSize:11}}};
+function mk(id,op){var el=document.getElementById(id);if(!el)return;var ch=echarts.init(el);ch.setOption(Object.assign({},BASE,op));window.addEventListener('resize',function(){ch.resize()});return ch}
+
+// c1 指数涨跌幅
+mk('c1',{
+  title:{text:'主要指数 9/30 涨跌幅（%）',left:'center',textStyle:{color:'#e2e8f0',fontSize:14,fontWeight:700}},
+  grid:{left:60,right:40,top:52,bottom:34},
+  xAxis:Object.assign({type:'value',name:'%'},AX),
+  yAxis:Object.assign({type:'category',data:['科创50','中证1000','创业板指','深证成指','沪深300','上证指数','北证50']},AX),
+  series:[{type:'bar',barWidth:16,data:[
+    {value:-2.51,itemStyle:{color:'#00d4aa'}},{value:-0.36,itemStyle:{color:'#00d4aa'}},
+    {value:-0.23,itemStyle:{color:'#00d4aa'}},{value:-0.11,itemStyle:{color:'#00d4aa'}},
+    {value:0.29,itemStyle:{color:'#ff4757'}},{value:0.31,itemStyle:{color:'#ff4757'}},
+    {value:0.70,itemStyle:{color:'#ff4757'}}],
+    label:{show:true,position:'right',color:'#e2e8f0',fontSize:11,formatter:'{c}%'}}]
+});
+
+// c2 上证走势 + 成交额
+mk('c2',{
+  title:{text:'上证指数 9/22–9/30 收盘与两市成交额',left:'center',textStyle:{color:'#e2e8f0',fontSize:14,fontWeight:700}},
+  tooltip:Object.assign({trigger:'axis'},BASE.tooltip),
+  legend:{data:['上证收盘','两市成交额(万亿)'],textStyle:{color:'#94a3b8',fontSize:11},top:26},
+  grid:{left:62,right:60,top:64,bottom:36},
+  xAxis:Object.assign({type:'category',data:['9/22','9/23','9/24','9/28','9/29','9/30'],boundaryGap:false},AX),
+  yAxis:[Object.assign({type:'value',name:'点位',min:3780,max:3980},AX),
+         Object.assign({type:'value',name:'万亿',min:1.2,max:2.4,splitLine:{show:false}},AX)],
+  series:[
+    {name:'上证收盘',type:'line',smooth:true,symbolSize:8,data:[3952.13,3936.52,3888.37,3823.62,3830.45,3842.19],
+      lineStyle:{width:3,color:'#667eea'},itemStyle:{color:'#667eea'},
+      label:{show:true,color:'#a5b4fc',fontSize:11,position:'top'},
+      markLine:{silent:true,symbol:'none',data:[{yAxis:3827.12,lineStyle:{color:'#ffa502',type:'dashed'},label:{formatter:'BOLL下轨 3827',color:'#ffa502',fontSize:10}},
+        {yAxis:3806.67,lineStyle:{color:'#ff4757',type:'dashed'},label:{formatter:'9/28低点 3807',color:'#ff4757',fontSize:10}}]}},
+    {name:'两市成交额(万亿)',type:'bar',yAxisIndex:1,barWidth:22,data:[2.1356,1.7650,1.6534,1.7028,1.4092,1.4380],
+      itemStyle:{color:'rgba(118,75,162,.65)'}}]
+});
+
+// c3 涨跌幅区间分布
+mk('c3',{
+  title:{text:'9/30 涨跌幅区间家数分布',left:'center',textStyle:{color:'#e2e8f0',fontSize:14,fontWeight:700}},
+  tooltip:Object.assign({trigger:'axis',axisPointer:{type:'shadow'}},BASE.tooltip),
+  grid:{left:56,right:30,top:56,bottom:56},
+  xAxis:Object.assign({type:'category',data:['涨停','>7%','5~7%','2~5%','0~2%','平盘','-2~0%','-5~-2%','-7~-5%','<-7%','跌停'],axisLabel:{color:'#94a3b8',fontSize:10,rotate:32}},AX),
+  yAxis:Object.assign({type:'value',name:'家数'},AX),
+  series:[{type:'bar',barWidth:'58%',data:[
+    {value:56,itemStyle:{color:'#ff4757'}},{value:41,itemStyle:{color:'#ff6b7a'}},{value:51,itemStyle:{color:'#ff8a95'}},
+    {value:545,itemStyle:{color:'#ffa8b1'}},{value:1874,itemStyle:{color:'#ffc9cf'}},
+    {value:181,itemStyle:{color:'#94a3b8'}},
+    {value:1841,itemStyle:{color:'#7fe8d0'}},{value:852,itemStyle:{color:'#4fdcc0'}},{value:87,itemStyle:{color:'#00d4aa'}},
+    {value:31,itemStyle:{color:'#00b894'}},{value:13,itemStyle:{color:'#00997f'}}],
+    label:{show:true,position:'top',color:'#cbd5e1',fontSize:10}}]
+});
+
+// c4 资金流入
+mk('c4',{
+  title:{text:'9/30 主力资金净流入 TOP（亿元）',left:'center',textStyle:{color:'#e2e8f0',fontSize:14,fontWeight:700}},
+  tooltip:Object.assign({trigger:'axis',axisPointer:{type:'shadow'}},BASE.tooltip),
+  grid:{left:96,right:56,top:52,bottom:30},
+  xAxis:Object.assign({type:'value'},AX),
+  yAxis:Object.assign({type:'category',data:['光伏设备','汽车整车','汽车零部件','光学光电子','食品饮料白酒','电池','电力设备','医药生物']},AX),
+  series:[{type:'bar',barWidth:14,data:[1.02,4.23,8.16,8.35,9.62,10.69,12.00,60.24],
+    itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#7a2f3a'},{offset:1,color:'#ff4757'}])},
+    label:{show:true,position:'right',color:'#ffc9cf',fontSize:11,formatter:'{c}'}}]
+});
+
+// c5 资金流出
+mk('c5',{
+  title:{text:'9/30 主力资金净流出 TOP（亿元）',left:'center',textStyle:{color:'#e2e8f0',fontSize:14,fontWeight:700}},
+  tooltip:Object.assign({trigger:'axis',axisPointer:{type:'shadow'}},BASE.tooltip),
+  grid:{left:96,right:56,top:52,bottom:30},
+  xAxis:Object.assign({type:'value'},AX),
+  yAxis:Object.assign({type:'category',data:['银行','传媒','卫星互联网','软件开发','计算机设备','消费电子','AI算力芯片','CPO光模块','半导体']},AX),
+  series:[{type:'bar',barWidth:14,data:[-0.72,-13.22,-10.29,-10.27,-7.53,-6.48,-34.09,-56.83,-98.74],
+    itemStyle:{color:new echarts.graphic.LinearGradient(1,0,0,0,[{offset:0,color:'#00d4aa'},{offset:1,color:'#0b5f4e'}])},
+    label:{show:true,position:'left',color:'#b8f5e6',fontSize:11,formatter:'{c}'}}]
+});
+
+// c6 主线轮动
+mk('c6',{
+  title:{text:'「主线」逐日证伪：主力资金 1–3 日游（亿元）',left:'center',textStyle:{color:'#e2e8f0',fontSize:14,fontWeight:700}},
+  tooltip:Object.assign({trigger:'axis'},BASE.tooltip),
+  legend:{data:['入选当日主力','后续验证日主力'],textStyle:{color:'#94a3b8',fontSize:11},top:26},
+  grid:{left:56,right:36,top:64,bottom:36},
+  xAxis:Object.assign({type:'category',data:['9/18 半导体','9/21 医药','9/22 AI芯片','9/24 卫星互联网','9/30 医药(再)']},AX),
+  yAxis:Object.assign({type:'value',name:'亿元'},AX),
+  series:[
+    {name:'入选当日主力',type:'bar',barWidth:26,data:[187.5,65.2,47.19,16.20,60.24],itemStyle:{color:'#ff4757'}},
+    {name:'后续验证日主力',type:'bar',barWidth:26,data:[-94.84,-38.70,-34.09,-10.29,null],itemStyle:{color:'#00d4aa'}}]
+});
+
+// c7 假期外围
+mk('c7',{
+  title:{text:'假期外围表现（%）· 10/1–10/2',left:'center',textStyle:{color:'#e2e8f0',fontSize:14,fontWeight:700}},
+  tooltip:Object.assign({trigger:'axis',axisPointer:{type:'shadow'}},BASE.tooltip),
+  grid:{left:56,right:36,top:56,bottom:76},
+  xAxis:Object.assign({type:'category',data:['恒生指数','恒生科技','国企指数','红筹指数','A50期货','道指','标普500','纳指','纳指100期货','伦敦金','美元指数'],axisLabel:{color:'#94a3b8',fontSize:10,rotate:34}},AX),
+  yAxis:Object.assign({type:'value',name:'%'},AX),
+  series:[{type:'bar',barWidth:'52%',data:[
+    {value:-2.74,itemStyle:{color:'#00d4aa'}},{value:-2.53,itemStyle:{color:'#00d4aa'}},
+    {value:-2.50,itemStyle:{color:'#00d4aa'}},{value:-2.10,itemStyle:{color:'#00d4aa'}},
+    {value:-0.54,itemStyle:{color:'#4fdcc0'}},
+    {value:0.04,itemStyle:{color:'#ff8a95'}},{value:0.19,itemStyle:{color:'#ff6b7a'}},{value:0.04,itemStyle:{color:'#ff8a95'}},
+    {value:0.44,itemStyle:{color:'#ff4757'}},{value:0.34,itemStyle:{color:'#ff6b7a'}},
+    {value:-0.16,itemStyle:{color:'#7fe8d0'}}],
+    label:{show:true,position:'top',color:'#cbd5e1',fontSize:10,formatter:'{c}%'}}]
+});
+
+// c8 技术雷达：位置
+mk('c8',{
+  title:{text:'上证 9/30 技术位分布（距收盘 3842.19 的偏离 %）',left:'center',textStyle:{color:'#e2e8f0',fontSize:14,fontWeight:700}},
+  tooltip:Object.assign({trigger:'axis',axisPointer:{type:'shadow'}},BASE.tooltip),
+  grid:{left:56,right:36,top:56,bottom:70},
+  xAxis:Object.assign({type:'category',data:['BOLL下轨\n3827','MA5\n3864','MA20\n3906','MA60\n3904','MA30\n3913','BOLL中轨\n3915','MA10\n3890','SAR空头\n3949'],axisLabel:{color:'#94a3b8',fontSize:10}},AX),
+  yAxis:Object.assign({type:'value',name:'偏离 %'},AX),
+  series:[{type:'bar',barWidth:'50%',data:[-0.39,0.57,1.65,1.61,1.83,1.89,1.25,2.77],
+    itemStyle:{color:function(p){return p.value<0?new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'#00d4aa'},{offset:1,color:'#0b5f4e'}]):'#667eea'}},
+    label:{show:true,position:'top',color:'#cbd5e1',fontSize:10,formatter:'{c}%'},
+    markLine:{silent:true,symbol:'none',data:[{yAxis:0,lineStyle:{color:'#ffa502'},label:{formatter:'收盘 3842.19',color:'#ffa502',fontSize:10}}]}}]
+});
+
+// c9 归因雷达
+mk('c9',{
+  title:{text:'五维评分归因',left:'center',textStyle:{color:'#e2e8f0',fontSize:14,fontWeight:700}},
+  tooltip:Object.assign({trigger:'item'},BASE.tooltip),
+  radar:{center:['50%','56%'],radius:'66%',
+    indicator:[{name:'技术面',max:100},{name:'资金面',max:100},{name:'市场广度',max:100},{name:'外围环境',max:100},{name:'估值/利率',max:100}],
+    axisName:{color:'#94a3b8',fontSize:12},
+    splitLine:{lineStyle:{color:'rgba(45,45,68,.9)'}},
+    splitArea:{areaStyle:{color:['rgba(102,126,234,.04)','rgba(118,75,162,.04)']}},
+    axisLine:{lineStyle:{color:'#2d2d44'}}},
+  series:[{type:'radar',data:[
+    {value:[22,38,52,25,62],name:'9/30 评分',
+      areaStyle:{color:'rgba(255,165,2,.28)'},lineStyle:{color:'#ffa502',width:2},itemStyle:{color:'#ffa502'},
+      label:{show:true,color:'#ffa502',fontSize:10,formatter:function(p){return p.value}}},
+    {value:[44,42,50,32,62],name:'10/1 评分（上期）',
+      areaStyle:{color:'rgba(102,126,234,.12)'},lineStyle:{color:'#667eea',width:2,type:'dashed'},itemStyle:{color:'#667eea'}}],
+    }]
+});
+</script>
+</body>
+</html>
