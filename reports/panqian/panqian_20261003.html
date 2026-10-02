@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盘前计划 · 2026-10-03（10/8 节后开盘作战版 v76.0）</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0f0f23;color:#e2e8f0;font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.7;padding:20px}
+.wrap{max-width:1280px;margin:0 auto}
+.hero{background:linear-gradient(135deg,#1a1a2e 0%,#252547 60%,#2d1b4e 100%);border:1px solid #2d2d44;border-radius:18px;padding:28px 32px;margin-bottom:20px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;background:radial-gradient(circle,rgba(102,126,234,.28),transparent 70%);border-radius:50%}
+.tagline{display:inline-block;background:rgba(102,126,234,.18);border:1px solid #667eea;color:#a5b4fc;padding:3px 12px;border-radius:20px;font-size:12px;letter-spacing:1px;margin-bottom:12px}
+h1{font-size:26px;font-weight:700;background:linear-gradient(90deg,#e2e8f0,#a5b4fc);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:6px}
+.sub{color:#94a3b8;font-size:13px}
+.oneline{background:rgba(0,212,170,.08);border-left:4px solid #00d4aa;padding:14px 18px;border-radius:0 10px 10px 0;margin:18px 0 6px;font-size:15px}
+.oneline b{color:#00d4aa}
+.metagrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:18px}
+.meta{background:rgba(15,15,35,.55);border:1px solid #2d2d44;border-radius:10px;padding:10px 14px}
+.meta .k{color:#94a3b8;font-size:11px}
+.meta .v{font-size:17px;font-weight:700;color:#e2e8f0;margin-top:2px}
+.card{background:#1a1a2e;border:1px solid #2d2d44;border-radius:16px;padding:22px 26px;margin-bottom:20px}
+h2{font-size:19px;margin-bottom:4px;display:flex;align-items:center;gap:10px}
+h2 .num{background:linear-gradient(135deg,#667eea,#764ba2);width:28px;height:28px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+.h2sub{color:#94a3b8;font-size:12.5px;margin-bottom:16px}
+h3{font-size:15px;color:#a5b4fc;margin:18px 0 8px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:16px}
+.tcard{background:linear-gradient(160deg,#1f1f3a,#1a1a2e);border:1px solid #2d2d44;border-radius:14px;padding:18px 20px;position:relative}
+.tcard.t1{border-color:#00d4aa55;box-shadow:0 0 0 1px rgba(0,212,170,.12) inset}
+.tcard.t2{border-color:#ffa50255}
+.tcard.t3{border-color:#667eea55}
+.rank{position:absolute;right:14px;top:12px;font-size:11px;padding:2px 10px;border-radius:12px;font-weight:700}
+.r1{background:rgba(0,212,170,.15);color:#00d4aa;border:1px solid #00d4aa55}
+.r2{background:rgba(255,165,2,.15);color:#ffa502;border:1px solid #ffa50255}
+.r3{background:rgba(102,126,234,.15);color:#a5b4fc;border:1px solid #667eea55}
+.tname{font-size:17px;font-weight:700;margin-bottom:4px}
+.tstage{font-size:12px;color:#94a3b8;margin-bottom:10px}
+.badge{display:inline-block;font-size:11px;padding:2px 9px;border-radius:6px;margin:2px 4px 2px 0}
+.b-buy{background:rgba(0,212,170,.14);color:#00d4aa;border:1px solid #00d4aa44}
+.b-hold{background:rgba(255,165,2,.14);color:#ffa502;border:1px solid #ffa50244}
+.b-try{background:rgba(102,126,234,.14);color:#a5b4fc;border:1px solid #667eea44}
+.b-bad{background:rgba(255,71,87,.14);color:#ff4757;border:1px solid #ff475744}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+th{background:#23234a;color:#a5b4fc;padding:9px 10px;text-align:left;font-weight:600;font-size:12px;white-space:nowrap}
+td{padding:9px 10px;border-bottom:1px solid #23233f;font-size:12.5px}
+tr:hover td{background:rgba(102,126,234,.06)}
+.up{color:#ff6b6b;font-weight:700}
+.dn{color:#00d4aa;font-weight:700}
+.chart{width:100%;height:340px;margin:8px 0}
+.chart-sm{width:100%;height:280px}
+.warn{background:rgba(255,71,87,.07);border:1px solid #ff475755;border-left:4px solid #ff4757;border-radius:0 10px 10px 0;padding:13px 16px;margin:12px 0;font-size:13px}
+.warn b{color:#ff6b6b}
+.good{background:rgba(0,212,170,.07);border:1px solid #00d4aa55;border-left:4px solid #00d4aa;border-radius:0 10px 10px 0;padding:13px 16px;margin:12px 0;font-size:13px}
+.good b{color:#00d4aa}
+.info{background:rgba(102,126,234,.07);border:1px solid #667eea55;border-left:4px solid #667eea;border-radius:0 10px 10px 0;padding:13px 16px;margin:12px 0;font-size:13px}
+.klist{list-style:none;padding:0}
+.klist li{padding:7px 0 7px 24px;position:relative;border-bottom:1px dashed #26264a;font-size:13px}
+.klist li:before{content:"▸";position:absolute;left:6px;color:#667eea}
+.klist li b{color:#ff6b6b}
+.score-wrap{display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin:10px 0}
+.legend{font-size:12.5px;color:#94a3b8}
+.legend span{display:block;margin:3px 0}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px}
+.foot{color:#64748b;font-size:11.5px;text-align:center;padding:22px 10px;border-top:1px solid #2d2d44;margin-top:8px}
+ul.plain{padding-left:20px;font-size:13px}
+ul.plain li{margin:5px 0}
+.pill{display:inline-block;background:#23234a;border:1px solid #33335c;border-radius:16px;padding:2px 11px;font-size:11.5px;color:#cbd5e1;margin:3px 4px 3px 0}
+@media(max-width:720px){.grid3{grid-template-columns:1fr}.chart{height:280px}h1{font-size:20px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hero">
+  <span class="tagline">v76.0 · 国庆假期 · 10/8 节后开盘作战版</span>
+  <h1>盘前计划 · 2026-10-03（周六）</h1>
+  <div class="sub">数据基准：A股 9/30 收盘 + 美股 10/2 收盘 + 港股 10/2 收盘 + 假期消息面 ｜ 下一交易日 <b style="color:#ffa502">10/8（周四）</b>，仅 2 个交易日后又逢周末</div>
+
+  <div class="oneline">
+    <b>一句话结论：国庆假期外盘完成「分母端反转」——9月非农仅 2.9 万（预期 9 万）把 10 月加息押注打掉、10Y 美债从 5.34% 回落至 5.15%、纳指与英伟达双双创历史新高；A股这边光通信在外盘+港股已连涨两天而 A股 9/30 仍在深跌坑里，10/8 节后首日是「超跌反弹第 0 天」，赔率最优、可买，但唯一纪律是：不追高开。</b>
+  </div>
+
+  <div class="metagrid">
+    <div class="meta"><div class="k">综合评分</div><div class="v" style="color:#00d4aa">65</div></div>
+    <div class="meta"><div class="k">信号</div><div class="v" style="color:#00d4aa">BUY</div></div>
+    <div class="meta"><div class="k">建议仓位</div><div class="v">50%</div></div>
+    <div class="meta"><div class="k">现金下限</div><div class="v">50%</div></div>
+    <div class="meta"><div class="k">生死线</div><div class="v" style="color:#ffa502">3821.74</div></div>
+    <div class="meta"><div class="k">清仓线</div><div class="v" style="color:#ff4757">3806.67</div></div>
+  </div>
+</div>
+
+<!-- ============ 问题一 ============ -->
+<div class="card">
+  <h2><span class="num">Q1</span>当下的主流题材是什么？（至多 3 个）</h2>
+  <div class="h2sub">判定依据：外盘映射强度 × A股资金流 × 位置赔率 × 催化新鲜度。已剔除被「东芝扩产 HDD」击垮的存储链。</div>
+
+  <div class="grid3">
+    <div class="tcard t1">
+      <span class="rank r1">主线 ①</span>
+      <div class="tname">光通信 / CPO / 光模块</div>
+      <div class="tstage">AI 算力互联 · 外盘与港股双双共振</div>
+      <span class="badge b-buy">可以买 · 赔率最优</span>
+      <span class="badge b-try">超跌反弹第 0 天</span>
+      <ul class="klist" style="margin-top:10px">
+        <li>美股 10/2：AAOI <b>+7.71%</b>、COHR <b>+5.59%</b>（5日 +13.9%、20日 +27.5%）、CRDO +4.03%、LITE +3.79%、CIEN +3.22%、FN +2.71%、GLW +2.35% —— <b>连续第二个交易日领涨全场</b></li>
+        <li>港股 10/2 全市场暴跌 2.6% 中<b>唯一逆势翻红</b>：长飞光纤 +4.28%、中际旭创 +3%、剑桥科技 +4%</li>
+        <li>A股 9/30 仍在坑里：亨通 5日 <span class="dn">-24.85%</span>、新易盛 -14.51%、中际旭创 -12.86%、长飞 -9.95%</li>
+        <li>新增硬催化：大摩称 <b>FCC 限制或从 3.2T 起，中际旭创不确定性正在下降</b></li>
+      </ul>
+    </div>
+
+    <div class="tcard t2">
+      <span class="rank r2">主线 ②</span>
+      <div class="tname">创新药 / CRO / 生物医药</div>
+      <div class="tstage">A股资金第一 · 但已出现高位分歧</div>
+      <span class="badge b-hold">只低吸 · 不追高</span>
+      <span class="badge b-try">主升中后段 · 第 3 天</span>
+      <ul class="klist" style="margin-top:10px">
+        <li>9/30 主力净流入全市场前 3 全是医药：生物医药 <b>+51.14 亿</b>、创新药 +43.43 亿、CRO +23.77 亿</li>
+        <li>行业涨幅：生物制品 +4.18%（第1）、医疗服务 +3.86%（第2）、化学制药 +2.79%</li>
+        <li><b>CRO 是唯一「20 日主力净流入为正」的方向（+36.17 亿）</b>，其余医药 20 日仍为负 → 位置不高但已连涨</li>
+        <li>⚠️ 分歧信号：港股 10/2 医药领跌，百济神州 -5.9%、诺诚健华/乐普生物重挫，节前获利盘兑现</li>
+      </ul>
+    </div>
+
+    <div class="tcard t3">
+      <span class="rank r3">主线 ③</span>
+      <div class="tname">商业航天 / 太空算力</div>
+      <div class="tstage">全新催化 · 位置最低 · 尚未炒作</div>
+      <span class="badge b-try">小仓试错 ≤7%</span>
+      <span class="badge b-try">启动第 0–1 天</span>
+      <ul class="klist" style="margin-top:10px">
+        <li><b>SpaceX 估值 2 万亿美元、史上最大 IPO 将至</b>（高盛已提前退出套现巨额收益）</li>
+        <li>星舰入轨 + <b>新增 26Tbps 算力租赁扩张</b> —— 太空算力从概念走向订单</li>
+        <li>A股位置极低：中国卫星 55.03（5日 -6.44%、20日 -7.39%）、霍莱沃 33.65（5日 +6.79%）</li>
+        <li>9/30 商业航天主力 -11.35 亿、20日 -272.74 亿 →<b>无人关注，赔率在位置</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="warn" style="margin-top:16px">
+    <b>❌ 已剔除 / 明确回避：存储 · HDD · HBM 链。</b> 10/2 东芝宣布投资约 600 亿日元（3.8 亿美元）扩建菲律宾 HDD 产能，目标 2027 财年容量翻倍、市占从 10%→30% → 希捷 <span class="dn">-10.21%</span>（盘中 -16%）、西部数据 <span class="dn">-10.22%</span>、闪迪 -3.79%、美光 -2.05%；2 倍做多希捷 ETF 跌超 20%。A股侧 9/30 存储器主力净流出 <b>-98.02 亿</b>（5日 -374 亿、20日 -598 亿）、长鑫存储 -31.55 亿（0/18 全绿）、HBM -27.91 亿（0/53 全绿）。<b>节后开盘一律不碰，反抽即减。</b>
+  </div>
+
+  <div id="c_ovs" class="chart"></div>
+</div>
+
+<!-- ============ 问题二 ============ -->
+<div class="card">
+  <h2><span class="num">Q2</span>主流题材的核心是谁？</h2>
+  <div class="h2sub">按「龙头地位 × 抗跌度 × 乖离率 <5% 严进策略 × 催化直接性」筛选。价格为 9/30 收盘。</div>
+
+  <h3>① 光通信 / CPO —— 三条腿：龙头 + 稳健 + 弹性</h3>
+  <table>
+    <tr><th>角色</th><th>标的</th><th>现价</th><th>5日</th><th>20日</th><th>MA20乖离</th><th>KDJ-J</th><th>核心逻辑</th><th>操作</th></tr>
+    <tr><td><span class="pill" style="background:rgba(0,212,170,.15);color:#00d4aa;border-color:#00d4aa44">首选龙头</span></td><td><b>中际旭创 300308</b></td><td>808.44</td><td class="dn">-12.86%</td><td class="dn">-5.92%</td><td>-7.95%</td><td>-19.01</td><td>全球光模块龙头；<b>808 连续 3 日不破筑平台底</b>；大摩 FCC 3.2T 不确定性下降直接受益</td><td>买点 795–815<br>止损 780</td></tr>
+    <tr><td><span class="pill">稳健腿</span></td><td><b>天孚通信 300394</b></td><td>260.77</td><td class="dn">-5.46%</td><td class="up">+3.78%</td><td style="color:#00d4aa"><b>-0.89%</b></td><td>19.11</td><td><b>全链最抗跌，乖离率唯一 <1%</b>；卡在 MA5(260.98)/MA120(261.53) 之上，MA60 245.77 托底</td><td>买点 254–262<br>止损 245</td></tr>
+    <tr><td><span class="pill">映射腿</span></td><td><b>长飞光纤 601869</b></td><td>411.16</td><td class="dn">-9.95%</td><td class="up">+2.78%</td><td>-5.25%</td><td>2.12</td><td><b>港股 10/2 已 +4.28% 领先 A股</b>；9/29 +3.48%、9/30 +0.79% 连涨 2 天企稳；J 值 2.12 极超卖</td><td>买点 400–412<br>止损 390</td></tr>
+    <tr><td><span class="pill">弹性腿</span></td><td>亨通光电 600487</td><td>54.86</td><td class="dn">-24.85%</td><td class="dn">-18.53%</td><td style="color:#ff6b6b">-15.67%</td><td>-15.58</td><td>跌最多、已跌破 BOLL 下轨（56.26）、RSI6 仅 20.4 → 反弹弹性最大，但趋势破坏，<b>只做超短</b></td><td>仅超短 ≤5%<br>止损 52.5</td></tr>
+    <tr><td><span class="pill">观察</span></td><td>新易盛 / 光迅 / 源杰 / 太辰光</td><td colspan="5">389 / 164.88 / 1613 / 212.35</td><td colspan="2">同为超跌，但资金与辨识度弱于前三者，<b>仅作板块温度计，不单独建仓</b></td></tr>
+  </table>
+
+  <h3>② 创新药 / CRO —— 只认「20 日资金唯一为正」的 CRO 中军</h3>
+  <table>
+    <tr><th>标的</th><th>现价</th><th>9/30</th><th>20日</th><th>技术形态</th><th>核心逻辑</th><th>操作</th></tr>
+    <tr><td><b>药明康德 603259</b><br><span style="color:#94a3b8;font-size:11px">中军首选</span></td><td>167.34</td><td class="up">+4.16%</td><td class="up">+8.74%</td><td><b>MA5&gt;MA10&gt;MA20&gt;MA60 完美多头排列，MACD 刚金叉</b>，站上 BOLL 中轨；但已逼近上轨 169.51</td><td>CRO 概念 20 日主力 <b>+36.17 亿</b>，是全市场极少数持续净流入方向；9/30 量比 1.37 放量</td><td><b>不追高</b>；回踩 160–165 分批<br>止损 155</td></tr>
+    <tr><td>恒瑞医药 600276</td><td>47.20</td><td class="up">+3.46%</td><td class="up">+2.10%</td><td>已到 BOLL 上轨 47.43，<b>J 值 97.57 极端超买</b>，RSI6 72.63</td><td>26 亿美元 BD 给诺和诺德仍在兑现期</td><td><b>短期回避追高</b>，等 J 值回落</td></tr>
+    <tr><td>泰格医药 300347</td><td>58.40</td><td class="up">+3.42%</td><td class="up">+13.62%</td><td>CRO 弹性标的，20 日涨幅居前</td><td>CRO 高景气 + 订单修复</td><td>回踩 55–57 低吸<br>止损 53</td></tr>
+    <tr><td>康希诺 688185</td><td>102.64</td><td class="up">+20.00%</td><td class="up">+35.41%</td><td>20cm 涨停，但 20 日已 +35%，<b>高位加速</b></td><td>肿瘤疫苗概念 +9.67% 龙头</td><td><b>情绪标尺，不追</b>；高开 &gt;8% 或翻绿 → 医药弹性腿全弃</td></tr>
+  </table>
+
+  <h3>③ 商业航天 / 太空算力 —— 位置最低，只做先手</h3>
+  <table>
+    <tr><th>标的</th><th>现价</th><th>5日</th><th>20日</th><th>关键位</th><th>操作</th></tr>
+    <tr><td><b>中国卫星 600118</b></td><td>55.03</td><td class="dn">-6.44%</td><td class="dn">-7.39%</td><td>BOLL 下轨 55.48 已破；MA60 62.84；J 值 -9.70 超卖</td><td>先手 4%：53.5–55.0，止损 52.0</td></tr>
+    <tr><td>霍莱沃 688682</td><td>33.65</td><td class="up">+6.79%</td><td class="up">+7.85%</td><td>板块内唯一逆势红盘，换手 4.8% 活跃</td><td>先手 3%：32.5–34.0，止损 31.0</td></tr>
+    <tr><td colspan="6" style="color:#94a3b8">观察未入池：航天电子 13.55、海格通信 9.89、航天彩虹 18.11 —— 均无独立催化，仅作板块宽度参考</td></tr>
+  </table>
+
+  <div id="c_core" class="chart"></div>
+</div>
+
+<!-- ============ 问题三 ============ -->
+<div class="card">
+  <h2><span class="num">Q3</span>主流题材走到哪个阶段了？能不能买？</h2>
+  <div class="h2sub">生命周期四阶段：启动 → 加速 → 高位分歧 → 退潮。结合沪指环境给出可执行结论。</div>
+
+  <div id="c_stage" class="chart"></div>
+
+  <table style="margin-top:16px">
+    <tr><th>题材</th><th>所处阶段</th><th>阶段特征</th><th>能不能买</th><th>建议动作</th></tr>
+    <tr>
+      <td><b style="color:#00d4aa">① 光通信/CPO</b></td>
+      <td><b>超跌反弹 第 0 天</b><br><span style="color:#64748b;font-size:11px">（退潮末 → 反弹启动）</span></td>
+      <td>A股尚未启动、外盘与港股已连涨 2 天；5 日主力净流出 CPO -682 亿 / 光通信 -391 亿 →<b>筹码已彻底洗过</b>；龙头 808 三日筑底</td>
+      <td><span class="badge b-buy">能买 · 首选</span></td>
+      <td>10/8 大概率高开。<b>高开 &lt;3% 可直接介入；高开 3–6% 等回踩均线；高开 &gt;6% 放弃当日、等次日缩量回踩</b></td>
+    </tr>
+    <tr>
+      <td><b style="color:#ffa502">② 创新药/CRO</b></td>
+      <td><b>主升中后段 · 第 3 天</b><br><span style="color:#64748b;font-size:11px">（加速 → 高位分歧）</span></td>
+      <td>CRO 20 日资金唯一为正说明是建仓不是炒作；但药明逼近 BOLL 上轨、恒瑞 J=97.57 超买、港股医药已开始兑现</td>
+      <td><span class="badge b-hold">能买但只低吸</span></td>
+      <td><b>绝不追高开</b>。只在回踩 MA5（药明 164）附近接；高开翻绿当日停买</td>
+    </tr>
+    <tr>
+      <td><b style="color:#a5b4fc">③ 商业航天</b></td>
+      <td><b>启动 第 0–1 天</b><br><span style="color:#64748b;font-size:11px">（催化刚落地）</span></td>
+      <td>SpaceX 2 万亿 IPO + 星舰 26Tbps 是全新催化；A股 20 日主力 -272.74 亿 = 无人区；但缺资金确认</td>
+      <td><span class="badge b-try">小仓试错</span></td>
+      <td>≤7% 先手仓。<b>需要 10/8 看到板块内 ≥2 只涨停才加仓</b>，否则维持试错仓不过夜放大</td>
+    </tr>
+  </table>
+
+  <div class="good">
+    <b>✅ 结论：能买，但方式只有一种 —— 分批低吸，不追高开。</b>
+    综合评分 <b>65</b>（上一版 58，+7），信号 <b>BUY·择机买入</b>，总仓位由 40% 上调至 <b>50%</b>，现金保留 ≥50%。
+    升级的核心理由是<b>分母端反转</b>：9 月非农 2.9 万（预期 9 万，前值 16.2 万下修至 13.3 万）、失业率 4.2%、时薪同比 +3.0% 不及预期 → CME 显示 10 月按兵不动概率由 72% 跳升至 <b>86%</b>，利率掉期已不再定价年内一次完整加息；10Y 美债下行近 10bp 至 5.15%（此前一度 5.34% 创 2002 年新高）。
+  </div>
+
+  <div class="warn">
+    <b>⚠️ 必须承认的三处不和谐（这也是为什么仓位只给 50% 而非更高）：</b>
+    <ul class="plain" style="margin-top:6px">
+      <li><b>港股 10/2 大跌 2.60% 失守 24000</b>（近半年最大单日跌幅），恒科 -2.26%、国企 -2.31%；恒指成分股仅 7 只上涨。医药（百济 -5.9%）、内房（旭辉 -17.6%、佳兆业 -17%）领跌 —— 但主因是<b>美债长端创新高 + 南向资金全程缺席</b>，而美债这一条在非农后已逆转，港股 10/5 起的修复值得跟踪。</li>
+      <li><b>存储/HDD 产业链被证伪</b>：东芝扩产直接击穿「供不应求」叙事，希捷年内 +240%、西数 +170% 的获利盘出逃。A股存储链节后仍有补跌压力。</li>
+      <li><b>沪指技术面仍空头排列</b>：9/30 收 3842.19，MACD 死叉（DIF -17.81 &lt; DEA -8.63），价格在 MA5/10/20/60/120/250 六线之下；市场综合评分仅 18.14。<b>唯一支撑是 J 值 7.59 极度超卖 + 低点三日抬升（3806.67→3810.81→3833.09）。这是反弹，不是反转。</b></li>
+    </ul>
+  </div>
+
+  <div id="c_index" class="chart"></div>
+</div>
+
+<!-- ============ 盘前交易计划 ============ -->
+<div class="card">
+  <h2><span class="num">P</span>10/8 盘前交易计划（节后首日作战）</h2>
+  <div class="h2sub">开盘 9:15–9:25 竞价定调 → 9:30–10:00 观察不追 → 10:00 后按信号分批执行</div>
+
+  <h3>一、开盘前必看（9:15–9:25）</h3>
+  <div class="info">
+    <b>假期剩余窗口：</b>港股 10/5、10/6、10/7 还有 3 个交易日，美股 10/5、10/6 两个交易日。<br>
+    <b>盯三个数：</b>① 港股 10/5 是否修复 10/2 的跌幅（尤其是长飞光纤、中际旭创的港股/相关标的能否延续强势）；② 纳指能否守住 27000；③ 10Y 美债能否稳定在 5.2% 以下。<br>
+    <b>若节中恒科/纳指累计再跌 &gt;3% → 10/8 一律不追高，总仓位压至 30%。</b>
+  </div>
+
+  <h3>二、分批建仓计划（总仓位 50%）</h3>
+  <table>
+    <tr><th>时间</th><th>方向</th><th>标的</th><th>价位区间</th><th>仓位</th><th>止损</th><th>触发条件</th></tr>
+    <tr><td rowspan="3"><b>第一笔</b><br>9:30–10:00<br><span style="color:#64748b;font-size:11px">（竞价后确认）</span></td><td rowspan="2">光通信 ①</td><td><b>中际旭创 300308</b></td><td>795 – 815</td><td><b>8%</b></td><td>780</td><td>高开 ≤3% 直接做；3–6% 等回踩至区间；&gt;6% 跳过</td></tr>
+    <tr><td><b>天孚通信 300394</b></td><td>254 – 262</td><td><b>7%</b></td><td>245</td><td>任何高开幅度均可做（乖离仅 -0.89%，最安全）</td></tr>
+    <tr><td>CRO ②</td><td><b>药明康德 603259</b></td><td>160 – 165</td><td><b>6%</b></td><td>155</td><td><b>必须回踩才做</b>，高开 ≥3%（&gt;172）当日放弃</td></tr>
+    <tr><td rowspan="3"><b>第二笔</b><br>10:00–11:00<br><span style="color:#64748b;font-size:11px">（需大盘确认）</span></td><td>光通信 ①</td><td><b>长飞光纤 601869</b></td><td>400 – 412</td><td><b>7%</b></td><td>390</td><td>沪指站上 3864.23（MA5）且分时红盘</td></tr>
+    <tr><td>CRO ②</td><td>泰格医药 300347</td><td>55 – 57</td><td><b>4%</b></td><td>53</td><td>药明康德翻红且 CRO 概念红盘</td></tr>
+    <tr><td>航天 ③</td><td><b>中国卫星 600118</b></td><td>53.5 – 55.0</td><td><b>4%</b></td><td>52.0</td><td>板块内出现 ≥2 只涨停，否则只做 2%</td></tr>
+    <tr><td><b>第三笔</b><br>14:00 后<br><span style="color:#64748b;font-size:11px">（尾盘确认强势）</span></td><td>弹性/先手</td><td>亨通光电 600487 / 霍莱沃 688682</td><td>53.5–55.0 / 32.5–34.0</td><td><b>5% + 3%</b></td><td>52.5 / 31.0</td><td>仅在前两笔全部盈利、沪指收阳且成交 ≥1.6 万亿时执行</td></tr>
+    <tr style="background:rgba(102,126,234,.06)"><td colspan="3"><b>合计权益仓位</b></td><td colspan="4"><b>44%（8+7+6+7+4+4+5+3）</b>，另留 <b>6%</b> 机动；<b>现金 ≥50%</b></td></tr>
+  </table>
+
+  <div class="grid3" style="margin-top:6px">
+    <div class="tcard">
+      <div class="tname" style="font-size:14px">📍 沪指关键点位标尺</div>
+      <ul class="klist">
+        <li><b>清仓线 3806.67</b>（9/28 低点）— 破则清超短</li>
+        <li><b>生死线 3821.74</b>（BOLL 下轨）— 破则降至 20%</li>
+        <li>现价 3842.19（9/30 收）</li>
+        <li><b>第一压力 3864.23</b>（MA5）— 站上才加仓</li>
+        <li>减仓位 3890.23（MA10）</li>
+        <li><b>反转确认 3904–3905.64</b>（MA60/MA20）</li>
+        <li>中期压力 3990.89 / 3995.72（MA250/MA120）</li>
+      </ul>
+    </div>
+    <div class="tcard">
+      <div class="tname" style="font-size:14px">🚫 一票否决清单</div>
+      <ul class="klist">
+        <li>沪指 30 分钟不收回 <b>3864.23</b> → 总仓位降至 30%</li>
+        <li>沪指破 <b>3821.74</b> → 降至 20%；破 <b>3806.67</b> → 清超短</li>
+        <li><b>中际旭创</b>高开 &gt;5%（&gt;849）后翻绿 → 光通信线当日停买</li>
+        <li><b>药明康德</b>高开 &gt;3%（&gt;172）后翻绿 → 医药线当日停买</li>
+        <li>康希诺高开 &gt;8% 或翻绿 → 放弃医药弹性腿</li>
+        <li>天孚破 <b>245</b> / 长飞破 <b>390</b> / 亨通破 <b>52.5</b> → 对应腿止损</li>
+        <li>节中恒科或纳指累计跌 &gt;3% → 10/8 不追高，仓位压至 30%</li>
+        <li>涨停家数 &lt;40 或跌停 &gt;20 → 情绪恶化，当日不再加仓</li>
+      </ul>
+    </div>
+    <div class="tcard">
+      <div class="tname" style="font-size:14px">⚡ 加仓 / 减仓触发</div>
+      <ul class="klist">
+        <li><b>加至 60%</b>：放量站稳 3864.23 且两市成交 ≥1.6 万亿 + 光通信板块涨停 ≥3 只</li>
+        <li><b>加至 70%</b>：站上 3904（MA60）并回踩不破 + 医药与光通信双线共振</li>
+        <li><b>减至 30%</b>：沪指冲 3890 后回落跌破 3864</li>
+        <li><b>减至 15%</b>：破 3821.74 且 30 分钟不收回</li>
+        <li><b>止盈</b>：中际旭创 878（MA20）减半；长飞 434（MA20）减半；药明 178 减半</li>
+        <li><b>时间止盈</b>：10/9 收盘前，任何未达目标价的超短仓位一律减半（因 10/10–10/11 又是周末）</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="c_pos" class="chart"></div>
+</div>
+
+<!-- ============ 信号归因 ============ -->
+<div class="card">
+  <h2><span class="num">A</span>信号归因 · 为什么给 65 分</h2>
+  <div class="h2sub">四维贡献度拆解，帮助理解评分来源与置信度</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px" class="grid3">
+    <div id="c_radar" class="chart-sm"></div>
+    <div>
+      <ul class="klist">
+        <li><b>市场环境 35%</b> —— 最强贡献。非农爆冷 → 10 月按兵不动概率 72%→86%，10Y 美债 5.34%→5.15%，纳指 27190.86 创新高、英伟达 233.95 创历史新高（市值 5.7 万亿），油价因 G7 释储跌超 3%。分子分母同时改善。</li>
+        <li><b>新闻情绪 30%</b> —— 大摩「FCC 限制从 3.2T 起、中际旭创不确定性下降」；SpaceX 2 万亿 IPO + 星舰 26Tbps；韩国 9 月半导体出口 +262.8%；港股 ASMPT +8%、赛力斯 +6.44%（华为新五年合作）。</li>
+        <li><b>技术指标 20%</b> —— 沪指 MACD 死叉、六线之下（弱），但 J=7.59 极超卖、低点三日抬升、连收两小阳（反弹信号）；个股层面中际旭创 J=-19.01、亨通 J=-15.58、长飞 J=2.12 均为极端超卖。</li>
+        <li><b>基本面/资金 15%</b> —— 9/30 医药主力大幅流入（生物医药 +51 亿、CRO 20 日 +36 亿）；但成交仅 1.438 万亿缩量、上涨家数 46%、涨停 56 / 跌停 13，市场综合评分 18.14 偏低。</li>
+      </ul>
+      <div class="good" style="margin-top:10px"><b>最强看多信号：</b>分母端反转（非农 + 美债）+ 光通信外盘港股两地连续两天共振，而 A股尚未反应。</div>
+      <div class="warn" style="margin-top:8px"><b>最强看空信号：</b>东芝扩产 HDD 击穿存储叙事 + 港股 10/2 大跌 2.6% 显示离岸资金仍在兑现 + 沪指空头排列未修复。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 隔夜要闻 ============ -->
+<div class="card">
+  <h2><span class="num">N</span>假期关键情报（10/1 – 10/3）</h2>
+  <table>
+    <tr><th>时间</th><th>事件</th><th>性质</th><th>对 A股影响</th></tr>
+    <tr><td>10/2 20:30</td><td><b>美国 9 月非农仅增 2.9 万</b>（预期 9 万，前值 16.2 万下修至 13.3 万）；失业率 4.2%（预期 4.1%）；时薪同比 +3.0%（预期 3.2%）</td><td><span class="badge b-buy">重大利多</span></td><td>CME：10 月按兵不动 72%→<b>86%</b>；12 月加息概率 61%→64%；10Y 美债 -10bp 至 5.15%。<b>压制 A股一个多月的加息预期这一核心利空解除</b></td></tr>
+    <tr><td>10/2 美股</td><td>纳指 27190.86 <b>+1.19%</b> 创新高；英伟达 233.95 +1.34% 破 5 月高点创历史新高，市值 5.7 万亿；费半 +2.7%；博通 +3.35%、台积电 +2.96%、AMD +2.95%、特斯拉 +5%</td><td><span class="badge b-buy">利多</span></td><td>全球 AI 硬件风险偏好回升，直接映射 A股算力链</td></tr>
+    <tr><td>10/2 美股</td><td><b>东芝宣布投资 600 亿日元扩产菲律宾 HDD</b>，2027 财年容量翻倍、市占 10%→30%，2030 年量产 65TB→100TB</td><td><span class="badge b-bad">重大利空</span></td><td>希捷 -10.21%、西数 -10.22%、闪迪 -3.79%、美光 -2.05%。<b>A股存储/HDD/HBM 链节后补跌，反抽即减</b></td></tr>
+    <tr><td>10/2</td><td>大摩：FCC 限制或从 3.2T 开始，<b>中际旭创不确定性正在下降</b></td><td><span class="badge b-buy">利多</span></td><td>光模块出口管制风险缓释，直接利好中际旭创、新易盛</td></tr>
+    <tr><td>10/2</td><td><b>G7 将释放 1 亿桶能源储备</b>；美油跌超 3%</td><td><span class="badge b-hold">中性偏空</span></td><td>利空油气、煤炭；利好航空机场、交运、化工中下游</td></tr>
+    <tr><td>10/2</td><td><b>港股大跌</b>：恒指 23972.29 -2.60%（失守 24000，近半年最大单日跌幅）、恒科 -2.26%、国企 -2.31%；恒指成分股仅 7 只上涨</td><td><span class="badge b-bad">利空</span></td><td>主因：美债长端创新高 + <b>港股通关闭南向缺席</b>（腾讯成交不足 40 亿 vs 日常 50 亿+）。<b>唯一逆势线 = 光通信</b>（长飞 +4.28%、中际旭创 +3%）；医药、内房暴跌兑现</td></tr>
+    <tr><td>10/1–10/2</td><td><b>SpaceX 估值 2 万亿美元、史上最大 IPO 将至</b>；星舰入轨新增 26Tbps 算力租赁扩张</td><td><span class="badge b-try">题材催化</span></td><td>商业航天 / 太空算力低位启动，A股尚未定价</td></tr>
+    <tr><td>10/2</td><td>欧元区 9 月通胀 3.8%（预期 3.2% 前值），2023 年 9 月来最高；英 30Y 国债 1998 年来首破 6%</td><td><span class="badge b-hold">外部风险</span></td><td>全球债市抛售尚未完全平息，需跟踪</td></tr>
+    <tr><td>10/2</td><td>现货黄金突破 4220 美元/盎司 +1%，白银同步走高；比特币突破 8.7 万美元 +3%</td><td><span class="badge b-buy">利多</span></td><td>贵金属板块有支撑（9/30 贵金属行业已 +1.81%）</td></tr>
+    <tr><td>9/30 A股</td><td>沪指 3842.19 +0.31%；两市成交 1.438 万亿；涨 2567(46%) / 跌 2824；<b>涨停 56 / 跌停 13</b></td><td><span class="badge b-hold">中性</span></td><td>节前缩量整理，情绪正常偏弱</td></tr>
+  </table>
+</div>
+
+<div class="foot">
+  <div>分析时间：2026-10-03 07:00 (GMT+8) ｜ 专家：星辰 · 多市场智能股票分析师 ｜ 策略：多头趋势 + 超跌反弹 + 事件驱动</div>
+  <div style="margin-top:6px">数据来源：westockdata（A股 9/30 收盘、美股 10/2 收盘、港股 10/2 收盘、概念板块资金流、市场涨跌分布、技术指标）</div>
+  <div style="margin-top:10px;color:#ff4757">⚠️ 免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有分析结论均基于历史数据和技术模型，不保证未来表现。节后首日受假期累积信息影响波动放大，请严格执行止损纪律。</div>
+</div>
+
+</div>
+
+<script>
+var D={txt:'#e2e8f0',sub:'#94a3b8',grid:'#2d2d44',up:'#ff4757',dn:'#00d4aa',pur:'#667eea',org:'#ffa502'};
+function base(){return{backgroundColor:'transparent',textStyle:{color:D.txt,fontFamily:'Segoe UI,PingFang SC,Microsoft YaHei'},tooltip:{backgroundColor:'#1a1a2e',borderColor:'#2d2d44',textStyle:{color:D.txt}},grid:{left:60,right:30,top:50,bottom:60}};}
+
+// 1. 隔夜外盘 光通信 vs 存储
+var c1=echarts.init(document.getElementById('c_ovs'));
+c1.setOption(Object.assign(base(),{
+ title:{text:'隔夜美股（10/2）：光通信全线大涨 vs 存储/HDD 链崩塌',left:'center',top:0,textStyle:{fontSize:14,color:'#a5b4fc'}},
+ tooltip:{trigger:'axis',axisPointer:{type:'shadow'},backgroundColor:'#1a1a2e',borderColor:'#2d2d44',textStyle:{color:D.txt},valueFormatter:function(v){return v+'%'}},
+ grid:{left:70,right:40,top:50,bottom:70},
+ xAxis:{type:'category',data:['AAOI','COHR','CRDO','LITE','CIEN','FN','GLW','英伟达','博通','台积电','美光','闪迪','希捷','西数'],axisLine:{lineStyle:{color:D.grid}},axisLabel:{color:D.sub,fontSize:10,interval:0,rotate:35}},
+ yAxis:{type:'value',name:'涨跌幅 %',nameTextStyle:{color:D.sub},axisLine:{lineStyle:{color:D.grid}},splitLine:{lineStyle:{color:'#23233f'}},axisLabel:{color:D.sub,formatter:'{value}%'}},
+ series:[{type:'bar',data:[
+  {value:7.71,itemStyle:{color:'#ff4757'}},{value:5.59,itemStyle:{color:'#ff4757'}},{value:4.03,itemStyle:{color:'#ff6b6b'}},
+  {value:3.79,itemStyle:{color:'#ff6b6b'}},{value:3.22,itemStyle:{color:'#ff6b6b'}},{value:2.71,itemStyle:{color:'#ff8787'}},
+  {value:2.35,itemStyle:{color:'#ff8787'}},{value:1.34,itemStyle:{color:'#ffa07a'}},{value:3.35,itemStyle:{color:'#ffa07a'}},
+  {value:2.96,itemStyle:{color:'#ffa07a'}},{value:-2.05,itemStyle:{color:'#00d4aa'}},{value:-3.79,itemStyle:{color:'#00d4aa'}},
+  {value:-10.21,itemStyle:{color:'#00b894'}},{value:-10.22,itemStyle:{color:'#00b894'}}],
+  barWidth:'55%',label:{show:true,position:'top',color:D.txt,fontSize:10,formatter:function(p){return p.value+'%'}}}]
+}));
+
+// 2. 核心个股乖离率
+var c2=echarts.init(document.getElementById('c_core'));
+c2.setOption(Object.assign(base(),{
+ title:{text:'核心标的 MA20 乖离率（严进策略：|乖离|<5% 才考虑入场）',left:'center',top:0,textStyle:{fontSize:14,color:'#a5b4fc'}},
+ tooltip:{trigger:'axis',axisPointer:{type:'shadow'},backgroundColor:'#1a1a2e',borderColor:'#2d2d44',textStyle:{color:D.txt},valueFormatter:function(v){return v+'%'}},
+ grid:{left:90,right:50,top:50,bottom:50},
+ xAxis:{type:'value',name:'乖离率 %',nameTextStyle:{color:D.sub},axisLine:{lineStyle:{color:D.grid}},splitLine:{lineStyle:{color:'#23233f'}},axisLabel:{color:D.sub,formatter:'{value}%'}},
+ yAxis:{type:'category',data:['亨通光电','中际旭创','长飞光纤','中国卫星','天孚通信','恒瑞医药','药明康德'],axisLine:{lineStyle:{color:D.grid}},axisLabel:{color:D.sub,fontSize:11}},
+ series:[{type:'bar',data:[
+  {value:-15.67,itemStyle:{color:'#00b894'}},{value:-7.95,itemStyle:{color:'#00d4aa'}},{value:-5.25,itemStyle:{color:'#00d4aa'}},
+  {value:-4.68,itemStyle:{color:'#00d4aa'}},{value:-0.89,itemStyle:{color:'#667eea'}},{value:5.33,itemStyle:{color:'#ffa502'}},{value:5.07,itemStyle:{color:'#ffa502'}}],
+  barWidth:'52%',label:{show:true,position:'right',color:D.txt,fontSize:10,formatter:function(p){return p.value+'%'}},
+  markLine:{silent:true,symbol:'none',data:[{xAxis:5,lineStyle:{color:'#ff4757',type:'dashed'},label:{formatter:'+5% 超买线',color:'#ff4757',fontSize:10}},{xAxis:-5,lineStyle:{color:'#667eea',type:'dashed'},label:{formatter:'-5% 严进线',color:'#667eea',fontSize:10}}]}}]
+}));
+
+// 3. 三主线阶段定位
+var c3=echarts.init(document.getElementById('c_stage'));
+c3.setOption(Object.assign(base(),{
+ title:{text:'三大主线生命周期定位（横轴 = 炒作进度）',left:'center',top:0,textStyle:{fontSize:14,color:'#a5b4fc'}},
+ tooltip:{backgroundColor:'#1a1a2e',borderColor:'#2d2d44',textStyle:{color:D.txt}},
+ grid:{left:110,right:60,top:55,bottom:50},
+ xAxis:{type:'value',min:0,max:100,name:'启动 → 加速 → 高位分歧 → 退潮',nameLocation:'middle',nameGap:30,nameTextStyle:{color:D.sub,fontSize:11},axisLine:{lineStyle:{color:D.grid}},splitLine:{lineStyle:{color:'#23233f'}},axisLabel:{show:false}},
+ yAxis:{type:'category',data:['③ 商业航天/太空算力','② 创新药 / CRO','① 光通信 / CPO'],axisLine:{lineStyle:{color:D.grid}},axisLabel:{color:D.txt,fontSize:12}},
+ series:[
+  {type:'bar',stack:'x',silent:true,data:[0,0,0],itemStyle:{color:'transparent'}},
+  {type:'scatter',symbolSize:26,data:[
+    {value:[18,0],itemStyle:{color:'#667eea'},name:'启动 第 0–1 天'},
+    {value:[66,1],itemStyle:{color:'#ffa502'},name:'主升中后段 第 3 天'},
+    {value:[12,2],itemStyle:{color:'#00d4aa'},name:'超跌反弹 第 0 天'}],
+   label:{show:true,position:'right',formatter:function(p){return p.name;},color:D.txt,fontSize:11},
+   markArea:{silent:true,data:[
+     [{xAxis:0,itemStyle:{color:'rgba(0,212,170,.05)'}},{xAxis:25}],
+     [{xAxis:25,itemStyle:{color:'rgba(102,126,234,.05)'}},{xAxis:55}],
+     [{xAxis:55,itemStyle:{color:'rgba(255,165,2,.06)'}},{xAxis:80}],
+     [{xAxis:80,itemStyle:{color:'rgba(255,71,87,.07)'}},{xAxis:100}]]}}
+ ]
+}));
+
+// 4. 沪指关键点位
+var c4=echarts.init(document.getElementById('c_index'));
+c4.setOption(Object.assign(base(),{
+ title:{text:'沪指关键点位标尺（9/30 收 3842.19）',left:'center',top:0,textStyle:{fontSize:14,color:'#a5b4fc'}},
+ tooltip:{trigger:'axis',axisPointer:{type:'line'},backgroundColor:'#1a1a2e',borderColor:'#2d2d44',textStyle:{color:D.txt}},
+ grid:{left:70,right:40,top:55,bottom:55},
+ xAxis:{type:'category',data:['清仓线\n3806.67','生死线\n3821.74','9/30收盘\n3842.19','MA5\n3864.23','MA10\n3890.23','MA60\n3904.04','MA20\n3905.64','MA250\n3990.89','MA120\n3995.72'],axisLine:{lineStyle:{color:D.grid}},axisLabel:{color:D.sub,fontSize:9.5,interval:0,lineHeight:13}},
+ yAxis:{type:'value',min:3790,max:4010,name:'点位',nameTextStyle:{color:D.sub},axisLine:{lineStyle:{color:D.grid}},splitLine:{lineStyle:{color:'#23233f'}},axisLabel:{color:D.sub}},
+ series:[{type:'line',data:[3806.67,3821.74,3842.19,3864.23,3890.23,3904.04,3905.64,3990.89,3995.72],
+  lineStyle:{color:'#667eea',width:2},itemStyle:{color:'#667eea'},symbolSize:9,smooth:false,
+  markLine:{silent:true,symbol:'none',data:[
+   {yAxis:3821.74,lineStyle:{color:'#ffa502',type:'dashed'},label:{formatter:'生死线 3821.74',color:'#ffa502',fontSize:10,position:'insideEndTop'}},
+   {yAxis:3904.04,lineStyle:{color:'#00d4aa',type:'dashed'},label:{formatter:'反转确认 3904',color:'#00d4aa',fontSize:10,position:'insideEndTop'}}]}}]
+}));
+
+// 5. 仓位分配
+var c5=echarts.init(document.getElementById('c_pos'));
+c5.setOption(Object.assign(base(),{
+ title:{text:'10/8 建议仓位分配（总 50%）',left:'center',top:0,textStyle:{fontSize:14,color:'#a5b4fc'}},
+ tooltip:{trigger:'item',backgroundColor:'#1a1a2e',borderColor:'#2d2d44',textStyle:{color:D.txt},formatter:'{b}: {c}%'},
+ legend:{bottom:0,textStyle:{color:D.sub,fontSize:11},itemWidth:12,itemHeight:12},
+ series:[{type:'pie',radius:['42%','68%'],center:['50%','52%'],avoidLabelOverlap:true,
+  itemStyle:{borderColor:'#1a1a2e',borderWidth:2},
+  label:{color:D.txt,fontSize:11,formatter:'{b}\n{c}%'},
+  labelLine:{lineStyle:{color:D.grid}},
+  data:[
+   {value:50,name:'现金（≥50%）',itemStyle:{color:'#3a3a5c'}},
+   {value:15,name:'光通信-龙头+稳健(中际+天孚)',itemStyle:{color:'#00d4aa'}},
+   {value:7,name:'光通信-映射(长飞)',itemStyle:{color:'#38d9a9'}},
+   {value:5,name:'光通信-弹性(亨通)',itemStyle:{color:'#63e6be'}},
+   {value:10,name:'CRO(药明+泰格)',itemStyle:{color:'#ffa502'}},
+   {value:7,name:'商业航天(卫星+霍莱沃)',itemStyle:{color:'#667eea'}},
+   {value:6,name:'机动资金',itemStyle:{color:'#764ba2'}}]}]
+}));
+
+// 6. 雷达
+var c6=echarts.init(document.getElementById('c_radar'));
+c6.setOption({
+ backgroundColor:'transparent',
+ tooltip:{backgroundColor:'#1a1a2e',borderColor:'#2d2d44',textStyle:{color:D.txt}},
+ radar:{indicator:[{name:'市场环境',max:100},{name:'新闻情绪',max:100},{name:'技术指标',max:100},{name:'基本面/资金',max:100}],
+  center:['50%','55%'],radius:'66%',axisName:{color:D.txt,fontSize:11},
+  splitLine:{lineStyle:{color:'#2d2d44'}},splitArea:{areaStyle:{color:['rgba(102,126,234,.03)','rgba(102,126,234,.06)']}},axisLine:{lineStyle:{color:'#2d2d44'}}},
+ series:[{type:'radar',data:[
+  {value:[78,72,45,52],name:'当前得分',itemStyle:{color:'#00d4aa'},areaStyle:{color:'rgba(0,212,170,.22)'},lineStyle:{width:2},
+   label:{show:true,color:D.txt,fontSize:10,formatter:function(p){return p.value;}}},
+  {value:[42,45,38,40],name:'10/2 上一版',itemStyle:{color:'#667eea'},lineStyle:{width:1.5,type:'dashed'},areaStyle:{color:'rgba(102,126,234,.10)'}}]}],
+ legend:{bottom:0,textStyle:{color:D.sub,fontSize:11},itemWidth:12,itemHeight:12}
+});
+
+window.addEventListener('resize',function(){[c1,c2,c3,c4,c5,c6].forEach(function(c){c.resize();});});
+</script>
+</body>
+</html>
