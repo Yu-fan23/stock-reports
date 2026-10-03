@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-03 07:56:32",
-  "total": 358,
+  "generatedAt": "2026-10-03 12:52:42",
+  "total": 359,
   "categories": [
     {
       "key": "panqian",
@@ -530,9 +530,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 75,
-      "latest": "20261002",
+      "count": 76,
+      "latest": "20261003",
       "reports": [
+        {
+          "date": "20261003",
+          "dateLabel": "2026-10-03（周六）",
+          "file": "reports/noon/noon_20261003.html",
+          "title": "A股国庆假期特辑 Ⅲ · 2026-10-03（非农爆冷 + G7释储 + 10/8 复市作战手册 v3）",
+          "size": 43036
+        },
         {
           "date": "20261002",
           "dateLabel": "2026-10-02（周五）",
