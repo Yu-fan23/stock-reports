@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-08 08:32:39",
-  "total": 360,
+  "generatedAt": "2026-10-09 08:38:27",
+  "total": 363,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,23 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 73,
-      "latest": "20261003",
+      "count": 75,
+      "latest": "20261009",
       "reports": [
+        {
+          "date": "20261009",
+          "dateLabel": "2026-10-09（周五）",
+          "file": "reports/panqian/panqian_20261009.html",
+          "title": "盘前计划 · 2026-10-09（周五 v78.0 · 三问三答）",
+          "size": 38987
+        },
+        {
+          "date": "20261008",
+          "dateLabel": "2026-10-08（周四）",
+          "file": "reports/panqian/panqian_20261008.html",
+          "title": "盘前计划 · 2026-10-08（节后开盘 v77.0 · 三问三答）",
+          "size": 40458
+        },
         {
           "date": "20261003",
           "dateLabel": "2026-10-03（周六）",
@@ -2110,9 +2124,16 @@ window.SITE_DATA = {
       "time": "08:00",
       "icon": "🌐",
       "color": "#7c5cff",
-      "count": 66,
-      "latest": "20261003",
+      "count": 67,
+      "latest": "20261008",
       "reports": [
+        {
+          "date": "20261008",
+          "dateLabel": "2026-10-08（周四）",
+          "file": "reports/global/global_20261008.html",
+          "title": "全球资本市场十大热点｜2026年10月8日（周四）",
+          "size": 42362
+        },
         {
           "date": "20261003",
           "dateLabel": "2026-10-03（周六）",
