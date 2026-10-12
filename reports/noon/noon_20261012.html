@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股午间行情复盘 · 2026-10-12</title>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --line:#2d2d44;
+    --txt:#e2e8f0; --txt2:#94a3b8;
+    --up:#ff4757;        /* 涨=红（A股惯例） */
+    --down:#00d4aa;      /* 跌=绿（A股惯例） */
+    --warn:#ffa502;
+    --acc1:#667eea; --acc2:#764ba2;
+    --in:#ff4757; --out:#00d4aa;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:"PingFang SC","Microsoft YaHei",-apple-system,system-ui,sans-serif;line-height:1.55;padding:28px 16px 60px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .head{background:linear-gradient(135deg,#1a1a2e,#221b3a);border:1px solid var(--line);border-radius:16px;padding:24px 26px;margin-bottom:18px}
+  .head h1{font-size:24px;font-weight:800;letter-spacing:.5px}
+  .head .meta{color:var(--txt2);font-size:13px;margin-top:6px}
+  .verdict{display:inline-block;margin-top:14px;padding:8px 16px;border-radius:999px;background:rgba(255,165,2,.15);color:var(--warn);font-weight:700;border:1px solid rgba(255,165,2,.4)}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:820px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px}
+  .card h2{font-size:15px;color:var(--txt);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--acc1)}
+  .idx{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px dashed var(--line)}
+  .idx:last-child{border-bottom:none}
+  .idx .nm{font-size:14px;color:var(--txt2)}
+  .idx .px{font-size:20px;font-weight:800}
+  .idx .ch{font-size:13px;font-weight:700;text-align:right}
+  .up{color:var(--up)} .down{color:var(--down)} .neu{color:var(--warn)}
+  .kv{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid rgba(45,45,68,.5)}
+  .kv:last-child{border-bottom:none}
+  .kv .k{color:var(--txt2)}
+  .kv .v{font-weight:700}
+  .gauge{display:flex;align-items:center;gap:16px}
+  .ring{--p:19;width:96px;height:96px;border-radius:50%;background:conic-gradient(var(--down) calc(var(--p)*1%),#2d2d44 0);display:flex;align-items:center;justify-content:center;position:relative;flex:none}
+  .ring::after{content:"";position:absolute;width:72px;height:72px;border-radius:50%;background:var(--card)}
+  .ring span{position:relative;font-size:20px;font-weight:800;color:var(--down)}
+  .temp{height:14px;border-radius:7px;background:linear-gradient(90deg,#00d4aa,#ffa502,#ff4757);position:relative;margin-top:8px}
+  .temp i{position:absolute;top:-4px;width:4px;height:22px;border-radius:2px;background:#fff;box-shadow:0 0 6px #fff}
+  .bar-row{display:flex;align-items:center;gap:10px;margin:7px 0;font-size:13px}
+  .bar-row .lbl{width:96px;flex:none;color:var(--txt2);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar-track{flex:1;background:#11111f;border-radius:6px;height:18px;position:relative;overflow:hidden}
+  .bar-fill{height:100%;border-radius:6px}
+  .bar-val{width:70px;flex:none;text-align:left;font-weight:700;font-size:12px}
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700;margin:3px 4px 3px 0}
+  .pill.hot{background:rgba(255,71,87,.15);color:var(--up);border:1px solid rgba(255,71,87,.35)}
+  .pill.cold{background:rgba(0,212,170,.13);color:var(--down);border:1px solid rgba(0,212,170,.3)}
+  .pill.acc{background:rgba(102,126,234,.15);color:#9ab0ff;border:1px solid rgba(102,126,234,.35)}
+  .note{font-size:12.5px;color:var(--txt2);line-height:1.7}
+  .plan li{font-size:13.5px;margin:9px 0 9px 18px;line-height:1.6}
+  .plan li::marker{color:var(--acc1)}
+  .box-warn{background:rgba(255,71,87,.09);border:1px solid rgba(255,71,87,.35);border-radius:10px;padding:12px 14px;font-size:13px;color:#ffb3bd;margin-top:8px}
+  .box-ok{background:rgba(0,212,170,.09);border:1px solid rgba(0,212,170,.35);border-radius:10px;padding:12px 14px;font-size:13px;color:#8ff0db;margin-top:8px}
+  .table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+  .table th,.table td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+  .table th{color:var(--txt2);font-weight:600;font-size:12px}
+  .tag-buy{color:var(--up);font-weight:700}.tag-sell{color:var(--down);font-weight:700}.tag-hold{color:var(--warn);font-weight:700}
+  .foot{color:var(--txt2);font-size:11.5px;margin-top:24px;line-height:1.7;border-top:1px solid var(--line);padding-top:14px}
+  .score-badge{font-size:12px;color:var(--txt2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 顶部摘要 -->
+  <div class="head">
+    <h1>A股午间行情复盘 · 决策仪表盘</h1>
+    <div class="meta">数据日期：2026-10-12 盘中（指数/涨跌分布/板块/资金为实时快照）｜市场画像基准：2026-10-09 收盘</div>
+    <div class="verdict">市场强度：极弱（防御占优 · 成长出清）｜ 综合评分 18.7 / 100</div>
+  </div>
+
+  <!-- 核心结论 -->
+  <div class="card" style="margin-bottom:16px">
+    <h2><span class="dot"></span>核心结论</h2>
+    <p style="font-size:14.5px;font-weight:700;color:var(--txt)">一句话：指数普跌、赚钱效应差（仅22%个股上涨），主力资金从科技硬件链（通信/半导体/CPO/元件）巨量撤出，市场进入"红利银行+传媒AI逆势、成长出清"的防御格局。</p>
+    <div style="margin-top:10px;font-size:13.5px;color:var(--txt2);line-height:1.7">
+      <span class="pill cold">深成指 -1.78%</span><span class="pill cold">创业板指 -2.22%</span><span class="pill cold">科创50 -1.60%</span><span class="pill cold">上证 -0.33%</span>
+      <span class="pill hot">出版 +4.21%</span><span class="pill hot">影视院线 +4.06%</span><span class="pill acc">银行板块集体红</span>
+      <span class="pill cold">通信设备 -4.49%</span><span class="pill cold">元件 -4.07%</span>
+    </div>
+    <div class="box-warn" style="margin-top:12px">
+      <b>风险优先提示：</b>风格轮动数据显示"价值 > 成长 +5%"，中长期趋势方向为弱势下跌（均线空头排列），MACD 死叉，技术面偏弱。成长科技链主力净流出合计超 130 亿元，短线仍处出清阶段，不宜抄底。
+    </div>
+  </div>
+
+  <!-- 指数 + 广度 -->
+  <div class="grid g2" style="margin-bottom:16px">
+    <div class="card">
+      <h2><span class="dot"></span>主要指数（2026-10-12 盘中）</h2>
+      <div class="idx"><span class="nm">上证指数</span><span><span class="px down">3801.14</span> <span class="ch down">-0.33%</span></span></div>
+      <div class="idx"><span class="nm">深证成指</span><span><span class="px down">12417.14</span> <span class="ch down">-1.78%</span></span></div>
+      <div class="idx"><span class="nm">创业板指</span><span><span class="px down">2975.90</span> <span class="ch down">-2.22%</span></span></div>
+      <div class="idx"><span class="nm">科创50</span><span><span class="px down">1433.97</span> <span class="ch down">-1.60%</span></span></div>
+      <p class="note" style="margin-top:10px">沪深主板/成长指数同步走弱，上证因银行权重护盘跌幅最小，创业板、科创50 领跌，成长股承压明显。</p>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot"></span>市场广度 · 涨跌分布</h2>
+      <div class="kv"><span class="k">上涨 / 下跌 / 平盘</span><span class="v">1249 / 4232 / 92</span></div>
+      <div class="kv"><span class="k">涨停 / 跌停</span><span class="v"><span class="up">51</span> / <span class="down">19</span></span></div>
+      <div class="kv"><span class="k">上涨占比</span><span class="v down">22%（情绪偏低）</span></div>
+      <div class="kv"><span class="k">两市成交额</span><span class="v">13694.65 亿</span></div>
+      <div class="kv"><span class="k">较上一交易日</span><span class="v down">-3634.91 亿（缩量）</span></div>
+      <p class="note" style="margin-top:10px">跌幅集中在 0~5% 区间（占比约 78%），典型"温水煮青蛙"式普跌，抛压虽较昨日收敛但承接极弱。</p>
+    </div>
+  </div>
+
+  <!-- 情绪温度计 + 综合评分 -->
+  <div class="grid g2" style="margin-bottom:16px">
+    <div class="card">
+      <h2><span class="dot"></span>市场综合评分</h2>
+      <div class="gauge">
+        <div class="ring"><span>18.7</span></div>
+        <div>
+          <div style="font-size:15px;font-weight:800" class="down">极弱 · 防御区</div>
+          <div class="score-badge">基于 14 维市场画像（短期趋势2/估值3/板块宽度2/个股宽度5/风格1/中长趋势2/量能3/技术2/情绪5…），调整评分 18.66。</div>
+        </div>
+      </div>
+      <div class="box-ok" style="margin-top:10px">正向因子：涨停家数(51)维持投机余热、估值处合理分位(PE 30%-70%)。负向因子：趋势疲弱、价值风格极致占优、技术面 MACD 死叉。</div>
+    </div>
+    <div class="card">
+      <h2><span class="dot"></span>情绪温度计</h2>
+      <div style="font-size:34px;font-weight:800" class="neu">32°<span style="font-size:14px;color:var(--txt2)"> 偏冷</span></div>
+      <div class="temp"><i style="left:32%"></i></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--txt2);margin-top:4px"><span>冰点</span><span>中性</span><span>狂热</span></div>
+      <p class="note" style="margin-top:10px">广度差(22%上涨)压低情绪，但连板/昨日涨停概念仍涨（投机余温），整体定性为"<b>情绪分化、亏钱效应扩大</b>"。</p>
+    </div>
+  </div>
+
+  <!-- 领涨领跌板块 -->
+  <div class="grid g2" style="margin-bottom:16px">
+    <div class="card">
+      <h2><span class="dot"></span>领涨行业 TOP（涨跌幅）</h2>
+      <div class="bar-row"><span class="lbl">出版</span><div class="bar-track"><div class="bar-fill up" style="width:100%"></div></div><span class="bar-val up">+4.21%</span></div>
+      <div class="bar-row"><span class="lbl">影视院线</span><div class="bar-track"><div class="bar-fill up" style="width:96%"></div></div><span class="bar-val up">+4.06%</span></div>
+      <div class="bar-row"><span class="lbl">农商行Ⅱ</span><div class="bar-track"><div class="bar-fill up" style="width:60%"></div></div><span class="bar-val up">+2.55%</span></div>
+      <div class="bar-row"><span class="lbl">国有大行Ⅱ</span><div class="bar-track"><div class="bar-fill up" style="width:59%"></div></div><span class="bar-val up">+2.48%</span></div>
+      <div class="bar-row"><span class="lbl">数字媒体</span><div class="bar-track"><div class="bar-fill up" style="width:55%"></div></div><span class="bar-val up">+2.33%</span></div>
+      <div class="bar-row"><span class="lbl">股份制银行Ⅱ</span><div class="bar-track"><div class="bar-fill up" style="width:52%"></div></div><span class="bar-val up">+2.18%</span></div>
+      <div class="bar-row"><span class="lbl">电视广播Ⅱ</span><div class="bar-track"><div class="bar-fill up" style="width:38%"></div></div><span class="bar-val up">+1.60%</span></div>
+      <div class="bar-row"><span class="lbl">风电设备</span><div class="bar-track"><div class="bar-fill up" style="width:33%"></div></div><span class="bar-val up">+1.41%</span></div>
+      <p class="note" style="margin-top:8px">领涨主线：① <b>红利银行</b>（价值防御）；② <b>传媒/AI应用</b>（短剧、影视、数字媒体、Kimi）；③ <b>风电设备</b>（资金净流入）。</p>
+    </div>
+    <div class="card">
+      <h2><span class="dot"></span>领跌行业 TOP（涨跌幅）</h2>
+      <div class="bar-row"><span class="lbl">通信设备</span><div class="bar-track"><div class="bar-fill down" style="width:100%"></div></div><span class="bar-val down">-4.49%</span></div>
+      <div class="bar-row"><span class="lbl">房地产服务</span><div class="bar-track"><div class="bar-fill down" style="width:100%"></div></div><span class="bar-val down">-4.49%</span></div>
+      <div class="bar-row"><span class="lbl">元件</span><div class="bar-track"><div class="bar-fill down" style="width:91%"></div></div><span class="bar-val down">-4.07%</span></div>
+      <div class="bar-row"><span class="lbl">能源金属</span><div class="bar-track"><div class="bar-fill down" style="width:89%"></div></div><span class="bar-val down">-4.01%</span></div>
+      <div class="bar-row"><span class="lbl">小金属</span><div class="bar-track"><div class="bar-fill down" style="width:89%"></div></div><span class="bar-val down">-4.01%</span></div>
+      <div class="bar-row"><span class="lbl">贵金属</span><div class="bar-track"><div class="bar-fill down" style="width:89%"></div></div><span class="bar-val down">-4.00%</span></div>
+      <div class="bar-row"><span class="lbl">焦炭Ⅱ</span><div class="bar-track"><div class="bar-fill down" style="width:89%"></div></div><span class="bar-val down">-4.00%</span></div>
+      <div class="bar-row"><span class="lbl">油服工程</span><div class="bar-track"><div class="bar-fill down" style="width:79%"></div></div><span class="bar-val down">-3.55%</span></div>
+      <p class="note" style="margin-top:8px">领跌主线：<b>科技硬件链</b>（通信/元件/半导体/消费电子/CPO/光通信）+ <b>有色/贵金属/能源金属</b> + 房地产链。成长出清特征显著。</p>
+    </div>
+  </div>
+
+  <!-- 资金流向 -->
+  <div class="grid g2" style="margin-bottom:16px">
+    <div class="card">
+      <h2><span class="dot"></span>主力净流入 TOP 行业</h2>
+      <div class="bar-row"><span class="lbl">影视院线</span><div class="bar-track"><div class="bar-fill in" style="width:100%"></div></div><span class="bar-val in">+7.61亿</span></div>
+      <div class="bar-row"><span class="lbl">风电设备</span><div class="bar-track"><div class="bar-fill in" style="width:92%"></div></div><span class="bar-val in">+6.98亿</span></div>
+      <div class="bar-row"><span class="lbl">医疗服务</span><div class="bar-track"><div class="bar-fill in" style="width:72%"></div></div><span class="bar-val in">+5.46亿</span></div>
+      <div class="bar-row"><span class="lbl">出版</span><div class="bar-track"><div class="bar-fill in" style="width:67%"></div></div><span class="bar-val in">+5.09亿</span></div>
+      <div class="bar-row"><span class="lbl">股份制银行Ⅱ</span><div class="bar-track"><div class="bar-fill in" style="width:64%"></div></div><span class="bar-val in">+4.91亿</span></div>
+      <div class="bar-row"><span class="lbl">电网设备</span><div class="bar-track"><div class="bar-fill in" style="width:60%"></div></div><span class="bar-val in">+4.59亿</span></div>
+      <div class="bar-row"><span class="lbl">国有大行Ⅱ</span><div class="bar-track"><div class="bar-fill in" style="width:54%"></div></div><span class="bar-val in">+4.08亿</span></div>
+      <div class="bar-row"><span class="lbl">数字媒体</span><div class="bar-track"><div class="bar-fill in" style="width:53%"></div></div><span class="bar-val in">+4.05亿</span></div>
+    </div>
+    <div class="card">
+      <h2><span class="dot"></span>主力净流出 TOP 行业</h2>
+      <div class="bar-row"><span class="lbl">通信设备</span><div class="bar-track"><div class="bar-fill out" style="width:100%"></div></div><span class="bar-val out">-50.08亿</span></div>
+      <div class="bar-row"><span class="lbl">元件</span><div class="bar-track"><div class="bar-fill out" style="width:64%"></div></div><span class="bar-val out">-31.87亿</span></div>
+      <div class="bar-row"><span class="lbl">电力</span><div class="bar-track"><div class="bar-fill out" style="width:37%"></div></div><span class="bar-val out">-18.67亿</span></div>
+      <div class="bar-row"><span class="lbl">半导体</span><div class="bar-track"><div class="bar-fill out" style="width:25%"></div></div><span class="bar-val out">-12.32亿</span></div>
+      <div class="bar-row"><span class="lbl">消费电子</span><div class="bar-track"><div class="bar-fill out" style="width:23%"></div></div><span class="bar-val out">-11.73亿</span></div>
+      <div class="bar-row"><span class="lbl">工业金属</span><div class="bar-track"><div class="bar-fill out" style="width:22%"></div></div><span class="bar-val out">-11.24亿</span></div>
+      <div class="bar-row"><span class="lbl">电池</span><div class="bar-track"><div class="bar-fill out" style="width:22%"></div></div><span class="bar-val out">-10.93亿</span></div>
+      <div class="bar-row"><span class="lbl">小金属</span><div class="bar-track"><div class="bar-fill out" style="width:21%"></div></div><span class="bar-val out">-10.30亿</span></div>
+      <p class="note" style="margin-top:8px">资金从<b>科技硬件（通信+元件+半导体+消费电子 合计约 -106 亿）</b>与电力/有色/电池集中撤离，转向防御与题材。</p>
+    </div>
+  </div>
+
+  <!-- 赚钱效应总结 -->
+  <div class="card" style="margin-bottom:16px">
+    <h2><span class="dot"></span>市场赚钱效应总结</h2>
+    <div class="grid g3">
+      <div class="card" style="background:#15152a">
+        <div style="font-size:13px;color:var(--txt2)">广度赚钱效应</div>
+        <div style="font-size:26px;font-weight:800" class="down">差</div>
+        <div class="note">上涨占比仅 22%，超 3900 只个股下跌，普跌格局。仅局部题材与红利有赚钱机会。</div>
+      </div>
+      <div class="card" style="background:#15152a">
+        <div style="font-size:13px;color:var(--txt2)">投机活跃度</div>
+        <div style="font-size:26px;font-weight:800" class="neu">中</div>
+        <div class="note">涨停 51 只、昨日涨停/连板概念仍涨，短线资金在传媒AI与低位题材中活跃，但赚钱难度高。</div>
+      </div>
+      <div class="card" style="background:#15152a">
+        <div style="font-size:13px;color:var(--txt2)">量能支撑</div>
+        <div style="font-size:26px;font-weight:800" class="down">弱化</div>
+        <div class="note">成交额 1.37 万亿、较昨缩量 3635 亿，下跌缩量说明恐慌有限，但亦无增量承接。</div>
+      </div>
+    </div>
+    <p class="note" style="margin-top:12px"><b>结论：</b>赚钱效应集中在"红利银行（稳健）+ 传媒AI应用（题材）+ 风电（事件）"三条窄线，多数行业亏钱。对普通持仓而言，今日是<b>净亏钱日</b>，宜防守、轻仓试错，避免追高成长。</p>
+  </div>
+
+  <!-- 仓位管理推荐 -->
+  <div class="card" style="margin-bottom:16px">
+    <h2><span class="dot"></span>仓位管理推荐（作战计划）</h2>
+    <table class="table">
+      <thead><tr><th>维度</th><th>建议</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td><b>总仓位</b></td><td><span class="tag-hold">30%~40%</span></td><td>防御偏低仓，上限不超 50%；市场极弱期现金为王。</td></tr>
+        <tr><td><b>仓位结构</b></td><td><span class="tag-buy">防御底仓</span></td><td>红利银行 10-15%（不追高、逢回调吸纳）；风电/传媒题材 5-10%（短打、严止损）；现金 ≥50% 等待。</td></tr>
+        <tr><td><b>规避方向</b></td><td><span class="tag-sell">减/不碰</span></td><td>CPO/光通信/半导体/元件/消费电子（主力巨量净流出、趋势破位）；有色/贵金属/能源金属（高位回调）；房地产链；电力。</td></tr>
+        <tr><td><b>加仓触发</b></td><td><span class="tag-hold">条件单</span></td><td>① 创业板/科创50 放量站回 5 日线；② 两市成交回升≥1.6万亿 且 上涨家数占比&gt;50%；③ 通信/半导体主力净流出收敛转流入。满足其一可分批加至 50-60%。</td></tr>
+        <tr><td><b>止损纪律</b></td><td><span class="tag-sell">硬约束</span></td><td>单标的 -5% 止损；组合回撤 -8% 主动降至 20%；严禁摊平亏损科技仓。</td></tr>
+      </tbody>
+    </table>
+    <div class="plan">
+      <li><b>持仓者：</b>成长/科技重仓建议借反弹减仓至 30% 以下，保留银行/红利做底仓对冲。</li>
+      <li><b>空仓/轻仓者：</b>不急于抄底，等待放量企稳信号；可小仓位参与传媒AI、风电的事件驱动短打（止损 -5%）。</li>
+      <li><b>风格选择：</b>当前价值&nbsp;&gt;&nbsp;成长，优先高股息、低波红利；成长股需等主力流出收敛。</li>
+    </div>
+  </div>
+
+  <!-- 信号归因 -->
+  <div class="card">
+    <h2><span class="dot"></span>信号归因（为什么给"极弱/防御"结论）</h2>
+    <div class="grid g2">
+      <div>
+        <div class="bar-row"><span class="lbl">技术面</span><div class="bar-track"><div class="bar-fill down" style="width:80%"></div></div><span class="bar-val down">40%</span></div>
+        <div class="bar-row"><span class="lbl">市场环境</span><div class="bar-track"><div class="bar-fill down" style="width:70%"></div></div><span class="bar-val down">35%</span></div>
+        <div class="bar-row"><span class="lbl">资金面</span><div class="bar-track"><div class="bar-fill down" style="width:40%"></div></div><span class="bar-val down">15%</span></div>
+        <div class="bar-row"><span class="lbl">情绪面</span><div class="bar-track"><div class="bar-fill neu" style="width:20%"></div></div><span class="bar-val neu">10%</span></div>
+      </div>
+      <div>
+        <p class="note"><b>最强看空信号：</b>通信设备单日主力净流出 50 亿、科技硬件链合计净流出超 130 亿，趋势破位 + 价值风格极致占优，成长出清未止。</p>
+        <p class="note" style="margin-top:8px"><b>最强看多信号：</b>红利银行逆势获主力净流入（合计约 +13 亿）且估值处合理分位，提供防御锚；传媒AI题材热力仍在。</p>
+        <p class="note" style="margin-top:8px"><b>数据说明：</b>两融余额变动接口当日为空（未披露），北向资金自 2024-08 起港交所不再实时披露，本报告以板块主力资金流替代外资维度。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    数据来源：腾讯自选股行情接口（westock CLI）｜ 市场画像基准日 2026-10-09，指数/广度/板块/资金为 2026-10-12 盘中实时快照，可能与收盘存在差异。<br>
+    本报告由"星辰"多市场智能股票分析师自动生成，仅供学习与研究的决策参考，<b>不构成任何投资建议</b>。股市有风险，投资需谨慎。所有结论基于历史数据与技术模型，不保证未来表现。
+  </div>
+
+</div>
+</body>
+</html>
