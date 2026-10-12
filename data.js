@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-12 20:05:04",
-  "total": 368,
+  "generatedAt": "2026-10-13 07:50:28",
+  "total": 370,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 76,
-      "latest": "20261012",
+      "count": 77,
+      "latest": "20261013",
       "reports": [
+        {
+          "date": "20261013",
+          "dateLabel": "2026-10-13（周二）",
+          "file": "reports/panqian/panqian_20261013.html",
+          "title": "盘前计划 · 2026-10-13（周二 v80.0 · 三问三答）",
+          "size": 33492
+        },
         {
           "date": "20261012",
           "dateLabel": "2026-10-12（周一）",
@@ -1101,9 +1108,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 76,
-      "latest": "20261003",
+      "count": 77,
+      "latest": "20261012",
       "reports": [
+        {
+          "date": "20261012",
+          "dateLabel": "2026-10-12（周一）",
+          "file": "reports/close/close_20261012.html",
+          "title": "A股行情复盘（2026-10-12 · 周一 · 缩量普跌·防御占优·仓位降至4-5成）",
+          "size": 32802
+        },
         {
           "date": "20261003",
           "dateLabel": "2026-10-03（周六）",
