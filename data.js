@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-10 15:50:58",
-  "total": 363,
+  "generatedAt": "2026-10-12 08:36:11",
+  "total": 365,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 75,
-      "latest": "20261009",
+      "count": 76,
+      "latest": "20261012",
       "reports": [
+        {
+          "date": "20261012",
+          "dateLabel": "2026-10-12（周一）",
+          "file": "reports/panqian/panqian_20261012.html",
+          "title": "盘前计划 · 2026-10-12（周一 v79.0 · 三问三答）",
+          "size": 34453
+        },
         {
           "date": "20261009",
           "dateLabel": "2026-10-09（周五）",
@@ -1630,9 +1637,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 69,
-      "latest": "20261002",
+      "count": 70,
+      "latest": "20261010",
       "reports": [
+        {
+          "date": "20261010",
+          "dateLabel": "2026-10-10（周六）",
+          "file": "reports/limitup/limitup_20261010.html",
+          "title": "涨停梯队复盘 · 2026-10-09（10/10 周末特别版）",
+          "size": 73832
+        },
         {
           "date": "20261002",
           "dateLabel": "2026-10-02（周五）",
