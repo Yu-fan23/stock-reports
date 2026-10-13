@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-13 07:56:29",
-  "total": 371,
+  "generatedAt": "2026-10-13 12:51:03",
+  "total": 372,
   "categories": [
     {
       "key": "panqian",
@@ -558,9 +558,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 77,
-      "latest": "20261012",
+      "count": 78,
+      "latest": "20261013",
       "reports": [
+        {
+          "date": "20261013",
+          "dateLabel": "2026-10-13（周二）",
+          "file": "reports/noon/noon_20261013.html",
+          "title": "A股午间复盘 · 2026-10-13（周二）· 指数平淡结构剧烈·电新重挫·算力硬件独秀·赚钱效应偏弱",
+          "size": 40110
+        },
         {
           "date": "20261012",
           "dateLabel": "2026-10-12（周一）",
