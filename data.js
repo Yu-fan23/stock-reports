@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-14 08:57:50",
-  "total": 375,
+  "generatedAt": "2026-10-14 09:06:21",
+  "total": 376,
   "categories": [
     {
       "key": "panqian",
@@ -1122,9 +1122,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 77,
-      "latest": "20261012",
+      "count": 78,
+      "latest": "20261013",
       "reports": [
+        {
+          "date": "20261013",
+          "dateLabel": "2026-10-13（周二）",
+          "file": "reports/close/close_20261013.html",
+          "title": "A股行情复盘（2026-10-13 · 周二 · 军工电子唱戏·放量分化·仓位升至5-6成）",
+          "size": 32990
+        },
         {
           "date": "20261012",
           "dateLabel": "2026-10-12（周一）",

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股行情复盘（2026-10-13 · 周二 · 军工电子唱戏·放量分化·仓位升至5-6成）</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --card2:#16162a; --border:#2d2d44;
+    --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --up:#ef4444; --down:#22c55e; --txt:#e2e8f0; --txt2:#94a3b8;
+    --accent1:#667eea; --accent2:#764ba2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,sans-serif;line-height:1.6;padding:18px;max-width:1180px;margin:0 auto}
+  .header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:18px;padding:18px 22px;background:linear-gradient(135deg,#1a1a2e,#16243a);border:1px solid var(--border);border-radius:16px}
+  .header h1{font-size:22px;font-weight:700;letter-spacing:.5px}
+  .header .sub{color:var(--txt2);font-size:13px;margin-top:4px}
+  .badge{display:inline-block;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;background:rgba(255,165,2,.15);color:#ffd9a0;border:1px solid rgba(255,165,2,.4)}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:860px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px}
+  .card h2{font-size:15px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .card h2 .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--accent1),var(--accent2))}
+  .chart{width:100%;height:300px}
+  .kpi{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+  .kpi .v{font-size:24px;font-weight:800;letter-spacing:.5px}
+  .kpi .l{font-size:12px;color:var(--txt2);margin-top:4px}
+  .up{color:var(--up)} .down{color:var(--down)} .neu{color:var(--txt2)}
+  .summary{font-size:15px;line-height:1.8}
+  .summary b{color:#fff}
+  .pill{display:inline-block;padding:3px 10px;border-radius:8px;font-size:12px;font-weight:600;margin:2px 4px 2px 0}
+  .pill-red{background:rgba(255,71,87,.15);color:var(--sell);border:1px solid rgba(255,71,87,.3)}
+  .pill-green{background:rgba(34,197,94,.13);color:var(--down);border:1px solid rgba(34,197,94,.3)}
+  .pill-amber{background:rgba(255,165,2,.15);color:var(--hold);border:1px solid rgba(255,165,2,.3)}
+  .pill-blue{background:rgba(102,126,234,.15);color:#8a9bff;border:1px solid rgba(102,126,234,.35)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--txt2);font-weight:600;font-size:12px}
+  tr:last-child td{border-bottom:none}
+  .note{font-size:12px;color:var(--txt2);margin-top:10px;padding:10px 12px;background:var(--card2);border-radius:10px;border-left:3px solid var(--accent1)}
+  .alert{background:rgba(255,71,87,.08);border:1px solid rgba(255,71,87,.3);border-radius:10px;padding:10px 14px;font-size:13px;color:#ffb3ba;margin-top:10px}
+  .ok{background:rgba(0,212,170,.08);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:10px 14px;font-size:13px;color:#9af0dd;margin-top:10px}
+  .warn{background:rgba(255,165,2,.08);border:1px solid rgba(255,165,2,.3);border-radius:10px;padding:10px 14px;font-size:13px;color:#ffd9a0;margin-top:10px}
+  .foot{margin-top:20px;font-size:11px;color:var(--txt2);text-align:center;line-height:1.8}
+  .temp-wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .temp-num{font-size:34px;font-weight:800;color:var(--hold)}
+  .stat-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px dashed var(--border)}
+  .stat-row:last-child{border-bottom:none}
+  .cata{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:860px){.cata{grid-template-columns:1fr}}
+  .cata-item{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:13px 15px}
+  .cata-item .t{font-size:13px;font-weight:700;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+  .cata-item .d{font-size:12.5px;color:var(--txt2);line-height:1.65}
+  .scen{padding:12px 14px;border-radius:12px;border:1px solid var(--border);margin-top:10px}
+  .scen-up{background:rgba(0,212,170,.07);border-color:rgba(0,212,170,.3)}
+  .scen-mid{background:rgba(255,165,2,.07);border-color:rgba(255,165,2,.3)}
+  .scen-dn{background:rgba(255,71,87,.07);border-color:rgba(255,71,87,.3)}
+  .scen .h{font-size:13.5px;font-weight:700;margin-bottom:4px}
+  .checklist{counter-reset:ck;list-style:none;padding:0;margin:10px 0 0}
+  .checklist li{position:relative;padding:9px 12px 9px 38px;font-size:13px;border-bottom:1px dashed var(--border)}
+  .checklist li:before{counter-increment:ck;content:counter(ck);position:absolute;left:10px;top:9px;width:20px;height:20px;line-height:20px;text-align:center;background:rgba(0,212,170,.18);color:#9af0dd;border-radius:50%;font-size:12px;font-weight:700}
+  .src{font-size:11px;color:var(--txt2);margin-top:8px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>📊 A股行情复盘（2026-10-13 · 周二 · <span class="down">军工电子唱戏·放量分化·仓位升至5–6成</span>）</h1>
+    <div class="sub">数据快照 2026-10-13 收盘 · 赚钱效应 + 资金流向 + 仓位管理推荐 · 多市场智能股票分析师「星辰」</div>
+  </div>
+  <div class="badge">🟠 分化日 · 仓位 5–6 成 · 军工航天+电子双主线·CPO主力+20.8亿·锂电风电传媒退潮</div>
+</div>
+
+<!-- 决策摘要 KPI -->
+<div class="grid g4" style="margin-bottom:16px">
+  <div class="kpi"><div class="v up">3800.86</div><div class="l">上证指数 <span class="up">+0.10%</span>（重上3800）</div></div>
+  <div class="kpi"><div class="v down">12353.70</div><div class="l">深证成指 <span class="down">−0.25%</span></div></div>
+  <div class="kpi"><div class="v down">2958.34</div><div class="l">创业板指 <span class="down">−0.18%</span>（盘中破3000后收回）</div></div>
+  <div class="kpi"><div class="v up">1427.18</div><div class="l">科创50 <span class="up">+0.03%</span> · 北证50 −0.31%</div></div>
+</div>
+<div class="grid g4" style="margin-bottom:16px">
+  <div class="kpi"><div class="v">1.68万亿</div><div class="l">两市成交额 · 放量约1381亿（+9.0%）</div></div>
+  <div class="kpi"><div class="v up">2909 : 2486</div><div class="l">涨/跌家数 · 红盘率约52%</div></div>
+  <div class="kpi"><div class="v">70 : 10</div><div class="l">涨停 : 跌停 · 炸板率较昨日回落</div></div>
+  <div class="kpi"><div class="v neu">25171.9亿</div><div class="l">融资余额 · 较上日−0.19%（2日连降）</div></div>
+</div>
+
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>核心结论（一句话）</h2>
+  <div class="summary">
+    10/13 A股呈<b>「权重窄震、军工电子唱戏、结构分化」</b>格局：沪指微涨0.10%重上3800（3800.86）、创业板指微跌0.18%盘中破3000后收回（2958.34），全市场<b>2909家上涨对2486家下跌、涨停70家对跌停10家、红盘率约52%</b>，两市成交<b>1.68万亿放量约1381亿</b>；资金与题材共振在两大主线——<b>军工航天</b>（地面兵装Ⅱ+5.08%、航空装备Ⅱ+3.55%、商业航天+1.10%、印巴冲突概念+5.54%）与<b>电子修复</b>（元件+2.97%、PCB+2.02%、CPO光模块+2.21%、覆铜板+4.44%），其中<b>CPO光模块主力净流入+20.8亿、PCB概念+16.4亿</b>为全天最强资金方向；而昨日强势的<b>锂电（电池−3.13%、厦钨新能/紫竹高科跌停）、风电（大金重工跌停）、传媒高位（内蒙新华跌停−9.98%、新华传媒停牌核查）</b>出现明显分歧退潮。情绪由10/12普跌修复至<b>中性偏暖（温度约57°C）</b>，操作上<b>仓位升至5–6成中性偏积极</b>：军工航天+电子修复作为进攻主线低吸，回避锂电资源与传媒高位，等量能确认与主线持续性再加仓。
+  </div>
+  <div class="src">数据来源：交易所行情 / Wind / 东方财富Choice / 财联社 / 新浪财经，截至 2026-10-13 收盘；涨跌停家数不同媒体口径存在 ±1~3 家差异，已在文中标注。北向资金当日数据未成功抓取，本报告资金口径以主力净流入（板块/个股）与两融为主。</div>
+</div>
+
+<!-- 指数 + 情绪 -->
+<div class="grid g2" style="margin-bottom:16px">
+  <div class="card">
+    <h2><span class="dot"></span>主要指数涨跌（收盘 · 10/13 · 红涨绿跌）</h2>
+    <div id="idxChart" class="chart"></div>
+    <div class="note">指数层面<b>窄幅震荡、涨跌互现</b>：仅上证指数（+0.10%）、科创50（+0.03%）、中证1000（+0.02%）微红，深成指−0.25%、创业板指−0.18%、沪深300−0.29%、中证A50−0.55%小幅收绿，北证50−0.31%。沪指盘中下探3741.53（前低附近）后拉回3800上方，创业板指盘中跌破3000（最低2860.80）后收回——典型的「下探有承接、上行缺合力」震荡结构。</div>
+  </div>
+  <div class="card">
+    <h2><span class="dot"></span>市场情绪温度计</h2>
+    <div id="tempChart" class="chart"></div>
+    <div class="note">红盘率约52%、涨停70家 vs 跌停10家、炸板率较昨日（40%）明显回落，连板高度维持（新华文轩11天8板、内蒙新华13天7板但当日跌停），综合给 <b>57°C 温凉转暖·修复</b>。资金从昨日避险转向主动出击军工/电子，但分化仍大（超2400家下跌），非全面普涨。</div>
+  </div>
+</div>
+
+<!-- 赚钱效应 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>赚钱效应总结</h2>
+  <div class="grid g2">
+    <div>
+      <div class="stat-row"><span>上涨 / 下跌 / 平盘（沪深）</span><span><span class="up">2909</span> / <span class="down">2486</span> / 179</span></div>
+      <div class="stat-row"><span>红盘率（可交易A股）</span><span class="up">约 52%（涨跌比 1.17 : 1）</span></div>
+      <div class="stat-row"><span>涨停 / 跌停（收盘）</span><span>70 / 10</span></div>
+      <div class="stat-row"><span>涨停集中行业</span><span>军工（地面兵装/航空/航海）、电子（元件/PCB/CPO）、旅游</span></div>
+      <div class="stat-row"><span>炸板率</span><span>较10/12的40%明显回落</span></div>
+      <div class="stat-row"><span>昨日涨停今表现</span><span>50只中约50%上涨（情绪一般偏修复）</span></div>
+      <div class="stat-row"><span>新股</span><span>N粤芯半导体-U（301660）+223.06%</span></div>
+    </div>
+    <div>
+      <table>
+        <tr><th>梯队</th><th>个股（代码）</th><th>题材 / 备注</th></tr>
+        <tr><td><b>11天8板</b></td><td>新华文轩（601811）</td><td>出版（高位延续）</td></tr>
+        <tr><td>13天7板</td><td>内蒙新华（603230）</td><td>出版 · <b>当日−9.98%跌停</b>（分歧）</td></tr>
+        <tr><td>首板/连板</td><td>航发科技（600391）</td><td>航空装备 +10.01%</td></tr>
+        <tr><td>首板</td><td>江龙船艇（300589）</td><td>航海装备 +10.09%</td></tr>
+        <tr><td>20CM</td><td>金百泽（301041）</td><td>元件 +20.00%</td></tr>
+        <tr><td>首板</td><td>天府文旅（000558）/丽人丽妆（605136）/超声电子（000823）</td><td>旅游/电商/覆铜板 +10% 批量</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="warn"><b>赚钱效应定性：中性偏暖、结构分化。</b>约52%个股收红、涨停70家，较10/12普跌（红盘率21%）明显修复；但超2400家仍下跌，赚钱集中在军工+电子两条主线，锂电/风电/传媒高位亏钱效应突出，属「主线抱团、非普涨」行情。</div>
+</div>
+
+<!-- 板块表现 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>板块表现 · 领涨TOP5 vs 领跌TOP5</h2>
+  <div id="sectChart" class="chart" style="height:340px"></div>
+  <div class="cata" style="margin-top:12px">
+    <div class="cata-item">
+      <div class="t">📈 领涨驱动</div>
+      <div class="d">
+        ① <b>军工/航天</b>：印巴冲突概念+5.54%（洪都航空+9.75%）、地面兵装Ⅱ+5.08%（国科军工+12.24%）、航空装备Ⅱ+3.55%（航发科技涨停）、航海装备Ⅱ+3.18%（江龙船艇涨停）、商业航天+1.10%、卫星互联网+0.89%——地缘催化+十五五装备订单预期共振。<br>
+        ② <b>电子修复</b>：元件+2.97%（金百泽20CM）、PCB概念+2.02%、CPO光模块+2.21%、覆铜板+4.44%（超声电子涨停）、锗镓概念+4.43%（光智科技+14.07%）——在连续调整后超跌反弹，主力资金大举回流。<br>
+        ③ <b>旅游/消费</b>：旅游及景区+3.18%（天府文旅涨停）、互联网电商+2.55%（丽人丽妆涨停）。
+      </div>
+    </div>
+    <div class="cata-item">
+      <div class="t">📉 领跌驱动</div>
+      <div class="d">
+        ① <b>锂电/新能源</b>：电池−3.13%（厦钨新能−10.04%、紫竹高科−10.00%、先导智能−9.58%）、磷酸铁锂−1.69%、锂矿−0.87%、镍概念−1.03%——昨日强势今日集体补跌。<br>
+        ② <b>创新药/题材退潮</b>：肿瘤疫苗−1.54%（康希诺−3.06%）；传媒高位分歧（内蒙新华跌停、新华传媒停牌核查）。<br>
+        ③ <b>风电/资源</b>：大金重工−10.00%跌停（前一日领涨今日补跌），资源股整体偏弱。
+      </div>
+    </div>
+  </div>
+  <div class="note">军工（地面兵装、航空、航海装备）与电子（元件、PCB、CPO、覆铜板）构成全天双主线；昨日领涨的锂电、风电、传媒出现「强转弱」补跌，显示轮动加快、追高性价比低。商业航天主力净流入+2.31亿、卫星互联网−3.67亿，板块内部分化。</div>
+</div>
+
+<!-- 资金流向 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>资金流向分析 · 主线获主力回流、半导体净流出</h2>
+  <div class="grid g2">
+    <div>
+      <div id="capChart" class="chart" style="height:280px"></div>
+      <div class="note">重点板块主力净流入：<b>CPO光模块+20.78亿、PCB概念+16.44亿</b>为全天最强资金方向，短剧互动+4.47亿、影视传媒+3.95亿、商业航天+2.31亿、通信设备+1.37亿次之；<b>半导体−19.05亿</b>逆势净流出居首，卫星互联网−3.67亿、出版−1.19亿小幅流出。资金结构：从泛科技内部「设计→设备材料/光模块」迁移，军工航天获增量配置。</div>
+    </div>
+    <div>
+      <div id="fundChart" class="chart" style="height:280px"></div>
+      <div class="note">两融：截至10/12融资余额<b>25171.89亿</b>、融券余额297.19亿，融资余额较上日−0.19%、<b>连续2日下降</b>，杠杆资金做多情绪仍偏谨慎；融资融券差额24874.70亿，小于20日均值。相对10/9的25300.46亿，节后杠杆资金整体仍在撤退。</div>
+    </div>
+  </div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="cata-item">
+      <div class="t">🌐 北向资金</div>
+      <div class="d">
+        • 当日北向资金净买入数据<b>未成功抓取</b>（数据源缺失），本报告暂不列示；<br>
+        • 参考：北向成交占两市比重通常约16%，个股层面光模块/PCB中军（中际旭创、新易盛、沪电股份等）仍为外资核心持仓；<br>
+        • <span style="color:#ffd9a0">注：2024年8月起交易所不再披露实时净买入，历史北向口径仅供参考。</span>
+      </div>
+    </div>
+    <div class="cata-item">
+      <div class="t">⚖️ 两融与流动性</div>
+      <div class="d">
+        • 融资余额25171.89亿（10/12），连续2日下降，杠杆资金节后偏谨慎；<br>
+        • 央行逆回购维持平稳，人民币中间价约6.73附近，汇率对风险偏好影响中性；<br>
+        • 股票ETF近期持续获长线资金净流入（科创50/创业板ETF份额增加），提供下方承接。
+      </div>
+    </div>
+  </div>
+  <table style="margin-top:12px">
+    <tr><th>个股主力净流入TOP</th><th>金额</th><th>个股主力净流出TOP</th><th>金额</th></tr>
+    <tr><td>中际旭创（300308）·CPO</td><td class="up">+约8亿级</td><td>半导体设备/设计权重</td><td class="down">−（板块合计−19亿）</td></tr>
+    <tr><td>沪电股份（002463）·PCB</td><td class="up">+（PCB合计+16亿）</td><td>厦钨新能（688778）·锂电</td><td class="down">−10.04%跌停</td></tr>
+    <tr><td>航发科技（600391）·航空</td><td class="up">+涨停</td><td>大金重工（002487）·风电</td><td class="down">−10.00%跌停</td></tr>
+    <tr><td>金百泽（301041）·元件</td><td class="up">+20CM</td><td>内蒙新华（603230）·出版</td><td class="down">−9.98%跌停</td></tr>
+  </table>
+  <div class="note">资金结构解读：主力在<b>军工航天 + 电子（CPO/PCB/元件）双主线</b>精准加仓，CPO光模块单日+20.8亿为近期罕见强度；同时半导体（−19亿）与昨日强势的锂电/风电/传媒高位遭获利了结，属典型的「主线切换、调仓不撤退」结构，对指数形成支撑而非系统性流出。</div>
+</div>
+
+<!-- 题材主线 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>主流题材与主线判断</h2>
+  <div class="cata">
+    <div class="cata-item">
+      <div class="t">🥇 主线一：军工/航天（地面兵装·航空·航海·商业航天）— 强度：强</div>
+      <div class="d">全天最强规模化主线：地面兵装Ⅱ+5.08%、航空装备Ⅱ+3.55%、航海装备Ⅱ+3.18%、商业航天+1.10%、印巴冲突概念+5.54%。催化：地缘局势（印巴冲突概念）+「十五五」装备现代化订单预期 + 航发科技/江龙船艇批量涨停。资金面商业航天主力+2.31亿。<b>定位</b>：新晋主线，可沿「航空装备/商业航天」低吸，避免追日内+10%以上后排。</div>
+    </div>
+    <div class="cata-item">
+      <div class="t">🥈 主线二：电子修复（元件·PCB·CPO光模块·覆铜板）— 强度：较强</div>
+      <div class="d">连续调整后超跌反弹，主力大举回流：CPO光模块+2.21%（主力+20.8亿）、PCB概念+2.02%（主力+16.4亿）、元件+2.97%、覆铜板+4.44%。光智科技（锗镓）+14.07%、超声电子（覆铜板）涨停。催化：AI算力链估值消化后的修复 + FCC（10/29会议）前抢跑。<b>风险</b>：此前深度回调，定性为修复而非反转，放量确认前控制仓位。</div>
+    </div>
+    <div class="cata-item">
+      <div class="t">🥉 次级热点：旅游/电商/影视传媒 — 强度：一般</div>
+      <div class="d">旅游及景区+3.18%（天府文旅涨停）、互联网电商+2.55%（丽人丽妆涨停）、影视传媒+0.70%（主力+3.95亿）。属消费修复与AI应用扩散，但板块容量有限，持续性待观察。</div>
+    </div>
+    <div class="cata-item">
+      <div class="t">⚠️ 退潮方向：锂电/风电/传媒高位 — 回避</div>
+      <div class="d">电池−3.13%（厦钨新能、紫竹高科跌停）、大金重工（风电）−10%跌停、内蒙新华（出版）−9.98%跌停、新华传媒停牌核查——昨日强势方向今日集体补跌，显示轮动加速、追高即套，反弹以减仓机会看待。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 作战计划 / 仓位管理 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>作战计划 · 仓位管理推荐</h2>
+  <div class="warn" style="margin-top:0"><b>前提假设</b>：普通个人投资者 · 中等风险承受能力 · 可承受总资金10–15%回撤 · 投资期限1–3个月。激进型可上浮、保守型按比例下调；以下仓位以总资金为口径。</div>
+  <div class="summary" style="margin-top:10px">
+    <b>总仓位建议：5–6成（中性偏积极档）。</b>市场处「放量分化、双主线清晰、情绪修复至中性偏暖」组合，风险预算可适度放开——<b>沿军工航天+电子修复两条主线布局进攻，回避昨日强势的补跌方向，留约4–5成机动</b>，等主线持续性与量能（站稳1.8万亿）确认后再加仓。
+  </div>
+  <table style="margin-top:12px">
+    <tr><th>仓位分层</th><th>建议比例</th><th>方向与执行要点</th></tr>
+    <tr><td>进攻主线①</td><td><b>1.5–2成</b></td><td>军工/航天（航空装备、商业航天、地面兵装）。沿5日线低吸中军（航发科技、洪都航空等），单票≤0.5成，不追日内+10%后排；事件驱动（地缘+十五五）为核。</td></tr>
+    <tr><td>进攻主线②</td><td><b>1.5–2成</b></td><td>电子修复（CPO光模块、PCB、元件、覆铜板）。仅低吸、不追高，等放量确认趋势；单票≤0.5成，−7%硬止损；受FCC（10/29）监管节点扰动，控仓。</td></tr>
+    <tr><td>防御底仓</td><td><b>1–1.5成</b></td><td>银行/高股息红利（前期强势、可作波动对冲）。底仓不动，创新高不追、回调分批。</td></tr>
+    <tr><td>现金机动</td><td><b>4–5成</b></td><td>留作右侧加仓弹药：等放量至1.8万亿+、沪指站稳3820–3830且主线持续性确认，再分批入场。</td></tr>
+  </table>
+  <div class="grid g3" style="margin-top:14px">
+    <div class="scen scen-up">
+      <div class="h">📗 情景A：主线延续放量（概率约35%）</div>
+      <div class="d" style="font-size:12.5px;color:var(--txt2)">触发：成交站稳1.8万亿 + 军工/电子主线连续2日强化 + 沪指放量站上3820–3830。<br>操作：仓位升至7成，加仓方向=军工中军 + CPO/PCB中军，仍可低吸不追高。</div>
+    </div>
+    <div class="scen scen-mid">
+      <div class="h">📙 情景B：放量分化震荡（概率约50%）</div>
+      <div class="d" style="font-size:12.5px;color:var(--txt2)">触发：量能1.6–1.8万亿、指数在3740–3830箱体反复、主线轮动。<br>操作：维持5–6成，双主线低吸做结构，单笔小仓位快进快出，不格局高位。</div>
+    </div>
+    <div class="scen scen-dn">
+      <div class="h">📕 情景C：冲高回落破位（概率约15%）</div>
+      <div class="d" style="font-size:12.5px;color:var(--txt2)">触发：沪指跌破3741（前低）且反抽无力 / 主线集体补跌 / 量能萎缩至1.5万亿下。<br>操作：仓位降至3–4成，清理补跌方向，仅留红利底仓，等情绪冰点。</div>
+    </div>
+  </div>
+  <ul class="checklist">
+    <li><b>加仓触发（满足其二再动手）</b>：① 两市成交额回升至1.8万亿以上并持续；② 沪指放量站稳3820–3830（今日高点3822.11）；③ 军工/电子主线连续2日强化、涨停家数≥80。</li>
+    <li><b>减仓触发（满足其一即执行）</b>：① 沪指跌破3741（前低）且反抽无力；② 主线（军工/电子）批量补跌、高位股再现「天地板」；③ 量能萎缩至1.5万亿下方且涨停家数连续<50。</li>
+    <li><b>单票纪律</b>：单票仓位≤总资金15%；单笔止损−7%~−8%（止损距离决定仓位大小）；单笔最大亏损≤总资金2%。</li>
+    <li><b>组合相关性</b>：CPO+PCB+覆铜板+元件按「电子」一个板块合并计总暴露≤2成；军工（航空/地面兵装/商业航天）按一个板块合并≤2成。</li>
+    <li><b>判断失效条件</b>：若沪指放量跌破3741并连续两日收于其下，本复盘「中性偏积极」判断作废，切换至防守框架（仓位≤4成）。</li>
+  </ul>
+</div>
+
+<!-- 明日观察清单 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>明日（10/14 · 周三）观察清单</h2>
+  <ul class="checklist">
+    <li><b>军工航天持续性</b>：印巴冲突概念/商业航天/航空装备能否延续强势——若航发科技、江龙船艇等连板晋级，主线确认；若冲高回落则定性为单日脉冲。</li>
+    <li><b>电子修复成色</b>：CPO光模块（+20.8亿主力）与PCB（+16.4亿）能否放量延续，中际旭创、沪电股份、金百泽等中军走势是关键观察点；受FCC（10/29）监管节点扰动。</li>
+    <li><b>补跌方向是否止跌</b>：锂电（厦钨新能）、风电（大金重工）、传媒高位（内蒙新华）跌停后能否企稳，决定情绪是否进一步退潮。</li>
+    <li><b>指数关键位</b>：沪指支撑3800/3741（前低），压力3822（今日高点）→3830；创业板看3000压力/2860支撑。</li>
+    <li><b>量能底线</b>：两市成交能否守住1.6万亿；若回落至1.5万亿下方，分化行情易转弱。</li>
+    <li><b>事件日历</b>：10/23国内首部AI超写实院线电影《三星堆：未来往事》上映（传媒催化）；10/26–28国际算电协同产业链展（上海）；10/29 FCC下次公开会议（光模块监管不确定性节点）。</li>
+  </ul>
+</div>
+
+<!-- 机构观点 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>机构观点摘要（非一手来源 · 需核实原文）</h2>
+  <div class="summary" style="font-size:13.5px">
+    • <b>中信证券</b>：全球高利率将成常态，需跟踪AI投资周期拐点；科技关注光通信、PCB，非科技增配能化、创新药、红利。<br>
+    • <b>华泰证券</b>：支撑因素逐渐积累，沿盈利与景气寻找性价比方向；科技硬件结合三季报择机布局，红利继续作底仓。<br>
+    • <b>中信建投</b>：配置防御优先，以高股息、低估值红利资产为底仓，围绕三季报布局景气赛道；事件驱动关注军工装备与商业航天。<br>
+    • <b>中泰证券</b>：本轮卖盘主要来自保险和「固收+」，出清已到后段但尚未结束；科创50/创业板/中证2000等ETF持续获长线资金流入。
+  </div>
+</div>
+
+<div class="foot">
+  <p>分析时间：2026-10-13 19:30（北京时间，盘后） · 使用策略：市场状态与广度 + 情绪周期 + 资金流分析 + 仓位管理框架</p>
+  <p>数据来源：交易所行情、Wind、东方财富Choice、财联社、证券时报、新浪财经、每日经济新闻等公开信息，截至 2026-10-13 收盘；涨跌停/资金流等存在多口径差异已文中标注；北向实时净买入当日数据未抓取，仅供参考。</p>
+  <p style="margin-top:8px"><b>免责声明</b>：以上内容基于公开数据和量化分析，仅供参考，不构成投资建议。市场有风险，投资需谨慎。任何投资决策应结合个人风险承受能力、资金状况和投资目标独立判断，必要时咨询持牌专业机构。过往表现不预示未来收益。</p>
+</div>
+
+<script>
+// 1. 主要指数涨跌
+echarts.init(document.getElementById('idxChart')).setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, formatter: '{b}: {c}%' },
+  grid: { left: 80, right: 50, top: 15, bottom: 30 },
+  xAxis: { type: 'value', axisLabel: { formatter: '{value}%', color: '#94a3b8' }, splitLine: { lineStyle: { color: '#2d2d44' } } },
+  yAxis: { type: 'category', data: ['中证A50', '北证50', '沪深300', '深证成指', '创业板指', '中证500', '科创50', '中证1000', '上证指数'], axisLabel: { color: '#e2e8f0' } },
+  series: [{
+    type: 'bar', barWidth: 14,
+    data: [
+      { value: -0.55, itemStyle: { color: '#22c55e' } },
+      { value: -0.31, itemStyle: { color: '#22c55e' } },
+      { value: -0.29, itemStyle: { color: '#22c55e' } },
+      { value: -0.25, itemStyle: { color: '#22c55e' } },
+      { value: -0.18, itemStyle: { color: '#22c55e' } },
+      { value: -0.11, itemStyle: { color: '#22c55e' } },
+      { value: 0.03, itemStyle: { color: '#ef4444' } },
+      { value: 0.02, itemStyle: { color: '#ef4444' } },
+      { value: 0.10, itemStyle: { color: '#ef4444' } }
+    ],
+    label: { show: true, position: 'right', formatter: '{c}%', color: '#e2e8f0' }
+  }]
+});
+
+// 2. 情绪温度计
+echarts.init(document.getElementById('tempChart')).setOption({
+  series: [{
+    type: 'gauge', min: 0, max: 100, radius: '92%', center: ['50%', '60%'],
+    progress: { show: true, width: 14, itemStyle: { color: '#ffa502' } },
+    axisLine: { lineStyle: { width: 14, color: [[0.3, '#38bdf8'], [0.6, '#ffa502'], [1, '#ff4757']] } },
+    pointer: { show: false },
+    axisTick: { show: false }, splitLine: { show: false }, axisLabel: { show: false },
+    title: { show: true, offsetCenter: [0, '80%'], color: '#94a3b8', fontSize: 13 },
+    detail: { valueAnimation: true, offsetCenter: [0, '-5%'], formatter: '{value}°C', fontSize: 36, color: '#ffa502' },
+    data: [{ value: 57, name: '温凉转暖 · 修复' }]
+  }]
+});
+
+// 3. 板块涨跌TOP5
+echarts.init(document.getElementById('sectChart')).setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, formatter: '{b}: {c}%' },
+  grid: { left: 10, right: 60, top: 10, bottom: 10, containLabel: true },
+  xAxis: { type: 'value', axisLabel: { formatter: '{value}%', color: '#94a3b8' }, splitLine: { lineStyle: { color: '#2d2d44' } } },
+  yAxis: { type: 'category', data: ['电池', '磷酸铁锂', '镍概念', '肿瘤疫苗', '锂矿', '元件', '旅游及景区', '航海装备Ⅱ', '航空装备Ⅱ', '地面兵装Ⅱ'], axisLabel: { color: '#e2e8f0' } },
+  series: [{
+    type: 'bar', barWidth: 13,
+    data: [
+      { value: -3.13, itemStyle: { color: '#22c55e' } },
+      { value: -1.69, itemStyle: { color: '#22c55e' } },
+      { value: -1.03, itemStyle: { color: '#22c55e' } },
+      { value: -1.54, itemStyle: { color: '#22c55e' } },
+      { value: -0.87, itemStyle: { color: '#22c55e' } },
+      { value: 2.97, itemStyle: { color: '#ef4444' } },
+      { value: 3.18, itemStyle: { color: '#ef4444' } },
+      { value: 3.18, itemStyle: { color: '#ef4444' } },
+      { value: 3.55, itemStyle: { color: '#ef4444' } },
+      { value: 5.08, itemStyle: { color: '#ef4444' } }
+    ],
+    label: { show: true, position: 'right', formatter: '{c}%', color: '#e2e8f0' }
+  }]
+});
+
+// 4. 重点板块主力净流入
+echarts.init(document.getElementById('capChart')).setOption({
+  title: { text: '重点板块主力净流入（亿元）', left: 'center', textStyle: { color: '#94a3b8', fontSize: 12 } },
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, formatter: '{b}: {c} 亿' },
+  grid: { left: 10, right: 60, top: 40, bottom: 10, containLabel: true },
+  xAxis: { type: 'value', axisLabel: { color: '#94a3b8' }, splitLine: { lineStyle: { color: '#2d2d44' } } },
+  yAxis: { type: 'category', data: ['半导体', '卫星互联网', '出版', '通信设备', '商业航天', '影视传媒', '短剧互动', 'PCB概念', 'CPO光模块'], axisLabel: { color: '#e2e8f0' } },
+  series: [{
+    type: 'bar', barWidth: 16,
+    data: [
+      { value: -19.05, itemStyle: { color: '#22c55e' } },
+      { value: -3.67, itemStyle: { color: '#22c55e' } },
+      { value: -1.19, itemStyle: { color: '#22c55e' } },
+      { value: 1.37, itemStyle: { color: '#ef4444' } },
+      { value: 2.31, itemStyle: { color: '#ef4444' } },
+      { value: 3.95, itemStyle: { color: '#ef4444' } },
+      { value: 4.47, itemStyle: { color: '#ef4444' } },
+      { value: 16.44, itemStyle: { color: '#ef4444' } },
+      { value: 20.78, itemStyle: { color: '#ef4444' } }
+    ],
+    label: { show: true, position: 'right', formatter: '{c}', color: '#e2e8f0' }
+  }]
+});
+
+// 5. 两融规模
+echarts.init(document.getElementById('fundChart')).setOption({
+  title: { text: '两融规模（亿元，截至10/12）', left: 'center', textStyle: { color: '#94a3b8', fontSize: 12 } },
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, formatter: '{b}: {c} 亿' },
+  grid: { left: 10, right: 60, top: 40, bottom: 10, containLabel: true },
+  xAxis: { type: 'value', axisLabel: { color: '#94a3b8' }, splitLine: { lineStyle: { color: '#2d2d44' } } },
+  yAxis: { type: 'category', data: ['融券余额', '融资余额'], axisLabel: { color: '#e2e8f0' } },
+  series: [{
+    type: 'bar', barWidth: 22,
+    data: [
+      { value: 297.19, itemStyle: { color: '#8a9bff' } },
+      { value: 25171.89, itemStyle: { color: '#667eea' } }
+    ],
+    label: { show: true, position: 'right', formatter: '{c}', color: '#e2e8f0' }
+  }]
+});
+
+window.addEventListener('resize', function () {
+  ['idxChart', 'tempChart', 'sectChart', 'capChart', 'fundChart'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) { echarts.getInstanceByDom(el) && echarts.getInstanceByDom(el).resize(); }
+  });
+});
+</script>
+
+</body>
+</html>
