@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股午间复盘 · 2026-10-14</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --border:#2d2d44;
+    --text:#e2e8f0; --sub:#94a3b8;
+    --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --acc1:#667eea; --acc2:#764ba2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.6;padding:24px;max-width:1180px;margin:0 auto}
+  h1{font-size:26px;font-weight:700;letter-spacing:1px}
+  .sub{color:var(--sub);font-size:13px;margin-top:4px}
+  .grid{display:grid;gap:16px;margin-top:20px}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:860px){.g4{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;position:relative;overflow:hidden}
+  .card h3{font-size:14px;color:var(--sub);font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .idx-name{font-size:13px;color:var(--sub)}
+  .idx-val{font-size:24px;font-weight:700;margin:2px 0}
+  .idx-chg{font-size:14px;font-weight:600}
+  .up{color:var(--buy)} .down{color:var(--sell)} .flat{color:var(--hold)}
+  .spark{height:46px;margin-top:8px}
+  .tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600}
+  .tag.buy{background:rgba(0,212,170,.15);color:var(--buy)}
+  .tag.sell{background:rgba(255,71,87,.15);color:var(--sell)}
+  .tag.hold{background:rgba(255,165,2,.15);color:var(--hold)}
+  .stat-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--border);font-size:14px}
+  .stat-row:last-child{border-bottom:none}
+  .stat-row b{font-size:16px}
+  .big{font-size:30px;font-weight:800}
+  .bar-chart{height:240px}
+  .note{background:rgba(255,71,87,.08);border:1px solid rgba(255,71,87,.3);border-radius:10px;padding:12px;font-size:13px;margin-top:12px}
+  .ok{background:rgba(0,212,170,.08);border:1px solid rgba(0,212,170,.3)}
+  .panel{margin-top:20px}
+  .summary-line{font-size:15px;background:linear-gradient(90deg,rgba(102,126,234,.18),rgba(118,75,162,.05));border-left:4px solid var(--acc1);padding:12px 16px;border-radius:8px;font-weight:600}
+  .gauge{height:200px}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border)}
+  th{color:var(--sub);font-weight:600}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .pos{color:var(--buy)} .neg{color:var(--sell)}
+  .foot{color:var(--sub);font-size:12px;margin-top:24px;border-top:1px solid var(--border);padding-top:14px}
+  .pill{display:inline-block;background:var(--border);border-radius:20px;padding:3px 12px;font-size:12px;margin:2px}
+  .plan-box{background:rgba(102,126,234,.08);border:1px solid var(--border);border-radius:10px;padding:14px;font-size:14px}
+  .plan-box li{margin:6px 0 6px 18px}
+</style>
+</head>
+<body>
+  <h1>A股午间复盘仪表盘</h1>
+  <div class="sub">数据截至 2026-10-14 午间收盘（11:30） · 数据源：腾讯自选股 / westock · 半日成交口径</div>
+
+  <!-- 一句话结论 -->
+  <div class="panel"><div class="summary-line">
+    📌 一句话结论：沪指护盘微红、深市与成长板块杀跌，全市场仅 32% 个股上涨、成交缩量，赚钱效应偏弱；资金由半导体/新能源硬件大幅切换至传媒/游戏/AI应用与电力红利方向。
+  </div></div>
+
+  <!-- 指数卡片 -->
+  <div class="grid g4">
+    <div class="card">
+      <div class="idx-name">上证指数</div>
+      <div class="idx-val">3801.13</div>
+      <div class="idx-chg flat">+0.01% <span class="flat">(+0.27)</span></div>
+      <div id="sp-sh" class="spark"></div>
+    </div>
+    <div class="card">
+      <div class="idx-name">深证成指</div>
+      <div class="idx-val">12290.59</div>
+      <div class="idx-chg down">-0.51% <span class="down">(-63.11)</span></div>
+      <div id="sp-sz" class="spark"></div>
+    </div>
+    <div class="card">
+      <div class="idx-name">创业板指</div>
+      <div class="idx-val">2924.39</div>
+      <div class="idx-chg down">-1.15% <span class="down">(-33.95)</span></div>
+      <div id="sp-cy" class="spark"></div>
+    </div>
+    <div class="card">
+      <div class="idx-name">科创50</div>
+      <div class="idx-val">1411.93</div>
+      <div class="idx-chg down">-1.07% <span class="down">(-15.25)</span></div>
+      <div id="sp-kc" class="spark"></div>
+    </div>
+  </div>
+
+  <!-- 市场概况 + 情绪 -->
+  <div class="grid g2 panel">
+    <div class="card">
+      <h3>📊 市场概况（沪深A股）</h3>
+      <div class="stat-row"><span>上涨 / 下跌 / 平盘</span><b><span class="up">1788</span> / <span class="down">3609</span> / 177</b></div>
+      <div class="stat-row"><span>上涨占比</span><b class="down">32%</b></div>
+      <div class="stat-row"><span>涨停 / 跌停</span><b><span class="up">45</span> / <span class="down">5</span></b></div>
+      <div class="stat-row"><span>半日成交额</span><b>8527.82 亿</b></div>
+      <div class="stat-row"><span>较前日同期</span><b class="down">-1554.16 亿（缩量）</b></div>
+      <div id="dist" class="bar-chart" style="height:230px"></div>
+    </div>
+    <div class="card">
+      <h3>🌡️ 市场情绪温度计</h3>
+      <div id="gauge" class="gauge"></div>
+      <div class="note">情绪评级：<b class="hold">偏冷 / 谨慎</b>。上涨占比仅 32%、涨停 45 家处于近期低位，结合缩量，资金风险偏好下降，属「权重护盘、个股普跌」的弱赚钱效应结构。</div>
+    </div>
+  </div>
+
+  <!-- 板块 -->
+  <div class="grid g2 panel">
+    <div class="card">
+      <h3>🔥 领涨行业 TOP5</h3>
+      <div id="up-sec" class="bar-chart"></div>
+    </div>
+    <div class="card">
+      <h3>❄️ 领跌行业 TOP5</h3>
+      <div id="dn-sec" class="bar-chart"></div>
+    </div>
+  </div>
+
+  <!-- 资金流向 -->
+  <div class="panel">
+    <div class="card">
+      <h3>💰 主力资金流向（板块层面，单位：亿元）</h3>
+      <div class="grid g2">
+        <div id="in-flow" class="bar-chart"></div>
+        <div id="out-flow" class="bar-chart"></div>
+      </div>
+      <div class="note ok" style="margin-top:6px">
+        🟢 <b>资金主线</b>：主力净流入高度集中在 <b>元件/PCB(+23.8亿)</b>、<b>电力(+9.95亿)</b>、<b>游戏(+9.83亿)</b>，概念层面 <b>文化传媒(+23.9亿)</b>、<b>TMT(+20.5亿)</b>、<b>PCB(+18.5亿)</b>、<b>短剧互动游戏(+17.3亿)</b>、<b>影视传媒(+16.7亿)</b> 全面吸金——AI应用/内容/传媒成为弱市中的抱团方向。
+      </div>
+      <div class="note">
+        🔴 <b>资金出逃</b>：<b>通信设备(-18.3亿)</b>、<b>电池(-15.2亿)</b>、<b>半导体(-13.3亿)</b>、<b>玻璃玻纤(-10.3亿)</b>、<b>风电设备(-5.0亿)</b> 净流出居前——科技硬件与新能源链条延续减仓。
+      </div>
+      <div class="stat-row" style="margin-top:10px"><span>北向资金（沪深港通净买入）</span><b class="flat">口径不可用</b></div>
+      <div class="stat-row"><span>融资融券（两融余额）</span><b class="flat">盘后披露</b></div>
+      <div class="note" style="margin-top:6px">
+        ⚠️ <b>数据口径说明</b>：港交所自 2024-08-19 起停止披露沪深港通每日净买入额，CLI 仅保留季度持仓且当前为空，故午间版不展示北向实时流向；两融数据为交易所盘后公布，盘中无披露。本报告以「板块主力净流入」作为日内资金风向的可用代理指标。
+      </div>
+    </div>
+  </div>
+
+  <!-- 赚钱效应总结 -->
+  <div class="panel">
+    <div class="card">
+      <h3>💡 赚钱效应总结</h3>
+      <table>
+        <tr><th>维度</th><th>午间状态</th><th>解读</th></tr>
+        <tr><td>宽度（涨/跌家数）</td><td><span class="neg">1788 / 3609（32%）</span></td><td>个股普跌，赚钱面收窄</td></tr>
+        <tr><td>高度（涨停/跌停）</td><td><span class="pos">45 / 5</span></td><td>连板情绪未崩，但非亢奋</td></tr>
+        <tr><td>量能</td><td><span class="neg">半日 8528 亿，缩量 1554 亿</span></td><td>缺增量，反弹持续性存疑</td></tr>
+        <tr><td>结构</td><td><span class="pos">传媒/游戏/AI应用 + 电力红利</span></td><td>局部抱团，权重护盘</td></tr>
+        <tr><td>风险点</td><td><span class="neg">创业板/科创50 跌超 1%</span></td><td>成长与科技硬件承压</td></tr>
+      </table>
+      <div class="summary-line" style="margin-top:12px">
+        综合判断：<b>弱平衡市中的结构性分化</b>——指数层面沪指靠权重守平，但个股与成长板块赚钱效应明显降温；赚钱机会局限于「传媒/AI内容+电力红利」少数主线，且需警惕缩量下的冲高回落。
+      </div>
+    </div>
+  </div>
+
+  <!-- 仓位管理推荐 -->
+  <div class="panel">
+    <div class="card">
+      <h3>🎯 仓位管理推荐</h3>
+      <div class="grid g2">
+        <div class="plan-box">
+          <b>总体仓位：中性偏防御，建议 30%–40%</b>
+          <ul>
+            <li>大盘处于弱势震荡（前一交易日画像评分 18/100，均线空头、MACD 死叉、板块宽度全面下跌），不宜重仓博弈。</li>
+            <li>午后若放量收复早盘高点且涨家数回升至 45%+，可将仓位提升至 50%；若继续缩量下行，维持 30% 以下观望。</li>
+            <li>总仓位上限 50%，保留现金应对尾盘与次日不确定性。</li>
+          </ul>
+        </div>
+        <div class="plan-box">
+          <b>结构取向：高低切换、去弱留强</b>
+          <ul>
+            <li><span class="pos">可关注</span>：传媒/游戏/短剧（AI应用内容线）、电力/煤炭/油服（红利+资源防御）、元件/PCB 中主力逆势流入的细分龙头。</li>
+            <li><span class="neg">暂回避</span>：半导体、通信设备、电池/光伏/风电等主力净流出且趋势走弱的硬件与新能源链条。</li>
+            <li>持仓者执行「去弱留强」，破位个股严格止损；新开仓仅做主线回踩均线的低吸，不追高。</li>
+          </ul>
+        </div>
+      </div>
+      <div style="margin-top:12px">
+        <span class="pill">散户情绪：偏冷</span>
+        <span class="pill">机构风向：防御+局部抱团</span>
+        <span class="pill">午后关键：量能是否回升</span>
+        <span class="pill">失效条件：沪指跌破 3786 早盘低点且放量</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 大盘背景 -->
+  <div class="panel">
+    <div class="card">
+      <h3>🧭 大盘背景（前一交易日 2026-10-13 收盘画像，评分 18/100）</h3>
+      <div class="stat-row"><span>中长期趋势</span><b class="down">弱势下跌（均线空头排列）</b></div>
+      <div class="stat-row"><span>技术指标</span><b class="down">偏弱（MACD 死叉）</b></div>
+      <div class="stat-row"><span>板块宽度</span><b class="down">全面下跌（上涨板块&lt;20%）</b></div>
+      <div class="stat-row"><span>风格</span><b class="flat">价值主导 / 缩量震荡</b></div>
+      <div class="note" style="margin-top:8px">今日午间延续该弱势背景：沪指靠权重勉强守平，深市与创业板继续下探，属「弱势中的分化抵抗」，尚无明显企稳反转信号。</div>
+    </div>
+  </div>
+
+  <div class="foot">
+    分析时间：2026-10-14 12:24（GMT+8） · 数据来源：腾讯自选股接口 / westock CLI（市场总览为 2026-10-13 收盘画像，指数/涨跌分布/板块为 2026-10-14 午间实时数据） · 可视化：ECharts<br>
+    ⚠️ 免责声明：本复盘仅供学习与研究的参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论基于历史与实时数据与技术模型，不保证未来表现。
+  </div>
+
+<script>
+const A='#00d4aa', R='#ff4757', H='#ffa502', B='#667eea', gridc='#2d2d44', sub='#94a3b8', txt='#e2e8f0';
+function spark(id, o,h,l,c, col){
+  const ch=echarts.init(document.getElementById(id));
+  const v=[o,h,l,c]; const mn=Math.min(...v), mx=Math.max(...v);
+  const data=[o, (o+h)/2, h, (h+l)/2, l, (l+c)/2, c].map(x=>((x-mn)/(mx-mn||1)*100).toFixed(1));
+  ch.setOption({grid:{left:0,right:0,top:4,bottom:4},xAxis:{type:'category',show:false,data:[1,2,3,4,5,6,7]},yAxis:{type:'value',show:false,min:0,max:100},
+    series:[{type:'line',data:data,smooth:true,symbol:'none',lineStyle:{color:col,width:2},areaStyle:{color:col,opacity:0.12}}]});
+}
+spark('sp-sh',3790.63,3811.81,3786.21,3801.13,H);
+spark('sp-sz',12308.64,12383.62,12259.02,12290.59,R);
+spark('sp-cy',2943.01,2962.73,2920.20,2924.39,R);
+spark('sp-kc',1419.46,1429.38,1406.80,1411.93,R);
+
+// 涨跌分布
+const dch=echarts.init(document.getElementById('dist'));
+const dl=['涨停','>7%','7~5%','5~2%','2~0%','平','0~2%','2~5%','5~7%','>7%跌','跌停'];
+const dv=[45,36,54,316,1337,177,2568,967,50,19,5];
+const dc=dv.map((_,i)=> i<=4?'#00d4aa':(i===5?'#64748b':'#ff4757'));
+dch.setOption({grid:{left:50,right:16,top:10,bottom:40},tooltip:{trigger:'axis'},
+  xAxis:{type:'category',data:dl,axisLabel:{color:sub,fontSize:10,interval:0,rotate:35}},
+  yAxis:{type:'value',axisLabel:{color:sub},splitLine:{lineStyle:{color:gridc}}},
+  series:[{type:'bar',data:dv.map((v,i)=>({value:v,itemStyle:{color:dc[i]}})),barWidth:'60%'}]});
+
+// 领涨行业
+function hbar(id, names, vals, color){
+  const ch=echarts.init(document.getElementById(id));
+  ch.setOption({grid:{left:90,right:40,top:10,bottom:10},tooltip:{trigger:'axis'},
+    xAxis:{type:'value',axisLabel:{color:sub},splitLine:{lineStyle:{color:gridc}}},
+    yAxis:{type:'category',data:names.slice().reverse(),axisLabel:{color:txt,fontSize:11}},
+    series:[{type:'bar',data:vals.slice().reverse(),barWidth:'55%',itemStyle:{color:color,borderRadius:[0,4,4,0]},
+      label:{show:true,position:'right',color:txt,formatter:p=>p.value+'%'}}]});
+}
+hbar('up-sec',['数字媒体','出版','油服工程','影视院线','广告营销'],[4.43,4.12,3.81,3.40,2.06],A);
+hbar('dn-sec',['玻璃玻纤','风电设备','商用车','小家电','通信设备'],[3.77,3.01,2.77,2.45,1.94],R);
+
+// 主力净流入/流出
+function fbar(id, names, vals, color){
+  const ch=echarts.init(document.getElementById(id));
+  ch.setOption({grid:{left:90,right:46,top:10,bottom:10},tooltip:{trigger:'axis'},
+    xAxis:{type:'value',axisLabel:{color:sub},splitLine:{lineStyle:{color:gridc}}},
+    yAxis:{type:'category',data:names.slice().reverse(),axisLabel:{color:txt,fontSize:11}},
+    series:[{type:'bar',data:vals.slice().reverse(),barWidth:'55%',itemStyle:{color:color,borderRadius:[0,4,4,0]},
+      label:{show:true,position:'right',color:txt,formatter:p=>p.value+'亿'}}]});
+}
+fbar('in-flow',['元件','电力','游戏Ⅱ','炼化及贸易','塑料'],[23.76,9.95,9.83,6.31,4.70],A);
+fbar('out-flow',['通信设备','电池','半导体','玻璃玻纤','风电设备'],[18.30,15.23,13.33,10.32,4.97],R);
+
+// 情绪温度计
+const g=echarts.init(document.getElementById('gauge'));
+g.setOption({series:[{type:'gauge',min:0,max:100,radius:'95%',center:['50%','58%'],
+  progress:{show:true,width:14,itemStyle:{color:'#ffa502'}},
+  axisLine:{lineStyle:{width:14,color:[[0.35,'#ff4757'],[0.6,'#ffa502'],[1,'#00d4aa']]}},
+  pointer:{itemStyle:{color:'#ffa502'}},
+  axisTick:{show:false},splitLine:{length:10,lineStyle:{color:gridc}},
+  axisLabel:{color:sub,fontSize:10,distance:14},
+  detail:{valueAnimation:true,formatter:'{value}',color:txt,fontSize:30,offsetCenter:[0,'40%']},
+  title:{show:true,offsetCenter:[0,'72%'],color:sub,fontSize:12},
+  data:[{value:36,name:'情绪分 36/100 · 偏冷'}]}]});
+
+window.addEventListener('resize',()=>{['sp-sh','sp-sz','sp-cy','sp-kc','dist','up-sec','dn-sec','in-flow','out-flow','gauge'].forEach(i=>echarts.getInstanceByDom(document.getElementById(i)).resize());});
+</script>
+</body>
+</html>
