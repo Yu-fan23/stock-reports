@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-14 15:51:09",
-  "total": 377,
+  "generatedAt": "2026-10-14 15:59:11",
+  "total": 378,
   "categories": [
     {
       "key": "panqian",
@@ -1129,9 +1129,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 78,
-      "latest": "20261013",
+      "count": 79,
+      "latest": "20261014",
       "reports": [
+        {
+          "date": "20261014",
+          "dateLabel": "2026-10-14（周三）",
+          "file": "reports/close/close_20261014.html",
+          "title": "A股行情复盘（2026-10-14 · 周三 · 缩量普跌·科技加速出逃·仓位降至4成）",
+          "size": 37931
+        },
         {
           "date": "20261013",
           "dateLabel": "2026-10-13（周二）",
