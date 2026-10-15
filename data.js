@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-15 08:40:58",
-  "total": 381,
+  "generatedAt": "2026-10-15 12:50:35",
+  "total": 382,
   "categories": [
     {
       "key": "panqian",
@@ -572,9 +572,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 79,
-      "latest": "20261014",
+      "count": 80,
+      "latest": "20261015",
       "reports": [
+        {
+          "date": "20261015",
+          "dateLabel": "2026-10-15（周四）",
+          "file": "reports/noon/noon_20261015.html",
+          "title": "A股午间复盘 · 2026-10-15（周四）· 全市场放量普跌·机构派发·光通信重挫·避险抱团医药白酒",
+          "size": 23503
+        },
         {
           "date": "20261014",
           "dateLabel": "2026-10-14（周三）",
