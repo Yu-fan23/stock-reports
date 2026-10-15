@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盘前计划 · 2026-10-16（周五）· 三问三答</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --acc:#667eea; --acc2:#764ba2; --txt:#e2e8f0; --txt2:#94a3b8; --bd:#2d2d44;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.6;padding:20px;max-width:1180px;margin:0 auto}
+  h1{font-size:24px;background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:4px}
+  .sub{color:var(--txt2);font-size:13px;margin-bottom:18px}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:860px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;position:relative;overflow:hidden}
+  .card h2{font-size:15px;color:var(--txt);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  .card h2::before{content:"";width:4px;height:16px;background:linear-gradient(var(--acc),var(--acc2));border-radius:2px}
+  .big{font-size:40px;font-weight:800}
+  .pill{display:inline-block;padding:4px 12px;border-radius:20px;font-size:13px;font-weight:700}
+  .p-watch{background:rgba(255,165,2,.15);color:var(--hold);border:1px solid var(--hold)}
+  .metric{font-size:22px;font-weight:700}
+  .metric small{font-size:12px;color:var(--txt2);font-weight:400}
+  .pos{color:var(--buy)} .neg{color:var(--sell)} .neu{color:var(--hold)}
+  .chart{width:100%;height:300px}
+  .chart-s{width:100%;height:230px}
+  .note{font-size:13px;color:var(--txt2)}
+  .kv{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px dashed var(--bd)}
+  .kv:last-child{border:0}
+  .warn{background:rgba(255,71,87,.12);border:1px solid rgba(255,71,87,.4);border-radius:10px;padding:12px;font-size:13px;color:#ffb3bb;margin:8px 0}
+  .good{background:rgba(0,212,170,.12);border:1px solid rgba(0,212,170,.4);border-radius:10px;padding:12px;font-size:13px;color:#9af0dc;margin:8px 0}
+  .tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:6px;margin:2px;background:#232342;color:var(--txt2)}
+  .tag.r{background:rgba(255,71,87,.18);color:#ff8a96}
+  .tag.g{background:rgba(0,212,170,.18);color:#7fe9d2}
+  .tag.n{background:rgba(255,165,2,.18);color:#ffce85}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--bd)}
+  th{color:var(--txt2);font-weight:600}
+  .qa{background:linear-gradient(135deg,#1a1a2e,#191930);border-left:4px solid var(--acc);border-radius:10px;padding:14px 16px;margin:10px 0}
+  .qa b{color:#fff}
+  .foot{font-size:11px;color:var(--txt2);margin-top:24px;border-top:1px solid var(--bd);padding-top:14px}
+  .disc{font-size:11px;color:#6b7280;margin-top:8px}
+  ul{margin:6px 0 6px 18px;font-size:13px}
+  li{margin:3px 0}
+  .core{background:linear-gradient(135deg,rgba(102,126,234,.18),rgba(118,75,162,.12));border:1px solid var(--bd);border-radius:14px;padding:18px;margin-bottom:16px}
+  .core p{font-size:15px}
+  .hl{color:#fff;font-weight:800;background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text}
+</style>
+</head>
+<body>
+<h1>📋 盘前计划 · 2026-10-16（周五）</h1>
+<div class="sub">星辰 · 多市场智能股票分析师 ｜ 三问三答 · 主流题材研判 ｜ 数据基准：10/15（周四）收盘 + 10/15 夜→10/16 早 隔夜 ｜ 下一交易日：10/16（周五）</div>
+
+<!-- 顶部决策摘要 -->
+<div class="card" style="margin-bottom:16px">
+  <div class="g4">
+    <div>
+      <div class="note">综合评分（0-100）</div>
+      <div id="scoreRing" class="chart-s"></div>
+      <div class="note" style="text-align:center;margin-top:-8px">偏空 · 防守控仓</div>
+    </div>
+    <div style="display:flex;flex-direction:column;justify-content:center">
+      <div class="note">核心信号</div>
+      <div class="big" style="color:var(--hold)">WATCH</div>
+      <div><span class="pill p-watch">观察待卖 · 防守（偏空区）</span></div>
+      <div class="note" style="margin-top:8px">大盘已破清仓线，系统性风险区</div>
+    </div>
+    <div style="display:flex;flex-direction:column;justify-content:center;gap:10px">
+      <div><div class="note">建议仓位</div><div class="metric neu">25% <small>现金 ≥ 75%</small></div></div>
+      <div><div class="note">大盘环境</div><div class="metric neg">退潮·冰点 <small>系统性风险</small></div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;justify-content:center;gap:8px">
+      <div class="kv"><span>沪指（10/15收）</span><span class="neg">3707.48 ▼1.59%</span></div>
+      <div class="kv"><span>创业板（10/15收）</span><span class="neg">2783 ▼2.92%</span></div>
+      <div class="kv"><span>两市成交</span><span class="neu">1.63万亿 ▲放量</span></div>
+      <div class="kv"><span>涨跌家数</span><span class="neg">≈400涨 / 5100+跌</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 核心结论 -->
+<div class="core">
+  <h2 style="margin-bottom:8px">⚡ 一句话结论</h2>
+  <p><span class="hl">沪指 3707 跌破前期 3754 清仓线、5100+ 个股下跌，叠加隔夜费半 −8% / 美 9 月 PPI 大超预期，市场已进入系统性风险与退潮冰点区；当前无健康主流题材可主动做多，仅「大金融·证券护盘」与「低位消费·白酒」两条防御线可轻仓低吸，PCB 高位抱团为风险信号坚决不接力。</span></p>
+  <div style="margin-top:10px"><span class="pill p-watch">信号：WATCH（偏空·防守）</span> <span class="tag n">仓位 25%</span> <span class="tag r">现金 ≥75%</span> <span class="tag g">仅防御线低吸</span></div>
+</div>
+
+<!-- 三问三答 -->
+<div class="card" style="margin-bottom:16px">
+  <h2>🎯 三问三答（用户三问）</h2>
+
+  <div class="qa">
+    <b>Q1：当下的主流题材是什么？（至多 3 个）</b><br>
+    <span class="tag n">① 大金融·证券（政策护盘主线）</span> <span class="tag n">② 低位消费·白酒（高低切防御主线）</span> <span class="tag r">③ PCB 高位抱团（科技唯一活口·风险极高）</span>
+    <div class="note" style="margin-top:6px">说明：10/15 全市场 5100+ 下跌、航运/煤炭/有色集体重挫，前期主线（传媒、红利能源、华为链）已被证伪或退潮。<b>真正意义上的"主流题材"已稀缺</b>，仅剩政策托底（证券）与低位防御（白酒）两条线，PCB 高标抱团是退潮末端的危险活口，不视为可参与主线。</div>
+  </div>
+
+  <div class="qa">
+    <b>Q2：主流题材的核心是谁？</b><br>
+    <ul>
+      <li><b>① 大金融·证券</b>：华林证券（10/15 涨停·标杆，不接力）、锦龙股份（+6%）、首创证券；中军中信证券、东方财富（ETF 护盘受益）。</li>
+      <li><b>② 低位消费·白酒</b>：皇台酒业（3天2板·标杆，不接力）、金种子酒、金徽酒、今世缘、古井贡酒（低位+防御）。</li>
+      <li><b>③ PCB 高位抱团</b>：澳弘电子（19天11板·历史新高，极度危险）、骏亚科技（3天2板）、崇达技术、金禄电子、天津普林（局部涨停）；中军景旺电子/广合科技（需看业绩兑现）。</li>
+    </ul>
+  </div>
+
+  <div class="qa">
+    <b>Q3：主流题材走到哪个阶段了，能不能买，给出盘前交易计划？</b><br>
+    <div class="note">阶段与可买性逐条判定如下，整体结论：<b>防守为主，轻仓低吸防御线，科技高位一律不接。</b></div>
+    <table style="margin-top:8px">
+      <tr><th>主线</th><th>阶段</th><th>能不能买</th><th>盘前操作计划</th></tr>
+      <tr><td>大金融·证券</td><td>护盘反抽初期</td><td class="neu">可低吸（≤10%）</td><td>只低吸中军（中信/东财）回踩 5 日线；华林涨停不接力；证券独涨虹吸则≤20%</td></tr>
+      <tr><td>低位消费·白酒</td><td>主升初期 第1-2天</td><td class="pos">可低吸（≤10%）</td><td>低吸金种子酒/金徽酒/今世缘；皇台 3天2板不接力；高开&gt;5%翻绿即停买</td></tr>
+      <tr><td>PCB 高位抱团</td><td>抱团末端·危险</td><td class="neg">不可买·回避</td><td>澳弘 19天11板为退潮信号，一旦炸板即全面退潮；坚决不接力，持仓者破 5 日线减</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 主线强度对比 -->
+<div class="card" style="margin-bottom:16px">
+  <h2>📊 主线强度与可买性对比（评分维度）</h2>
+  <div id="themeBar" class="chart"></div>
+  <div class="note">注：强度=资金/持续性/确定性综合；可买性=当前位置的赔率与风险。PCB 强度虚高（抱团末端），可买性为负。</div>
+</div>
+
+<!-- 大盘关键位标尺 -->
+<div class="card" style="margin-bottom:16px">
+  <h2>📏 大盘关键位标尺（沪指）</h2>
+  <div id="levelBar" class="chart"></div>
+  <div class="g3" style="margin-top:10px">
+    <div class="kv"><span>政策底/强支撑</span><span class="neu">3700（10/15 险守·国家队护盘区）</span></div>
+    <div class="kv"><span>清仓线（已破位）</span><span class="neg">3754.14（前低·破则系统性风险）</span></div>
+    <div class="kv"><span>反抽确认</span><span class="neu">3795（BOLL下轨/生死线）</span></div>
+    <div class="kv"><span>第一压力</span><span class="neu">3811 → 3824（MA5）</span></div>
+    <div class="kv"><span>反转确认</span><span class="pos">3876（MA10）</span></div>
+    <div class="kv"><span>今日收盘</span><span class="neg">3707.48 ▼1.59%</span></div>
+  </div>
+</div>
+
+<!-- 信号归因雷达 + 情绪温度计 -->
+<div class="g2" style="margin-bottom:16px">
+  <div class="card">
+    <h2>🧭 信号归因雷达</h2>
+    <div id="radar" class="chart-s"></div>
+    <div class="note" style="margin-top:6px">
+      📊 信号归因：<br>
+      • 技术指标贡献 <b>25%</b>（破位、六线之下、MACD 死叉，但 3700 护盘）<br>
+      • 新闻情绪贡献 <b>30%</b>（美 PPI 超预期+费半−8% 利空；国内政策托底利多）<br>
+      • 基本面贡献 <b>10%</b>（三季报预喜但整体弱）<br>
+      • 市场环境贡献 <b>35%</b>（系统性风险、5100+ 下跌、全球科技重挫，国家队对冲）<br>
+      • 最强看空：沪指破 3754 清仓线 + 隔夜费半−8% + 美 PPI 超预期<br>
+      • 最强看多：国家队 ETF 尾盘护盘 + 央行净投放 + 3700 政策底
+    </div>
+  </div>
+  <div class="card">
+    <h2>🌡️ 市场情绪温度计</h2>
+    <div id="gauge" class="chart-s"></div>
+    <div class="note" style="margin-top:6px">
+      情绪评级：<b class="neg">冰点（18/100）</b><br>
+      赚钱效应：极差（红盘率 &lt;8%）；封板率走低；高位抱团独木难支。<br>
+      风险偏好：避险主导，资金转向防御（证券/白酒）与抱团高标。
+    </div>
+  </div>
+</div>
+
+<!-- 情报面 -->
+<div class="card" style="margin-bottom:16px">
+  <h2>📰 情报面（隔夜 → 盘前）</h2>
+  <div class="good">
+    <b>积极催化（绿色）</b><br>
+    • 多只宽基 ETF 尾盘放量，<b>国家队进场护盘</b>；央行单日净投放 750 亿逆回购稳流动性。<br>
+    • 商务部等 9 部门出台<b>汽车后市场促消费 17 条</b>；三部门<b>稳外资 15 条</b>（放宽金融/医药/数据跨境）。<br>
+    • 2026 上海 MWC 开幕（6G 提速）；工信部征询<b>人形机器人</b>应用标准；海天味业/新和成大额回购。
+  </div>
+  <div class="warn">
+    <b>风险警报（红色）</b><br>
+    • <b>美 9 月 PPI 同比 +6.3%（预期 5.3%）、环比 +1.3%</b> 远超预期 → 加息/通胀交易重燃，10Y 美债承压。<br>
+    • <b>隔夜美股科技重挫：纳指 −2.21%、费半 −8%（英伟达/AMD/存储龙头大幅回调），韩国股市触发熔断</b> → 直接压制 A 股半导体/CPO/存储高位。<br>
+    • <b>CoreWeave 股债双杀</b>（AI 云泡沫担忧）；黄金 −1.75%、白银 −6%（通胀交易退潮、美伊缓和）。<br>
+    • 沪指已破 3754 清仓线，创业板/科创50 高β 持续新低。
+  </div>
+  <div class="note"><b>10/15 盘面回顾：</b>沪指 −1.59% 险守 3700，成交 1.63 万亿放量；逆势活口=PCB 高标（澳弘 19天11板、骏亚 3天2板）、证券（华林涨停）、白酒（皇台 3天2板）；重挫=航运（招商南油/中远海能/招商轮船跌停）、煤炭（整体下挫）、有色。</div>
+</div>
+
+<!-- 一票否决 -->
+<div class="card" style="margin-bottom:16px">
+  <h2>🚫 一票否决清单（盘中硬纪律）</h2>
+  <ul>
+    <li>沪指 30 分钟不收回 <b>3754.14</b> → 总仓降至 <b>15%</b>。</li>
+    <li>沪指跌破 <b>3700</b> 政策底且放量 → <b>清超短</b>，总仓≤10%。</li>
+    <li>隔夜费半−8% 传导：半导体/CPO/存储 <b>开盘放量下跌 → 科技全不碰</b>。</li>
+    <li>涨停 &lt; 40 或 跌停 &gt; 30 → <b>当日不加仓</b>。</li>
+    <li>证券独涨虹吸（其他普跌）→ 总仓 ≤ 20%。</li>
+    <li>A50 早盘跌 &gt; 1.5% → 总仓压至 20%。</li>
+    <li>10Y 美债破 <b>5.40%</b> → 全线减半。</li>
+    <li>白酒高标（皇台）高开 &gt; 5% 翻绿 → 白酒线停买。</li>
+    <li>PCB 高标（澳弘/骏亚）炸板翻绿 → PCB 线全弃，持仓破 5 日线减。</li>
+    <li>央行净投放 / ETF 护盘力度减弱 → 降仓观望。</li>
+  </ul>
+</div>
+
+<!-- 作战计划 -->
+<div class="card" style="margin-bottom:16px">
+  <h2>⚔️ 作战计划（盘前可执行）</h2>
+  <table>
+    <tr><th>方向</th><th>动作</th><th>标的/价位</th><th>仓位</th><th>止损/失效</th></tr>
+    <tr><td>大金融·证券（低吸）</td><td class="pos">回踩 5 日线低吸中军</td><td>中信证券 / 东方财富</td><td>≤10%</td><td>证券板块放量破位即撤</td></tr>
+    <tr><td>低位消费·白酒（低吸）</td><td class="pos">低吸低位防御</td><td>金种子酒 / 金徽酒 / 今世缘</td><td>≤10%</td><td>皇台高标炸板→停买；破 5 日线止损</td></tr>
+    <tr><td>PCB 抱团（回避）</td><td class="neg">不接力·持仓减</td><td>澳弘/骏亚/崇达</td><td>0%</td><td>炸板翻绿即全弃</td></tr>
+    <tr><td>机动现金</td><td class="neu">等待企稳信号</td><td>待沪指收回 3795 + 成交≥1.6 万亿</td><td>≥75%</td><td>—</td></tr>
+  </table>
+  <div class="note" style="margin-top:10px">
+    <b>加仓触发条件：</b>沪指 30 分钟收回 3795 且两市成交回升至 1.6 万亿以上、涨跌家数转为红多 → 总仓可升至 40%，优先回补证券/白酒低吸仓。<br>
+    <b>减仓/清仓触发：</b>破 3700 放量、费半续跌传导科技崩、跌停&gt;30 → 降至 10% 以下，仅留护盘相关。
+  </div>
+  <div class="good" style="margin-top:10px">
+    <b>明确回避清单：</b>半导体/CPO/存储（隔夜费半−8% 压制）、航运（10/15 跌停潮）、煤炭（10/15 整体下挫）、有色/贵金属（白银−6%）、创业板/科创50 高β、保险、AI 传媒连板高标、PCB 高标接力。
+  </div>
+</div>
+
+<!-- 底部元信息 -->
+<div class="card">
+  <h2>📌 元信息</h2>
+  <div class="kv"><span>分析时间</span><span>2026-10-16 07:00 GMT+8（盘前）</span></div>
+  <div class="kv"><span>使用策略</span><span>多头趋势 + 事件驱动 + 情绪周期（退潮冰点判定）</span></div>
+  <div class="kv"><span>数据来源</span><span>央广网/中国证券网/同花顺/财联社/格隆汇/东方财富 公开聚合（WebSearch）</span></div>
+  <div class="kv"><span>大盘环境摘要</span><span class="neg">退潮·冰点（系统性风险区）｜沪指 3707 破清仓线｜隔夜费半−8% + 美PPI超预期</span></div>
+  <div class="disc">⚠️ 免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论基于历史数据与技术模型，不保证未来表现。</div>
+</div>
+
+<script>
+// 综合评分圆环
+(function(){
+  var c=echarts.init(document.getElementById('scoreRing'));
+  c.setOption({series:[{type:'gauge',startAngle:90,endAngle:-270,radius:'92%',pointer:{show:false},
+    progress:{show:true,width:14,roundCap:true,itemStyle:{color:'#ffa502'}},
+    axisLine:{lineStyle:{width:14,color:[[1,'#2d2d44']]}},
+    axisTick:{show:false},splitLine:{show:false},axisLabel:{show:false},
+    detail:{valueAnimation:true,fontSize:34,fontWeight:'bolder',color:'#ffa502',offsetCenter:[0,'0%'],formatter:'{value}'},
+    data:[{value:40}]}],
+    graphic:[{type:'text',left:'center',top:'62%',style:{text:'WATCH',fill:'#ffa502',fontSize:13,fontWeight:'bold'}}]});
+})();
+
+// 主线强度对比
+(function(){
+  var c=echarts.init(document.getElementById('themeBar'));
+  c.setOption({
+    tooltip:{trigger:'axis'},
+    legend:{data:['强度','可买性'],textStyle:{color:'#94a3b8'},top:0},
+    grid:{left:60,right:20,top:36,bottom:30},
+    xAxis:{type:'category',data:['大金融·证券','低位消费·白酒','PCB高位抱团'],axisLabel:{color:'#e2e8f0'},axisLine:{lineStyle:{color:'#2d2d44'}}},
+    yAxis:{type:'value',max:100,axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[
+      {name:'强度',type:'bar',barWidth:22,data:[78,62,70],itemStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'#667eea'},{offset:1,color:'#764ba2'}])}},
+      {name:'可买性',type:'bar',barWidth:22,data:[55,60,-20],itemStyle:{color:function(p){return p.value<0?'#ff4757':'#00d4aa';},borderRadius:[4,4,0,0]}}
+    ]
+  });
+})();
+
+// 大盘关键位标尺
+(function(){
+  var c=echarts.init(document.getElementById('levelBar'));
+  var levels=[
+    {n:'3700 政策底',v:3700,c:'#667eea'},
+    {n:'3754 清仓线(破)',v:3754.14,c:'#ff4757'},
+    {n:'3795 生死线',v:3795,c:'#ffa502'},
+    {n:'3811/3824 压力',v:3818,c:'#94a3b8'},
+    {n:'3876 反转',v:3876,c:'#00d4aa'}
+  ];
+  c.setOption({
+    tooltip:{trigger:'axis',formatter:function(p){return p[0].name+'<br/>'+p[0].value;}},
+    grid:{left:90,right:30,top:20,bottom:40},
+    xAxis:{type:'value',min:3650,max:3900,axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+    yAxis:{type:'category',data:levels.map(function(l){return l.n;}),axisLabel:{color:'#e2e8f0'},axisLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'bar',data:levels.map(function(l){return {value:l.v,itemStyle:{color:l.c,borderRadius:4}};}),barWidth:18,
+      label:{show:true,position:'right',color:'#e2e8f0',formatter:function(p){return p.value;}},
+      markLine:{silent:true,symbol:'none',lineStyle:{color:'#ff4757',type:'dashed'},data:[{xAxis:3707.48,label:{formatter:'收盘3707',color:'#ff8a96',position:'start'}}]}}]
+  });
+})();
+
+// 信号归因雷达
+(function(){
+  var c=echarts.init(document.getElementById('radar'));
+  c.setOption({
+    tooltip:{},
+    radar:{indicator:[{name:'技术指标',max:100},{name:'新闻情绪',max:100},{name:'基本面',max:100},{name:'市场环境',max:100}],
+      axisName:{color:'#e2e8f0'},splitLine:{lineStyle:{color:'#2d2d44'}},splitArea:{areaStyle:{color:['#191930','#1a1a2e']}},axisLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'radar',data:[{value:[25,30,10,35],name:'贡献度',
+      areaStyle:{color:'rgba(102,126,234,.35)'},lineStyle:{color:'#667eea'},itemStyle:{color:'#764ba2'}}]}]
+  });
+})();
+
+// 情绪温度计
+(function(){
+  var c=echarts.init(document.getElementById('gauge'));
+  c.setOption({series:[{type:'gauge',min:0,max:100,startAngle:200,endAngle:-20,
+    progress:{show:true,width:16,itemStyle:{color:'#ff4757'}},
+    axisLine:{lineStyle:{width:16,color:[[0.3,'#ff4757'],[0.6,'#ffa502'],[1,'#00d4aa']]}},
+    pointer:{itemStyle:{color:'#ff4757'}},
+    axisLabel:{color:'#94a3b8',distance:-44,fontSize:10},
+    detail:{valueAnimation:true,fontSize:30,color:'#ff4757',formatter:'{value}',offsetCenter:[0,'40%']},
+    title:{offsetCenter:[0,'72%'],color:'#94a3b8',fontSize:12},
+    data:[{value:18,name:'情绪·冰点'}]}]});
+})();
+</script>
+</body>
+</html>
