@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股行情复盘（2026-10-15 · 周四 · 放量长阴·情绪冰点·仓位降至2.5成）</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --card2:#16162a; --border:#2d2d44;
+    --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --up:#ef4444; --down:#22c55e; --txt:#e2e8f0; --txt2:#94a3b8;
+    --accent1:#667eea; --accent2:#764ba2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,sans-serif;line-height:1.6;padding:18px;max-width:1180px;margin:0 auto}
+  .header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:18px;padding:18px 22px;background:linear-gradient(135deg,#1a1a2e,#16243a);border:1px solid var(--border);border-radius:16px}
+  .header h1{font-size:22px;font-weight:700;letter-spacing:.5px}
+  .header .sub{color:var(--txt2);font-size:13px;margin-top:4px}
+  .badge{display:inline-block;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;background:rgba(255,71,87,.15);color:#ffb3ba;border:1px solid rgba(255,71,87,.4)}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:860px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px}
+  .card h2{font-size:15px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .card h2 .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--accent1),var(--accent2))}
+  .chart{width:100%;height:300px}
+  .kpi{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+  .kpi .v{font-size:24px;font-weight:800;letter-spacing:.5px}
+  .kpi .l{font-size:12px;color:var(--txt2);margin-top:4px}
+  .up{color:var(--up)} .down{color:var(--down)} .neu{color:var(--txt2)}
+  .summary{font-size:15px;line-height:1.8}
+  .summary b{color:#fff}
+  .pill{display:inline-block;padding:3px 10px;border-radius:8px;font-size:12px;font-weight:600;margin:2px 4px 2px 0}
+  .pill-red{background:rgba(255,71,87,.15);color:var(--sell);border:1px solid rgba(255,71,87,.3)}
+  .pill-green{background:rgba(34,197,94,.13);color:var(--down);border:1px solid rgba(34,197,94,.3)}
+  .pill-amber{background:rgba(255,165,2,.15);color:var(--hold);border:1px solid rgba(255,165,2,.3)}
+  .pill-blue{background:rgba(102,126,234,.15);color:#8a9bff;border:1px solid rgba(102,126,234,.35)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--txt2);font-weight:600;font-size:12px}
+  tr:last-child td{border-bottom:none}
+  .note{font-size:12px;color:var(--txt2);margin-top:10px;padding:10px 12px;background:var(--card2);border-radius:10px;border-left:3px solid var(--accent1)}
+  .alert{background:rgba(255,71,87,.08);border:1px solid rgba(255,71,87,.3);border-radius:10px;padding:10px 14px;font-size:13px;color:#ffb3ba;margin-top:10px}
+  .ok{background:rgba(0,212,170,.08);border:1px solid rgba(0,212,170,.3);border-radius:10px;padding:10px 14px;font-size:13px;color:#9af0dd;margin-top:10px}
+  .warn{background:rgba(255,165,2,.08);border:1px solid rgba(255,165,2,.3);border-radius:10px;padding:10px 14px;font-size:13px;color:#ffd9a0;margin-top:10px}
+  .foot{margin-top:20px;font-size:11px;color:var(--txt2);text-align:center;line-height:1.8}
+  .temp-wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .temp-num{font-size:34px;font-weight:800;color:#38bdf8}
+  .stat-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px dashed var(--border)}
+  .stat-row:last-child{border-bottom:none}
+  .score-ring{position:relative;width:120px;height:120px;margin:0 auto}
+  .score-ring svg{transform:rotate(-90deg)}
+  .score-ring .num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:26px;font-weight:800}
+  .score-ring .lab{position:absolute;top:64%;left:50%;transform:translateX(-50%);font-size:11px;color:var(--txt2)}
+  .ladder{position:relative;margin:18px 0 6px;padding:0 6px}
+  .ladder .bar{height:10px;border-radius:6px;background:linear-gradient(90deg,#22c55e,#ffa502,#ef4444);opacity:.75}
+  .ladder .marks{display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:var(--txt2)}
+  .ladder .cur{position:absolute;top:-8px;width:2px;height:26px;background:#fff;box-shadow:0 0 6px #fff}
+  .ladder .cur span{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:11px;color:#fff;white-space:nowrap}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>📊 A股行情复盘（2026-10-15 · 周四）</h1>
+    <div class="sub">放量长阴 · 情绪冰点 · AI硬件天量派发 · 数据截至 2026-10-15 收盘</div>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <span class="badge">🔴 偏空 WATCH · 评分 28/100</span>
+    <span class="badge" style="background:rgba(102,126,234,.15);color:#8a9bff;border-color:rgba(102,126,234,.4)">仓位 2.5 成（昨 4 成）</span>
+  </div>
+</div>
+
+<!-- KPI 快照 -->
+<div class="grid g4" style="margin-bottom:16px">
+  <div class="kpi"><div class="v up">3707.48</div><div class="l">上证指数 <span class="up">-1.59%</span>（跳空低开·破前低创新低）</div></div>
+  <div class="kpi"><div class="v down">2783.17</div><div class="l">创业板指 <span class="down">-2.92%</span>（四连跌·破 2860.80）</div></div>
+  <div class="kpi"><div class="v neu">1.63 万亿</div><div class="l">两市成交 · 放量 2186 亿（+15.4%）</div></div>
+  <div class="kpi"><div class="v down">430 : 5108</div><div class="l">涨/跌家数 · 红盘率仅 <b class="down">7%</b></div></div>
+</div>
+<div class="grid g4" style="margin-bottom:16px">
+  <div class="kpi"><div class="v neu">36 : 28</div><div class="l">涨停 : 跌停（昨 39 : 13）</div></div>
+  <div class="kpi"><div class="v down">-150.1 亿</div><div class="l">CPO 光模块主力净流出（10日 -1267 亿）</div></div>
+  <div class="kpi"><div class="v down">24975 亿</div><div class="l">融资余额（10/14）· 4 日连降</div></div>
+  <div class="kpi"><div class="v up">+7.67 亿</div><div class="l">白酒Ⅱ主力净流入 · 三重周期全正</div></div>
+</div>
+
+<!-- 核心结论 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>核心结论（一句话）</h2>
+  <div class="summary">
+    10/15 A股呈 <b>「放量长阴、情绪冰点、AI硬件天量派发」</b>格局：上证跳空低开 0.7% 后全天无力回补，收 <b>3707.48（-1.59%）</b>、盘中 3674.82 <b class="down">击穿前低 3741.53 创本轮调整新低</b>，创业板指 -2.92%（2783.17，四连跌、深穿 BOLL 下轨），全市场 <b class="down">仅 430 家上涨 / 5108 家下跌、红盘率 7%</b>（昨 17%，本轮最低）、涨停 36 家 vs 跌停 28 家、跌超 5% 达 838 家，两市成交 <b>1.633 万亿、放量 2186 亿（+15.4%）</b>——放量长阴叠加广度崩塌；资金面 <b class="down">CPO 光模块主力净流出 -150.07 亿（近 10 日累计 -1267 亿，本轮最大单一失血点）</b>、通信设备 -83.94 亿、半导体 -69.38 亿，22 个重点板块 <b>仅 3 个净流入、多空比约 1:48</b>；唯一逆势方向为 <b class="up">白酒Ⅱ（+1.72%、主力 +7.67 亿，当日+5日+10日「三重全正」）与出版（+1.47 亿，同为三重全正）</b>，叠加国有大行 +0.81%、保险 +0.71% 的防御抱团。<b>10/14 设定的三条减仓触发全部兑现</b>（上证破 3741.53、创业板破 2860.80、A50 破 13400），仓位由 4 成执行降至 <b>2.5 成</b>：仅留防御底仓 + 0.5 成超跌反抽博弈，成长/题材仓清零，<b>明日不抄底</b>。
+  </div>
+  <div class="note">数据来源：交易所行情 / 东方财富Choice / 财联社 / 新浪财经，截至 2026-10-15 收盘；涨跌停家数不同媒体口径存在 ±1~3 家差异；北向资金当日数据未成功抓取，资金口径以主力净流入（板块）与两融为主；上证/创业板技术指标为 T-1（10/14）口径（T 日指标 T+1 更新），文中均以 10/15 收盘价对照；A50/黄金为 10/15 盘中实时口径，恒生指数为 10/15 港股盘中口径，美股为 10/14 收盘口径，两融为 T+1 披露（10/14）。</div>
+</div>
+
+<!-- 一、主要指数 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>一、主要指数表现（红涨绿跌 · 收盘）</h2>
+  <div id="c_idx" class="chart"></div>
+  <div style="margin-top:10px">
+    <span class="pill pill-red">上证 3707.48 -1.59%</span>
+    <span class="pill pill-green">深成 11816.79 -2.43%</span>
+    <span class="pill pill-green">创业板 2783.17 -2.92%</span>
+    <span class="pill pill-green">科创50 1359.52 -1.50%</span>
+    <span class="pill pill-green">沪深300 4166.01 -1.23%</span>
+    <span class="pill pill-green">中证1000 6678.65 -3.28%</span>
+    <span class="pill pill-green">北证50 967.51 -3.44%</span>
+  </div>
+  <div class="note">指数层面<b>全线收绿、小盘股重挫</b>：北证50（-3.44%）、中证1000（-3.28%）、创业板指（-2.92%）领跌，权重指数相对抗跌（沪深300 -1.23%、上证 -1.59%），呈现典型的「权重护盘、小盘失血」结构。沪指<b>跳空低开 3710.70（缺口 3710.70~3767.23 全天未回补）</b>，最高 3724.56 即回落，盘中最低 3674.82 <b>击穿 10/13 前低 3741.53，创 9 月以来本轮调整新低</b>；创业板指四连跌（10/12 -2.10% → 10/13 -0.25% → 10/14 -3.10% → 10/15 -2.92%），收盘深穿 BOLL 下轨（T-1 口径 2931.41）逾 148 点；科创50 最低 1326.24 亦为本轮最低，自 9/22 高点 1707.67 累计回撤 -20.4%。两市成交 1.6330 万亿（沪 7743.92 亿 + 深 8586.04 亿），较昨日 1.4144 万亿放量 2186 亿（+15.4%）——<b>放量下跌 = 恐慌盘涌出，非缩量阴跌</b>。</div>
+</div>
+
+<div class="grid g2" style="margin-bottom:16px">
+  <div class="card">
+    <h2><span class="dot"></span>上证 / 创业板 近 6 日走势</h2>
+    <div id="c_kline" class="chart"></div>
+    <div class="note">上证 6 日：3811.90 → 3813.79 → 3797.24 → 3800.86 → 3767.23 → <b>3707.48</b>（区间 -2.7%）；创业板 6 日：3036.66 → 3043.33 → 2963.82 → 2958.34 → 2866.76 → <b>2783.17</b>（区间 -8.3%）。10/15 上证向下跳空、留下 3710.70~3767.23 未回补缺口，为首个明确破位信号。</div>
+  </div>
+  <div class="card">
+    <h2><span class="dot"></span>市场情绪温度计</h2>
+    <div class="temp-wrap">
+      <div class="temp-num">8°C</div>
+      <div style="flex:1;min-width:220px">
+        <div class="stat-row"><span>红盘率（可交易A股）</span><span class="down"><b>7%</b>（昨 17%）</span></div>
+        <div class="stat-row"><span>涨停 / 跌停</span><span>36 / 28（昨 39 / 13）</span></div>
+        <div class="stat-row"><span>跌超 5% 家数</span><span class="down">838 家（含跌停 28）</span></div>
+        <div class="stat-row"><span>昨日涨停今日表现</span><span class="down">40 只中仅 37.5% 上涨</span></div>
+        <div class="stat-row"><span>上涨占比历史分位</span><span>过去一年仅 27% 交易日处于该热度区间</span></div>
+      </div>
+    </div>
+    <div class="alert">⚠️ 情绪定性：<b>冰点区（普跌日）且较昨日进一步恶化</b>。红盘率 7% 为 9/24（20%）以来最低、亦低于 9/24 恐慌高潮日；跌停 28 家 vs 涨停 36 家、跌超 5% 达 838 家、昨日涨停股今日仅三成七上涨——短线亏钱效应全面扩散，连板高度持续压缩。唯一慰藉：<b>放量</b>（+15.4%）意味着抛压集中释放而非无人承接，配合 KDJ J 12.76 / 上证 RSI 19.74 / 创业板 RSI 8.30 的极度超卖，短期存在技术性反抽可能，但趋势信号明确向下，反抽≠反转。</div>
+  </div>
+</div>
+
+<!-- 二、赚钱效应 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>二、市场赚钱效应总结</h2>
+  <div id="c_breadth" class="chart"></div>
+  <div class="grid g2" style="margin-top:12px">
+    <div>
+      <table>
+        <tr><th>领涨</th><th>个股（代码）</th><th>题材 / 备注</th></tr>
+        <tr><td>+401.71%</td><td>N联亚药业（301569）</td><td>次新股 · 换手 79.79% · CRO 概念领涨股</td></tr>
+        <tr><td>+20.06%</td><td>向日葵（300111）</td><td>高血压概念领涨股</td></tr>
+        <tr><td>+20.00%</td><td>金禄电子（301282）</td><td>PCB</td></tr>
+        <tr><td>+13.94%</td><td>南模生物（688265）</td><td>CRO/模式动物</td></tr>
+        <tr><td>+13.31%</td><td>朗特智能（300916）</td><td>智能控制</td></tr>
+        <tr><td>+12.78%</td><td>中邮科技（688648）</td><td>物流装备</td></tr>
+        <tr><td>+12.24%</td><td>正业科技（300410）</td><td>锂电检测</td></tr>
+        <tr><td>+10.06%</td><td>万和电气（002543）</td><td>白色家电</td></tr>
+        <tr><td>+10.06%</td><td>尖峰集团（600668）</td><td>建材/医药</td></tr>
+        <tr><td>+10.04%</td><td>皇台酒业（000995）</td><td>白酒Ⅱ领涨股</td></tr>
+      </table>
+    </div>
+    <div>
+      <table>
+        <tr><th>领跌</th><th>个股（代码）</th><th>题材 / 备注</th></tr>
+        <tr><td>-20.01%</td><td>远信工业（301053）</td><td>锂电设备 · 20CM 跌停</td></tr>
+        <tr><td>-14.89%</td><td>富祥股份（300497）</td><td>医药原料</td></tr>
+        <tr><td>-13.91%</td><td>*ST仕净（301030）</td><td>ST 股</td></tr>
+        <tr><td>-12.68%</td><td>博力威（688345）</td><td>锂电电池</td></tr>
+        <tr><td>-12.23%</td><td>博硕科技（300951）</td><td>电子元器件</td></tr>
+        <tr><td>-12.20%</td><td>华新科技（301265）</td><td>电子</td></tr>
+        <tr><td>-12.09%</td><td>华是科技（301218）</td><td>计算机 · 换手 26.95%</td></tr>
+        <tr><td>-11.97%</td><td>建新股份（300107）</td><td>化工 · 换手 26.46%</td></tr>
+        <tr><td>-6.98%</td><td>中国船舶（600150）</td><td>航海装备Ⅱ早盘异动领跌</td></tr>
+        <tr><td>-7.38%</td><td>方邦股份（688020）</td><td>元件/电磁屏蔽膜</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="note"><b>赚钱效应定性：冰点普跌、结构极端分化、防御独舞。</b>全市场仅 430 家收红（7%），涨幅榜前 10 中 6 席被<b>医药（CRO）与白酒/消费</b>包揽（N联亚药业、南模生物、向日葵、皇台酒业、万和电气），涨停 36 家主要集中在防御与超跌方向；而前期主线批量重挫——<b>航海装备Ⅱ早盘即触发 -6.49% 异动（中国船舶 -6.98%）</b>、通信设备 -5.26%（全行业跌幅第一）、AI算力芯片 -4.20%、国防军工 -3.98%、航天装备Ⅱ -3.97%、汽车零部件 -3.41%、半导体 -2.71%，叠加 ST 股批量跌停（*ST仕净 -13.91%、*ST卓然 -10.99%、ST豆神 -10.42%），显示<b>高位题材、绩差股、微盘股三线同时失血</b>，仅剩低估值防御资产有赚钱效应。这是典型的「主线真空 + 全面退潮 + 防御抱团」冰点结构。</div>
+</div>
+
+<!-- 三、资金流向 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>三、资金流向分析</h2>
+  <div id="c_fund" class="chart"></div>
+  <div class="grid g2" style="margin-top:12px">
+    <div>
+      <h2 style="font-size:13px"><span class="dot"></span>重点板块主力净流入（当日 / 5日 / 10日 · 亿元）</h2>
+      <table>
+        <tr><th>板块</th><th>当日</th><th>5日</th><th>10日</th><th>定性</th></tr>
+        <tr><td>白酒Ⅱ</td><td class="up">+7.67</td><td class="up">+11.94</td><td class="up">+7.06</td><td><span class="pill pill-red">三重全正</span></td></tr>
+        <tr><td>食品饮料</td><td class="up">+3.21</td><td class="down">-6.62</td><td class="down">-8.96</td><td>当日回流</td></tr>
+        <tr><td>出版</td><td class="up">+1.47</td><td class="up">+19.22</td><td class="up">+17.16</td><td><span class="pill pill-red">三重全正·价跌资金入</span></td></tr>
+        <tr><td>共封装光模块 CPO</td><td class="down">-150.07</td><td class="down">-480.92</td><td class="down">-1267.31</td><td><span class="pill pill-green">三周期全负·加速派发</span></td></tr>
+        <tr><td>通信设备</td><td class="down">-83.94</td><td class="down">-241.86</td><td class="down">-605.77</td><td><span class="pill pill-green">三周期全负</span></td></tr>
+        <tr><td>半导体</td><td class="down">-69.38</td><td class="down">-223.58</td><td class="down">-719.50</td><td><span class="pill pill-green">三周期全负</span></td></tr>
+        <tr><td>商业航天</td><td class="down">-55.77</td><td class="down">-183.46</td><td class="down">-368.74</td><td><span class="pill pill-green">三周期全负</span></td></tr>
+        <tr><td>电力设备</td><td class="down">-43.37</td><td class="down">-129.49</td><td class="down">-167.71</td><td>三周期全负</td></tr>
+        <tr><td>AI算力芯片</td><td class="down">-32.81</td><td class="down">-94.76</td><td class="down">-268.99</td><td>三周期全负</td></tr>
+        <tr><td>国防军工</td><td class="down">-29.57</td><td class="down">-49.26</td><td class="down">-67.26</td><td>三周期全负</td></tr>
+        <tr><td>短剧/互动游戏</td><td class="down">-20.46</td><td class="up">+32.44</td><td class="down">-5.13</td><td>高位首日分歧</td></tr>
+        <tr><td>卫星互联网</td><td class="down">-19.02</td><td class="down">-71.61</td><td class="down">-120.18</td><td>三周期全负</td></tr>
+        <tr><td>影视传媒</td><td class="down">-18.79</td><td class="up">+37.00</td><td class="up">+25.10</td><td>高位分歧·5/10日仍正</td></tr>
+        <tr><td>汽车零部件</td><td class="down">-16.51</td><td class="down">-37.15</td><td class="down">-31.38</td><td>三周期全负</td></tr>
+        <tr><td>电池</td><td class="down">-11.83</td><td class="down">-44.49</td><td class="down">-23.51</td><td>三周期全负</td></tr>
+        <tr><td>半导体设备概念</td><td class="down">-10.78</td><td class="down">-48.24</td><td class="down">-161.10</td><td>三周期全负</td></tr>
+        <tr><td>光学光电子</td><td class="down">-9.68</td><td class="down">-34.89</td><td class="down">-71.31</td><td>三周期全负</td></tr>
+        <tr><td>银行</td><td class="down">-6.92</td><td class="down">-19.72</td><td class="down">-41.00</td><td>护盘资金亦流出</td></tr>
+        <tr><td>覆铜板</td><td class="down">-6.55</td><td class="down">-32.74</td><td class="down">-45.52</td><td>三周期全负</td></tr>
+        <tr><td>房地产开发</td><td class="down">-4.65</td><td class="down">-13.23</td><td class="down">-22.63</td><td>三周期全负</td></tr>
+        <tr><td>风电设备</td><td class="down">-4.80</td><td class="down">-27.66</td><td class="down">-25.40</td><td>三周期全负</td></tr>
+        <tr><td>航天装备Ⅱ</td><td class="down">-2.25</td><td class="down">-11.24</td><td class="down">-13.64</td><td>三周期全负</td></tr>
+      </table>
+    </div>
+    <div>
+      <h2 style="font-size:13px"><span class="dot"></span>两融与流动性</h2>
+      <div id="c_margin" class="chart" style="height:250px"></div>
+      <div class="stat-row"><span>融资余额（10/14）</span><span><b>24974.85 亿</b> · 较 10/13 -187.84 亿</span></div>
+      <div class="stat-row"><span>融券余额 / 两融差额</span><span>295.36 亿 / 24679.49 亿（&lt; 20日均值）</span></div>
+      <div class="stat-row"><span>节后杠杆累计（9/30→10/14）</span><span class="down">25404.34 → 24974.85 亿（<b>-429 亿</b>）</span></div>
+      <div class="stat-row"><span>自 9/22 高点累计</span><span class="down">26263.36 → 24974.85 亿（<b>-1288.51 亿 / -4.90%</b>）</span></div>
+      <div class="stat-row"><span>平均维持担保比例（10/13）</span><span>262.20%（远高于 130% 强平线）</span></div>
+      <div class="stat-row"><span>两融交易额占比（10/13）</span><span>8.10%（较 10/12 的 7.92% 微升）</span></div>
+      <div class="alert">⚠️ <b>资金结构解读：AI硬件链「天量派发」进入主跌段。</b>CPO 光模块单日 -150.07 亿（本周第二根巨量绿柱，10/14 -105.19 → 10/15 -150.07）、近 10 日 -1267.31 亿，5 日（-480.92 亿）占 10 日流出的 38%——<b>派发非但没有收敛反而在加速</b>；通信设备（-605.77 亿/10日）、半导体（-719.50 亿/10日）、AI算力芯片（-268.99 亿/10日）、商业航天（-368.74 亿/10日）全部「当日+5日+10日」三周期全负。22 个重点板块 <b>3 流入 vs 19 流出（多空比约 1:48）</b>，为 9 月以来最极端单边流出。两融 4 日连降、差额低于 20 日均值，杠杆资金持续撤退，与「放量长阴」互相印证。</div>
+      <div class="ok">✅ <b>多头仅存的火种：</b>① 白酒Ⅱ（+7.67/+11.94/+7.06）为全市场唯二「三重全正」板块，且价格 +1.72% 领涨全行业 = <b>价量资金三重共振</b>，防御抱团核心；② 出版（+1.47/+19.22/+17.16）三重全正且「价跌资金入」= 传媒退潮中唯一未撤的方向；③ 概念端 CRO +10.56 亿（价 -1.06%）、超级品牌 +7.22 亿、白酒概念 +4.87 亿同样呈「价跌资金入」的潜伏特征。但需注意：白酒Ⅱ 20 日主力仅 +7.06 亿、CRO 20 日仍 -16.23 亿，定性为<b>存量资金防御性回补的启动期</b>，只低吸不追高。</div>
+    </div>
+  </div>
+  <div class="note">北向资金：当日净买入数据未成功抓取（数据源缺失），暂不列示；参考口径——北向成交占两市比重通常约 16%，2024 年 8 月起交易所不再披露实时净买入，历史数据仅供参考。</div>
+</div>
+
+<!-- 四、题材主线 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>四、题材主线与生命周期</h2>
+  <div class="grid g2">
+    <div>
+      <div class="alert" style="margin-top:0">🥉 <b>主跌方向（回避）：AI 硬件链</b> — 强度：主跌段<br>
+      CPO -3.59%（主力 -150 亿，10日 -1267 亿）、通信设备 -5.26%（全行业跌幅第一，主力 -83.94 亿）、半导体 -2.71%（-69.38 亿）、AI算力芯片 -4.20%（-32.81 亿）、覆铜板 -0.95%（-6.55 亿，早盘异动）、光学光电子 -3.25%（-9.68 亿）、PCB 个股批量重挫（博硕科技 -12.23%）。<br>
+      <b>定位</b>：9/18 以来 CPO 主力累计流出已超 -1267 亿，从「加速派发」正式转入<b>主跌段</b>；叠加隔夜英伟达 -3.16%（盘后 -1.54%），产业叙事与资金流双杀，任何反抽均为减仓机会而非抄底机会。</div>
+      <div class="warn">🥈 <b>潜伏失败确认：军工航天链</b> — 强度：退潮加速<br>
+      商业航天 -55.77 亿（10日 -368.74）、卫星互联网 -19.02 亿（10日 -120.18）、国防军工 -29.57 亿、航天装备Ⅱ -3.97%；早盘「航海装备Ⅱ」触发 -6.49% 快速跌幅异动（中国船舶 -6.98%）。<br>
+      <b>定位</b>：9/24 曾逆势吸筹的卫星互联网（当日 +16.20 亿）已三周期全负，<b>「逆势潜伏」逻辑正式证伪</b>；航母概念 -3.34%、印巴冲突概念 -2.34%，事件驱动叙事亦退潮。</div>
+      <div class="ok">🥇 <b>唯一防御主线：白酒/消费/银行保险</b> — 强度：强（逆势独立）<br>
+      白酒Ⅱ +1.72%（皇台酒业 +10.04%，主力 +7.67 亿三重全正）、国有大型银行Ⅱ +0.81%（交通银行 +1.75%）、保险Ⅱ +0.71%（中国平安 +1.07%）、白色家电 +0.53%（TCL智家 +1.30%）、证券Ⅱ +0.51%（华林证券 +10.01%）；全行业仅此 5 家收红。<br>
+      <b>定位</b>：低估值 + 低拥挤 + 资金避风港，是普跌日唯一「价量资金」共振方向；但注意银行板块整体主力仍 -6.92 亿（母体走弱、大行护盘），按防御底仓配置、创新高不追。</div>
+      <div class="note" style="margin-top:10px">📌 <b>分歧观察：传媒（退潮期首日分歧但资金未撤完）</b>：影视传媒 -2.62%（主力 -18.79，但 5日 +37.00 / 10日 +25.10 仍正）、短剧/互动游戏 -2.44%（-20.46，5日 +32.44 仍正）、出版 -0.71%（+1.47，唯一三重全正）。10/14「唯一主线」今日价格补跌但 5 日/10 日资金仍为正 = <b>退潮初期的第一次分歧</b>，若明日缩量止跌可确认强势，若放量补跌则最后避风港失守。概念端「26三季报预增」+0.62%（崇达技术 +9.98%）为唯一收红概念，三季报窗口期业绩线是弱势中少数确定性。</div>
+    </div>
+    <div>
+      <div id="c_theme" class="chart" style="height:300px"></div>
+      <div class="note">资金多周期对照（5日 vs 10日主力净流入）：左侧 AI 硬件链 5 日/10 日均为深度净流出且当日仍在加速；右侧白酒Ⅱ/出版为仅有的双正方向。题材轮动节奏回顾：10/12 锂电风电一日游 → 10/13 军工+电子双主线 → 10/14 传媒独立防御 → <b>10/15 全线退潮、仅剩白酒/银行防御</b>。四日内三轮「主线证伪」，印证本轮行情始终是<b>存量资金高速轮动、无增量主线</b>；当连传媒也开始补跌、市场只剩防御时，进入「等右侧」阶段。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 五、仓位管理 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>五、仓位管理推荐（作战计划）</h2>
+  <div class="note" style="border-left-color:var(--hold)">前提假设：普通个人投资者 · 中等风险承受能力 · 可承受总资金 10–15% 回撤 · 投资期限 1–3 个月。激进型可上浮、保守型按比例下调；仓位以总资金为口径。</div>
+  <div style="margin:14px 0"><b>总仓位建议：<span class="up" style="font-size:18px">2.5 成</span>（全面防守档，昨 4 成）</b></div>
+  <div class="ladder">
+    <div class="bar"></div>
+    <div class="cur" style="left:12%"><span>当前 3707.48</span></div>
+    <div class="marks"><span>3674 今日低点</span><span>3707 收盘</span><span>3741 前低(已破)</span><span>3767 缺口上沿</span><span>3798 MA5</span><span>3831 MA10</span></div>
+  </div>
+  <table style="margin-top:10px">
+    <tr><th>仓位分层</th><th>建议比例</th><th>方向与执行要点</th></tr>
+    <tr><td>防御底仓</td><td><b>2.0 成</b></td><td>白酒/国有大行/保险/红利。今日已验证防御属性（白酒Ⅱ +1.72%、大行 +0.81%、保险 +0.71%），底仓不动、创新高不追；若明日防御方向批量补跌，再降至 1.5 成。</td></tr>
+    <tr><td>进攻博弈</td><td><b>0.5 成</b></td><td>仅限超跌反抽：出版（唯一三重全正的传媒残余）或 CRO/医药（N联亚药业、南模生物领涨的方向）。明日不新开仓，仅持仓做 T；单票 ≤0.3 成；<b>-5% 硬止损</b>。</td></tr>
+    <tr><td>现金机动</td><td><b>7.5 成</b></td><td>留作右侧加仓弹药：等缩量企稳 + 站回缺口上沿 3767.23 + 科技止跌信号，再分批入场。</td></tr>
+  </table>
+  <div class="grid g3" style="margin-top:14px">
+    <div class="note" style="border-left-color:var(--down)">📗 <b>情景 A：超跌反抽（概率约 30%）</b><br>触发：明日缩量（成交回落至 1.3 万亿下方）+ 收复 3720 + 白酒/出版延续。<br>操作：维持 2.5 成，0.5 成进攻仓低吸做 T，不扩大战线；反抽至 3767 缺口上沿无力则减进攻仓。</div>
+    <div class="note" style="border-left-color:var(--hold)">📙 <b>情景 B：低开震荡（概率约 45%）</b><br>触发：A50 -0.98% + 英伟达盘后 -1.54% 传导，沪指低开 3676~3690 区域震荡。<br>操作：开盘 30 分钟不操作，观察 3674.82（今日低点）承接；不破则持仓观望，不接飞刀。</div>
+    <div class="note" style="border-left-color:var(--sell)">📕 <b>情景 C：破位续杀（概率约 25%）</b><br>触发：跌破 3674.82 且无反抽 / 创业板跌破 2751.20 / 防御方向补跌。<br>操作：降至 2 成（仅余红利底仓 1.5 + 医药 0.5），等情绪冰点与地量。</div>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="ok" style="margin-top:0"><b>加仓触发（满足其二再动手）</b><br>① 两市成交缩量企稳（回落至 1.3 万亿以下后转稳）且沪指站回 3720；② 沪指放量收复 3767.23（缺口上沿）且涨家数回到 2500 以上；③ 涨停家数回到 60+ 且红盘率修复至 50% 以上；④ CPO/半导体主力净流出明显收窄（单日流出 &lt;30 亿）。<br>对应加仓路径：2.5 成 → 3 成（站 3720）→ 4 成（收复 3767.23）→ 4.5 成（站回 MA5 3798.21 且成交 >1.6 万亿）→ 5.5 成（放量收复 MA10 3831.22）。</div>
+    <div class="alert" style="margin-top:0"><b>减仓触发（满足其一即执行）</b><br>① 沪指跌破 3674.82（今日低点）→ 降至 2 成；② 创业板指跌破 2751.20（今日低点）→ 剩余成长/题材仓清零；③ 白酒/大行/保险等防御方向批量补跌 → 防御底仓减半；④ 跌停家数超过 50 家或红盘率连续两日 &lt;15% → 降至 1.5 成；⑤ A50 继续下探 13200 下方 → 全面防守、停止一切抄底。</div>
+  </div>
+  <div class="note"><b>单票纪律</b>：单票仓位 ≤ 总资金 15%；单笔止损 -5%~-7%（止损距离决定仓位大小）；单笔最大亏损 ≤ 总资金 2%。<b>组合相关性</b>：白酒+大行+保险+红利按防御合并计总暴露 ≤2 成；出版+CRO+医药按一个方向合并 ≤0.5 成。<b>判断失效条件</b>：若沪指放量跌破 3674.82 并连续两日收于其下，本复盘「冰点但不恐慌」框架作废，切换至全面防守（仓位 ≤1.5 成）；若明日出现「缩量长下影 + 收复 3720 + 涨停家数翻倍」组合信号，则冰点反弹框架生效，可按情景 A 执行。</div>
+</div>
+
+<!-- 六、外围环境 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>六、外围环境与风险提示</h2>
+  <div class="grid g4">
+    <div class="kpi"><div class="v neu">-0.09%</div><div class="l">道指 51621.48（10/14）</div></div>
+    <div class="kpi"><div class="v down">-1.88%</div><div class="l">纳指 26692.87（10/14）</div></div>
+    <div class="kpi"><div class="v down">-3.16%</div><div class="l">英伟达 221.30（盘后 -1.54%）</div></div>
+    <div class="kpi"><div class="v down">-1.39%</div><div class="l">中概 HXC 5660.10（10/14）</div></div>
+    <div class="kpi"><div class="v down">-0.98%</div><div class="l">A50 期货 13380 · 破 13400 触发线</div></div>
+    <div class="kpi"><div class="v down">-2.79%</div><div class="l">恒生科技 4057.91（10/15 盘中）</div></div>
+    <div class="kpi"><div class="v up">+1.37%</div><div class="l">伦敦金 4164.00 · 避险升温</div></div>
+    <div class="kpi"><div class="v down">1.6516%</div><div class="l">10Y 国债（10/14）· 创近月新低</div></div>
+  </div>
+  <div class="alert" style="margin-top:12px">⚠️ <b>明日（10/16）最直接利空组合：A50 -0.98% 跌破 13400 触发线 + 隔夜纳指 -1.88% + 英伟达 -3.16%（盘后续跌 -1.54%）+ 恒生科技 -2.79%。</b>算力龙头英伟达放量大跌是 AI 硬件链（CPO/光模块/算力芯片）全球叙事的同步走弱，与 A 股 CPO 10 日 -1267 亿的派发形成跨市场共振；A50 日内低 13196、持仓 93.2 万手，空头压力未释放完毕。预计 10/16 沪指低开 -0.8%~-1.2%（3676~3690 区域），大概率低开考验 3674.82。<b>操作纪律：低开不接飞刀</b>，前 30 分钟观察能否收复 3720；若开盘即破 3674 且无反抽，按情景 C 降仓执行。</div>
+  <div class="ok">✅ <b>对冲信号</b>：① <b>伦敦金 +1.37%（COMEX 金 +1.39%）</b>——避险资金明确升温，若 A 股出现无差别杀跌，金银方向是少数受益方向；② 美元指数 102.06 -0.48%（20 日 +3.30% 后首度明显回落）、离岸人民币环境改善；③ <b>10Y 国债 1.6516% 续创近月新低</b>——无风险利率下行的估值支撑逻辑未变；④ 沪原油主力 744.6（-1.53%）、WTI 93.84（-1.31%）大宗回落，输入性成本压力缓解。本轮下跌更接近<b>A股结构性去杠杆（两融 4 日连降 + 存量高低切换失败）+ 全球科技股共振调整</b>的叠加，而非中国资产的基本面系统性恶化。</div>
+  <div class="note"><b>事件日历</b>：10/15–10/31 三季报密集披露期（业绩暴雷风险与预增机会并存，今日「26三季报预增」+0.62% 是唯一收红概念，崇达技术 +9.98%）；10/26–28 国际算电协同产业链展（上海）；10/29 FCC 下次公开会议（光模块监管不确定性节点）。<b>风险提示</b>：① 美元指数 YTD +3.86% 中期仍强，压制外资风险偏好；② 两融差额低于 20 日均值、融资余额自高点 -1288 亿，杠杆资金撤退未完；③ 微盘股/ST 股批量跌停（*ST仕净 -13.91%、ST豆神 -10.42%）显示尾部风险释放中；④ 次新股 N联亚药业 +401.71%（换手 79.79%）的极端炒作与大盘冰点并存，警惕情绪极端化后的双向波动。</div>
+</div>
+
+<!-- 七、信号归因 -->
+<div class="card" style="margin-bottom:16px">
+  <h2><span class="dot"></span>七、信号归因与综合评分</h2>
+  <div class="grid g2">
+    <div>
+      <div id="c_radar" class="chart" style="height:300px"></div>
+      <div class="note">红盘率与成交趋势：breadth 接口仅返回最新交易日，9/24（20%）→ 9/30（46%）→ 10/14（17%）→ 10/15（7%）为关键节点值（部分交易日缺失）；两市成交自 10/9 的 1.90 万亿峰值回落至 10/14 的 1.41 万亿后，10/15 放量 15.4% 至 1.63 万亿——「缩量阴跌转放量长阴」，抛压进入集中释放阶段。</div>
+    </div>
+    <div>
+      <div class="score-ring">
+        <svg width="120" height="120">
+          <circle cx="60" cy="60" r="52" stroke="#2d2d44" stroke-width="10" fill="none"/>
+          <circle cx="60" cy="60" r="52" stroke="#ff4757" stroke-width="10" fill="none" stroke-dasharray="326.7" stroke-dashoffset="235.2" stroke-linecap="round"/>
+        </svg>
+        <div class="num">28</div><div class="lab">偏空 WATCH</div>
+      </div>
+      <div class="stat-row"><span>技术指标</span><span>15 · 跳空破位+五线全失守+破 BOLL 下轨创新低，但 KDJ J 12.76 / RSI 19.74 / 创业板 RSI 8.30 极度超卖</span></div>
+      <div class="stat-row"><span>资金流向</span><span>12 · CPO 单日 -150 亿（10日 -1267 亿）加速派发，22 板块仅 3 流入（多空比 1:48），两融 4 日连降</span></div>
+      <div class="stat-row"><span>市场广度</span><span>8 · 红盘率 7%（昨 17%），跌停 28 家，跌超 5% 达 838 家，昨日涨停仅 37.5% 上涨</span></div>
+      <div class="stat-row"><span>外围环境</span><span>15 · 纳指 -1.88%、英伟达 -3.16%、A50 破 13400、恒生科技 -2.79%；对冲：黄金 +1.37%、美元回落、10Y 新低</span></div>
+      <div class="alert"><b>最强看多信号</b>：白酒Ⅱ当日 +7.67 / 5日 +11.94 / 10日 +7.06「三重全正」且价格 +1.72% 领涨全行业，是全市场唯一「价量资金」共振方向（皇台酒业 +10.04%）；出版同为三重全正；叠加极度超卖（创业板 RSI 8.30）与放量（恐慌盘涌出），冰点后技术反抽概率上升。<br><b>最强看空信号</b>：CPO 光模块单日 -150.07 亿、10 日 -1267.31 亿且派发加速（5 日占 10 日 38%），叠加红盘率 7% 的放量普跌与 A50 破位——「主线真空 + 天量派发 + 跨市场共振调整」三重叠加，10/14 三条减仓触发全部兑现。</div>
+    </div>
+  </div>
+  <div class="note">评分说明：28/100 处于深度偏空区间（较 10/14 的 40 分下调 12 分），对应「全面防守、等右侧」——技术超卖与放量限制了继续恐慌性下杀的空间，但资金派发、广度崩塌、外围共振三项权重因子同时恶化，任何反抽均按减仓/做 T 机会对待而非趋势反转。<b>「冰点已至、但不接飞刀」</b>是当前最优解；真正的右侧信号 = 缩量企稳 + 收复 3767.23 缺口上沿 + 科技主力流出收窄，三者出现其二再将仓位从 2.5 成分批加回。</div>
+</div>
+
+<div class="foot">
+  <div>多市场智能股票分析师「星辰」· A股每日复盘 · 2026-10-15（周四）收盘后生成</div>
+  <div>数据截至 2026-10-15 15:35（A股已收盘；恒指/A50/黄金为盘中口径，美股为 10/14 收盘口径；两融为 T+1 披露口径；上证/创业板技术指标为 T-1 口径）</div>
+  <div style="margin-top:6px">免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有分析结论均基于历史数据和技术模型，不保证未来表现。</div>
+</div>
+
+<script>
+var UP = '#ef4444', DOWN = '#22c55e', TXT2 = '#94a3b8', BORDER = '#2d2d44';
+function mk(id, opt){ var el = document.getElementById(id); if(el){ var c = echarts.init(el); c.setOption(opt); window.addEventListener('resize', function(){ c.resize(); }); } }
+
+/* 1. 指数涨跌幅 */
+mk('c_idx', {
+  grid:{left:10,right:60,top:10,bottom:10},
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+  xAxis:{type:'value',axisLabel:{color:TXT2,formatter:'{value}%'},splitLine:{lineStyle:{color:BORDER}}},
+  yAxis:{type:'category',data:['沪深300','科创50','上证指数','深证成指','创业板指','中证1000','北证50'],axisLabel:{color:'#e2e8f0'}},
+  series:[{type:'bar',data:[-1.23,-1.50,-1.59,-2.43,-2.92,-3.28,-3.44],
+    label:{show:true,position:'right',color:'#e2e8f0',formatter:'{c}%'},
+    itemStyle:{color:function(p){return p.value<0?DOWN:UP;}}}]});
+
+/* 2. K线走势 */
+mk('c_kline', {
+  tooltip:{trigger:'axis'},
+  legend:{data:['上证指数','创业板指'],textStyle:{color:TXT2}},
+  grid:{left:50,right:20,top:30,bottom:22},
+  xAxis:{type:'category',data:['10/8','10/9','10/12','10/13','10/14','10/15'],axisLabel:{color:TXT2}},
+  yAxis:[{type:'value',scale:true,min:3650,max:3860,axisLabel:{color:TXT2},splitLine:{lineStyle:{color:BORDER}}},
+         {type:'value',scale:true,axisLabel:{color:TXT2},splitLine:{show:false}}],
+  series:[
+    {name:'上证指数',type:'line',data:[3811.90,3813.79,3797.24,3800.86,3767.23,3707.48],smooth:true,symbolSize:7,
+     lineStyle:{width:3,color:'#667eea'},itemStyle:{color:'#667eea'},areaStyle:{color:'rgba(102,126,234,.12)'},
+     markLine:{silent:true,symbol:'none',lineStyle:{color:'#ffa502',type:'dashed'},
+       label:{color:'#ffa502',formatter:'前低 3741.53'},data:[{yAxis:3741.53}]}},
+    {name:'创业板指',type:'line',yAxisIndex:1,data:[3036.66,3043.33,2963.82,2958.34,2866.76,2783.17],smooth:true,symbolSize:7,
+     lineStyle:{width:3,color:'#f472b6'},itemStyle:{color:'#f472b6'},
+     markLine:{silent:true,symbol:'none',lineStyle:{color:'#ffa502',type:'dashed'},
+       label:{color:'#ffa502',formatter:'BOLL下轨 2931'},data:[{yAxis:2931.41}]}}]});
+
+/* 3. 涨跌分布 */
+mk('c_breadth', {
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+  legend:{data:['上涨','下跌'],textStyle:{color:TXT2}},
+  grid:{left:10,right:30,top:30,bottom:22},
+  xAxis:{type:'category',data:['涨停','>7%','5~7%','2~5%','0~2%','平盘','-2~0%','-5~-2%','-7~-5%','<-7%','跌停'],axisLabel:{color:TXT2}},
+  yAxis:{type:'value',axisLabel:{color:TXT2},splitLine:{lineStyle:{color:BORDER}}},
+  series:[
+    {name:'上涨',type:'bar',stack:'a',data:[36,19,21,113,241,0,0,0,0,0,0],itemStyle:{color:UP}},
+    {name:'下跌',type:'bar',stack:'a',data:[0,0,0,0,0,38,1038,3232,630,180,28],itemStyle:{color:DOWN}}]});
+
+/* 4. 板块资金 */
+mk('c_fund', {
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+  grid:{left:10,right:60,top:10,bottom:10},
+  xAxis:{type:'value',axisLabel:{color:TXT2,formatter:'{value}亿'},splitLine:{lineStyle:{color:BORDER}}},
+  yAxis:{type:'category',axisLabel:{color:'#e2e8f0',fontSize:11},
+    data:['航天装备Ⅱ','风电设备','房地产开发','覆铜板','银行','光学光电子','半导体设备','电池','汽车零部件','影视传媒','卫星互联网','短剧/互动','国防军工','AI算力芯片','电力设备','商业航天','半导体','通信设备','CPO光模块','食品饮料','出版','白酒Ⅱ']},
+  series:[{type:'bar',data:[-2.25,-4.80,-4.65,-6.55,-6.92,-9.68,-10.78,-11.83,-16.51,-18.79,-19.02,-20.46,-29.57,-32.81,-43.37,-55.77,-69.38,-83.94,-150.07,3.21,1.47,7.67],
+    label:{show:true,position:'right',color:'#e2e8f0',fontSize:10,formatter:'{c}'},
+    itemStyle:{color:function(p){return p.value<0?DOWN:UP;}}}]});
+
+/* 5. 两融余额 */
+mk('c_margin', {
+  tooltip:{trigger:'axis'},
+  grid:{left:52,right:16,top:26,bottom:22},
+  xAxis:{type:'category',data:['9/22','9/23','9/24','9/28','9/29','9/30','10/8','10/9','10/12','10/13','10/14'],axisLabel:{color:TXT2,fontSize:10}},
+  yAxis:{type:'value',min:24700,max:26500,axisLabel:{color:TXT2},splitLine:{lineStyle:{color:BORDER}}},
+  series:[{type:'line',data:[26263.36,26252.91,26078.48,25816.72,25796.66,25404.34,25445.87,25300.46,25252.87,25162.69,24974.85],
+    smooth:true,symbolSize:6,lineStyle:{width:3,color:'#667eea'},itemStyle:{color:'#667eea'},
+    areaStyle:{color:'rgba(102,126,234,.15)'},
+    markLine:{silent:true,symbol:'none',lineStyle:{color:DOWN,type:'dashed'},label:{color:DOWN,formatter:'自高点 -1288亿'},
+      data:[{yAxis:26263.36}]}}]});
+
+/* 6. 题材资金多周期 */
+mk('c_theme', {
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+  legend:{data:['5日主力净流入','10日主力净流入'],textStyle:{color:TXT2}},
+  grid:{left:10,right:20,top:30,bottom:22},
+  xAxis:{type:'category',axisLabel:{color:'#e2e8f0',fontSize:10,interval:0,rotate:28},
+    data:['CPO','通信设备','半导体','商业航天','电力设备','AI算力芯片','卫星互联网','影视传媒','短剧/互动','出版','白酒Ⅱ']},
+  yAxis:{type:'value',axisLabel:{color:TXT2,formatter:'{value}亿'},splitLine:{lineStyle:{color:BORDER}}},
+  series:[
+    {name:'5日主力净流入',type:'bar',data:[-480.92,-241.86,-223.58,-183.46,-129.49,-94.76,-71.61,37.00,32.44,19.22,11.94],
+     itemStyle:{color:function(p){return p.value<0?DOWN:UP;}}},
+    {name:'10日主力净流入',type:'bar',data:[-1267.31,-605.77,-719.50,-368.74,-167.71,-268.99,-120.18,25.10,-5.13,17.16,7.06],
+     itemStyle:{color:'rgba(148,163,184,.55)'}}]});
+
+/* 7. 信号归因雷达 */
+mk('c_radar', {
+  tooltip:{},
+  radar:{indicator:[{name:'技术指标',max:50},{name:'资金流向',max:50},{name:'市场广度',max:50},{name:'外围环境',max:50}],
+    axisName:{color:TXT2},splitLine:{lineStyle:{color:BORDER}},splitArea:{areaStyle:{color:['rgba(102,126,234,.03)','rgba(102,126,234,.06)']}}},
+  series:[{type:'radar',data:[{value:[15,12,8,15],name:'信号贡献度'}],
+    areaStyle:{color:'rgba(255,71,87,.25)'},lineStyle:{color:'#ff4757',width:2},itemStyle:{color:'#ff4757'}}]});
+</script>
+</body>
+</html>

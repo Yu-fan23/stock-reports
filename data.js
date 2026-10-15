@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-15 15:50:15",
-  "total": 382,
+  "generatedAt": "2026-10-15 16:00:58",
+  "total": 383,
   "categories": [
     {
       "key": "panqian",
@@ -1143,9 +1143,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 79,
-      "latest": "20261014",
+      "count": 80,
+      "latest": "20261015",
       "reports": [
+        {
+          "date": "20261015",
+          "dateLabel": "2026-10-15（周四）",
+          "file": "reports/close/close_20261015.html",
+          "title": "A股行情复盘（2026-10-15 · 周四 · 放量长阴·情绪冰点·仓位降至2.5成）",
+          "size": 43530
+        },
         {
           "date": "20261014",
           "dateLabel": "2026-10-14（周三）",
