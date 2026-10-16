@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-16 15:50:53",
-  "total": 387,
+  "generatedAt": "2026-10-16 16:22:15",
+  "total": 388,
   "categories": [
     {
       "key": "panqian",
@@ -1157,9 +1157,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 80,
-      "latest": "20261015",
+      "count": 81,
+      "latest": "20261016",
       "reports": [
+        {
+          "date": "20261016",
+          "dateLabel": "2026-10-16（周五）",
+          "file": "reports/close/close_20261016.html",
+          "title": "A股行情复盘（2026-10-16 · 周五 · 高开冲高回落尾盘反抽·广度史诗级修复·仓位回升至3成）",
+          "size": 34522
+        },
         {
           "date": "20261015",
           "dateLabel": "2026-10-15（周四）",
