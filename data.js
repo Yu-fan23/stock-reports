@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-16 08:19:58",
-  "total": 386,
+  "generatedAt": "2026-10-16 12:50:49",
+  "total": 387,
   "categories": [
     {
       "key": "panqian",
@@ -579,9 +579,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 80,
-      "latest": "20261015",
+      "count": 81,
+      "latest": "20261016",
       "reports": [
+        {
+          "date": "20261016",
+          "dateLabel": "2026-10-16（周五）",
+          "file": "reports/noon/noon_20261016.html",
+          "title": "A股午间复盘 · 2026-10-16（周五）· 报复性普涨·收复3741生命线·主力单日转净流入·控仓待确认",
+          "size": 29628
+        },
         {
           "date": "20261015",
           "dateLabel": "2026-10-15（周四）",
