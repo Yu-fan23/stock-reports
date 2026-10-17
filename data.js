@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-17 15:50:25",
-  "total": 392,
+  "generatedAt": "2026-10-17 16:19:26",
+  "total": 393,
   "categories": [
     {
       "key": "panqian",
@@ -1171,9 +1171,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 81,
-      "latest": "20261016",
+      "count": 82,
+      "latest": "20261017",
       "reports": [
+        {
+          "date": "20261017",
+          "dateLabel": "2026-10-17（周六）",
+          "file": "reports/close/close_20261017.html",
+          "title": "A股周末休市特刊（2026-10-17 · 周六 · 定格10/16修复日 · 周五夜盘美股重挫纳指-2.15%）",
+          "size": 40158
+        },
         {
           "date": "20261016",
           "dateLabel": "2026-10-16（周五）",
