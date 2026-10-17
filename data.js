@@ -1,5 +1,5 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-17 18:00:21",
+  "generatedAt": "2026-10-18 07:50:49",
   "total": 394,
   "categories": [
     {
@@ -15,8 +15,8 @@ window.SITE_DATA = {
           "date": "20261019",
           "dateLabel": "2026-10-19（周一）",
           "file": "reports/panqian/panqian_20261019.html",
-          "title": "盘前计划 · 2026-10-19（周一）· 三问三答",
-          "size": 17410
+          "title": "盘前计划 2026-10-19 · 主流题材三问三答",
+          "size": 21317
         },
         {
           "date": "20261016",
