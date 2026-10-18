@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-18 15:51:02",
-  "total": 396,
+  "generatedAt": "2026-10-18 16:16:37",
+  "total": 398,
   "categories": [
     {
       "key": "panqian",
@@ -1178,9 +1178,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 82,
-      "latest": "20261017",
+      "count": 83,
+      "latest": "20261018",
       "reports": [
+        {
+          "date": "20261018",
+          "dateLabel": "2026-10-18（周日）",
+          "file": "reports/close/close_20261018.html",
+          "title": "A股周末休市特刊（2026-10-18 · 周日 · 定格10/16修复日 · 两融T+1落地6连降 · 存储链业绩反转）",
+          "size": 50922
+        },
         {
           "date": "20261017",
           "dateLabel": "2026-10-17（周六）",
@@ -1763,9 +1770,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 76,
-      "latest": "20261017",
+      "count": 77,
+      "latest": "20261018",
       "reports": [
+        {
+          "date": "20261018",
+          "dateLabel": "2026-10-18（周日）",
+          "file": "reports/limitup/limitup_20261018.html",
+          "title": "涨停梯队复盘 · 2026-10-18（周日休市特别版 Day2）",
+          "size": 84881
+        },
         {
           "date": "20261017",
           "dateLabel": "2026-10-17（周六）",
