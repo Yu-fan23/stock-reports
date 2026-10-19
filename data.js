@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-19 20:49:09",
-  "total": 402,
+  "generatedAt": "2026-10-20 07:51:07",
+  "total": 403,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 81,
-      "latest": "20261019",
+      "count": 82,
+      "latest": "20261020",
       "reports": [
+        {
+          "date": "20261020",
+          "dateLabel": "2026-10-20（周二）",
+          "file": "reports/panqian/panqian_20261020.html",
+          "title": "盘前计划 2026-10-20 · 三问三答（星辰·多市场智能股票分析师）",
+          "size": 21812
+        },
         {
           "date": "20261019",
           "dateLabel": "2026-10-19（周一）",
