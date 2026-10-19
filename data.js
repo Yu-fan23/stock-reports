@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-19 07:55:50",
-  "total": 399,
+  "generatedAt": "2026-10-19 12:50:56",
+  "total": 400,
   "categories": [
     {
       "key": "panqian",
@@ -586,9 +586,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 83,
-      "latest": "20261018",
+      "count": 84,
+      "latest": "20261019",
       "reports": [
+        {
+          "date": "20261019",
+          "dateLabel": "2026-10-19（周一）",
+          "file": "reports/noon/noon_20261019.html",
+          "title": "A股午间复盘 · 2026-10-19（周一）· 光通信三剑客单日资金回流·指数分化·维持3成防御",
+          "size": 27879
+        },
         {
           "date": "20261018",
           "dateLabel": "2026-10-18（周日）",
