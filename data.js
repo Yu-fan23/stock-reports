@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-19 15:50:47",
-  "total": 400,
+  "generatedAt": "2026-10-19 16:19:43",
+  "total": 401,
   "categories": [
     {
       "key": "panqian",
@@ -1185,9 +1185,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 83,
-      "latest": "20261018",
+      "count": 84,
+      "latest": "20261019",
       "reports": [
+        {
+          "date": "20261019",
+          "dateLabel": "2026-10-19（周一）",
+          "file": "reports/close/close_20261019.html",
+          "title": "A股收盘复盘（2026-10-19 · 周一 · 沪指收复BOLL下轨 · 机器人链启动 · 光通信业绩兑现）",
+          "size": 35103
+        },
         {
           "date": "20261018",
           "dateLabel": "2026-10-18（周日）",
