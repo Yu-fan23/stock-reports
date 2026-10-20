@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股收盘复盘（2026-10-20 · 周二 · 指数歇脚题材开派对 · 机器人+端侧AI双主线 · 北证50大涨3.88%）</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --card2:#16162a; --border:#2d2d44;
+    --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --up:#ef4444; --down:#22c55e; --txt:#e2e8f0; --txt2:#94a3b8;
+    --accent1:#667eea; --accent2:#764ba2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,sans-serif;line-height:1.65;padding:18px;max-width:1180px;margin:0 auto}
+  .header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:18px;padding:18px 22px;background:linear-gradient(135deg,#1a1a2e,#16243a);border:1px solid var(--border);border-radius:16px}
+  .header h1{font-size:21px;font-weight:700;letter-spacing:.5px}
+  .header .sub{color:var(--txt2);font-size:13px;margin-top:4px}
+  .badge{display:inline-block;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;background:rgba(255,165,2,.15);color:#ffd28a;border:1px solid rgba(255,165,2,.45)}
+  .concl{background:linear-gradient(135deg,rgba(102,126,234,.12),rgba(118,75,162,.10));border:1px solid rgba(102,126,234,.4);border-radius:14px;padding:16px 20px;margin-bottom:18px;font-size:14.5px}
+  .concl b{color:#a5b8ff}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .g5{grid-template-columns:repeat(5,1fr)}
+  @media(max-width:860px){.g2,.g3,.g4,.g5{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.g2,.g3,.g4,.g5{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px}
+  .card h3{font-size:15px;color:var(--txt);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .idx-card{text-align:center;padding:12px 6px}
+  .idx-card .name{font-size:12.5px;color:var(--txt2)}
+  .idx-card .val{font-size:20px;font-weight:700;margin:4px 0}
+  .idx-card .chg{font-size:12.5px;font-weight:600}
+  .up{color:var(--up)} .down{color:var(--down)}
+  .chart{width:100%;height:300px}
+  .chart-tall{width:100%;height:340px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--txt2);font-weight:600;background:var(--card2)}
+  .tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:12px;font-weight:600;margin-right:6px}
+  .tag-buy{background:rgba(0,212,170,.15);color:var(--buy)}
+  .tag-sell{background:rgba(255,71,87,.15);color:#ff8a94}
+  .tag-hold{background:rgba(255,165,2,.15);color:var(--hold)}
+  .tag-warn{background:rgba(255,71,87,.12);color:#ff8a94;border:1px solid rgba(255,71,87,.35)}
+  .tag-good{background:rgba(0,212,170,.12);color:var(--buy);border:1px solid rgba(0,212,170,.35)}
+  .warnbox{background:rgba(255,71,87,.08);border:1px solid rgba(255,71,87,.35);border-radius:12px;padding:14px 16px;font-size:13.5px}
+  .goodbox{background:rgba(0,212,170,.08);border:1px solid rgba(0,212,170,.35);border-radius:12px;padding:14px 16px;font-size:13.5px}
+  .kv{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px dashed var(--border)}
+  .kv:last-child{border-bottom:none}
+  .kv .k{color:var(--txt2)}
+  .sec-title{font-size:17px;font-weight:700;margin:22px 0 12px;padding-left:12px;border-left:4px solid var(--accent1)}
+  .note{color:var(--txt2);font-size:12px;margin-top:8px}
+  .pill{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11.5px;font-weight:600;background:var(--card2);border:1px solid var(--border);color:var(--txt2);margin-left:6px}
+  .life{font-size:12px;color:var(--txt2)}
+  .foot{margin-top:26px;padding:16px 20px;background:var(--card2);border:1px solid var(--border);border-radius:12px;font-size:12px;color:var(--txt2)}
+  .toggle{margin-left:auto;font-size:11.5px;padding:2px 10px;border-radius:10px;border:1px solid var(--border);background:var(--card2);color:var(--txt2);cursor:pointer}
+  .line-item{display:flex;gap:10px;padding:9px 0;border-bottom:1px dashed var(--border);font-size:13.5px}
+  .line-item:last-child{border-bottom:none}
+  .line-item .n{flex:0 0 86px;font-weight:700;color:#a5b8ff}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>📈 A股收盘复盘 · 2026-10-20（周二）</h1>
+    <div class="sub">数据截至 10/20 收盘 ｜ 交易状态：已收盘（沪深北均交易，沪深港通正常）｜ 报告生成 16:35 ｜ 数据源：NEODATA 行情/资金流 + 公开财经媒体</div>
+  </div>
+  <span class="badge">⚖️ HOLD偏多 · 57/100 · 存量换挡接力</span>
+</div>
+
+<div class="concl">
+  <b>一句话结论：</b>三大指数「一红两绿」但个股普涨——沪指 +0.12% 收 3735.37、<b>北证50 大涨 3.88% 领跑</b>，全市场 3778 家上涨（占比 67%，较昨日 42% 大幅修复）、涨停 57 家、跌停仅 7 家，<b>赚钱效应显著扩散</b>；但两市成交 1.46 万亿仍未回 1.5 万亿、<b>四大指数主力资金合计净流出 171.5 亿</b>、两融余额 7 连降，定性为「<b>存量博弈下的接力换挡</b>」而非趋势反转——资金从煤炭/保险/券商/军工等防御红利撤出，涌入<b>人形机器人+端侧AI+半导体+医疗</b>；10/18 设定的「站回 3720 + 涨家&gt;2500」条件今日双双兑现，<b>总仓位由 3.0 成小幅提至 3.5 成</b>，进一步加码需等「量能回 1.5 万亿 + 主力资金转正」确认，跌破 3692 双底则回撤防守。
+</div>
+
+<!-- ================= 一、主要指数表现 ================= -->
+<div class="sec-title">一、主要指数表现</div>
+<div class="grid g4">
+  <div class="card idx-card"><div class="name">上证指数</div><div class="val up">3735.37</div><div class="chg up">+0.12% ｜ 振幅1.01%</div></div>
+  <div class="card idx-card"><div class="name">深证成指</div><div class="val down">11801.29</div><div class="chg down">-0.14% ｜ 振幅2.09%</div></div>
+  <div class="card idx-card"><div class="name">创业板指</div><div class="val down">2739.20</div><div class="chg down">-0.26% ｜ 振幅3.05%</div></div>
+  <div class="card idx-card"><div class="name">科创50</div><div class="val up">1342.42</div><div class="chg up">+1.00% ｜ 振幅3.41%</div></div>
+  <div class="card idx-card"><div class="name">北证50</div><div class="val up">982.87</div><div class="chg up">+3.88% ｜ 大幅领跑</div></div>
+  <div class="card idx-card"><div class="name">沪深300</div><div class="val down">4152.11</div><div class="chg down">-0.54%</div></div>
+  <div class="card idx-card"><div class="name">上证50</div><div class="val down">2765.77</div><div class="chg down">-0.31%</div></div>
+  <div class="card idx-card"><div class="name">两市成交额</div><div class="val">1.4561万亿</div><div class="chg up">放量185.95亿（+1.3%）</div></div>
+</div>
+<div class="grid g2" style="margin-top:16px">
+  <div class="card"><h3>📊 当日指数涨跌幅对比</h3><div id="c_idx" class="chart"></div>
+    <div class="note">格局：大盘权重偏弱（沪深300 -0.54%、上证50 -0.31%）、中小盘与题材强势（北证50 +3.88%、科创50 +1.00%），黄白线分化明显。来源：NEODATA 统一行情，2026-10-20 收盘。</div>
+  </div>
+  <div class="card"><h3>🧭 当日分时形态</h3>
+    <div class="kv"><span class="k">开盘</span><span>三大指数集体低开（沪指 3718.44，-0.33%）</span></div>
+    <div class="kv"><span class="k">上午</span><span>震荡回升，盘中集体翻红，机器人/端侧AI 领涨</span></div>
+    <div class="kv"><span class="k">午后</span><span>走势分化，创业板指冲高回落、振幅 3.05%（低点 2706.41）</span></div>
+    <div class="kv"><span class="k">尾盘</span><span>上证50ETF 华夏等宽基 ETF 约 20 分钟成交超 40 亿，带动指数收窄跌幅、<b>沪指翻红</b></span></div>
+    <div class="kv"><span class="k">关键位</span><span>收 3735.37 站稳 3720/3730；10/16 双底 3681.28 / 3692.29 未破；上方 3745 附近为昨日复盘 MA5 区域压力</span></div>
+  </div>
+</div>
+
+<!-- ================= 二、市场赚钱效应总结 ================= -->
+<div class="sec-title">二、市场赚钱效应总结</div>
+<div class="grid g2">
+  <div class="card"><h3>📊 涨跌幅分布（家数）<button class="toggle" id="btn_breadth" onclick="toggleBreadth()">切换表格</button></h3>
+    <div id="c_breadth" class="chart"></div>
+    <div id="t_breadth" style="display:none">
+      <table>
+        <tr><th>区间</th><th>家数</th><th>区间</th><th>家数</th></tr>
+        <tr><td>涨停</td><td class="up">57</td><td>平盘</td><td>129</td></tr>
+        <tr><td>+7% 以上</td><td class="up">134</td><td>-2%～0%</td><td class="down">1322</td></tr>
+        <tr><td>+5%～+7%</td><td class="up">203</td><td>-5%～-2%</td><td class="down">279</td></tr>
+        <tr><td>+2%～+5%</td><td class="up">1363</td><td>-7%～-5%</td><td class="down">33</td></tr>
+        <tr><td>0～+2%</td><td class="up">2021</td><td>-7% 以下</td><td class="down">27</td></tr>
+        <tr><td colspan="2"><b>上涨合计 3778（67%）</b></td><td><b>下跌合计 1668</b>（含跌停 7）</td><td><b>7</b></td></tr>
+      </table>
+    </div>
+    <div class="note">上涨占比 67%，较昨日约 42% 提升 25 个百分点，情绪修复明显。来源：NEODATA 市场宽度统计，2026-10-20。</div>
+  </div>
+  <div class="card"><h3>🌡️ 市场情绪仪表盘</h3><div id="c_gauge" class="chart"></div>
+    <div class="note">情绪分 57/100（10/19 约 45）：红盘率 67%、涨停 57 家、跌停 7 家、封板率 65%；但昨日涨停股今日仅 50% 上涨（昨日为 53.97%），高位接力资金偏谨慎，以分化兑现为主。</div>
+  </div>
+</div>
+<div class="card" style="margin-top:16px">
+  <h3>💰 赚钱效应定性</h3>
+  <table>
+    <tr><th>维度</th><th>10/20</th><th>10/19</th><th>解读</th></tr>
+    <tr><td>上涨/下跌家数</td><td class="up">3778 / 1668（红盘率 67%）</td><td class="up">2275 / 3129（40%）</td><td>广度大幅扩张，个股普涨</td></tr>
+    <tr><td>涨停 / 跌停</td><td>57 / <b>7</b></td><td>50 / 27</td><td>涨停升、跌停骤降，两极反转</td></tr>
+    <tr><td>昨日涨停股今日表现</td><td>50.00% 上涨</td><td>53.97%</td><td>短线赚钱效应高位持稳</td></tr>
+    <tr><td>连板梯队</td><td>连板 14 只、三连板以上 6 只、晋级率 54.5%</td><td>前日连板 11 只</td><td>高度受压（最高 12天7板），中低位接力活跃</td></tr>
+    <tr><td>涨/跌超 9%</td><td class="up">112 家 / 20 家</td><td>—</td><td>极端强势股占比较高</td></tr>
+    <tr><td>两市成交额</td><td>1.4561 万亿（+185.95 亿）</td><td>1.4375 万亿</td><td>温和放量，但仍低于 1.5 万亿</td></tr>
+  </table>
+  <div class="note">定性：<b>「个股级赚钱、指数级歇脚」的换挡行情</b>。权重（沪深300 -0.54%）拖累指数、小微盘领涨（微盘股指数涨逾 1%）；赚钱效应集中于机器人链（板块内约 100 只个股涨超 5%、20 余只涨停）与端侧AI/半导体链；煤炭、保险、券商、军工、汽车整车是主要亏钱方向。风险信号：昨日连板指数涨 3.38% 但主力资金净流出 4.65 亿（近 5 日净流出 24.0 亿），高位股分歧正在积累。</div>
+</div>
+
+<!-- ================= 三、资金流向分析 ================= -->
+<div class="sec-title">三、资金流向分析</div>
+<div class="grid g2">
+  <div class="card"><h3>💹 指数主力资金流向（亿元）</h3><div id="c_flow" class="chart"></div>
+    <div class="note">四大指数当日合计净流出约 171.5 亿；上证近 5 日 -555.62 亿、近 10 日 -1036.18 亿，创业板近 10 日 -513.77 亿，指数层面兑现压力持续。来源：NEODATA 统一资金流向，2026-10-20。</div>
+  </div>
+  <div class="card"><h3>🏭 行业资金流向（第三方口径）</h3>
+    <table>
+      <tr><th>方向</th><th>行业</th><th>数值</th></tr>
+      <tr><td rowspan="3"><span class="tag tag-good">净流入</span></td><td>消费电子</td><td class="up">+28.82 亿</td></tr>
+      <tr><td>自动化设备 / 半导体 / IT服务 / 软件开发 / 医疗器械</td><td>居前（未披露具体值）</td></tr>
+      <tr><td colspan="2" class="note" style="padding-top:0">流入集中硬科技+医疗，与领涨板块高度重合</td></tr>
+      <tr><td rowspan="2"><span class="tag tag-sell">净流出</span></td><td>工业金属</td><td class="down">-21.92 亿</td></tr>
+      <tr><td>证券 / 电力 / 军工装备 / 电网设备 / 银行</td><td>居前（未披露具体值）</td></tr>
+    </table>
+    <div class="kv" style="margin-top:10px"><span class="k">融资余额</span><span>24,454.97 亿（-0.26%，<b class="down">连续 7 日下降</b>）</span></div>
+    <div class="kv"><span class="k">融券余额 / 两融差额</span><span>291.67 亿 / 24,163.30 亿（低于 20 日均值）</span></div>
+    <div class="kv"><span class="k">北向资金</span><span>当日净买入值<b>数据不可用</b>（沪深港通单日净买额已不实时披露，需以交易所后续口径为准）</span></div>
+    <div class="note">注：行业资金为第三方统计口径（按大单/中单/小单推断），与指数口径方向存在差异，参考意义有限；杠杆资金做多情绪连续降温。</div>
+  </div>
+</div>
+<div class="goodbox" style="margin-top:16px">
+  <b>资金面关键信号：</b>① 尾盘宽基 ETF 放量（上证50ETF 华夏 20 分钟成交超 40 亿）带动沪指翻红——「稳市场」资金仍在关键位置托底；② 主力资金净流出集中在防御红利（银行/券商/电力/军工），净流入集中在机器人/端侧AI——<b>是「换位置」不是「离场」</b>；③ 两融 7 连降说明杠杆资金尚未回来，行情向上弹性受限，结构上做多、总量上克制。
+</div>
+
+<!-- ================= 四、主线题材与情绪周期 ================= -->
+<div class="sec-title">四、主线题材与情绪周期</div>
+<div class="grid g2">
+  <div class="card">
+    <h3>🔥 主线一：人形机器人 + 物理AI（全天最强）</h3>
+    <div class="line-item"><span class="n">板块表现</span><span>机器人概念 20 余只涨停：长盈精密、赛摩智能 20CM 涨停，奥比中光 +15.86%、索辰科技 +13.10%、宇树科技涨超 6%；板块内约 100 只个股涨超 5%；自动化设备 +4.09% 居行业首位</span></div>
+    <div class="line-item"><span class="n">梯队</span><span>高位：九阳股份 12天7板（「羊」字辈玄学）；3板：大业股份（一字）、京城股份、海洋王；2板：福莱新材、宁波东力、浙江荣泰、科森科技、凡拓数创（物理AI 20CM 2板）</span></div>
+    <div class="line-item"><span class="n">催化</span><span>英伟达 GTC 柏林大会（10/20-22，黄仁勋 21 日演讲）将物理AI/机器人列为核心议题；工信部：上半年人形机器人整机超 400 款、产量超 4 万台、全年有望破 10 万台；首批人形机器人国家标准发布；沙利文：上半年全球人形机器人收入前五全部为中国企业；特斯拉 Optimus 10/21（美东）财报</span></div>
+    <div class="line-item"><span class="n">风险</span><span>板块连续反弹后换手偏高、多数标的机器人业务实际占比有限，午后部分后排已开板回落，分歧正在积累</span></div>
+  </div>
+  <div class="card">
+    <h3>⚡ 主线二：端侧AI / 消费电子 / 半导体</h3>
+    <div class="line-item"><span class="n">板块表现</span><span>消费电子 +3.37%、半导体 +2.92%；恒玄科技 20CM 涨停，瑞芯微、美格智能、移远通信、博通集成、龙旗科技涨停，乐鑫科技、银河微电涨超 16%，摩尔线程涨超 11%</span></div>
+    <div class="line-item"><span class="n">催化</span><span>9 月集成电路出口 449.5 亿美元、同比 +136.0%（前三季度累计 +99.1%）；隔夜费城半导体指数 +1.61% 终结八连跌；三季报窗口国产算力全线预喜（海光信息、龙芯中科、寒武纪净利增速五成到数倍）；银河微电前三季净利 +109.70%；IDC：端侧算力需求快速攀升，AI眼镜销售额同比 +1.1 倍</span></div>
+    <div class="line-item"><span class="n">支线</span><span>医疗服务/医疗美容（迪安诊断 19.99%）、食品饮料盘中异动（安记食品直线涨停）——资金外溢的低位补涨方向，尚无完整梯队</span></div>
+  </div>
+</div>
+<div class="card" style="margin-top:16px">
+  <h3>🏛️ 政策与外部背景</h3>
+  <div class="kv"><span class="k">资本市场</span><span>吴清 10/19 金融街论坛释放稳市信号：北证50ETF、违规减持新规落地、首批 18 只主动ETF 获批（10/23 发售）→ 直接点燃北证50 +3.88%</span></div>
+  <div class="kv"><span class="k">货币政策</span><span>央行：设立应对非银机构大额赎回的流动性支持工具、扩大 SLF 适用范围、推动债市互联互通；10 月 LPR 连续 17 个月不变（1Y 3.0% / 5Y+ 3.5%）</span></div>
+  <div class="kv"><span class="k">政策储备</span><span>发改委 10/20 发布会：将根据需要及时出台新的增量政策，确保经济运行在合理区间</span></div>
+  <div class="kv"><span class="k">外部扰动</span><span>高盛交易部门：截至 10/15 的五个交易日，对冲基金以至少十年最快速度减持科技股，净杠杆率降至一年最低 48.6%——全球风险偏好对科技链的扰动需警惕</span></div>
+</div>
+<div class="warnbox" style="margin-top:16px">
+  <b>情绪周期定位：修复中段的高位分歧期。</b>连板高度受压（最高 12天7板但为玄学炒作）、炸板率 35%（封板率 65%）、昨日涨停股今日仅 50% 上涨、主力资金连续净流出——普涨背后是「低位补涨 + 高位兑现」并存。<b>证伪信号</b>：明日若成交额缩至 1.4 万亿以下（缩水超 600 亿）、涨停家数掉到 30 家以下且跌停扩散至两位数，则题材有「一日游」风险，需降低预期、收缩进攻仓。
+</div>
+
+<!-- ================= 五、仓位管理推荐 ================= -->
+<div class="sec-title">五、仓位管理推荐</div>
+<div class="grid g2">
+  <div class="card">
+    <h3>🎯 仓位结论（中等风险偏好口径）</h3>
+    <div class="kv"><span class="k">总仓位</span><span><b>3.0 成 → 3.5 成</b>（+0.5 成试仓）</span></div>
+    <div class="kv"><span class="k">兑现条件</span><span>10/18 设定「站回 3720」✓（3735.37）、「涨家&gt;2500」✓（3778）——按纪律小幅加码</span></div>
+    <div class="kv"><span class="k">克制原因</span><span>成交 1.46 万亿未回 1.5 万亿、主力净流出 171.5 亿、两融 7 连降——增量资金未确认，只加「试仓」不加「重仓」</span></div>
+    <div class="kv"><span class="k">加仓触发（满足其二再加 1 成）</span><span>① 成交额连续两日 ≥ 1.5 万亿；② 主力资金转正；③ 涨停维持 ≥ 50 家且机器人龙头弱转强</span></div>
+    <div class="kv"><span class="k">减仓触发</span><span>跌破 3692 双底 / 创业板再创新低 / 成交缩至 1.4 万亿以下且涨停 &lt; 30 家——任一项触发，进攻仓减半</span></div>
+    <div class="kv"><span class="k">单笔纪律</span><span>单笔试错仓 ≤ 总仓位 10%；止损距离 ÷ 单笔风险预算（账户 1-2%）反推仓位；不在浮盈上盲目加码</span></div>
+  </div>
+  <div class="card">
+    <h3>🧩 结构建议（进攻仓内部再平衡）</h3>
+    <table>
+      <tr><th>方向</th><th>动作</th><th>逻辑</th></tr>
+      <tr><td>人形机器人 / 物理AI</td><td><span class="tag tag-buy">进攻主仓</span></td><td>主线最强、催化连续（GTC+国标+产量），回踩不破位可持有，回避 12天7板类高位玄学标的</td></tr>
+      <tr><td>端侧AI / 半导体</td><td><span class="tag tag-buy">进攻副仓</span></td><td>出口 +136%、三季报预喜提供业绩支撑，回调即机会</td></tr>
+      <tr><td>光通信业绩链</td><td><span class="tag tag-hold">持有观察</span></td><td>10/15 天量出逃后主力 10/19 首次转正，今日随科技普涨，看资金能否连续回流</td></tr>
+      <tr><td>煤炭 / 保险 / 银行 / 军工</td><td><span class="tag tag-sell">降低权重</span></td><td>防御红利获利了结、主力持续流出，仅保留对冲底仓</td></tr>
+    </table>
+    <div class="note">压力测试：若明日低开 1% 且机器人链集体调整，3.5 成仓位的账户回撤可控在 1.5% 以内；若满仓（≥7 成）则同类冲击回撤超 3%，不符合当前存量市风险预算。<b>组合相关性提示：机器人+端侧AI+半导体三方向高度同涨同跌，合并视为一笔「科技进攻仓」，合计不超过总仓位 50%。</b></div>
+  </div>
+</div>
+<div class="card" style="margin-top:16px">
+  <h3>🔭 明日（10/21）观察清单</h3>
+  <table>
+    <tr><th>#</th><th>观察项</th><th>看多信号</th><th>看空信号</th></tr>
+    <tr><td>1</td><td>量能</td><td>维持 1.46 万亿以上、向 1.5 万亿修复</td><td>缩至 1.4 万亿以下（缩水超 600 亿）</td></tr>
+    <tr><td>2</td><td>英伟达 GTC 柏林（黄仁勋 21 日演讲）+ 特斯拉 Optimus 财报</td><td>物理AI/机器人议程超预期，链上标的批量晋级</td><td>议程不及预期或 Optimus 进展低于预期，高位股集体退潮</td></tr>
+    <tr><td>3</td><td>高位股分歧承接（九阳股份 12天7板、大业股份 3 板、凡拓数创 20CM 2板）</td><td>弱转强、分歧后回流</td><td>批量炸板、连板梯队断层</td></tr>
+    <tr><td>4</td><td>主力资金</td><td>四指数合计转正、消费电子/半导体连续流入</td><td>净流出扩大至 300 亿以上</td></tr>
+    <tr><td>5</td><td>指数关键位</td><td>沪指站稳 3730-3745，创业板收复 2790 上方缺口区</td><td>跌破 3692 双底、创业板再创新低</td></tr>
+  </table>
+</div>
+
+<!-- ================= 底部 ================= -->
+<div class="foot">
+  <b>元信息</b>：分析时间 2026-10-20 16:35（盘后）｜ 数据截至 10/20 收盘 ｜ 行情与资金流：NEODATA（交易所口径）；板块与题材：同花顺、金融界、格隆汇、腾讯财经等公开媒体（2026-10-20，非一手来源，需核实原文）｜ 北向资金当日值数据不可用（已取消实时披露）<br><br>
+  <b>免责声明</b>：以上内容基于公开数据和量化分析，仅供参考，不构成投资建议。市场有风险，投资需谨慎。任何投资决策应结合个人风险承受能力、资金状况和投资目标独立判断，必要时咨询持牌专业机构。过往表现不预示未来收益。
+</div>
+
+<script>
+function toggleBreadth(){
+  var c=document.getElementById('c_breadth'), t=document.getElementById('t_breadth'), b=document.getElementById('btn_breadth');
+  if(t.style.display==='none'){t.style.display='block';c.style.display='none';b.textContent='切换图表';}
+  else{t.style.display='none';c.style.display='block';b.textContent='切换表格';}
+}
+
+echarts.init(document.getElementById('c_idx')).setOption({
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:'{b}: {c}%'},
+  grid:{left:90,right:40,top:10,bottom:10},
+  xAxis:{type:'value',axisLabel:{formatter:'{value}%',color:'#94a3b8'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+  yAxis:{type:'category',data:['北证50','科创50','上证指数','深证成指','创业板指','上证50','沪深300'],axisLabel:{color:'#e2e8f0'}},
+  series:[{type:'bar',barWidth:16,label:{show:true,position:'right',formatter:'{c}%',color:'#e2e8f0'},
+    data:[
+      {value:3.88,itemStyle:{color:'#ef4444'}},
+      {value:1.00,itemStyle:{color:'#ef4444'}},
+      {value:0.12,itemStyle:{color:'#ef4444'}},
+      {value:-0.14,itemStyle:{color:'#22c55e'}},
+      {value:-0.26,itemStyle:{color:'#22c55e'}},
+      {value:-0.31,itemStyle:{color:'#22c55e'}},
+      {value:-0.54,itemStyle:{color:'#22c55e'}}
+    ]}]
+});
+
+echarts.init(document.getElementById('c_breadth')).setOption({
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:'{b}: {c} 家'},
+  grid:{left:80,right:50,top:10,bottom:10},
+  xAxis:{type:'value',axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+  yAxis:{type:'category',data:['0～+2%','+2%～+5%','+5%～+7%','+7%以上','涨停','平盘','-2%～0%','-5%～-2%','-7%～-5%','-7%以下','跌停'],axisLabel:{color:'#e2e8f0'}},
+  series:[{type:'bar',barWidth:12,label:{show:true,position:'right',color:'#e2e8f0'},
+    data:[
+      {value:2021,itemStyle:{color:'#b91c1c'}},
+      {value:1363,itemStyle:{color:'#dc2626'}},
+      {value:203,itemStyle:{color:'#ef4444'}},
+      {value:134,itemStyle:{color:'#ef4444'}},
+      {value:57,itemStyle:{color:'#f87171'}},
+      {value:129,itemStyle:{color:'#64748b'}},
+      {value:1322,itemStyle:{color:'#16a34a'}},
+      {value:279,itemStyle:{color:'#22c55e'}},
+      {value:33,itemStyle:{color:'#4ade80'}},
+      {value:27,itemStyle:{color:'#4ade80'}},
+      {value:7,itemStyle:{color:'#86efac'}}
+    ]}]
+});
+
+echarts.init(document.getElementById('c_gauge')).setOption({
+  series:[{
+    type:'gauge',startAngle:200,endAngle:-20,min:0,max:100,
+    progress:{show:true,width:16,itemStyle:{color:'#ffa502'}},
+    axisLine:{lineStyle:{width:16,color:[[0.3,'#ff4757'],[0.7,'#ffa502'],[1,'#00d4aa']]}},
+    pointer:{width:5,itemStyle:{color:'#e2e8f0'}},
+    axisTick:{distance:-22,length:6,lineStyle:{color:'#94a3b8'}},
+    splitLine:{distance:-28,length:10,lineStyle:{color:'#94a3b8',width:2}},
+    axisLabel:{distance:32,color:'#94a3b8',fontSize:11,formatter:'{value}'},
+    anchor:{show:true,size:12,itemStyle:{color:'#e2e8f0'}},
+    title:{show:true,offsetCenter:[0,'35%'],color:'#94a3b8',fontSize:12},
+    detail:{valueAnimation:true,offsetCenter:[0,'0%'],formatter:'{value} 分',color:'#ffa502',fontSize:26,fontWeight:700},
+    data:[{value:57,name:'市场情绪（修复中段·高位分歧）'}]
+  }]
+});
+
+echarts.init(document.getElementById('c_flow')).setOption({
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(params){var s=params[0].name+'：';for(var i=0;i<params.length;i++){s+=params[i].marker+params[i].seriesName+' '+params[i].value+' 亿  ';}return s;}},
+  legend:{data:['当日','近5日','近10日'],textStyle:{color:'#94a3b8'},top:0},
+  grid:{left:60,right:30,top:36,bottom:24},
+  xAxis:{type:'category',data:['上证指数','深证成指','创业板指','科创50'],axisLabel:{color:'#e2e8f0'}},
+  yAxis:{type:'value',name:'亿元',axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+  series:[
+    {name:'当日',type:'bar',data:[-64.02,-63.38,-35.23,-8.84],itemStyle:{color:'#ff4757'},label:{show:true,position:'bottom',color:'#ff8a94',fontSize:11}},
+    {name:'近5日',type:'bar',data:[-555.62,-551.44,-280.84,-40.36],itemStyle:{color:'#764ba2'},label:{show:true,position:'bottom',color:'#c4b5fd',fontSize:11}},
+    {name:'近10日',type:'bar',data:[-1036.18,-1099.97,-513.77,-121.87],itemStyle:{color:'#667eea'},label:{show:true,position:'bottom',color:'#a5b8ff',fontSize:11}}
+  ]
+});
+</script>
+</body>
+</html>

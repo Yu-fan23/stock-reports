@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-20 15:51:08",
-  "total": 405,
+  "generatedAt": "2026-10-20 16:50:53",
+  "total": 407,
   "categories": [
     {
       "key": "panqian",
@@ -1199,9 +1199,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 84,
-      "latest": "20261019",
+      "count": 85,
+      "latest": "20261020",
       "reports": [
+        {
+          "date": "20261020",
+          "dateLabel": "2026-10-20（周二）",
+          "file": "reports/close/close_20261020.html",
+          "title": "A股收盘复盘（2026-10-20 · 周二 · 指数歇脚题材开派对 · 机器人+端侧AI双主线 · 北证50大涨3.88%）",
+          "size": 27610
+        },
         {
           "date": "20261019",
           "dateLabel": "2026-10-19（周一）",
@@ -1798,9 +1805,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 78,
-      "latest": "20261019",
+      "count": 79,
+      "latest": "20261020",
       "reports": [
+        {
+          "date": "20261020",
+          "dateLabel": "2026-10-20（周二）",
+          "file": "reports/limitup/limitup_20261020.html",
+          "title": "涨停梯队复盘 · 2026-10-20（周二 · 真实交易日）",
+          "size": 45661
+        },
         {
           "date": "20261019",
           "dateLabel": "2026-10-19（周一）",
