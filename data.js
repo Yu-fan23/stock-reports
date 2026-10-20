@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-20 07:56:06",
-  "total": 404,
+  "generatedAt": "2026-10-20 12:50:47",
+  "total": 405,
   "categories": [
     {
       "key": "panqian",
@@ -593,9 +593,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 84,
-      "latest": "20261019",
+      "count": 85,
+      "latest": "20261020",
       "reports": [
+        {
+          "date": "20261020",
+          "dateLabel": "2026-10-20（周二）",
+          "file": "reports/noon/noon_20261020.html",
+          "title": "A股午间复盘 · 2026-10-20（周二）· 结构分化缩量普涨·赚钱效应回暖·维持3成防御",
+          "size": 30573
+        },
         {
           "date": "20261019",
           "dateLabel": "2026-10-19（周一）",
