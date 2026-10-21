@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-22 07:50:40",
-  "total": 412,
+  "generatedAt": "2026-10-22 07:57:55",
+  "total": 413,
   "categories": [
     {
       "key": "panqian",
@@ -2397,9 +2397,16 @@ window.SITE_DATA = {
       "time": "08:00",
       "icon": "🌐",
       "color": "#7c5cff",
-      "count": 77,
-      "latest": "20261021",
+      "count": 78,
+      "latest": "20261022",
       "reports": [
+        {
+          "date": "20261022",
+          "dateLabel": "2026-10-22（周四）",
+          "file": "reports/global/global_20261022.html",
+          "title": "全球资本市场热点 2026-10-22（周四）",
+          "size": 23289
+        },
         {
           "date": "20261021",
           "dateLabel": "2026-10-21（周三）",
