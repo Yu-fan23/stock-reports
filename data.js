@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-22 15:50:50",
-  "total": 415,
+  "generatedAt": "2026-10-22 16:18:40",
+  "total": 417,
   "categories": [
     {
       "key": "panqian",
@@ -1227,9 +1227,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 86,
-      "latest": "20261021",
+      "count": 87,
+      "latest": "20261022",
       "reports": [
+        {
+          "date": "20261022",
+          "dateLabel": "2026-10-22（周四）",
+          "file": "reports/close/close_20261022.html",
+          "title": "A股收盘复盘（2026-10-22 · 周四 · 全球「黑色星期四」· 创业板跌穿2600 · CPO天量派发）",
+          "size": 44246
+        },
         {
           "date": "20261021",
           "dateLabel": "2026-10-21（周三）",
@@ -1840,9 +1847,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 80,
-      "latest": "20261021",
+      "count": 81,
+      "latest": "20261022",
       "reports": [
+        {
+          "date": "20261022",
+          "dateLabel": "2026-10-22（周四）",
+          "file": "reports/limitup/limitup_20261022.html",
+          "title": "涨停梯队复盘 · 2026-10-22（周四收盘）",
+          "size": 68357
+        },
         {
           "date": "20261021",
           "dateLabel": "2026-10-21（周三）",
