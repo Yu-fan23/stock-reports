@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-22 07:57:55",
-  "total": 413,
+  "generatedAt": "2026-10-22 12:51:15",
+  "total": 415,
   "categories": [
     {
       "key": "panqian",
@@ -607,9 +607,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 86,
-      "latest": "20261021",
+      "count": 87,
+      "latest": "20261022",
       "reports": [
+        {
+          "date": "20261022",
+          "dateLabel": "2026-10-22（周四）",
+          "file": "reports/noon/noon_20261022.html",
+          "title": "A股午间复盘 · 2026-10-22",
+          "size": 31300
+        },
         {
           "date": "20261021",
           "dateLabel": "2026-10-21（周三）",
@@ -1220,9 +1227,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 85,
-      "latest": "20261020",
+      "count": 86,
+      "latest": "20261021",
       "reports": [
+        {
+          "date": "20261021",
+          "dateLabel": "2026-10-21（周三）",
+          "file": "reports/close/close_20261021.html",
+          "title": "A股收盘复盘（2026-10-21 · 周三 · 创业板创逾一年新低 · 电池链业绩杀 · 数据要素逆势突围）",
+          "size": 27715
+        },
         {
           "date": "20261020",
           "dateLabel": "2026-10-20（周二）",
