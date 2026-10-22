@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盘前计划_20261023 · 三问三答（星辰·v90.0）</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --accent1:#667eea; --accent2:#764ba2; --txt:#e2e8f0; --txt2:#94a3b8; --border:#2d2d44;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.6;padding:24px;max-width:1100px;margin:0 auto}
+  h1{font-size:26px;font-weight:700;background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:4px}
+  .sub{color:var(--txt2);font-size:13px;margin-bottom:20px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:18px}
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:1fr 1fr 1fr}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:760px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .summary{display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:center}
+  @media(max-width:760px){.summary{grid-template-columns:1fr}}
+  .sig{display:inline-block;padding:6px 18px;border-radius:30px;font-weight:800;font-size:18px;letter-spacing:1px}
+  .sig.watch{background:linear-gradient(135deg,#ffa502,#ff7b00);color:#1a1a2e}
+  .kv{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--border);font-size:14px}
+  .kv:last-child{border-bottom:none}
+  .kv b{color:var(--txt)}
+  .tag{display:inline-block;padding:2px 10px;border-radius:6px;font-size:12px;margin:2px}
+  .t-red{background:rgba(255,71,87,.15);color:#ff6b78;border:1px solid rgba(255,71,87,.4)}
+  .t-green{background:rgba(0,212,170,.15);color:#00d4aa;border:1px solid rgba(0,212,170,.4)}
+  .t-orange{background:rgba(255,165,2,.15);color:#ffa502;border:1px solid rgba(255,165,2,.4)}
+  .t-blue{background:rgba(102,126,234,.15);color:#8fa0ff;border:1px solid rgba(102,126,234,.4)}
+  .t-gray{background:rgba(148,163,184,.12);color:var(--txt2);border:1px solid var(--border)}
+  .lead{font-size:16px;font-weight:700;background:rgba(255,165,2,.1);border-left:4px solid var(--hold);padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:14px}
+  .qa{margin-bottom:16px}
+  .qa h3{font-size:15px;color:#8fa0ff;margin-bottom:6px}
+  .qa p{font-size:14px;color:var(--txt)}
+  .qa .ans{color:#fff;font-weight:600}
+  .chart{width:100%;height:300px}
+  .chart.sm{height:240px}
+  .alert{border-radius:10px;padding:12px 16px;margin:10px 0;font-size:14px}
+  .alert.risk{background:rgba(255,71,87,.12);border:1px solid rgba(255,71,87,.5);color:#ff8a93}
+  .alert.good{background:rgba(0,212,170,.12);border:1px solid rgba(0,212,170,.5);color:#2ee6bd}
+  .alert.warn{background:rgba(255,165,2,.10);border:1px solid rgba(255,165,2,.4);color:#ffbe4d}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+  th,td{border:1px solid var(--border);padding:8px 10px;text-align:left}
+  th{background:rgba(102,126,234,.12);color:#aab4ff;font-weight:600}
+  tr:nth-child(even){background:rgba(255,255,255,.02)}
+  .ruler{position:relative;height:54px;background:linear-gradient(90deg,#3a1020,#5a2a10 30%,#1a3a2a 60%,#16314a);border-radius:8px;margin:14px 0 6px;border:1px solid var(--border)}
+  .mark{position:absolute;top:0;transform:translateX(-50%);font-size:11px;text-align:center;color:#fff;padding-top:4px;white-space:nowrap}
+  .mark::after{content:"";position:absolute;left:50%;top:24px;width:2px;height:26px;background:rgba(255,255,255,.55)}
+  .scale{display:flex;justify-content:space-between;font-size:11px;color:var(--txt2)}
+  .foot{font-size:12px;color:var(--txt2);border-top:1px solid var(--border);padding-top:14px;margin-top:8px}
+  .pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700;margin-right:6px}
+  .p-buy{background:rgba(0,212,170,.15);color:#00d4aa}
+  .p-hold{background:rgba(255,165,2,.15);color:#ffa502}
+  .p-sell{background:rgba(255,71,87,.15);color:#ff6b78}
+  .small{font-size:12px;color:var(--txt2)}
+  ul.tight{margin:6px 0 0 18px;font-size:13px}
+  ul.tight li{margin:3px 0}
+  .up{color:#ff6b78}.down{color:#2ee6bd}
+</style>
+</head>
+<body>
+
+<h1>盘前计划 · 2026-10-23（周五）· 三问三答</h1>
+<div class="sub">星辰 · 多市场智能股票分析师 · v90.0 &nbsp;|&nbsp; 数据基准：2026-10-22 收盘 + 2026-10-22 美东隔夜 + 2026-10-23 盘前 &nbsp;|&nbsp; 下一交易日即当日（周五）</div>
+
+<div class="card">
+  <div class="summary">
+    <div id="gauge" class="chart sm"></div>
+    <div>
+      <div class="grid g4" style="margin-bottom:12px">
+        <div><div class="pill p-hold">WATCH · 偏空</div></div>
+        <div><span class="small">综合评分</span><br><b style="font-size:22px">43</b><span class="small">/100</span></div>
+        <div><span class="small">建议仓位</span><br><b style="font-size:22px;color:var(--hold)">30%</b></div>
+        <div><span class="small">现金缓冲</span><br><b style="font-size:22px;color:var(--buy)">≥70%</b></div>
+      </div>
+      <div class="kv"><span>上证指数</span><b><span class="down">3658.03 ▼1.48%</span>（破3700政策底，低3649.86创年内新低）</b></div>
+      <div class="kv"><span>深成 / 创业板</span><b><span class="down">11357.32 ▼2.96% / 2576.90 ▼4.37%</span></b></div>
+      <div class="kv"><span>成交额 / 涨跌家数</span><b>1.53万亿（放量近千亿）· 535涨 / 4999跌</b></div>
+      <div class="kv"><span>涨停 / 跌停</span><b><span class="down">跌停49-55家 &gt; 涨停33家</span>（冰点·炸板率41%）</b></div>
+      <div class="kv"><span>隔夜外围</span><b>纳指-2.60% · 费半≈-7% · A50夜盘+0.04%企稳 · 10Y美债4.95%破5% · 布油+4%破113</b></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="lead">一句话结论：大盘放量破位、系统性风险加深（沪指失守3700、创业板连跌、费半隔夜≈-7%重击），但 ETF 护盘+主动ETF发行+美债破5% 构成缓冲——<b>当下仅"人形机器人抱团 / 银行红利防御 / 工程机械逆势"三条主线可看，策略上防守为先、只低吸不追高，总仓≤30%、现金≥70%。</b></div>
+
+  <div class="qa">
+    <h3>① 当下的主流题材是什么？（至多3个）</h3>
+    <p class="ans">1) 人形机器人 / 具身智能（physical AI）&nbsp;<span class="tag t-orange">绝对主线·高潮末端</span>&nbsp; 2) 红利·银行 / 中特估（防御穿越）&nbsp;<span class="tag t-green">主升初期·抱团</span>&nbsp; 3) 工程机械 / 基建（设备更新+出海）&nbsp;<span class="tag t-blue">启动初期·脉冲</span></p>
+    <p class="small">候补（不计入主流3）：油气设服（油价破100事件驱动补涨）、军工（海洋王5板独立走妖）、数据要素（星光5天4板周末博弈）；创新药/CRO 10/22随大盘-3%~-5%回踩，结构性逻辑（ESMO/出海/三季报）仍在，列为"观察·等回踩企稳再切"。</p>
+  </div>
+
+  <div class="qa">
+    <h3>② 主流题材的核心是谁？</h3>
+    <p class="ans"><b>人形机器人核心</b>：高标抱团（大业股份603278·5板、兆威机电003021·4天2板、鸣志电器603728、大洋电机002249、襄阳轴承000678）；趋势中军（宇树科技-W 688836、绿的谐波688017、三花智控002050、拓普集团601689、卧龙电驱600580、中大力德、柯力传感、北特科技、万向钱潮000559）。</p>
+    <p class="ans"><b>银行/红利核心</b>：工商银行601398、建设银行601939、农业银行601288、中国银行601988；红利扩散=中煤能源/大有能源（煤炭）、海通发展/海峡股份（港口航运）、华能国际（电力）、中国海油（油气）。</p>
+    <p class="ans"><b>工程机械核心</b>：山河智能002097、南方路机603280、南矿集团001360（基建先锋一字）、中联重科000157、三一重工600031、浙江鼎力603338。</p>
+  </div>
+
+  <div class="qa">
+    <h3>③ 主流题材走到哪个阶段？能不能买？盘前交易计划？</h3>
+    <p class="ans"><b>人形机器人</b>=加速→高潮末端/抱团分化（板块指数实际是绿的、概念主力净流出-63亿，纯辨识度标的独立行情）。<b>不能追高标接力</b>（大业/兆威均发异动公告），只可 ≤8-10% 轻仓低吸分歧中军回踩5日线（绿的谐波/三花/卧龙/中大力德），宇树只观察（PE388+异常波动）。<br>
+    <b>银行红利</b>=主升初期·防御抱团（工行/建行历史新高）。<b>可 ≤10% 回踩5日线低吸中军</b>作底仓压舱，不追高。<br>
+    <b>工程机械</b>=启动初期第1-2天（脉冲性质、持续性存疑）。<b>仅 ≤6% 试错</b>，不追板、等分歧回踩。</p>
+  </div>
+</div>
+
+<div class="card">
+  <h3 style="margin-bottom:10px;color:#aab4ff">主流题材强度对比（10/22 逆势维度综合评分）</h3>
+  <div id="bar" class="chart"></div>
+  <p class="small">强度口径=涨停梯队完整性+主力净流入方向+催化密度+持续性研判。人形机器人资金与涨停双第一但"板块指数实绿、概念净流出-63亿"=抱团分化，故强度高但风险亦高；银行红利确定性最高但弹性小；工程机械偏脉冲。</p>
+</div>
+
+<div class="card">
+  <h3 style="margin-bottom:10px;color:#aab4ff">数据透视 · 大盘环境</h3>
+  <div class="grid g2">
+    <div>
+      <div class="kv"><span>趋势状态</span><b><span class="down">空头排列 · MACD死叉 · 系统性风险区</span></b></div>
+      <div class="kv"><span>价格位置</span><b>沪指3658 已破3700政策底；创业板连跌、破位</b></div>
+      <div class="kv"><span>量能</span><b>1.53万亿放量近千亿=抛压集中释放</b></div>
+      <div class="kv"><span>筹码结构</span><b>ETF连续13日净流入（累计2148亿+）护盘托底；科技抱团筹码未出清</b></div>
+      <div class="kv"><span>情绪</span><b><span class="down">冰点（跌停&gt;涨停、~5000股跌、炸板率41%）</span></b></div>
+    </div>
+    <div>
+      <div id="thermo" class="chart sm"></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h3 style="margin-bottom:10px;color:#aab4ff">情报面</h3>
+  <div class="alert good"><b>积极催化（绿）：</b>① 英伟达升级 Isaac 通用机器人平台（人形参考框架+仿真工作流+百万级数据工具）；② 宇树 H2-X 新品+马斯克 Optimus 交付预期+6项人形机器人国标获批；③ 首批18只主动ETF今日发行（理论最高360亿增量）、公募自购13亿、吴清"稳字当头"、ETF连续13日净流入；④ 国常会部署AI+工信部八部门《产业基础能力提升十五五规划》；⑤ 10Y美债破5%（4.95%）缓和分母端；⑥ 澜起科技Q3净利预增+154%~175%。</div>
+  <div class="alert risk"><b>风险警报（红）：</b>① 费半隔夜≈-7%（Lam -11.8%、AMD -8%、英伟达 -4.4%），A股算力硬件/半导体/存储开盘承压；② 沪指失守3700、创业板连跌、系统性风险未解除；③ 人形机器人纯情绪抱团（板块指数实绿、概念净流出-63亿），大业/兆威异动公告，高位补跌风险极高；④ 布油破113（中东升级：胡塞袭沙特延布港、Shaybah油田袭击、美撤非紧急雇员），通胀/贴现率担忧；⑤ 三季报密集，高位绩差股定价修正；⑥ 两融连续9日回落至2.48万亿下方。</div>
+  <div class="alert warn"><b>中性/观察（橙）：</b>磐均监管趋严智能驾驶"激进式创新"上车；多国机构网站因PHP漏洞下线→网络安全关注；建筑机器人订单火爆（800亿市场）、前8月手术机器人出口+272.9%（高端装备出海）。</div>
+</div>
+
+<div class="card">
+  <h3 style="margin-bottom:10px;color:#aab4ff">信号归因雷达（四维贡献度 · 合计≈100%）</h3>
+  <div id="radar" class="chart"></div>
+  <div class="grid g2" style="margin-top:10px">
+    <div class="kv"><span>技术指标贡献</span><b>28%</b></div>
+    <div class="kv"><span>新闻情绪贡献</span><b>27%</b></div>
+    <div class="kv"><span>基本面贡献</span><b>15%</b></div>
+    <div class="kv"><span>市场环境贡献</span><b>30%</b></div>
+  </div>
+  <p class="small">最强看多信号：人形机器人是唯一贯穿全天的逆势主线+英伟达Isaac催化+ETF护盘托底。最强看空信号：费半≈-7%隔夜重击+沪指破3700政策底+~5000股跌的系统性风险。</p>
+</div>
+
+<div class="card">
+  <h3 style="margin-bottom:10px;color:#aab4ff">作战计划 · 大盘关键位标尺</h3>
+  <div class="ruler">
+    <div class="mark" style="left:0%">3600<br>清仓线</div>
+    <div class="mark" style="left:22%">3650<br>新支撑</div>
+    <div class="mark" style="left:50%">3700<br>政策底(破)</div>
+    <div class="mark" style="left:72%">3754<br>清仓线(破)</div>
+    <div class="mark" style="left:88%">3795<br>反抽</div>
+    <div class="mark" style="left:100%">3824+<br>MA5反转</div>
+  </div>
+  <div class="scale"><span>← 下行风险</span><span>当前 3658 ▼</span><span>上行修复 →</span></div>
+  <p class="small">沪指3658已低于3700政策底（转为压力）。3650（10/22低点3649.86）=即时支撑；3600=防守线，破则系统性清仓确认；反抽看3700→3754.14；站稳3795+3824(MA5)为反转确认。</p>
+
+  <h3 style="margin:16px 0 6px;color:#aab4ff">分批建仓 / 减仓计划</h3>
+  <table>
+    <tr><th>主线</th><th>阶段</th><th>能否买</th><th>仓位</th><th>买点（回踩低吸）</th><th>止损/失效</th></tr>
+    <tr><td>人形机器人/具身智能</td><td>高潮末端·抱团</td><td><span class="tag t-orange">只低吸·不追高</span></td><td>≤8-10%</td><td>绿的谐波/三花/卧龙/中大力德 回踩5日线；宇树仅观察</td><td>高标核按钮/板块大面积跌停→空仓；破位即走</td></tr>
+    <tr><td>银行/红利/中特估</td><td>主升初期·防御</td><td><span class="tag t-green">可低吸</span></td><td>≤10%</td><td>工行/建行/农行 回调5日线买入作底仓</td><td>银行独涨虹吸→降至≤20%；破位减</td></tr>
+    <tr><td>工程机械/基建</td><td>启动初期·脉冲</td><td><span class="tag t-blue">试错</span></td><td>≤6%</td><td>山河智能/南方路机/南矿 分歧回踩</td><td>一日游/无跟风→撤</td></tr>
+    <tr><td>候补：油气设服</td><td>事件驱动·补涨</td><td><span class="tag t-gray">小仓观察</span></td><td>≤5%</td><td>中国海油/中曼石油 低位补涨（油价100附近）</td><td>布油破115或美伊缓和→止盈</td></tr>
+    <tr><td>候补：创新药/CRO</td><td>回踩·结构 intact</td><td><span class="tag t-gray">等企稳</span></td><td>0%（暂）</td><td>ESMO/出海/三季报逻辑，回踩企稳后切</td><td>继续破位不接</td></tr>
+  </table>
+
+  <h3 style="margin:16px 0 6px;color:#aab4ff">风险控制清单（一票否决）</h3>
+  <ul class="tight">
+    <li>沪指30分钟不回3700 → 总仓降至 25%</li>
+    <li>破3650放量 → 清超短 ≤15%</li>
+    <li>破3600 → <b>系统性清仓</b></li>
+    <li>费半/半导体开盘放量跌 → 科技全不碰</li>
+    <li>机器人/工程机械高标高开&gt;5%翻绿 → 停买</li>
+    <li>涨停&lt;40 / 跌停&gt;30 → 不加仓</li>
+    <li>银行独涨虹吸 → ≤20%</li>
+    <li>A50早盘跌&gt;1.5% → 20%</li>
+    <li>10Y美债回升破5.40% → 减半（当前4.95%已下，反向利好但风偏弱）</li>
+    <li>30分钟成交&lt;3500亿 → 不加仓</li>
+    <li>央行/ETF护盘减弱 → 降仓</li>
+    <li>布油破115/美伊缓和 → 油气止盈</li>
+  </ul>
+
+  <h3 style="margin:16px 0 6px;color:#aab4ff">明确回避</h3>
+  <p><span class="tag t-red">半导体/CPO/存储</span><span class="tag t-red">PCB高标</span><span class="tag t-red">AI漫剧/传媒高位</span><span class="tag t-red">创业板/科创50高β</span><span class="tag t-red">贵金属(黄金-2.79%)</span><span class="tag t-red">新能源(宁德连跌)</span><span class="tag t-red">三季报绩差高位股</span><span class="tag t-red">纯玄学连板</span></p>
+</div>
+
+<div class="card">
+  <h3 style="margin-bottom:10px;color:#aab4ff">元信息</h3>
+  <div class="kv"><span>分析时间</span><b>2026-10-23 07:00 (GMT+8) · 周五盘前</b></div>
+  <div class="kv"><span>使用策略</span><b>大盘上下文注入 + 主流题材三问三答 + 情绪周期 + 防守控仓</b></div>
+  <div class="kv"><span>数据来源</span><b>央广网/中证网/东方财富/财联社/同花顺/格隆汇/每经/腾讯财经公开聚合（WebSearch）+ v76–v89 基线；未调用 westock CLI（自动化无交互）</b></div>
+  <div class="kv"><span>大盘环境摘要</span><b>退潮冰点·系统性风险加深；沪指3658破3700、创业板-4.37%连跌、费半≈-7%隔夜重击、~5000股跌；但 ETF护盘+主动ETF发行+美债破5% 形成缓冲，下行空间受限、企稳需缩量确认</b></div>
+  <div class="foot">
+    <p><b>免责声明：</b>本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论均基于历史数据与技术模型，不保证未来表现。数据可能存在口径差异，请以交易所实时行情为准。</p>
+    <p style="margin-top:6px">星辰 · 多市场智能股票分析师 · 自动化盘前计划 v90.0 · 生成于 2026-10-23</p>
+  </div>
+</div>
+
+<script>
+// 综合评分圆环
+var g = echarts.init(document.getElementById('gauge'));
+g.setOption({
+  series:[{
+    type:'gauge', startAngle:210, endAngle:-30, min:0, max:100, radius:'95%',
+    progress:{show:true, width:14, itemStyle:{color:'#ffa502'}},
+    axisLine:{lineStyle:{width:14, color:[[0.19,'#ff4757'],[0.34,'#ff6b78'],[0.44,'#ffa502'],[0.54,'#ffd166'],[0.64,'#00d4aa'],[1,'#00d4aa']]}},
+    pointer:{width:5, length:'62%', itemStyle:{color:'#ffa502'}},
+    axisTick:{show:false}, splitLine:{length:10, lineStyle:{color:'#555', width:1}},
+    axisLabel:{color:'#94a3b8', fontSize:9, distance:14},
+    anchor:{show:true, size:10, itemStyle:{color:'#ffa502'}},
+    detail:{valueAnimation:true, formatter:'{value}', color:'#ffa502', fontSize:30, offsetCenter:[0,'38%']},
+    title:{offsetCenter:[0,'72%'], color:'#94a3b8', fontSize:11},
+    data:[{value:43, name:'综合评分 · WATCH偏空'}]
+  }]
+});
+
+// 主线强度对比
+var b = echarts.init(document.getElementById('bar'));
+b.setOption({
+  grid:{left:120, right:30, top:20, bottom:20},
+  tooltip:{trigger:'axis', axisPointer:{type:'shadow'}},
+  xAxis:{type:'value', max:100, axisLabel:{color:'#94a3b8'}, splitLine:{lineStyle:{color:'#2d2d44'}}},
+  yAxis:{type:'category', data:['创新药(候补)','油气设服(候补)','工程机械/基建','银行/红利','人形机器人'], axisLabel:{color:'#e2e8f0', fontSize:12}},
+  series:[{
+    type:'bar', barWidth:18,
+    data:[
+      {value:40, itemStyle:{color:'#4b5563'}},
+      {value:46, itemStyle:{color:'#4b5563'}},
+      {value:50, itemStyle:{color:'#667eea'}},
+      {value:62, itemStyle:{color:'#00d4aa'}},
+      {value:85, itemStyle:{color:'#ffa502'}}
+    ],
+    label:{show:true, position:'right', color:'#e2e8f0', fontSize:12, formatter:'{c}'}
+  }]
+});
+
+// 信号归因雷达
+var r = echarts.init(document.getElementById('radar'));
+r.setOption({
+  tooltip:{},
+  radar:{indicator:[
+    {name:'技术指标', max:100}, {name:'新闻情绪', max:100},
+    {name:'基本面', max:100}, {name:'市场环境', max:100}
+  ], radius:'65%', center:['50%','55%'],
+    axisName:{color:'#aab4ff', fontSize:12},
+    splitLine:{lineStyle:{color:'#2d2d44'}}, splitArea:{areaStyle:{color:['rgba(102,126,234,.04)','rgba(102,126,234,.08)']}},
+    axisLine:{lineStyle:{color:'#2d2d44'}}},
+  series:[{
+    type:'radar', data:[{value:[28,27,15,30], name:'信号归因',
+      areaStyle:{color:'rgba(255,165,2,.25)'}, lineStyle:{color:'#ffa502', width:2}, itemStyle:{color:'#ffa502'}}]
+  }]
+});
+
+// 情绪温度计
+var t = echarts.init(document.getElementById('thermo'));
+t.setOption({
+  series:[{
+    type:'gauge', min:0, max:100, radius:'92%', center:['50%','58%'],
+    startAngle:180, endAngle:0,
+    progress:{show:true, width:18, itemStyle:{color:'#ff4757'}},
+    axisLine:{lineStyle:{width:18, color:[[0.2,'#ff4757'],[0.4,'#ffa502'],[0.6,'#ffd166'],[1,'#00d4aa']]}},
+    pointer:{width:4, length:'55%', itemStyle:{color:'#ff4757'}},
+    axisTick:{show:false}, splitLine:{length:8, lineStyle:{color:'#555'}},
+    axisLabel:{color:'#94a3b8', fontSize:9, distance:10},
+    detail:{valueAnimation:true, formatter:'{value}', color:'#ff4757', fontSize:26, offsetCenter:[0,'-8%']},
+    title:{offsetCenter:[0,'22%'], color:'#94a3b8', fontSize:11},
+    data:[{value:19, name:'市场情绪 · 冰点'}]
+  }]
+});
+
+window.addEventListener('resize', function(){ g.resize(); b.resize(); r.resize(); t.resize(); });
+</script>
+</body>
+</html>
