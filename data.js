@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-23 15:51:00",
-  "total": 420,
+  "generatedAt": "2026-10-23 16:17:32",
+  "total": 421,
   "categories": [
     {
       "key": "panqian",
@@ -1241,9 +1241,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 87,
-      "latest": "20261022",
+      "count": 88,
+      "latest": "20261023",
       "reports": [
+        {
+          "date": "20261023",
+          "dateLabel": "2026-10-23（周五）",
+          "file": "reports/close/close_20261023.html",
+          "title": "A股收盘复盘（2026-10-23 · 周五 · 深V反转 · 红盘率81% · 光模块龙头午间公告定军心）",
+          "size": 48786
+        },
         {
           "date": "20261022",
           "dateLabel": "2026-10-22（周四）",
