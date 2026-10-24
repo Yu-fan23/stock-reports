@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-24 15:51:09",
-  "total": 425,
+  "generatedAt": "2026-10-24 16:19:02",
+  "total": 427,
   "categories": [
     {
       "key": "panqian",
@@ -1255,9 +1255,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 88,
-      "latest": "20261023",
+      "count": 89,
+      "latest": "20261024",
       "reports": [
+        {
+          "date": "20261024",
+          "dateLabel": "2026-10-24（周六）",
+          "file": "reports/close/close_20261024.html",
+          "title": "A股周末休市特刊（2026-10-24 · 周六 · 数据定格10/23深V反转 · 周五夜道指-1.23% · 下周FOMC+1023亿解禁）",
+          "size": 61986
+        },
         {
           "date": "20261023",
           "dateLabel": "2026-10-23（周五）",
@@ -1882,9 +1889,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 82,
-      "latest": "20261023",
+      "count": 83,
+      "latest": "20261024",
       "reports": [
+        {
+          "date": "20261024",
+          "dateLabel": "2026-10-24（周六）",
+          "file": "reports/limitup/limitup_20261024.html",
+          "title": "涨停梯队复盘 · 2026-10-24（周六 · 休市特别版）",
+          "size": 71645
+        },
         {
           "date": "20261023",
           "dateLabel": "2026-10-23（周五）",
