@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-25 15:51:03",
-  "total": 429,
+  "generatedAt": "2026-10-25 16:19:05",
+  "total": 431,
   "categories": [
     {
       "key": "panqian",
@@ -1262,9 +1262,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 89,
-      "latest": "20261024",
+      "count": 90,
+      "latest": "20261025",
       "reports": [
+        {
+          "date": "20261025",
+          "dateLabel": "2026-10-25（周日）",
+          "file": "reports/close/close_20261025.html",
+          "title": "A股周末休市特刊（2026-10-25 · 周日 · 数据定格10/23深V · T+1两融落地 · 中东重大升级 · 下周FOMC+807亿解禁+五中全会）",
+          "size": 73535
+        },
         {
           "date": "20261024",
           "dateLabel": "2026-10-24（周六）",
@@ -1896,9 +1903,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 83,
-      "latest": "20261024",
+      "count": 84,
+      "latest": "20261025",
       "reports": [
+        {
+          "date": "20261025",
+          "dateLabel": "2026-10-25（周日）",
+          "file": "reports/limitup/limitup_20261025.html",
+          "title": "涨停梯队复盘 · 2026-10-25（周日 · 休市特别版 Day2）",
+          "size": 83734
+        },
         {
           "date": "20261024",
           "dateLabel": "2026-10-24（周六）",
