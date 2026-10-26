@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-26 15:51:06",
-  "total": 433,
+  "generatedAt": "2026-10-26 16:14:21",
+  "total": 434,
   "categories": [
     {
       "key": "panqian",
@@ -1269,9 +1269,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 90,
-      "latest": "20261025",
+      "count": 91,
+      "latest": "20261026",
       "reports": [
+        {
+          "date": "20261026",
+          "dateLabel": "2026-10-26（周一）",
+          "file": "reports/close/close_20261026.html",
+          "title": "A股收盘复盘（2026-10-26 · 周一 · 深V次日缩量分化 · 权重防御护指数 · 算力硬件天量派发 · 机器人链高低切）",
+          "size": 50489
+        },
         {
           "date": "20261025",
           "dateLabel": "2026-10-25（周日）",
