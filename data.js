@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-27 15:50:26",
-  "total": 438,
+  "generatedAt": "2026-10-27 16:12:55",
+  "total": 439,
   "categories": [
     {
       "key": "panqian",
@@ -1283,9 +1283,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 91,
-      "latest": "20261026",
+      "count": 92,
+      "latest": "20261027",
       "reports": [
+        {
+          "date": "20261027",
+          "dateLabel": "2026-10-27（周二）",
+          "file": "reports/close/close_20261027.html",
+          "title": "A股收盘复盘（2026-10-27 · 周二 · 高开低走光脚长阴 · 全面退潮 · 银行红利独强 · 机器人题材端崩塌）",
+          "size": 54728
+        },
         {
           "date": "20261026",
           "dateLabel": "2026-10-26（周一）",
