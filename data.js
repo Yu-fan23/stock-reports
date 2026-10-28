@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-28 18:00:45",
-  "total": 443,
+  "generatedAt": "2026-10-29 07:50:49",
+  "total": 444,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 88,
-      "latest": "20261028",
+      "count": 89,
+      "latest": "20261029",
       "reports": [
+        {
+          "date": "20261029",
+          "dateLabel": "2026-10-29（周四）",
+          "file": "reports/panqian/panqian_20261029.html",
+          "title": "盘前计划_20261029 · 三问三答（星辰）",
+          "size": 23361
+        },
         {
           "date": "20261028",
           "dateLabel": "2026-10-28（周三）",
