@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-29 18:01:01",
-  "total": 448,
+  "generatedAt": "2026-10-30 07:51:01",
+  "total": 449,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 89,
-      "latest": "20261029",
+      "count": 90,
+      "latest": "20261030",
       "reports": [
+        {
+          "date": "20261030",
+          "dateLabel": "2026-10-30（周五）",
+          "file": "reports/panqian/panqian_20261030.html",
+          "title": "盘前计划 · 2026-10-30（周五）· 星辰决策仪表盘",
+          "size": 20925
+        },
         {
           "date": "20261029",
           "dateLabel": "2026-10-29（周四）",
