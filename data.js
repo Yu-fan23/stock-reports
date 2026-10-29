@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-29 15:51:09",
-  "total": 446,
+  "generatedAt": "2026-10-29 16:50:41",
+  "total": 448,
   "categories": [
     {
       "key": "panqian",
@@ -1311,9 +1311,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 92,
-      "latest": "20261027",
+      "count": 93,
+      "latest": "20261028",
       "reports": [
+        {
+          "date": "20261028",
+          "dateLabel": "2026-10-28（周三）",
+          "file": "reports/close/close_20261028.html",
+          "title": "A股收盘复盘（2026-10-28 · 周三 · 放量普涨 · 科技领衔修复 · 通信设备+6.01% · 两市1.63万亿）",
+          "size": 52775
+        },
         {
           "date": "20261027",
           "dateLabel": "2026-10-27（周二）",
@@ -1966,9 +1973,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 86,
-      "latest": "20261027",
+      "count": 87,
+      "latest": "20261029",
       "reports": [
+        {
+          "date": "20261029",
+          "dateLabel": "2026-10-29（周四）",
+          "file": "reports/limitup/limitup_20261029.html",
+          "title": "涨停梯队复盘 · 2026-10-29（周四 · 真实交易日）",
+          "size": 34262
+        },
         {
           "date": "20261027",
           "dateLabel": "2026-10-27（周二）",
