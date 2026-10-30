@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-30 07:55:39",
-  "total": 450,
+  "generatedAt": "2026-10-30 13:01:54",
+  "total": 451,
   "categories": [
     {
       "key": "panqian",
@@ -1318,9 +1318,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 93,
-      "latest": "20261028",
+      "count": 94,
+      "latest": "20261029",
       "reports": [
+        {
+          "date": "20261029",
+          "dateLabel": "2026-10-29（周四）",
+          "file": "reports/close/close_20261029.html",
+          "title": "A股收盘复盘（2026-10-29 · 周四 · 反弹一日游·科技溃败·风险再释放 · 通信设备-8.94% · 半导体-5.13% · 两市1.56万亿）",
+          "size": 46912
+        },
         {
           "date": "20261028",
           "dateLabel": "2026-10-28（周三）",
