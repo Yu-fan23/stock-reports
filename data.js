@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-10-30 15:50:54",
-  "total": 451,
+  "generatedAt": "2026-10-30 16:50:41",
+  "total": 453,
   "categories": [
     {
       "key": "panqian",
@@ -1318,9 +1318,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 94,
-      "latest": "20261029",
+      "count": 95,
+      "latest": "20261030",
       "reports": [
+        {
+          "date": "20261030",
+          "dateLabel": "2026-10-30（周五）",
+          "file": "reports/close/close_20261030.html",
+          "title": "A股收盘复盘（2026-10-30 · 周五 · 放量杀跌·科技续崩·消费白马逆势·白酒+3.77%·半导体-5.32%·两市1.67万亿）",
+          "size": 47472
+        },
         {
           "date": "20261029",
           "dateLabel": "2026-10-29（周四）",
@@ -1987,9 +1994,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 87,
-      "latest": "20261029",
+      "count": 88,
+      "latest": "20261030",
       "reports": [
+        {
+          "date": "20261030",
+          "dateLabel": "2026-10-30（周五）",
+          "file": "reports/limitup/limitup_20261030.html",
+          "title": "涨停梯队复盘 · 2026-10-30（周五 · 真实交易日）",
+          "size": 28993
+        },
         {
           "date": "20261029",
           "dateLabel": "2026-10-29（周四）",
