@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盘前计划 · 2026-11-02（周一）· 星辰决策仪表盘</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --accent1:#667eea; --accent2:#764ba2; --text:#e2e8f0; --sub:#94a3b8; --border:#2d2d44;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6;padding:20px;}
+  .wrap{max-width:1080px;margin:0 auto;}
+  .header{text-align:center;padding:24px 0 8px;}
+  .header h1{font-size:26px;font-weight:700;background:linear-gradient(90deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  .header .meta{color:var(--sub);font-size:13px;margin-top:6px;}
+  .grid{display:grid;gap:16px;margin-top:18px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;}
+  .card h2{font-size:17px;margin-bottom:12px;color:var(--text);border-left:4px solid var(--accent1);padding-left:10px;}
+  .summary{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:14px;align-items:center;}
+  .signal-badge{display:inline-block;padding:6px 18px;border-radius:30px;font-weight:700;font-size:20px;}
+  .badge-hold{background:rgba(255,165,2,.15);color:var(--hold);border:1px solid var(--hold);}
+  .score-num{font-size:56px;font-weight:800;color:var(--hold);line-height:1;}
+  .kv{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--border);font-size:14px;}
+  .kv span:last-child{color:var(--text);font-weight:600;}
+  .kv span:first-child{color:var(--sub);}
+  .three-themes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .theme-card{background:#15152a;border:1px solid var(--border);border-radius:12px;padding:14px;}
+  .theme-card h3{font-size:15px;margin-bottom:8px;color:#fff;}
+  .tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:6px;margin-bottom:8px;}
+  .tag-stage{background:rgba(102,126,234,.18);color:#a5b4fc;}
+  .tag-core{background:rgba(0,212,170,.14);color:var(--buy);}
+  .theme-card ul{list-style:none;font-size:12.5px;color:var(--sub);}
+  .theme-card ul li{padding:3px 0;border-bottom:1px dotted #23233d;}
+  .theme-card ul li b{color:var(--text);}
+  .charts{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .chart-box{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:10px;}
+  .chart-box h2{font-size:15px;padding-left:8px;margin:4px 0 6px;}
+  .chart{width:100%;height:240px;}
+  .ruler{position:relative;height:54px;margin:10px 0;background:linear-gradient(90deg,#ff4757 0%,#ff4757 12%,#ffa502 30%,#ffa502 55%,#00d4aa 100%);border-radius:8px;}
+  .ruler .mark{position:absolute;top:0;height:54px;border-left:2px solid #fff;font-size:10px;color:#fff;padding-left:3px;white-space:nowrap;}
+  .ruler .mark span{display:block;background:rgba(0,0,0,.55);padding:1px 3px;border-radius:3px;margin-top:2px;}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px;}
+  th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;}
+  th{background:#20203a;color:var(--sub);font-weight:600;}
+  td b{color:var(--text);}
+  .green{color:var(--buy);} .red{color:var(--sell);} .orange{color:var(--hold);}
+  .answer{background:#15152a;border-left:4px solid var(--accent2);padding:14px 16px;border-radius:8px;margin-top:10px;}
+  .answer p{font-size:14px;margin:6px 0;color:var(--text);}
+  .answer .q{color:#a5b4fc;font-weight:700;}
+  .warn{background:rgba(255,71,87,.12);border:1px solid rgba(255,71,87,.4);border-radius:10px;padding:12px 14px;margin-top:10px;}
+  .warn b{color:var(--sell);}
+  .foot{color:var(--sub);font-size:12px;text-align:center;margin-top:24px;line-height:1.8;}
+  @media(max-width:760px){.summary,.three-themes,.charts{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <h1>盘前作战仪表盘 · 2026-11-02（周一）</h1>
+    <div class="meta">星辰 · 多市场智能股票分析师 ｜ 适用交易日：2026-11-02 ｜ 数据基线：10/30 收盘 + 周末(10/30夜-10/31)催化 + v71–v97 历史记忆</div>
+  </div>
+
+  <!-- 顶部决策摘要 -->
+  <div class="card">
+    <div class="summary">
+      <div style="text-align:center;">
+        <div class="score-num">46</div>
+        <div style="color:var(--sub);font-size:13px;">大盘综合评分 / 100</div>
+        <div style="margin-top:10px;"><span class="signal-badge badge-hold">HOLD · 防守反击</span></div>
+      </div>
+      <div>
+        <div class="kv"><span>信号定性</span><span class="orange">中性偏空 · 结构性</span></div>
+        <div class="kv"><span>建议仓位</span><span class="orange">30%（现金≥70%）</span></div>
+        <div class="kv"><span>市场阶段</span><span>退潮冰点末端</span></div>
+        <div class="kv"><span>个股宽度</span><span>极端分化 · 抱团</span></div>
+      </div>
+      <div>
+        <div class="kv"><span>防守线</span><span class="red">3574（破则清仓）</span></div>
+        <div class="kv"><span>支撑位</span><span>3650</span></div>
+        <div class="kv"><span>压力位</span><span class="orange">3700（政策底转压）</span></div>
+        <div class="kv"><span>清仓线</span><span class="red">3754（已破·系统风险）</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 三问三答核心结论 -->
+  <div class="card">
+    <h2>三问三答 · 当下主流题材研判</h2>
+    <div class="answer">
+      <p><span class="q">Q1｜当下的主流题材是什么（至多3个）？</span><br>
+      <b class="green">① 存储芯片 / 半导体（国产化 + 回购潮 + 三季报业绩硬）</b>；
+      <b class="green">② 商业航天 / 卫星互联网（资本化 + 技术验证 + 政策三重共振）</b>；
+      <b class="green">③ 大消费 / 食品饮料 / 白酒（内需防御 + 机构左侧布局）</b>。
+      三者构成「科技进攻 + 事件驱动 + 防御压舱」三角结构，是 11/2 盘前最具持续性的三条主线。</p>
+      <p><span class="q">Q2｜主流题材的核心是谁？</span><br>
+      ① 存储半导体核心：<b>长鑫科技（回购龙头）、佰维存储、紫光国微、东芯股份、大普微、必易微、兆易创新、君正股份、德明利</b>；
+      ② 商业航天核心：<b>中国卫星、上海沪工（2板·3日净流入）、盛洋科技（涨停·3日净流入）、西部材料、中国卫通、航天电子、广联航空（持仓）、臻镭科技（持仓）</b>；
+      ③ 大消费核心：<b>青岛食品（5板·仅观察）、迎驾贡酒、皇台酒业、古井贡酒、泸州老窖、黑芝麻、巴比食品、好想你</b>。</p>
+      <p><span class="q">Q3｜走到哪个阶段、能不能买、盘前计划？</span><br>
+      ① 存储半导体＝<b>超跌反抽→修复启动</b>，可 ≤10-12% 轻仓低吸（防高开低走，不追 &gt;3% 高开）；
+      ② 商业航天＝<b>启动 / 分歧</b>，可 ≤8-10% 小仓低吸中军（不追一字，等回踩 5 日线）；
+      ③ 大消费＝<b>主升初期 / 防御穿越</b>，可 ≤6-8% 低位补涨低吸（高标不接力）。
+      整体「防守控仓」，严禁抄底高位科技与连板高标。详见下方作战计划与一票否决清单。</p>
+    </div>
+  </div>
+
+  <!-- 三大题材卡片 -->
+  <div class="card">
+    <h2>主流题材核心名单与阶段</h2>
+    <div class="three-themes">
+      <div class="theme-card">
+        <h3>① 存储 / 半导体</h3>
+        <span class="tag tag-stage">超跌反抽 → 修复启动</span>
+        <ul>
+          <li><b>长鑫科技</b>：拟 10-20 亿回购（龙头）</li>
+          <li><b>佰维存储</b>：回购 2-2.5 亿</li>
+          <li><b>紫光国微</b>：回购 5-7 亿</li>
+          <li><b>东芯股份</b>：控股股东增持 4-6 亿</li>
+          <li><b>大普微</b>：三季报净利 +1492%</li>
+          <li><b>必易微</b>：+745%·20cm 涨停</li>
+          <li><b>兆易 / 君正 / 德明利</b>：存储弹性</li>
+        </ul>
+      </div>
+      <div class="theme-card">
+        <h3>② 商业航天 / 卫星</h3>
+        <span class="tag tag-stage">启动 / 分歧（事件驱动）</span>
+        <ul>
+          <li><b>中国卫星</b>：中军（10/30 +0.02%）</li>
+          <li><b>上海沪工</b>：2 板·连续 3 日净流入</li>
+          <li><b>盛洋科技</b>：涨停·连续 3 日净流入</li>
+          <li><b>西部材料</b>：机构净买</li>
+          <li><b>中国卫通 / 航天电子</b>：运营+制造</li>
+          <li><b>广联航空 / 臻镭科技</b>：持仓相关</li>
+          <li>催化：国星宇航聆讯·蓝箭 IPO·长十二甲 11/6 回收</li>
+        </ul>
+      </div>
+      <div class="theme-card">
+        <h3>③ 大消费 / 食饮</h3>
+        <span class="tag tag-stage">主升初期 / 防御穿越</span>
+        <ul>
+          <li><b>青岛食品</b>：5 连板（控制权拟变更·仅观察）</li>
+          <li><b>迎驾贡酒 / 皇台酒业</b>：涨停活跃</li>
+          <li><b>古井贡酒 / 泸州老窖</b>：白酒中军</li>
+          <li><b>黑芝麻 / 巴比食品</b>：低位补涨</li>
+          <li><b>好想你 / 良品铺子</b>：零食弹性</li>
+          <li>机构 11 月策略：食品饮料左侧布局</li>
+          <li>逻辑：低估值+低预期+低拥挤+高股息</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 图表区 -->
+  <div class="charts">
+    <div class="chart-box">
+      <h2>综合评分</h2>
+      <div id="scoreGauge" class="chart"></div>
+    </div>
+    <div class="chart-box">
+      <h2>市场情绪温度计</h2>
+      <div id="sentGauge" class="chart"></div>
+    </div>
+    <div class="chart-box">
+      <h2>主线强度对比</h2>
+      <div id="themeBar" class="chart"></div>
+    </div>
+    <div class="chart-box">
+      <h2>信号归因雷达（四维）</h2>
+      <div id="radar" class="chart"></div>
+    </div>
+  </div>
+
+  <!-- 大盘关键位标尺 -->
+  <div class="card">
+    <h2>大盘关键位标尺（沪指）</h2>
+    <div class="ruler">
+      <div class="mark" style="left:0%;"><span>3574 清仓线</span></div>
+      <div class="mark" style="left:21%;"><span>3650 支撑</span></div>
+      <div class="mark" style="left:52%;"><span>3700 政策底→压</span></div>
+      <div class="mark" style="left:78%;"><span>3754 前清仓线</span></div>
+      <div class="mark" style="left:100%;"><span>3824 MA5</span></div>
+    </div>
+    <p style="font-size:12px;color:var(--sub);">沪指 10/30 盘中破 3600 后收回 ~3640-3650，仍处六线之下空头排列；<b class="red">3754.14 已破＝系统性风险未解除</b>，收回才解除警报；3574（10/23 新低）为最后防守线，破则系统性清仓。</p>
+  </div>
+
+  <!-- 分题材作战计划 -->
+  <div class="card">
+    <h2>分题材作战计划（盘前）</h2>
+    <table>
+      <thead><tr><th>题材</th><th>阶段</th><th>仓位</th><th>狙击点（低吸区间）</th><th>止损 / 失效条件</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><b>存储 / 半导体</b><br><span style="color:var(--sub);font-size:12px;">回购潮+业绩硬</span></td>
+          <td>修复启动</td>
+          <td class="orange">≤10-12%</td>
+          <td>回踩 5 日线 / 重要均线低吸；长鑫不破发行区、兆易 200 上方、君正 / 德明利 分歧低吸</td>
+          <td class="red">费半开盘放量跌→科技全不碰；高开 &gt;3% 翻绿即停买；破位减仓</td>
+        </tr>
+        <tr>
+          <td><b>商业航天 / 卫星</b><br><span style="color:var(--sub);font-size:12px;">事件驱动</span></td>
+          <td>启动 / 分歧</td>
+          <td class="orange">≤8-10%</td>
+          <td>中军回踩 5 日线：中国卫星 54-56、航天电子、广联航空、臻镭科技；上海沪工 / 盛洋等回封分歧</td>
+          <td class="red">板块高开 &gt;5% 翻绿→停买；11/6 长十二甲回收前易兑现，到点降仓</td>
+        </tr>
+        <tr>
+          <td><b>大消费 / 食饮</b><br><span style="color:var(--sub);font-size:12px;">防御穿越</span></td>
+          <td>主升初期</td>
+          <td class="orange">≤6-8%</td>
+          <td>白酒 / 食品低位龙头回踩低吸（泸州老窖 / 古井 / 黑芝麻 / 巴比）；食饮 ETF 分批</td>
+          <td class="red">青岛食品 5 板高标不接力；消费数据弱 / 板块放量跌→撤离</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 一票否决风控 -->
+  <div class="card">
+    <h2>一票否决 · 风控清单（触发即降仓 / 清仓）</h2>
+    <table>
+      <thead><tr><th>#</th><th>触发条件</th><th>动作</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>沪指 30 分钟不收回 3700</td><td class="orange">降至 25%</td></tr>
+        <tr><td>2</td><td>跌破 3650 放量 / 跌破 3574</td><td class="red">系统性清仓 ≤10%</td></tr>
+        <tr><td>3</td><td>费半 / 半导体开盘放量跌</td><td class="red">科技硬件全不碰</td></tr>
+        <tr><td>4</td><td>涨停 &lt;40 或跌停 &gt;30</td><td class="orange">不加仓</td></tr>
+        <tr><td>5</td><td>A50 早盘跌 &gt;1.5%</td><td class="orange">压至 20%</td></tr>
+        <tr><td>6</td><td>10Y 美债破 5.40%</td><td class="orange">全线减半</td></tr>
+        <tr><td>7</td><td>30 分钟成交 &lt;3500 亿</td><td class="orange">不加仓</td></tr>
+        <tr><td>8</td><td>央行 / ETF 护盘减弱</td><td class="orange">降仓</td></tr>
+        <tr><td>9</td><td>10/31 发布 10 月 PMI 跌破荣枯线</td><td class="orange">避险强化·消费/红利优先</td></tr>
+        <tr><td>10</td><td>青岛食品 / 上海沪工 / 澳弘 高标炸板</td><td class="red">对应线只减不增</td></tr>
+      </tbody>
+    </table>
+    <div class="warn">
+      <b>⚠ 明确回避：</b>算力硬件高位（光模块 / CPO 前期高标 天孚 / 新易盛 / 中际 10/29 崩塌 -8~-20%）、创业板 / 科创50 高 β 追高、贵金属（外围白银 / 黄金暴跌）、新能源 / 电池 / 锂电（宁德 -12% 带崩）、互联网金融（指南针 -10%）、短剧 / AI 传媒高标（文投控股跌停）、纯玄学连板、三季报绩差高位股、解禁股（西安奕材等）。
+    </div>
+  </div>
+
+  <!-- 信号归因 -->
+  <div class="card">
+    <h2>信号归因（为什么给 46 分）</h2>
+    <div class="kv"><span>技术指标贡献（18%）</span><span>沪指六线之下空头排列，3754 已破，趋势弱</span></div>
+    <div class="kv"><span>新闻情绪贡献（34%）</span><span>周末回购潮（长鑫/佰维/紫光国微/东芯）+ 商业航天三重催化正面</span></div>
+    <div class="kv"><span>基本面贡献（28%）</span><span>存储/PCB 三季报业绩硬（大普微+1492%/必易微+745%），消费低预期但估值底</span></div>
+    <div class="kv"><span>市场环境贡献（20%）</span><span>FOMC 偏鹰 12 月加息概率~70%、10Y 美债 5.028%、系统性风险未解除</span></div>
+    <p style="font-size:12.5px;color:var(--sub);margin-top:8px;">最强看多：存储/半导体回购潮 + 三季报业绩兑现，构成科技线唯一可低吸硬逻辑。<br>最强看空：沪指 3754 破位未收复 + 美债高位偏鹰，系统性风险压制整体仓位。</p>
+  </div>
+
+  <div class="foot">
+    分析时间：2026-10-31（周六盘前，面向 2026-11-02 周一）｜ 使用策略：多头趋势 + 事件驱动 + 防御穿越 复合框架<br>
+    数据来源：财联社 / 同花顺 / 东方财富 / 央广网 / 第一财经 / 中财网公开聚合 + v71–v97 历史记忆基线（自动化无交互，未调用 westock CLI）<br>
+    <b style="color:var(--hold);">免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论基于历史数据与技术模型，不保证未来表现。</b>
+  </div>
+</div>
+
+<script>
+  var scoreChart = echarts.init(document.getElementById('scoreGauge'));
+  scoreChart.setOption({
+    series:[{type:'gauge',startAngle:220,endAngle:-40,min:0,max:100,
+      progress:{show:true,width:16,itemStyle:{color:'#ffa502'}},
+      axisLine:{lineStyle:{width:16,color:[[0.4,'#ff4757'],[0.55,'#ffa502'],[1,'#00d4aa']]}},
+      pointer:{itemStyle:{color:'#ffa502'}},
+      detail:{valueAnimation:true,formatter:'{value}',color:'#e2e8f0',fontSize:46,offsetCenter:[0,'-8%']},
+      title:{show:false},data:[{value:46}],axisTick:{show:false},splitLine:{show:false},axisLabel:{show:false}}]
+  });
+
+  var sentChart = echarts.init(document.getElementById('sentGauge'));
+  sentChart.setOption({
+    series:[{type:'gauge',min:0,max:100,startAngle:180,endAngle:0,
+      progress:{show:true,width:18,itemStyle:{color:'#ff4757'}},
+      axisLine:{lineStyle:{width:18,color:[[0.3,'#ff4757'],[0.5,'#ffa502'],[1,'#00d4aa']]}},
+      pointer:{itemStyle:{color:'#ffa502'}},
+      detail:{formatter:'{value}',color:'#e2e8f0',fontSize:34},
+      title:{show:false},data:[{value:28}],splitLine:{show:false},axisTick:{show:false},axisLabel:{show:false}}]
+  });
+
+  var themeChart = echarts.init(document.getElementById('themeBar'));
+  themeChart.setOption({
+    grid:{left:96,right:36,top:16,bottom:16},
+    xAxis:{type:'value',max:100,axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+    yAxis:{type:'category',data:['商业航天/卫星','存储/半导体','大消费/食饮','算力硬件(回避)','创业板高β(回避)'],axisLabel:{color:'#e2e8f0',fontSize:11}},
+    series:[{type:'bar',barWidth:16,data:[
+      {value:68,itemStyle:{color:'#667eea'}},
+      {value:75,itemStyle:{color:'#00d4aa'}},
+      {value:62,itemStyle:{color:'#ffa502'}},
+      {value:30,itemStyle:{color:'#ff4757'}},
+      {value:25,itemStyle:{color:'#ff4757'}}
+    ],label:{show:true,position:'right',color:'#e2e8f0',formatter:'{c}'}}]
+  });
+
+  var radarChart = echarts.init(document.getElementById('radar'));
+  radarChart.setOption({
+    radar:{indicator:[{name:'技术指标',max:100},{name:'新闻情绪',max:100},{name:'基本面',max:100},{name:'市场环境',max:100}],
+      axisName:{color:'#e2e8f0',fontSize:11},splitLine:{lineStyle:{color:'#2d2d44'}},
+      splitArea:{areaStyle:{color:['#1a1a2e','#15152a']}},axisLine:{lineStyle:{color:'#2d2d44'}}},
+    series:[{type:'radar',data:[{value:[35,70,60,30],areaStyle:{color:'rgba(102,126,234,0.3)'},lineStyle:{color:'#667eea'},itemStyle:{color:'#667eea'}}]}]
+  });
+
+  window.addEventListener('resize',function(){scoreChart.resize();sentChart.resize();themeChart.resize();radarChart.resize();});
+</script>
+</body>
+</html>
