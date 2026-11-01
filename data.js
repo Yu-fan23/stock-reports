@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-01 07:56:13",
-  "total": 458,
+  "generatedAt": "2026-11-01 12:50:44",
+  "total": 459,
   "categories": [
     {
       "key": "panqian",
@@ -656,9 +656,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 95,
-      "latest": "20261031",
+      "count": 96,
+      "latest": "20261101",
       "reports": [
+        {
+          "date": "20261101",
+          "dateLabel": "2026-11-01（周日）",
+          "file": "reports/noon/noon_20261101.html",
+          "title": "A股开盘作战手册 · 2026-11-01（周日）",
+          "size": 43044
+        },
         {
           "date": "20261031",
           "dateLabel": "2026-10-31（周六）",
