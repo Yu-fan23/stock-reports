@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-02 15:50:36",
-  "total": 463,
+  "generatedAt": "2026-11-02 16:50:41",
+  "total": 465,
   "categories": [
     {
       "key": "panqian",
@@ -1346,9 +1346,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 96,
-      "latest": "20261101",
+      "count": 97,
+      "latest": "20261102",
       "reports": [
+        {
+          "date": "20261102",
+          "dateLabel": "2026-11-02（周一）",
+          "file": "reports/close/close_20261102.html",
+          "title": "A股收盘复盘（2026-11-02 · 周一 · 政策底首日·V型反攻·放量普涨·上证+1.08%·AI应用/传媒/券商领涨·两市1.78万亿）",
+          "size": 34349
+        },
         {
           "date": "20261101",
           "dateLabel": "2026-11-01（周日）",
@@ -2029,9 +2036,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 90,
-      "latest": "20261101",
+      "count": 91,
+      "latest": "20261102",
       "reports": [
+        {
+          "date": "20261102",
+          "dateLabel": "2026-11-02（周一）",
+          "file": "reports/limitup/limitup_20261102.html",
+          "title": "涨停梯队复盘 · 2026-11-02（周一 · 真实交易日 · 放量普涨反弹）",
+          "size": 50325
+        },
         {
           "date": "20261101",
           "dateLabel": "2026-11-01（周日）",
