@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盘前计划_20261104 · 星辰决策仪表盘</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --acc1:#667eea; --acc2:#764ba2; --txt:#e2e8f0; --txt2:#94a3b8; --bd:#2d2d44;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6;padding:24px;max-width:1180px;margin:0 auto}
+  h1{font-size:26px;font-weight:800;background:linear-gradient(90deg,var(--acc1),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:4px}
+  .sub{color:var(--txt2);font-size:13px;margin-bottom:20px}
+  .card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:20px;margin-bottom:18px}
+  .card h2{font-size:17px;margin-bottom:14px;color:#fff;display:flex;align-items:center;gap:8px}
+  .card h2::before{content:"";width:4px;height:18px;background:linear-gradient(var(--acc1),var(--acc2));border-radius:3px}
+  .grid{display:grid;gap:14px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g2{grid-template-columns:1fr}}
+  .kpi{background:#16162a;border:1px solid var(--bd);border-radius:10px;padding:14px;text-align:center}
+  .kpi .lab{color:var(--txt2);font-size:12px;margin-bottom:6px}
+  .kpi .val{font-size:22px;font-weight:800}
+  .pill{display:inline-block;padding:4px 12px;border-radius:20px;font-weight:700;font-size:13px}
+  .pill.hold{background:rgba(255,165,2,.18);color:var(--hold);border:1px solid var(--hold)}
+  .pill.buy{background:rgba(0,212,170,.18);color:var(--buy);border:1px solid var(--buy)}
+  .pill.sell{background:rgba(255,71,87,.18);color:var(--sell);border:1px solid var(--sell)}
+  .ringwrap{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  #scoreRing{width:160px;height:160px;flex:0 0 auto}
+  .scoreMeta{flex:1;min-width:200px}
+  .row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--bd);font-size:14px}
+  .row:last-child{border-bottom:none}
+  .row .k{color:var(--txt2)}
+  .row .v{font-weight:700}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--bd)}
+  th{color:var(--txt2);font-weight:600;background:#16162a}
+  td.pos{color:var(--buy);font-weight:700}
+  td.neg{color:var(--sell);font-weight:700}
+  .tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:700;margin-right:4px}
+  .tag.pos{background:rgba(0,212,170,.15);color:var(--buy)}
+  .tag.neg{background:rgba(255,71,87,.15);color:var(--sell)}
+  .tag.neu{background:rgba(148,163,184,.15);color:var(--txt2)}
+  .tag.warn{background:rgba(255,165,2,.15);color:var(--hold)}
+  .box{padding:13px 15px;border-radius:10px;font-size:13.5px;margin-bottom:10px}
+  .box.risk{background:rgba(255,71,87,.10);border-left:4px solid var(--sell)}
+  .box.cat{background:rgba(0,212,170,.10);border-left:4px solid var(--buy)}
+  .box.info{background:rgba(102,126,234,.10);border-left:4px solid var(--acc1)}
+  .timeline{position:relative;height:46px;background:linear-gradient(90deg,#23233f,#2a2a4a);border-radius:10px;margin:10px 0 4px;overflow:hidden}
+  .tick{position:absolute;top:0;height:100%;width:2px;background:var(--bd)}
+  .tick.lab::after{content:attr(data-l);position:absolute;top:-2px;left:4px;font-size:10px;color:var(--txt2);white-space:nowrap}
+  .marker{position:absolute;top:50%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:var(--hold);border:2px solid #fff;box-shadow:0 0 8px var(--hold)}
+  .marker::after{content:attr(data-l);position:absolute;top:16px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--hold);white-space:nowrap;font-weight:700}
+  .note{font-size:12.5px;color:var(--txt2)}
+  .foot{font-size:11.5px;color:var(--txt2);border-top:1px solid var(--bd);padding-top:14px;margin-top:8px}
+  .hl{background:rgba(255,165,2,.22);padding:1px 6px;border-radius:4px;color:var(--hold);font-weight:700}
+  .hlb{background:rgba(0,212,170,.18);padding:1px 6px;border-radius:4px;color:var(--buy);font-weight:700}
+  .hlr{background:rgba(255,71,87,.18);padding:1px 6px;border-radius:4px;color:var(--sell);font-weight:700}
+  ul{margin:6px 0 6px 18px}li{margin:3px 0}
+  .chart{width:100%;height:300px}
+</style>
+</head>
+<body>
+<h1>盘前计划 · 2026-11-04（周三）</h1>
+<div class="sub">星辰 · 多市场智能股票分析师 ｜ 数据基准：11/03 收盘 + 11/03 美股隔夜 + 11/04 盘前（美国中期选举盘中出结果）｜ 非投资建议</div>
+
+<!-- 顶部决策摘要 -->
+<div class="card">
+  <h2>决策摘要</h2>
+  <div class="ringwrap">
+    <div id="scoreRing"></div>
+    <div class="scoreMeta">
+      <div style="margin-bottom:8px"><span class="pill hold">HOLD · 中性偏空（防守控仓）</span></div>
+      <div class="row"><span class="k">综合评分</span><span class="v" style="color:var(--hold)">48 / 100</span></div>
+      <div class="row"><span class="k">建议仓位</span><span class="v">30%–35%（现金 ≥ 65%）</span></div>
+      <div class="row"><span class="k">大盘环境</span><span class="v">缩量磨底 · 结构切换 · 选举扰动</span></div>
+      <div class="row"><span class="k">市场情绪</span><span class="v" style="color:var(--sell)">冰点退潮 32/100</span></div>
+      <div class="row"><span class="k">沪指关键位</span><span class="v">支撑 3580 / 3550 ｜ 压力 3640 / 3700</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 大盘环境注入 -->
+<div class="card">
+  <h2>大盘上下文（个股分析的背景修正因子）</h2>
+  <div class="grid g3">
+    <div class="kpi"><div class="lab">上证指数</div><div class="val neg">3608.10</div><div class="note">−0.82%</div></div>
+    <div class="kpi"><div class="lab">创业板指</div><div class="val neg">2391.65</div><div class="note">−2.73% · 破2400</div></div>
+    <div class="kpi"><div class="lab">科创50</div><div class="val neg">1151.28</div><div class="note">−3.81% · 主跌</div></div>
+    <div class="kpi"><div class="lab">沪深300</div><div class="val" style="color:#e2e8f0">−0.20%</div><div class="note">蓝筹抗跌</div></div>
+    <div class="kpi"><div class="lab">成交额</div><div class="val" style="color:#e2e8f0">1.70万亿</div><div class="note">缩量 803亿</div></div>
+    <div class="kpi"><div class="lab">涨跌家数</div><div class="val neg">2108 / 3309</div><div class="note">涨停~50 / 跌停~20</div></div>
+  </div>
+  <div class="box info" style="margin-top:14px">
+    <b>研判：</b>指数普跌但极致分化——沪深300/上证抗跌，创业板/科创50领跌（科技成长成杀跌重灾区）。成交缩至1.7万亿、融资余额三连降、封板率跌破60%、连板高度降至4板，自发性买盘弱；但<span class="hlb">4只宽基ETF同日成交破百亿</span>（924以来首次）说明托底资金活跃。结论：<b>政策底已现、市场底未确认，仓位比方向更重要，区间震荡磨底。</b>
+  </div>
+</div>
+
+<!-- 模块1 核心结论：三问三答 -->
+<div class="card">
+  <h2>核心结论 · 三问三答</h2>
+  <div class="box info">
+    <b>一句话结论：</b>当下主流题材已从"AI科技"切换为 <span class="hlb">新能源（固态电池/锂电/储能）</span> + <span class="hlb">低位核心资产/白酒消费（茅指数）</span> + <span class="hl">政策托底/大金融·保险</span> 三条线；旧主线（算力硬件/半导体/机器人）退潮至"观察止跌"，<b>今日最大变量是美国中期选举结果盘中（09:00–14:00北京）逐步揭晓</b>，建议防守控仓、只低吸不追高。
+  </div>
+
+  <h3 style="margin:16px 0 8px;color:#fff;font-size:15px">① 当下主流题材（≤3）</h3>
+  <table>
+    <tr><th>主线</th><th>性质 / 阶段</th><th>资金证据（11/03）</th></tr>
+    <tr><td><b>新能源（固态电池/锂电/储能）</b></td><td><span class="tag pos">启动第1-2天</span> 三共振·最硬</td><td>电力设备净流入+35.6亿(全行业第一)、电池+24.7亿；宁德时代+12.86亿居全市场第一、阳光电源+5.41亿</td></tr>
+    <tr><td><b>低位核心资产/白酒消费（茅指数）</b></td><td><span class="tag warn">主升初期</span> 防御重估</td><td>茅概念+93亿、食品饮料+42亿、白酒+2.35%；外资/中线资金回流</td></tr>
+    <tr><td><b>政策托底/大金融·保险</b></td><td><span class="tag neu">防御压舱</span> 缓冲垫</td><td>非银金融+30亿、保险+2.86%(中国太保+4.03%)；SFISF千亿+再贷款长期化</td></tr>
+  </table>
+  <div class="note" style="margin-top:8px">降级说明：AI应用/传媒（AI漫剧）11/02领涨但11/03大幅回落（传媒净流出5.8亿、一日游），降级为<b>情绪活口·冲高兑现</b>；AI算力硬件/半导体/CPO/PCB/人形机器人处于<b>主跌/补跌段</b>（中际旭创−12.7%、天孚−12.8%、半导体指数−5%），降级为<b>观察止跌·不抄底</b>。</div>
+
+  <h3 style="margin:18px 0 8px;color:#fff;font-size:15px">② 主流题材的核心是谁</h3>
+  <table>
+    <tr><th>主线</th><th>核心标的（中军 / 活口 / 高标仅观察）</th></tr>
+    <tr><td>新能源</td><td><b>宁德时代</b>(中军·+12.86亿)、<b>阳光电源</b>(储能)、尚水智能/盟固利(20cm首板·固态·已异动公告)、丰元股份、圣阳股份、龙蟠科技、德业股份、隆基绿能(光伏)</td></tr>
+    <tr><td>白酒消费</td><td><b>贵州茅台</b>、<b>五粮液</b>(回购18亿)、皇台酒业(3板高标·<span class="hlr">仅观察不接</span>)、科沃斯、美的集团、格力电器(回购分红)</td></tr>
+    <tr><td>大金融/保险</td><td><b>中国太保</b>(+4.03%)、中信证券、东方财富、四大行(工行/建行·红利压舱)</td></tr>
+  </table>
+
+  <h3 style="margin:18px 0 8px;color:#fff;font-size:15px">③ 走到哪个阶段 · 能不能买 · 盘前交易计划</h3>
+  <table>
+    <tr><th>主线</th><th>阶段</th><th>能不能买</th><th>盘前操作要点</th></tr>
+    <tr><td>新能源</td><td>启动初期（超跌反弹+叙事定价）</td><td><span class="hlb">可买（≤10-12%）</span></td><td>只低吸龙头/有订单设备材料，<span class="hlr">不追20cm连板</span>（尚水/盟固利已异动公告）；防"一日游"与科技回暖跷跷板</td></tr>
+    <tr><td>白酒消费</td><td>主升初期（防御+重估）</td><td><span class="hlb">可买（≤6-10%）</span></td><td>回踩5日线低吸，<span class="hlr">不接皇台3板高标</span>；白酒前三季仍负增长(−7.6%/−9.6%)，中线逻辑、短线不追</td></tr>
+    <tr><td>大金融/保险</td><td>防御压舱（缓冲垫）</td><td><span class="hl">小仓≤6-8%作底仓</span></td><td>当指数缓冲垫，不当进攻主线；等SFISF资金真实落地</td></tr>
+    <tr><td>AI算力/半导体/机器人</td><td>主跌/补跌段</td><td><span class="hlr">暂不可买</span></td><td>等"缩量止跌+净流入转正+选举/AMD落地"三条件齐备再谈；当前只观察</td></tr>
+  </table>
+</div>
+
+<!-- 模块2 主线强度对比 -->
+<div class="card">
+  <h2>数据透视 · 主线强度对比（相对强弱评分）</h2>
+  <div id="lineChart" class="chart"></div>
+  <div class="note">注：评分基于11/03资金净流入、板块涨幅、连板梯队与催化确定性综合赋权（0-100），仅作相对强弱参考。</div>
+</div>
+
+<!-- 模块3 情报面 -->
+<div class="card">
+  <h2>情报面 · 催化 / 风险 / 回避</h2>
+  <div class="grid g2">
+    <div>
+      <div class="box cat"><b>🟢 积极催化</b>
+        <ul>
+          <li>SFISF第三次操作落地：1000亿、31家机构、费率10bp（单次规模最大）</li>
+          <li>股票回购增持再贷款转为<b>长期制度性安排</b>，利率1.25%→1%</li>
+          <li>宁德时代注销式回购已耗资53.6亿 + 长时储能首批交付；9月储能销量+104.4%</li>
+          <li>《新型电池产业"十五五"规划》：2030全固态初步规模化</li>
+          <li>广东扩大消费方案 + 高盛看白酒2027营收+7%/净利+10%</li>
+          <li>4只宽基ETF同日破百亿（托底信号）</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="box risk"><b>🔴 风险警报</b>
+        <ul>
+          <li><span class="hlr">美国中期选举（11/04 09:00–14:00北京盘中出结果）</span>——基准=民主党夺回众院概率高， senate分歧大；"横扫两院"是尾部风险（AI监管+加税压制科技）</li>
+          <li>AMD 11/03盘后财报（算力链最后一塊拼图，待盘中验证）</li>
+          <li>费半隔夜−3.37%、英特尔−8.8%、Lumentum−18.6%（迈威尔收购落地）</li>
+          <li>高盛下修中际旭创（净利预测−17%/-6%/-6%），当日−12.69%</li>
+          <li>央行上调外汇存款准备金率 4%→6%（11/15起，偏收紧）</li>
+          <li>12月加息概率仍约75%；百通能源/百瑞吉高比例解禁（50%+）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="box info"><b>⚪ 明确回避</b>：高位算力硬件补跌段（CPO/PCB/光模块/存储）、断板与炸板股、高比例解禁股（百通能源/百瑞吉）、被立案/戴帽股（ST中基）、<span class="hlr">"羊字辈"纯玄学连板</span>（11只涨停·监管风险提示·尾盘已炸板）、创业板/科创高β追高。</div>
+</div>
+
+<!-- 模块4 信号归因雷达 -->
+<div class="card">
+  <h2>信号归因雷达（四维贡献度）</h2>
+  <div class="grid g2">
+    <div id="radarChart" class="chart" style="height:320px"></div>
+    <div>
+      <div class="row"><span class="k">市场环境贡献</span><span class="v">35%</span></div>
+      <div class="note">选举盘中扰动 + 缩量 + 融资三连降 + 美债/加息压制</div>
+      <div class="row" style="margin-top:10px"><span class="k">基本面贡献</span><span class="v">30%</span></div>
+      <div class="note">新能源景气（储能+104%）+ 白酒边际改善 + 宁德/阳光业绩</div>
+      <div class="row" style="margin-top:10px"><span class="k">新闻情绪贡献</span><span class="v">20%</span></div>
+      <div class="note">政策托底(SFISF/再贷款) vs 选举不确定 + 高盛下修</div>
+      <div class="row" style="margin-top:10px"><span class="k">技术指标贡献</span><span class="v">15%</span></div>
+      <div class="note">科技主跌/科创50−3.81%、沪指仍空头排列</div>
+      <div class="box cat" style="margin-top:12px"><b>最强看多信号：</b>新能源"资金+产业+政策"三共振，宁德时代单日+12.86亿全市场第一。</div>
+      <div class="box risk" style="margin-top:8px"><b>最强看空信号：</b>美国中期选举盘中揭晓 + 费半/AMD未落地 + 科技主跌段，压制整体风险偏好。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 模块5 情绪温度计 -->
+<div class="card">
+  <h2>市场情绪温度计</h2>
+  <div id="gaugeChart" class="chart" style="height:260px"></div>
+  <div class="note">冰点退潮（32/100）：涨停腰斩、封板率<60%、炸板率42%、连板高度降至4板、融资三连降；但托底资金活跃、新能源主线有真实承接，非系统性崩盘。</div>
+</div>
+
+<!-- 模块6 作战计划 -->
+<div class="card">
+  <h2>作战计划 · 分题材买卖点与风控</h2>
+
+  <h3 style="color:#fff;margin-bottom:8px">📐 大盘关键位标尺（沪指）</h3>
+  <div class="timeline">
+    <div class="tick lab" data-l="3550清仓" style="left:2%"></div>
+    <div class="tick lab" data-l="3580防守" style="left:22%"></div>
+    <div class="tick lab" data-l="3608今收" style="left:34%"></div>
+    <div class="tick lab" data-l="3640压MA5" style="left:55%"></div>
+    <div class="tick lab" data-l="3700政策底转压" style="left:78%"></div>
+    <div class="tick lab" data-l="3754前清仓线" style="left:96%"></div>
+    <div class="marker" data-l="3608" style="left:34%"></div>
+  </div>
+
+  <h3 style="color:#fff;margin:14px 0 8px">🎯 分题材狙击点（回踩低吸，不追高）</h3>
+  <table>
+    <tr><th>题材</th><th>买点（回踩）</th><th>目标/止盈</th><th>止损/失效</th><th>仓位</th></tr>
+    <tr><td>新能源（宁德/阳光）</td><td>回踩5日线/分时企稳承接</td><td>前高/板块放量确认</td><td>破11/03低点 / 板块一日游</td><td>≤10-12%</td></tr>
+    <tr><td>白酒消费（茅台/五粮液）</td><td>回踩5日线低吸</td><td>估值修复+分红</td><td>皇台炸板扩散 / 破位</td><td>≤6-10%</td></tr>
+    <tr><td>大金融/保险（太保/中信）</td><td>指数回调压舱低吸</td><td>指数缓冲利润</td><td>SFISF落地不及预期</td><td>≤6-8%</td></tr>
+    <tr><td>AI算力/半导体</td><td><span class="hlr">暂不买</span></td><td>—</td><td>等缩量止跌+净流入转正+选举/AMD落地</td><td>0%</td></tr>
+  </table>
+
+  <h3 style="color:#fff;margin:14px 0 8px">🛡️ 一票否决 · 风控清单（触发即执行）</h3>
+  <table>
+    <tr><th>#</th><th>条件</th><th>动作</th></tr>
+    <tr><td>1</td><td>沪指30分不回3620 / 破3580放量</td><td>清超短仓</td></tr>
+    <tr><td>2</td><td>破3550</td><td><span class="hlr">系统性清仓</span></td></tr>
+    <tr><td>3</td><td>费半/AMD发酵 → 科技承压</td><td>科技全不碰</td></tr>
+    <tr><td>4</td><td>选举"民主党横扫两院"明确</td><td>科技成长日内压仓≤25%</td></tr>
+    <tr><td>5</td><td>涨停<40 / 跌停>20</td><td>不加仓</td></tr>
+    <tr><td>6</td><td>A50早盘跌>1.5%</td><td>降仓20%</td></tr>
+    <tr><td>7</td><td>10Y美债破5.40%</td><td>减半</td></tr>
+    <tr><td>8</td><td>30分成交<3500亿</td><td>不加仓</td></tr>
+    <tr><td>9</td><td>央行/ETF护盘减弱</td><td>降仓</td></tr>
+    <tr><td>10</td><td>皇台酒业/东方海洋高标炸板</td><td>对应线只减不增</td></tr>
+    <tr><td>11</td><td>百通能源/百瑞吉解禁日</td><td>不接盘</td></tr>
+  </table>
+
+  <div class="box info" style="margin-top:12px"><b>开盘30分钟观察清单：</b>① AMD财报与隔夜美股科技是否止跌 → 决定算力链开盘方向；② 中际旭创/天孚是否缩量止跌；③ 电力设备/锂电资金是否延续净流入 → 主线能否接力；④ 跌停家数是否收敛至10只内 → 情绪止血；⑤ 宽基ETF是否继续百亿级 → 托底仍在；⑥ 选举开票（09:00起）→ 决定午后风险偏好方向。</div>
+</div>
+
+<!-- 持仓联动提示（针对本用户持仓） -->
+<div class="card">
+  <h2>持仓联动提示（臻镭科技 / 长盈通 / 广联航空）</h2>
+  <div class="box info">
+    <ul>
+      <li><b>长盈精密</b>11/03获+3.87亿净流入（新能源/锂电+机器人双属性），但纯机器人链整体退潮，暂按新能源/低位制造逻辑看待，不追高。</li>
+      <li><b>长飞光纤</b>11/03获+3.20亿净流入，光纤属新能源/通信交叉；光通信板块整体仍弱（通信设备−8.37%），仅个股有承接，等板块止跌。</li>
+      <li><b>臻镭科技 / 广联航空（商业航天/卫星）</b>：当前非市场主线，商业航天11/03随大盘回调，等待11/06长征十二甲回收验证、珠海航展(12/7)等事件催化；持仓以观察为主，不急于加仓。</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 底部元信息 -->
+<div class="card">
+  <h2>元信息</h2>
+  <div class="row"><span class="k">分析时间</span><span class="v">2026-11-04 07:00 (GMT+8) 盘前</span></div>
+  <div class="row"><span class="k">使用策略</span><span class="v">热点题材 + 多头趋势 + 事件驱动（中期选举）</span></div>
+  <div class="row"><span class="k">数据来源</span><span class="v">同花顺/财联社/东方财富/中国基金报/证券时报公开聚合 + v71–v101 历史基线</span></div>
+  <div class="row"><span class="k">大盘环境摘要</span><span class="v">缩量磨底·结构切换·选举扰动·托底活跃</span></div>
+  <div class="foot">
+    免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有分析结论均基于历史数据和技术模型，不保证未来表现。美国中期选举结果、AMD财报及11/03美股收盘为盘中外生变量，需盘中实时验证，本计划为盘前预案而非盘中指令。
+  </div>
+</div>
+
+<script>
+// 综合评分圆环
+var ring = echarts.init(document.getElementById('scoreRing'));
+ring.setOption({
+  series:[{type:'gauge',startAngle:90,endAngle:-270,radius:'100%',pointer:{show:false},
+    progress:{show:true,width:14,roundCap:true,itemStyle:{color:'#ffa502'}},
+    axisLine:{lineStyle:{width:14,color:[[1,'#2d2d44']]}},
+    splitLine:{show:false},axisTick:{show:false},axisLabel:{show:false},
+    detail:{valueAnimation:true,fontSize:34,fontWeight:'bolder',color:'#ffa502',offsetCenter:[0,'0%'],formatter:'{value}'},
+    title:{show:true,offsetCenter:[0,'38%'],color:'#94a3b8',fontSize:12},
+    data:[{value:48,name:'综合评分'}]}]
+});
+
+// 主线强度条形
+var line = echarts.init(document.getElementById('lineChart'));
+line.setOption({
+  grid:{left:120,right:30,top:20,bottom:30},
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+  xAxis:{type:'value',max:100,axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+  yAxis:{type:'category',data:['AI算力/半导体','人形机器人','AI应用/传媒','大金融/保险','白酒消费','新能源'],axisLabel:{color:'#e2e8f0'}},
+  series:[{type:'bar',barWidth:'55%',
+    data:[{value:22,itemStyle:{color:'#ff4757'}},{value:35,itemStyle:{color:'#ff4757'}},{value:40,itemStyle:{color:'#ffa502'}},{value:55,itemStyle:{color:'#667eea'}},{value:68,itemStyle:{color:'#00d4aa'}},{value:85,itemStyle:{color:'#00d4aa'}}],
+    label:{show:true,position:'right',color:'#e2e8f0',fontWeight:'bold'},
+    itemStyle:{borderRadius:[0,6,6,0]}}]
+});
+
+// 信号归因雷达
+var radar = echarts.init(document.getElementById('radarChart'));
+radar.setOption({
+  tooltip:{},
+  radar:{indicator:[{name:'市场环境',max:100},{name:'基本面',max:100},{name:'新闻情绪',max:100},{name:'技术指标',max:100}],
+    axisName:{color:'#e2e8f0'},splitLine:{lineStyle:{color:'#2d2d44'}},splitArea:{areaStyle:{color:['#16162a','#1a1a2e']}},axisLine:{lineStyle:{color:'#2d2d44'}}},
+  series:[{type:'radar',data:[{value:[35,30,20,15],name:'信号归因',
+    areaStyle:{color:'rgba(102,126,234,0.35)'},lineStyle:{color:'#667eea'},itemStyle:{color:'#764ba2'}}]}]
+});
+
+// 情绪温度计
+var gauge = echarts.init(document.getElementById('gaugeChart'));
+gauge.setOption({
+  series:[{type:'gauge',min:0,max:100,radius:'85%',center:['50%','60%'],
+    progress:{show:true,width:18,itemStyle:{color:'#ff4757'}},
+    axisLine:{lineStyle:{width:18,color:[[0.3,'#ff4757'],[0.5,'#ffa502'],[0.7,'#00d4aa'],[1,'#00d4aa']]}},
+    pointer:{itemStyle:{color:'#e2e8f0'}},
+    axisLabel:{color:'#94a3b8',distance:-42},
+    splitLine:{lineStyle:{color:'#2d2d44'}},axisTick:{show:false},
+    detail:{valueAnimation:true,fontSize:30,fontWeight:'bolder',color:'#ff4757',formatter:'{value}',offsetCenter:[0,'70%']},
+    title:{offsetCenter:[0,'95%'],color:'#94a3b8',fontSize:13},
+    data:[{value:32,name:'市场情绪 · 冰点退潮'}]}]
+});
+
+window.addEventListener('resize',function(){ring.resize();line.resize();radar.resize();gauge.resize();});
+</script>
+</body>
+</html>
