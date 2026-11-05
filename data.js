@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-05 15:51:41",
-  "total": 478,
+  "generatedAt": "2026-11-05 16:51:09",
+  "total": 480,
   "categories": [
     {
       "key": "panqian",
@@ -1388,9 +1388,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 99,
-      "latest": "20261104",
+      "count": 100,
+      "latest": "20261105",
       "reports": [
+        {
+          "date": "20261105",
+          "dateLabel": "2026-11-05（周四）",
+          "file": "reports/close/close_20261105.html",
+          "title": "A股行情复盘（2026-11-05 · 周四 · 放量独立修复·结构性强势·仓位6成）",
+          "size": 30068
+        },
         {
           "date": "20261104",
           "dateLabel": "2026-11-04（周三）",
@@ -2092,9 +2099,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 93,
-      "latest": "20261104",
+      "count": 94,
+      "latest": "20261105",
       "reports": [
+        {
+          "date": "20261105",
+          "dateLabel": "2026-11-05（周四）",
+          "file": "reports/limitup/limitup_20261105.html",
+          "title": "涨停梯队复盘 · 2026-11-05（周四 · 真实交易日）",
+          "size": 43327
+        },
         {
           "date": "20261104",
           "dateLabel": "2026-11-04（周三）",
