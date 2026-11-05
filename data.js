@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-05 15:50:36",
-  "total": 476,
+  "generatedAt": "2026-11-05 15:51:25",
+  "total": 480,
   "categories": [
     {
       "key": "panqian",
@@ -677,9 +677,23 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 98,
-      "latest": "20261103",
+      "count": 102,
+      "latest": "20261105",
       "reports": [
+        {
+          "date": "20261105",
+          "dateLabel": "2026-11-05（周四）",
+          "file": "reports/noon/noon_20261105.html",
+          "title": "A股午间复盘 2026-11-05 · 星辰决策仪表盘",
+          "size": 29256
+        },
+        {
+          "date": "20261104",
+          "dateLabel": "2026-11-04（周三）",
+          "file": "reports/noon/noon_20261104.html",
+          "title": "A股午间复盘 2026-11-04 · 星辰决策仪表盘",
+          "size": 27455
+        },
         {
           "date": "20261103",
           "dateLabel": "2026-11-03（周二）",
@@ -693,6 +707,13 @@ window.SITE_DATA = {
           "file": "reports/noon/noon_20261102.html",
           "title": "A股午间复盘 2026-11-02 · 星辰决策仪表盘",
           "size": 25799
+        },
+        {
+          "date": "20261101",
+          "dateLabel": "2026-11-01（周日）",
+          "file": "reports/noon/noon_20261101.html",
+          "title": "A股开盘作战手册 · 2026-11-01（周日）",
+          "size": 43044
         },
         {
           "date": "20261101",
@@ -763,6 +784,13 @@ window.SITE_DATA = {
           "file": "reports/noon/noon_20261022.html",
           "title": "A股午间复盘 · 2026-10-22",
           "size": 31300
+        },
+        {
+          "date": "20261021",
+          "dateLabel": "2026-10-21（周三）",
+          "file": "reports/noon/noon_20261021.html",
+          "title": "A股午间复盘 · 2026-10-21",
+          "size": 30120
         },
         {
           "date": "20261021",

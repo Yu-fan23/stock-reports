@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股午间复盘 2026-11-05 · 星辰决策仪表盘</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+:root{
+  --bg:#0f0f23; --card:#1a1a2e; --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+  --accent1:#667eea; --accent2:#764ba2; --txt:#e2e8f0; --txt2:#94a3b8; --border:#2d2d44;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.5;padding:18px}
+.wrap{max-width:1180px;margin:0 auto}
+header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding:18px 22px;background:linear-gradient(135deg,#1a1a2e,#241f3a);border-radius:16px;border:1px solid var(--border);margin-bottom:16px}
+header h1{font-size:20px;font-weight:700;letter-spacing:.5px}
+header .meta{font-size:12px;color:var(--txt2)}
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;margin-left:8px}
+.score-ring{position:relative;width:120px;height:120px}
+.score-ring .num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-ring .num b{font-size:34px;font-weight:800;background:linear-gradient(135deg,var(--accent1),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.score-ring .num span{font-size:11px;color:var(--txt2)}
+.grid{display:grid;gap:14px}
+.cols-3{grid-template-columns:repeat(3,1fr)}
+.cols-2{grid-template-columns:repeat(2,1fr)}
+.cols-1{grid-template-columns:1fr}
+@media(max-width:820px){.cols-3{grid-template-columns:1fr 1fr}.cols-2{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px}
+.card h2{font-size:14px;font-weight:600;color:var(--txt);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.card h2::before{content:"";width:4px;height:14px;background:linear-gradient(180deg,var(--accent1),var(--accent2));border-radius:3px}
+.idx{display:flex;flex-direction:column;gap:2px}
+.idx .nm{font-size:12px;color:var(--txt2)}
+.idx .pr{font-size:22px;font-weight:700}
+.idx .pc{font-size:13px;font-weight:600}
+.up{color:#ff5b6e}.dn{color:#2fd6a8}.flat{color:var(--txt2)}
+.bignum{font-size:30px;font-weight:800}
+.chart{width:100%;height:300px}
+.chart-sm{width:100%;height:240px}
+.kpi{display:flex;justify-content:space-around;text-align:center;flex-wrap:wrap;gap:8px}
+.kpi div b{display:block;font-size:20px;font-weight:700}
+.kpi div span{font-size:11px;color:var(--txt2)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th,td{padding:7px 8px;text-align:right;border-bottom:1px solid var(--border)}
+th{color:var(--txt2);font-weight:600;text-align:right}
+td:first-child,th:first-child{text-align:left}
+tr:hover{background:#22223a}
+.pos{color:#2fd6a8}.neg{color:#ff5b6e}
+.note{font-size:11px;color:var(--txt2)}
+.plan{border-left:3px solid var(--accent1);padding:10px 14px;background:#16162a;border-radius:0 10px 10px 0;margin:8px 0;font-size:13px}
+.risk{background:#2a1620;border-left:3px solid var(--sell)}
+.warn{background:#2a2410;border-left:3px solid var(--hold)}
+.ok{background:#10271f;border-left:3px solid var(--buy)}
+.foot{font-size:11px;color:var(--txt2);margin-top:18px;text-align:center;line-height:1.8}
+.pill{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;background:#22223a;margin:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div>
+    <h1>A股午间复盘 <span class="tag" style="background:linear-gradient(135deg,var(--accent1),var(--accent2));color:#fff">星辰 · 决策仪表盘</span></h1>
+    <div class="meta">日期 2026-11-05 &nbsp;|&nbsp; 时点 12:00（午间） &nbsp;|&nbsp; 数据：westock 结构化 + 公开外围交叉校验</div>
+  </div>
+  <div class="score-ring">
+    <div id="ring"></div>
+    <div class="num"><b>63</b><span>偏多·观察待买（可阶梯加仓）</span></div>
+  </div>
+</header>
+
+<div class="grid cols-3" style="margin-bottom:14px">
+<div class="card idx"><div class="nm">上证指数 <span class="note">sh000001</span></div><div class="pr">3689.79</div><div class="pc up">▲ +0.10%</div></div><div class="card idx"><div class="nm">深证成指 <span class="note">sz399001</span></div><div class="pr">11498.77</div><div class="pc up">▲ +1.44%</div></div><div class="card idx"><div class="nm">创业板指 <span class="note">sz399006</span></div><div class="pr">2576.28</div><div class="pc up">▲ +1.24%</div></div><div class="card idx"><div class="nm">科创50 <span class="note">sh000688</span></div><div class="pr">1292.12</div><div class="pc up">▲ +2.11%</div></div><div class="card idx"><div class="nm">北证50 <span class="note">bj899050</span></div><div class="pr">912.88</div><div class="pc up">▲ +2.10%</div></div><div class="card idx"><div class="nm">沪深300 <span class="note">sh000300</span></div><div class="pr">4115.93</div><div class="pc up">▲ +0.36%</div></div>
+</div>
+
+<div class="grid cols-2" style="margin-bottom:14px">
+  <div class="card">
+    <h2>市场赚钱效应 · 涨跌分布</h2>
+    <div class="kpi">
+      <div><b style="color:#2fd6a8">4792</b><span>上涨家数</span></div>
+      <div><b style="color:#ff5b6e">676</b><span>下跌家数</span></div>
+      <div><b style="color:#ffa502">62</b><span>涨停</span></div>
+      <div><b style="color:#ff5b6e">0</b><span>跌停</span></div>
+      <div><b>14643.73亿</b><span>半日成交额(+5393.12亿)</span></div>
+    </div>
+    <div id="dist" class="chart-sm" style="height:200px;margin-top:10px"></div>
+  </div>
+  <div class="card">
+    <h2>市场情绪温度计</h2>
+    <div id="gauge" class="chart" style="height:260px"></div>
+  </div>
+</div>
+
+<div class="grid cols-1" style="margin-bottom:14px">
+  <div class="card">
+    <h2>上证指数分时（低开3646、V反至3701、午收3689 · 缺口回补、测试MA20）</h2>
+    <div id="minute" class="chart"></div>
+  </div>
+</div>
+
+<div class="grid cols-2" style="margin-bottom:14px">
+  <div class="card">
+    <h2>领涨板块 TOP（行业涨跌幅 %）</h2>
+    <div id="secUp" class="chart-sm"></div>
+  </div>
+  <div class="card">
+    <h2>领跌板块（行业涨跌幅 %）</h2>
+    <div id="secDown" class="chart-sm"></div>
+  </div>
+</div>
+
+<div class="grid cols-2" style="margin-bottom:14px">
+  <div class="card">
+    <h2>主力资金流向 · 今日行业净流入/流出 TOP（亿元）</h2>
+    <div id="flowToday" class="chart"></div>
+  </div>
+  <div class="card">
+    <h2>主力资金流向 · 5日行业净流向 TOP（亿元）</h2>
+    <div id="flow5d" class="chart"></div>
+  </div>
+</div>
+
+<div class="grid cols-1" style="margin-bottom:14px">
+  <div class="card">
+    <h2>用户覆盖池 · 资金与涨跌（今日主力 / 5日 / 10日 / 20日 单位：亿元）</h2>
+    <table id="cov">
+      <thead><tr><th>名称</th><th>代码</th><th>现价</th><th>涨跌幅%</th><th>今日主力</th><th>5日主力</th><th>10日主力</th><th>20日主力</th><th>关键信号</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="grid cols-2" style="margin-bottom:14px">
+  <div class="card">
+    <h2>信号归因 · 四维雷达</h2>
+    <div id="radar" class="chart-sm"></div>
+  </div>
+  <div class="card">
+    <h2>信号归因 · 贡献度与最强因子</h2>
+    <div class="plan ok"><b>技术 30%</b> · <b>情绪 25%</b> · <b>资金 30%</b> · <b>环境 15%</b></div>
+    <div class="plan ok" style="border-left-color:var(--buy)"><b>最强看多：</b>85%上涨+62涨停+0跌停(沸点)+半日成交1.46万亿暴增5393亿+科创50+2.11%领涨(延续昨日+9.92%动能)+半导体单日+59亿/5日+108亿转正+民主党横扫国会(蓝色浪潮)→布油暴跌破100(94.62)→美债10Y降至4.88%、离岸人民币6.67偏强+中国央行再贷款降至1%制度性托底</div>
+    <div class="plan risk"><b>最强看空：</b>上证+0.10%仍处MA20(3701.53)与3741生命线下方(仅站回3674周低/MA5/MA10)+光通信(通信设备5日-100亿全市场最差/元件-66亿)逆势派发延续(受美股费半-3.11%/美光-7%AI硬件链抛售传导)+央行今日净回笼2000亿"削峰"+两融连续4日降1131亿(杠杆未回归、反弹由ETF/游资驱动外资缺席)</div>
+  </div>
+</div>
+
+<div class="grid cols-1" style="margin-bottom:14px">
+  <div class="card">
+    <h2>仓位管理 · 作战计划</h2>
+    <div class="kpi" style="margin-bottom:12px">
+      <div><b style="color:var(--hold)">2.5 成</b><span>当前建议仓位(由2.0成上调)</span></div>
+      <div><b style="font-size:13px">防御1.5(含水晶光电等资金转正确认标的) / 高β进攻0.5·军工航天(广联航空) / 科技反弹试探0.5(半导体设备+光伏+电池·今日放量主线) / 光通信0 / 现金7.0</b><span>仓位结构</span></div>
+    </div>
+    <div class="plan"><b>加仓触发（午间版）：</b>① 收盘站回 <b>3674</b>（上周周低/已站上）且全天成交 ≥ 1.8 万亿（半日已 1.46 万亿、量级基本满足）→ 维持 <b>2.5 成</b>；② 站回 <b>3741 生命线</b>且半导体/通信/元件科技三链 5 日合计资金全面转正（当前通信/元件仍净出）→ <b>3.0 成</b>；③ 有效突破 MA20 3701.53 并放量站稳 → 3.0~3.5 成。</div>
+    <div class="plan warn"><b>减仓触发：</b>破 <b>3674</b> 且成交萎缩 → 降回 <b>2.0 成</b>；破 <b>3600</b> 整数关 → 降至 <b>1.5 成</b>；破 <b>3550</b> / 布油重上 <b>115</b> / 美债 10Y > <b>5.5%</b> → <b>1.0 成</b>（当前油价/美债均处安全区，该情景概率低）。</div>
+    <div class="plan ok"><b>光通信专项（维持 0 成）：</b>今日光通信链逆势下跌——通信设备行业 <b>-2.34%</b>（5日净流出 <b>-100 亿、全市场 5 日净出第一</b>）、元件 <b>-1.43%</b>（5日 -66 亿）；覆盖池中长飞 -1.36%（逆势微跌、今日+0.59亿微正但20日-19.29亿）、亨通 +1.61%/中天 +2.00%（反弹但5日仍净出）。逻辑：隔夜美股 AI 硬件链遭抛售（费半 -3.11%、美光 -7%、Coherent -6%，得州新州长承诺暂停数据中心审批、高盛测算约45%规划产能受影响），A 股光通信/光模块受传导。<b>维持 0 成</b>；仅水晶光电（+3.36%、5日+1.64亿/10日+1.93亿 资金持续正、全池最稳）作为消费电子/AI端侧防御锚保留在 1.5 防御仓。</div>
+    <div class="plan risk"><b>风险清单：</b>① 上证 +0.10% 仍为「缺口低开后V反」形态，午收 3689.79 仍处 MA20 3701.53 与 3741 生命线下方（今日高点 3701.59 精准触及 MA20 后回落）；② 反弹资金合力未成——两融连续 4 日降 1131 亿、北向上一交易日净卖出 9.22 亿、反弹由 ETF/游资驱动，外资与杠杆资金缺席；③ 央行今日对 5000 亿买断式逆回购仅续作 3000 亿、净回笼 2000 亿，释放「削峰」信号；④ 板块极致分化（光伏+7%/电池+5% 强 vs 通信-2.3%/煤炭-3.9% 弱），赚钱效应集中在新能源+资源+贵金属，需防冲高回落；⑤ 美股 AI 硬件链（数据中心/光通信/存储）抛售未止，对 A 股光通信/半导体硬件形成持续压制。</div>
+  </div>
+</div>
+
+<div class="grid cols-2" style="margin-bottom:14px">
+  <div class="card">
+    <h2>关键技术位（上证）</h2>
+    <div class="kpi">
+      <div><b>3741</b><span>生命线/收复线</span></div>
+      <div><b>3701.53</b><span>MA20(今日高点精准触及)</span></div>
+      <div><b>3674</b><span>上周周低/已站上</span></div>
+      <div><b>3659</b><span>MA10</span></div>
+      <div><b>3644</b><span>MA5(下方支撑)</span></div>
+      <div><b>3600</b><span>整数关</span></div>
+      <div><b>3550</b><span>极弱线</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>外围边际变量（11/4 收盘 · 蓝色浪潮驱动）</h2>
+    <div class="kpi">
+      <div><b style="color:#2fd6a8">94.62</b><span>布油(暴跌破100·安全)</span></div>
+      <div><b>4.884%</b><span>美债10Y(<5.5%安全)</span></div>
+      <div><b>6.6739</b><span>离岸人民币(偏强)</span></div>
+      <div><b>4060.13</b><span>现货黄金(反弹)</span></div>
+    </div>
+    <div class="note" style="margin-top:10px">外围由「压制」转为「缓冲」：美国中期选举 <b>民主党横扫参众两院（蓝色浪潮）</b>→ 市场押注伊朗战争降级 → 布油 94.62（<b>暴跌 8.67%、破 100</b>，较上周 104~117 全面回落）、WTI 88.12；美债 10Y 4.88%（<5.5%、两月新低）；离岸人民币 6.67（偏强）；黄金 4060（+3.35% 反弹）。但 <b>美股 AI 硬件链遭重挫</b>（费半 -3.11%、美光 -7%、Coherent -6%、CoreWeave -10%，得州新州长承诺暂停数据中心审批）→ 对 A 股光通信/光模块/半导体硬件构成压制。国内：央行 11/4 起股票回购增持再贷款降至 1% 制度性安排 + 隔夜逆回购 1.25% 换锚托底，但今日净回笼 2000 亿「削峰」。</div>
+  </div>
+</div>
+
+<div class="foot">
+  <b>一句话结论：</b>今日 A 股呈「缺口低开后 V 型反转、题材强势轮动」格局——隔夜美股民主党横扫国会（蓝色浪潮）驱动全球 risk-on（布油暴跌至 94.62 破 100、美债 10Y 降至 4.88%、人民币 6.67 偏强），上证低开 3646 后翻红收 3689.79（+0.10%）、科创50 +2.11% / 北证50 +2.10% 领涨；赚钱效应达沸点（85% 上涨、62 涨停、0 跌停），半日成交 1.46 万亿暴增 5393 亿。结构上「光伏/电池/贵金属/半导体设备」强、「光通信/通信设备/元件」逆势下跌（-2.34%/-1.43%，受美股 AI 硬件链费半 -3.11%/美光 -7% 抛售传导）。上证仍处 MA20（3701.53，今日高点精准触及后回落）与 3741 生命线下方，央行今日净回笼 2000 亿「削峰」、两融连续 4 日降 1131 亿，反弹资金合力（ETF/游资驱动、外资/杠杆缺席）待验证。<b>综合评分 63/100（偏多·观察待买）</b>，建议 2.0→2.5 成，待收盘站回 3674（量能≥1.8 万亿已基本满足）阶梯加仓，光通信维持 0 成。<br>
+  数据来源：westock 行情 / 资金流 / 涨跌分布 / 板块排行（2026-11-05 12:00 时间戳）＋ 华尔街见闻 / 新浪财经 / 财联社 / 中国基金报 外围交叉校验。年份污染已规避，点位量级自洽。<br>
+  <span style="color:#ff5b6e">免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有分析结论均基于历史数据和技术模型，不保证未来表现。</span>
+</div>
+</div>
+
+<script>
+const D = {"date": "2026-11-05", "time": "12:00（午间）", "score": 63, "signal": "偏多·观察待买（可阶梯加仓）", "signal_en": "Bullish-leaning · Watch & Scale-in", "indices": [{"name": "上证指数", "code": "sh000001", "price": 3689.79, "pct": 0.1}, {"name": "深证成指", "code": "sz399001", "price": 11498.77, "pct": 1.44}, {"name": "创业板指", "code": "sz399006", "price": 2576.28, "pct": 1.24}, {"name": "科创50", "code": "sh000688", "price": 1292.12, "pct": 2.11}, {"name": "北证50", "code": "bj899050", "price": 912.88, "pct": 2.1}, {"name": "沪深300", "code": "sh000300", "price": 4115.93, "pct": 0.36}], "minute": [["0930", 3646.57], ["0931", 3650.7], ["0932", 3653.03], ["0933", 3657.83], ["0934", 3663.06], ["0935", 3661.68], ["0936", 3665.49], ["0937", 3665.3], ["0938", 3667.95], ["0939", 3668.16], ["0940", 3671.17], ["0941", 3673.58], ["0942", 3673.58], ["0943", 3676.47], ["0944", 3677.3], ["0945", 3680.88], ["0946", 3679.75], ["0947", 3681.27], ["0948", 3680.12], ["0949", 3683.51], ["0950", 3684.55], ["0951", 3686.65], ["0952", 3688.34], ["0953", 3688.18], ["0954", 3688.04], ["0955", 3688.16], ["0956", 3685.16], ["0957", 3680.67], ["0958", 3682.23], ["0959", 3680.99], ["1000", 3680.73], ["1001", 3676.83], ["1002", 3681.89], ["1003", 3684.76], ["1004", 3686.34], ["1005", 3689.15], ["1006", 3689.24], ["1007", 3690.87], ["1008", 3693.77], ["1009", 3691.5], ["1010", 3693.31], ["1011", 3692.44], ["1012", 3690.87], ["1013", 3690.7], ["1014", 3692.96], ["1015", 3692.5], ["1016", 3691.31], ["1017", 3691.21], ["1018", 3691.0], ["1019", 3695.35], ["1020", 3695.97], ["1021", 3694.76], ["1022", 3696.28], ["1023", 3698.66], ["1024", 3700.54], ["1025", 3698.51], ["1026", 3700.53], ["1027", 3697.52], ["1028", 3694.39], ["1029", 3694.76], ["1030", 3694.24], ["1031", 3694.91], ["1032", 3694.64], ["1033", 3693.88], ["1034", 3692.15], ["1035", 3692.91], ["1036", 3697.25], ["1037", 3697.76], ["1038", 3693.28], ["1039", 3694.95], ["1040", 3695.74], ["1041", 3694.31], ["1042", 3695.57], ["1043", 3695.48], ["1044", 3691.69], ["1045", 3691.86], ["1046", 3693.04], ["1047", 3691.91], ["1048", 3690.44], ["1049", 3688.02], ["1050", 3686.92], ["1051", 3685.13], ["1052", 3685.47], ["1053", 3683.3], ["1054", 3681.78], ["1055", 3683.61], ["1056", 3684.4], ["1057", 3683.88], ["1058", 3686.08], ["1059", 3687.42], ["1100", 3686.45], ["1101", 3684.02], ["1102", 3685.66], ["1103", 3684.36], ["1104", 3687.61], ["1105", 3688.4], ["1106", 3688.14], ["1107", 3688.11], ["1108", 3685.91], ["1109", 3686.14], ["1110", 3685.2], ["1111", 3684.65], ["1112", 3684.34], ["1113", 3684.87], ["1114", 3686.51], ["1115", 3690.14], ["1116", 3687.14], ["1117", 3684.8], ["1118", 3684.64], ["1119", 3685.78], ["1120", 3687.3], ["1121", 3688.34], ["1122", 3687.86], ["1123", 3688.02], ["1124", 3687.22], ["1125", 3686.86], ["1126", 3684.28], ["1127", 3685.03], ["1128", 3683.64], ["1129", 3687.94], ["1130", 3689.79]], "breadth": {"up": 4792, "down": 676, "flat": 110, "suspend": 7, "limitUp": 62, "limitDown": 0, "amount": "14643.73", "amountChg": "+5393.12", "upRatioPct": 85}, "dist": [["涨停", 62], [">7%", 166], ["7~5%", 273], ["5~2%", 2145], ["2~0%", 2146], ["平", 110], ["0~2%", 537], ["2~5%", 108], ["5~7%", 23], ["7%<", 8], ["跌停", 0]], "sectorUp": [["光伏设备", 7.08], ["能源金属", 5.66], ["贵金属", 5.31], ["电池", 4.97], ["广告营销", 4.69], ["装修装饰Ⅱ", 4.54], ["风电设备", 3.6]], "sectorDown": [["煤炭开采", -3.91], ["通信设备", -2.34], ["航运港口", -1.5], ["元件", -1.43], ["炼化及贸易", -1.33], ["农商行Ⅱ", -1.32], ["国有大型银行Ⅱ", -1.21]], "flowTodayIn": [["半导体", 59.39], ["光伏设备", 33.71], ["电池", 30.12], ["广告营销", 16.1], ["消费电子", 14.23], ["IT服务Ⅱ", 10.71], ["通用设备", 10.48], ["能源金属", 10.12]], "flowTodayOut": [["元件", -47.64], ["通信设备", -36.11], ["证券Ⅱ", -10.12], ["煤炭开采", -9.39], ["电力", -5.63], ["航运港口", -5.55], ["白酒Ⅱ", -3.44]], "flow5dIn": [["半导体", 108.41], ["电池", 77.78], ["光伏设备", 60.31], ["医疗服务", 29.82], ["小金属", 28.44], ["广告营销", 22.3], ["贵金属", 19.85], ["能源金属", 13.6]], "flow5dOut": [["通信设备", -100.24], ["元件", -66.07], ["电力", -46.82], ["汽车零部件", -25.42], ["煤炭开采", -24.4], ["股份制银行Ⅱ", -23.04], ["航空装备Ⅱ", -21.82]], "coverage": [{"name": "长飞光纤", "code": "601869", "price": 267.8, "pct": -1.36, "today": 0.59, "d5": -0.81, "d10": -11.07, "d20": -19.29, "note": "-1.36%逆势微跌·今日+0.59亿微正·20日-19.29亿·景气真筹码假未变·光通信最弱"}, {"name": "亨通光电", "code": "600487", "price": 44.22, "pct": 1.61, "today": -1.37, "d5": -10.7, "d10": -17.91, "d20": -27.27, "note": "+1.61%·5日-10.70亿·并购压制延续"}, {"name": "中天科技", "code": "600522", "price": 24.53, "pct": 2.0, "today": -0.45, "d5": -13.6, "d10": -19.1, "d20": -34.3, "note": "+2.00%·5日-13.60亿仍大幅净出"}, {"name": "大族激光", "code": "002008", "price": 55.51, "pct": 5.39, "today": 0.24, "d5": -4.08, "d10": -12.58, "d20": -25.06, "note": "今日+5.39%全池最强·激光设备受益反弹·但5日-4.08亿仍净出"}, {"name": "水晶光电", "code": "002273", "price": 24.29, "pct": 3.36, "today": 0.5, "d5": 1.64, "d10": 1.93, "d20": -0.31, "note": "全池资金最稳·5日+1.64/10日+1.93亿(20日-0.31接近转正)·消费电子/AI端侧受益半导体修复·防御锚"}, {"name": "长盈通", "code": "688143", "price": 119.99, "pct": -0.56, "today": -0.34, "d5": -3.17, "d10": -5.24, "d20": -9.6, "note": "-0.56%微跌·中期净出"}, {"name": "长光华芯", "code": "688048", "price": 140.55, "pct": 4.89, "today": 0.17, "d5": -2.99, "d10": -10.2, "d20": -25.09, "note": "+4.89%光芯片反弹·5日-2.99亿仍净出"}, {"name": "ST臻镭", "code": "688270", "price": 53.8, "pct": -0.35, "today": -0.1, "d5": 0.46, "d10": 0.49, "d20": -0.91, "note": "逆势微跌·5日+0.46亿转正·0仓位(ST涨跌停5%)"}, {"name": "广联航空", "code": "300900", "price": 22.49, "pct": 3.45, "today": -0.21, "d5": 0.51, "d10": 0.41, "d20": 0.83, "note": "商业航天·d5/d10/d20全正(+0.51/+0.41/+0.83亿)·高β0.5仓"}], "radar": {"tech": 30, "sentiment": 25, "fundamental": 30, "env": 15}, "attr": {"techPct": "30%", "sentPct": "25%", "fundPct": "30%", "envPct": "15%", "bull": "85%上涨+62涨停+0跌停(沸点)+半日成交1.46万亿暴增5393亿+科创50+2.11%领涨(延续昨日+9.92%动能)+半导体单日+59亿/5日+108亿转正+民主党横扫国会(蓝色浪潮)→布油暴跌破100(94.62)→美债10Y降至4.88%、离岸人民币6.67偏强+中国央行再贷款降至1%制度性托底", "bear": "上证+0.10%仍处MA20(3701.53)与3741生命线下方(仅站回3674周低/MA5/MA10)+光通信(通信设备5日-100亿全市场最差/元件-66亿)逆势派发延续(受美股费半-3.11%/美光-7%AI硬件链抛售传导)+央行今日净回笼2000亿\"削峰\"+两融连续4日降1131亿(杠杆未回归、反弹由ETF/游资驱动外资缺席)"}, "levels": {"life": 3741.11, "ma20": 3701.53, "ma10": 3659.03, "ma5": 3644.22, "weeklow": 3674, "int3600": 3600, "weak": 3550}, "position": {"now": 2.5, "prev": 2.0, "struct": "防御1.5(含水晶光电等资金转正确认标的) / 高β进攻0.5·军工航天(广联航空) / 科技反弹试探0.5(半导体设备+光伏+电池·今日放量主线) / 光通信0 / 现金7.0"}, "external": {"brent": 94.62, "brentPrev": 104.73, "ust10y": 4.884, "rmb": 6.6739, "gold": 4060.13}};
+const C={bg:'#1a1a2e',txt:'#e2e8f0',txt2:'#94a3b8',border:'#2d2d44',buy:'#00d4aa',sell:'#ff4757',hold:'#ffa502',a1:'#667eea',a2:'#764ba2'};
+function mk(id){const e=document.getElementById(id);const c=echarts.init(e,null,{renderer:'canvas'});return c;}
+window.addEventListener('resize',()=>{document.querySelectorAll('.chart,.chart-sm').forEach(e=>{const c=echarts.getInstanceByDom(e);if(c)c.resize();});});
+
+(function(){
+  const c=mk('ring');
+  c.setOption({series:[{type:'gauge',startAngle:90,endAngle:-270,radius:'100%',pointer:{show:false},progress:{show:true,width:10,roundCap:true,itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,1,[{offset:0,color:C.a1},{offset:1,color:C.a2}])}},axisLine:{lineStyle:{width:10,color:[[1,'#2d2d44']]}},splitLine:{show:false},axisTick:{show:false},axisLabel:{show:false},data:[{value:D.score}],detail:{show:false}}]});
+})();
+
+(function(){
+  const d=D.dist;
+  const cats=d.map(x=>x[0]); const vals=d.map(x=>x[1]);
+  const colors=vals.map(v=> v>=55?C.hold : v>0?C.buy : C.sell);
+  const c=mk('dist');
+  c.setOption({grid:{left:50,right:20,top:10,bottom:50},tooltip:{trigger:'axis'},xAxis:{type:'category',data:cats,axisLabel:{color:C.txt2,rotate:35,fontSize:10},axisLine:{lineStyle:{color:C.border}}},yAxis:{type:'value',axisLabel:{color:C.txt2},splitLine:{lineStyle:{color:C.border}}},series:[{type:'bar',data:vals.map((v,i)=>({value:v,itemStyle:{color:colors[i],borderRadius:[3,3,0,0]}})),barWidth:'55%'}]});
+})();
+
+(function(){
+  const up=D.breadth.upRatioPct||85;
+  const c=mk('gauge');
+  c.setOption({series:[{type:'gauge',min:0,max:100,splitNumber:5,radius:'92%',center:['50%','58%'],axisLine:{lineStyle:{width:18,color:[[0.3,C.sell],[0.5,C.hold],[0.85,C.buy],[1,'#2fd6a8']]}},pointer:{itemStyle:{color:C.hold}},detail:{valueAnimation:true,formatter:'{value}°',color:C.txt,fontSize:38,offsetCenter:[0,'40%']},title:{offsetCenter:[0,'75%'],color:C.txt2,fontSize:13},data:[{value:up,name:'市场情绪（上涨占比'+up+'%）'}]}]});
+})();
+
+(function(){
+  const t=D.minute.map(x=>x[0]); const p=D.minute.map(x=>x[1]);
+  const base=D.minute[0][1];
+  const c=mk('minute');
+  c.setOption({grid:{left:55,right:20,top:20,bottom:30},tooltip:{trigger:'axis'},xAxis:{type:'category',data:t,axisLabel:{color:C.txt2,fontSize:9,interval:14},axisLine:{lineStyle:{color:C.border}}},yAxis:{type:'value',scale:true,axisLabel:{color:C.txt2},splitLine:{lineStyle:{color:C.border}}},series:[
+    {type:'line',data:p,smooth:true,symbol:'none',lineStyle:{width:2,color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:C.a1},{offset:1,color:C.a2}])},areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(102,126,234,0.35)'},{offset:1,color:'rgba(102,126,234,0)'}])},
+     markLine:{symbol:'none',data:[{yAxis:base,label:{formatter:'今开 '+base,color:C.txt2,fontSize:10},lineStyle:{color:C.border,type:'dashed'}}]},
+     markPoint:{symbol:'pin',symbolSize:38,data:[{type:'max',name:'高'},{type:'min',name:'低'}],itemStyle:{color:C.buy}}
+    }
+  ]});
+})();
+
+(function(){
+  const d=[...D.sectorUp].reverse();
+  const c=mk('secUp');
+  c.setOption({grid:{left:70,right:35,top:10,bottom:25},tooltip:{trigger:'axis'},xAxis:{type:'value',axisLabel:{color:C.txt2},splitLine:{lineStyle:{color:C.border}}},yAxis:{type:'category',data:d.map(x=>x[0]),axisLabel:{color:C.txt2,fontSize:10}},series:[{type:'bar',data:d.map(x=>({value:x[1],itemStyle:{color:C.buy,borderRadius:[0,3,3,0]}})),barWidth:'62%',label:{show:true,position:'right',color:C.txt,fontSize:10,formatter:'{c}%'}}]});
+})();
+(function(){
+  const d=[...D.sectorDown].sort((a,b)=>a[1]-b[1]);
+  const c=mk('secDown');
+  c.setOption({grid:{left:80,right:35,top:10,bottom:25},tooltip:{trigger:'axis'},xAxis:{type:'value',axisLabel:{color:C.txt2},splitLine:{lineStyle:{color:C.border}}},yAxis:{type:'category',data:d.map(x=>x[0]),axisLabel:{color:C.txt2,fontSize:10}},series:[{type:'bar',data:d.map(x=>({value:x[1],itemStyle:{color:x[1]<0?C.sell:C.buy,borderRadius:[0,3,3,0]}})),barWidth:'62%',label:{show:true,position:'right',color:C.txt,fontSize:10,formatter:'{c}%'}}]});
+})();
+
+(function(){
+  const inn=D.flowTodayIn.slice().reverse(); const out=D.flowTodayOut.slice().reverse();
+  const all=out.concat(inn);
+  const c=mk('flowToday');
+  c.setOption({grid:{left:80,right:40,top:10,bottom:25},tooltip:{trigger:'axis'},xAxis:{type:'value',axisLabel:{color:C.txt2},splitLine:{lineStyle:{color:C.border}}},yAxis:{type:'category',data:all.map(x=>x[0]),axisLabel:{color:C.txt2,fontSize:10}},series:[{type:'bar',data:all.map(x=>({value:x[1],itemStyle:{color:x[1]>=0?C.buy:C.sell,borderRadius:[0,3,3,0]}})),barWidth:'60%',label:{show:true,position:'right',color:C.txt,fontSize:9,formatter:'{c}'}}]});
+})();
+(function(){
+  const inn=D.flow5dIn.slice().reverse(); const out=D.flow5dOut.slice().reverse();
+  const all=out.concat(inn);
+  const c=mk('flow5d');
+  c.setOption({grid:{left:90,right:40,top:10,bottom:25},tooltip:{trigger:'axis'},xAxis:{type:'value',axisLabel:{color:C.txt2},splitLine:{lineStyle:{color:C.border}}},yAxis:{type:'category',data:all.map(x=>x[0]),axisLabel:{color:C.txt2,fontSize:10}},series:[{type:'bar',data:all.map(x=>({value:x[1],itemStyle:{color:x[1]>=0?C.buy:C.sell,borderRadius:[0,3,3,0]}})),barWidth:'60%',label:{show:true,position:'right',color:C.txt,fontSize:9,formatter:'{c}'}}]});
+})();
+
+(function(){
+  const tb=document.querySelector('#cov tbody');
+  D.coverage.forEach(r=>{
+    const tr=document.createElement('tr');
+    const tcls=r.today>=0?'pos':'neg'; const d5=r.d5>=0?'pos':'neg'; const d10=r.d10>=0?'pos':'neg'; const d20=r.d20>=0?'pos':'neg';
+    const pcls=r.pct>=0?'pos':'neg';
+    tr.innerHTML=`<td>${r.name}</td><td class="note">${r.code}</td><td>${r.price.toFixed(2)}</td><td class="${pcls}">${r.pct.toFixed(2)}</td><td class="${tcls}">${r.today>=0?'+':''}${r.today.toFixed(2)}</td><td class="${d5}">${r.d5>=0?'+':''}${r.d5.toFixed(2)}</td><td class="${d10}">${r.d10>=0?'+':''}${r.d10.toFixed(2)}</td><td class="${d20}">${r.d20>=0?'+':''}${r.d20.toFixed(2)}</td><td class="note">${r.note}</td>`;
+    tb.appendChild(tr);
+  });
+})();
+
+(function(){
+  const r=D.radar;
+  const c=mk('radar');
+  c.setOption({tooltip:{},radar:{indicator:[{name:'技术指标',max:100},{name:'新闻情绪',max:100},{name:'基本面',max:100},{name:'市场环境',max:100}],axisName:{color:C.txt2},splitLine:{lineStyle:{color:C.border}},splitArea:{areaStyle:{color:['#1a1a2e','#16162a']}},axisLine:{lineStyle:{color:C.border}}},series:[{type:'radar',data:[{value:[r.tech,r.sentiment,r.fundamental,r.env],areaStyle:{color:'rgba(102,126,234,0.35)'},lineStyle:{color:C.a1,width:2},itemStyle:{color:C.a2}}]}]});
+})();
+</script>
+</body>
+</html>
