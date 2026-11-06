@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-06 18:01:16",
-  "total": 485,
+  "generatedAt": "2026-11-07 07:50:43",
+  "total": 486,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 95,
-      "latest": "20261106",
+      "count": 96,
+      "latest": "20261109",
       "reports": [
+        {
+          "date": "20261109",
+          "dateLabel": "2026-11-09（周一）",
+          "file": "reports/panqian/panqian_20261109.html",
+          "title": "盘前计划 2026-11-09（周一）· 主流题材三问三答 · 星辰决策仪表盘",
+          "size": 22860
+        },
         {
           "date": "20261106",
           "dateLabel": "2026-11-06（周五）",
