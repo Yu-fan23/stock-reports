@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股周度复盘 · 2026-11-02 ~ 11-06 · 星辰</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --accent1:#667eea; --accent2:#764ba2; --txt:#e2e8f0; --txt2:#94a3b8; --border:#2d2d44;
+    --up:#ff4d4f; --down:#1ec77d;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.55;padding:0 0 60px}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 18px}
+  header{padding:34px 0 20px;text-align:center;background:linear-gradient(180deg,#16162e,#0f0f23)}
+  header h1{font-size:26px;font-weight:800;letter-spacing:1px}
+  header .sub{color:var(--txt2);font-size:13px;margin-top:6px}
+  .badge{display:inline-block;padding:3px 12px;border-radius:20px;font-size:12px;font-weight:700;margin:8px 4px}
+  .b-week{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#fff}
+  .b-sat{background:#2d2d44;color:var(--txt2);border:1px solid var(--border)}
+  /* decision summary */
+  .summary{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:16px;margin:22px 0}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px}
+  .sig{font-size:40px;font-weight:900;text-align:center;padding:14px 0;border-radius:12px}
+  .sig.sell{background:linear-gradient(135deg,#ff4757,#c0392b);color:#fff}
+  .score-wrap{display:flex;align-items:center;justify-content:center;gap:14px}
+  .score-num{font-size:46px;font-weight:900;color:var(--sell)}
+  .score-sub{color:var(--txt2);font-size:13px}
+  .kv{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--border);font-size:14px}
+  .kv:last-child{border-bottom:none}
+  .kv b{color:var(--txt2);font-weight:500}
+  .pos-tag{display:inline-block;padding:2px 10px;border-radius:6px;font-size:12px;font-weight:700;background:#3a2a1a;color:var(--hold);border:1px solid #5a3a1a}
+  section{margin:26px 0}
+  h2{font-size:19px;font-weight:800;margin-bottom:14px;padding-left:12px;border-left:4px solid var(--accent1)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .chart{width:100%;height:320px}
+  .chart.tall{height:360px}
+  .concl{background:linear-gradient(135deg,#1a1a2e,#211a33);border:1px solid var(--border);border-left:4px solid var(--sell);border-radius:12px;padding:18px 20px;font-size:15px}
+  .concl .hl{color:var(--sell);font-weight:800}
+  .concl .hl2{color:var(--hold);font-weight:700}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card);border-radius:10px;overflow:hidden}
+  th,td{padding:9px 10px;text-align:center;border-bottom:1px solid var(--border)}
+  th{background:#22223c;color:var(--txt2);font-weight:600}
+  tr:hover td{background:#20203a}
+  .pos{color:var(--up);font-weight:700}.neg{color:var(--down);font-weight:700}
+  .neu{color:var(--txt2)}
+  .plan-table td:first-child{text-align:left;font-weight:600}
+  .plan-key{color:var(--accent1);font-weight:700}
+  .alert{background:#2a1620;border:1px solid #5a2030;border-radius:10px;padding:12px 16px;color:#ffb3bd;font-size:13.5px;margin-top:12px}
+  .ok{background:#16261f;border:1px solid #205a3a;border-radius:10px;padding:12px 16px;color:#9be8c0;font-size:13.5px;margin-top:12px}
+  .foot{color:var(--txt2);font-size:12px;text-align:center;margin-top:30px;line-height:1.8}
+  .pill{display:inline-block;padding:2px 9px;border-radius:6px;font-size:11px;background:#22223c;color:var(--txt2);margin:2px}
+  @media(max-width:820px){.summary{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>📊 A股周度复盘 · 决策仪表盘</h1>
+    <div class="sub">区间 2026-11-02（周一）~ 11-06（周五）　|　生成于 2026-11-07（周六）　|　分析师：星辰</div>
+    <div>
+      <span class="badge b-week">周六路由 · 周度复盘</span>
+      <span class="badge b-sat">覆盖：指数 / 赚钱效应 / 资金流向 / 仓位管理</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- 决策摘要 -->
+  <div class="summary">
+    <div class="card">
+      <div class="sig sell">SELL · 看空</div>
+      <div style="text-align:center;color:var(--txt2);font-size:13px;margin-top:8px">信号：减仓回避　|　建议：维持防御、严控仓位</div>
+      <div style="margin-top:14px">
+        <div class="kv"><b>综合评分</b><span class="score-num" style="font-size:24px">30</span><span class="score-sub">/100</span></div>
+        <div class="kv"><b>当前仓位</b><span class="pos-tag">2.0 成（维持）</span></div>
+        <div class="kv"><b>本周区间</b><span>3580.38 ~ 3701.59</span></div>
+        <div class="kv"><b>关键位</b><span>生命线 3741 / 支撑 3600 / 强支撑 3550</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="kv"><b>防御底仓</b><span>1.0 成（含水晶光电）</span></div>
+      <div class="kv"><b>高β进攻</b><span>0.5 成（军工航天·广联）</span></div>
+      <div class="kv"><b>光通信</b><span class="neu">0 成（观察）</span></div>
+      <div class="kv"><b>现金</b><span>8.0 成（机动）</span></div>
+      <div style="margin-top:10px;font-size:12px;color:var(--txt2)">结构：防御 1.0 / 高β 0.5 / 光通信 0 / 现金 8.0</div>
+    </div>
+    <div class="card">
+      <div class="kv"><b>上证周涨跌</b><span class="pos">+1.40%</span></div>
+      <div class="kv"><b>创业板周涨跌</b><span class="pos">+2.14%</span></div>
+      <div class="kv"><b>科创50周涨跌</b><span class="pos">+7.96%（最强）</span></div>
+      <div class="kv"><b>周五收盘上证</b><span class="neg">3649.18 (−1.10%)</span></div>
+      <div class="kv"><b>周五成交</b><span>16577亿（−4601亿）</span></div>
+    </div>
+  </div>
+
+  <!-- 核心结论 -->
+  <section>
+    <h2>① 核心结论</h2>
+    <div class="concl">
+      <p>本周 A 股呈现「<span class="hl2">周一/周四两根放量长阳、周五全球风险资产血洗吞噬涨幅</span>」的剧烈过山车结构：前四日受<span class="hl2">布油脱离115美元警戒线 + 央行隔夜逆回购利率换锚(1.25%) + 证监会稳市场</span>三重托底驱动超跌反弹，半导体单周吸金+112亿；但<span class="hl">周五隔夜美股史诗级抛售（纳指−5.52%、费半−12.25%为2020/3以来最大单日跌幅）</span>通过 KOSPI 熔断、A50 夜盘−1.85% 传导至 A 股，赚钱效应骤降至冰点（上涨占比13%），光通信重灾。</p>
+      <p style="margin-top:8px">一句话：<span class="hl">反弹被证伪为下跌中继，全球风险偏好塌方主导，维持 2.0 成防御、光通信 0 成，等待非农与美股止跌信号。</span></p>
+      <p style="margin-top:8px;color:var(--txt2);font-size:13px">评分 30/100（看空·减仓回避）｜仓位 2.0 成维持｜核心矛盾：外部利空（费半/AI资本开支担忧/美债加息概率回升）vs 内部托底（汇金平准+再贷款1%+DR007新低）。</p>
+    </div>
+  </section>
+
+  <!-- 本周行情轨迹 -->
+  <section>
+    <h2>② 本周行情轨迹 · 指数表现</h2>
+    <div class="grid2">
+      <div class="card"><div id="idxWeek" class="chart"></div></div>
+      <div class="card"><div id="shDaily" class="chart"></div></div>
+    </div>
+  </section>
+
+  <!-- 赚钱效应 -->
+  <section>
+    <h2>③ 市场赚钱效应总结</h2>
+    <div class="grid2">
+      <div class="card"><div id="breadthDonut" class="chart"></div></div>
+      <div class="card"><div id="sentiment" class="chart"></div></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <table>
+        <tr><th>日期</th><th>上证收盘</th><th>涨跌</th><th>上涨家数占比</th><th>情绪温度</th><th>定性</th></tr>
+        <tr><td>11/02 周一</td><td>3638.03</td><td class="pos">+1.08%</td><td class="pos">85%</td><td>85°</td><td>暴力反弹（评分24→60）</td></tr>
+        <tr><td>11/03 周二</td><td>3608.10</td><td class="neg">−0.82%</td><td>59%</td><td>59°</td><td>科技天量派发、缩量回调</td></tr>
+        <tr><td>11/04 周三</td><td>3686.17</td><td class="pos">+2.16%</td><td class="neg">29%</td><td>29°</td><td>“指数红、个股绿”</td></tr>
+        <tr><td>11/05 周四</td><td>3689.91</td><td class="pos">+0.10%</td><td class="pos">85%</td><td>85°</td><td>“蓝色浪潮”放量普涨</td></tr>
+        <tr><td>11/06 周五</td><td>3649.18</td><td class="neg">−1.10%</td><td class="neg">13%</td><td>16°</td><td>全球抛售、冰点（758涨/4741跌）</td></tr>
+      </table>
+      <div class="alert" style="margin-top:12px">⚠️ 全周赚钱效应呈“脉冲式”：仅 11/02 与 11/05 两日出现普涨（85%上涨），其余三日均为结构性分化或冰点。周五涨停33:跌停15，炸板与补跌并行，<b>连板情绪与赚钱效应已显著退潮</b>。</div>
+    </div>
+  </section>
+
+  <!-- 资金流向 -->
+  <section>
+    <h2>④ 资金流向分析（本周5日主力净流入）</h2>
+    <div class="grid2">
+      <div class="card"><div id="indIn" class="chart"></div></div>
+      <div class="card"><div id="indOut" class="chart"></div></div>
+    </div>
+    <div class="card" style="margin-top:16px"><div id="conIn" class="chart"></div></div>
+    <div class="card" style="margin-top:16px">
+      <table>
+        <tr><th>维度</th><th>净流入 TOP（本周5日）</th><th>净流出 TOP（本周5日）</th></tr>
+        <tr><td>行业</td><td class="pos" style="text-align:left">半导体 +112亿 · 光伏设备 +55亿 · 电池 +38亿 · 贵金属 +24亿</td><td class="neg" style="text-align:left">元件 −126亿 · 通信设备 −114亿 · 白酒 −26亿 · 煤炭 −25亿</td></tr>
+        <tr><td>概念</td><td class="pos" style="text-align:left">中芯国际 +136亿 · 半导体设备 +124亿 · 半导体产业 +122亿 · 集成电路 +113亿</td><td class="neg" style="text-align:left">元件/通信设备链全面派发，AI硬件映射承压</td></tr>
+      </table>
+      <div class="ok" style="margin-top:12px">✅ 资金主线信号：① <b>半导体产业链是本周唯一明确获资方向</b>（中芯国际/设备/大基金二期合计逾+460亿），但<b>周五单日遭−118亿抛售</b>，属“周初吸筹、周末派发”；② 防御端银行/电力/白酒出现分歧（白酒5日−26亿）；③ 光通信（元件−126亿/通信设备−114亿）再度沦为净流出重灾区。</div>
+    </div>
+  </section>
+
+  <!-- 覆盖池 -->
+  <section>
+    <h2>⑤ 用户覆盖池跟踪（11/06 收盘）</h2>
+    <div class="card">
+      <table>
+        <tr><th>标的</th><th>收盘</th><th>今日主力</th><th>5日主力</th><th>10日主力</th><th>20日主力</th><th>标记</th></tr>
+        <tr><td>水晶光电 002273</td><td>23.84</td><td class="neg">−0.80</td><td class="pos">+2.52</td><td class="pos">+2.96</td><td class="pos">+1.92</td><td><span class="pill" style="color:#9be8c0">防御锚·全周期正</span></td></tr>
+        <tr><td>广联航空 300900</td><td>21.84</td><td class="neg">−0.05</td><td class="pos">+0.12</td><td class="pos">+0.11</td><td class="pos">+0.50</td><td><span class="pill" style="color:#9be8c0">商业航天防御</span></td></tr>
+        <tr><td>长飞光纤 601869</td><td>240.00</td><td class="neg">−3.08</td><td class="pos">+2.78</td><td class="neg">−7.99</td><td class="neg">−17.03</td><td>光通信·5日勉强正、今日重挫</td></tr>
+        <tr><td>亨通光电 600487</td><td>40.90</td><td class="neg">−5.23</td><td class="neg">−3.06</td><td class="neg">−19.96</td><td class="neg">−21.84</td><td>光通信·5日转负</td></tr>
+        <tr><td>中天科技 600522</td><td>23.15</td><td class="neg">−2.69</td><td class="neg">−10.23</td><td class="neg">−19.33</td><td class="neg">−33.09</td><td>光通信·5日最弱</td></tr>
+        <tr><td>大族激光 002008</td><td>52.40</td><td class="pos">+0.48</td><td class="neg">−2.71</td><td class="neg">−11.15</td><td class="neg">−25.99</td><td>激光·中性</td></tr>
+        <tr><td>长盈通 688143</td><td>106.81</td><td class="neg">−0.27</td><td class="neg">−2.13</td><td class="neg">−4.67</td><td class="neg">−8.93</td><td>低位震荡</td></tr>
+        <tr><td>长光华芯 688048</td><td>131.50</td><td class="neg">−0.86</td><td class="neg">−0.71</td><td class="neg">−8.40</td><td class="neg">−19.38</td><td>光芯片·承压</td></tr>
+        <tr><td>ST臻镭 688270</td><td>54.82</td><td class="pos">+0.11</td><td class="neg">−0.21</td><td class="pos">+0.50</td><td class="neg">−1.19</td><td>0仓位观察</td></tr>
+      </table>
+      <div class="alert" style="margin-top:12px">⚠️ 光通信三剑客（长飞/亨通/中天）本周5日资金再度转弱（亨通−3亿、中天−10亿），前期“景气真、筹码假”逻辑延续，<b>光通信维持 0 成观察</b>。仅水晶光电（消费电子/AI端侧）与广联航空（商业航天）保持 5/10/20 日全周期净流入，为组合防御锚。</div>
+    </div>
+  </section>
+
+  <!-- 信号归因雷达 -->
+  <section>
+    <h2>⑥ 信号归因雷达</h2>
+    <div class="grid2">
+      <div class="card"><div id="radar" class="chart"></div></div>
+      <div class="card" style="display:flex;flex-direction:column;justify-content:center">
+        <div class="kv"><b>技术指标</b><span>25%</span></div>
+        <div class="kv"><b>新闻情绪</b><span>20%</span></div>
+        <div class="kv"><b>基本面</b><span>10%</span></div>
+        <div class="kv"><b>市场环境</b><span>45%</span></div>
+        <div class="ok" style="margin-top:14px">🔼 最强看多：半导体产业链周度主力+112亿回流、周一/周四两根放量长阳、央行政策利率换锚托底。</div>
+        <div class="alert" style="margin-top:10px">🔽 最强看空：周五全球科技股血洗（费半−12.25%）、光通信/元件/通信5日净流出逾−240亿、赚钱效应冰点（上涨13%）。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 下周作战计划 -->
+  <section>
+    <h2>⑦ 下周作战计划（11/09 ~ 11/13）</h2>
+    <div class="card">
+      <table class="plan-table">
+        <tr><th>情景</th><th>触发条件</th><th>仓位动作</th></tr>
+        <tr><td><span class="plan-key">强修复</span></td><td>站回 3741（生命线）且两市≥1.8万亿、科技三链（半导体/通信/元件）5日转正</td><td>2.5 ~ 3.0 成（含光通信试探 0.3）</td></tr>
+        <tr><td><span class="plan-key">基准震荡</span></td><td>3600 ~ 3741 区间震荡</td><td><b>2.0 成维持</b>（防御1.0/高β0.5/现金8.0）</td></tr>
+        <tr><td><span class="plan-key">破位减仓</span></td><td>跌破 3600（周五低 3610 已逼近）</td><td>1.5 成</td></tr>
+        <tr><td><span class="plan-key">极端风险</span></td><td>破 3550 / 美债10Y&gt;5.5% / 布油&gt;115</td><td>1.0 成</td></tr>
+        <tr><td><span class="plan-key">油价预警</span></td><td>布油&gt;105 且美伊冲突升级</td><td>先降至 1.5 成预警</td></tr>
+      </table>
+      <div class="alert" style="margin-top:14px">
+        🔴 下周核心观察变量：① <b>今晚 21:30 美国10月非农</b>（双向变量，影响美债加息概率与汇率）；② 周一美股/费半能否止跌（决定 A 股低开幅度）；③ 央行对冲力度（平准基金/再贷款/逆回购）；④ 布油是否重回 100 上方及美伊局势。
+      </div>
+      <div class="ok" style="margin-top:10px">
+        🟢 对冲缓冲仍在：中央汇金类平准基金 + 再贷款降至 1% + DR007 创新低（指数有底）；离岸人民币 6.6652 偏强；布油周五反弹至 97.97~99.18（脱离 115 但逼近 100）。
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <p>数据来源：westock 行情/K线/资金流（2026-11-06 收盘口径）＋ 内部执行记忆交叉校验　|　分析策略：星辰·大盘复盘框架（周六→周度复盘路由）</p>
+    <p>⚠️ 免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有结论基于历史数据与技术模型，不保证未来表现。</p>
+  </div>
+
+</div>
+
+<script>
+const C={bg:'#1a1a2e',txt:'#e2e8f0',txt2:'#94a3b8',border:'#2d2d44',up:'#ff4d4f',down:'#1ec77d',acc1:'#667eea',acc2:'#764ba2'};
+const baseGrid={left:'3%',right:'4%',bottom:'3%',top:'12%',containLabel:true};
+function mk(id){const c=echarts.init(document.getElementById(id),null,{renderer:'canvas'});c.group='g';return c;}
+const charts=[];
+
+// ① 指数周涨跌
+(function(){
+  const d=[['上证指数',1.40],['深证成指',3.16],['创业板指',2.14],['科创50',7.96],['北证50',0.31],['沪深300',1.73]];
+  const c=mk('idxWeek');charts.push(c);
+  c.setOption({
+    backgroundColor:C.bg,title:{text:'六大指数周涨跌(%)',textStyle:{color:C.txt,fontSize:14}},
+    tooltip:{trigger:'axis'},grid:baseGrid,
+    xAxis:{type:'category',data:d.map(x=>x[0]),axisLabel:{color:C.txt2,interval:0,rotate:20,fontSize:11}},
+    yAxis:{type:'value',axisLabel:{color:C.txt2},splitLine:{lineStyle:{color:C.border}}},
+    series:[{type:'bar',data:d.map(x=>({value:x[1],itemStyle:{color:x[1]>=0?C.down:C.up}})),
+      label:{show:true,position:'top',color:C.txt,formatter:'{c}%'},barWidth:'45%'}]
+  });
+})();
+
+// ② 上证日轨迹
+(function(){
+  const d=[['11/02',3638.03],['11/03',3608.10],['11/04',3686.17],['11/05',3689.91],['11/06',3649.18]];
+  const c=mk('shDaily');charts.push(c);
+  c.setOption({
+    backgroundColor:C.bg,title:{text:'上证指数日收盘轨迹',textStyle:{color:C.txt,fontSize:14}},
+    tooltip:{trigger:'axis'},grid:baseGrid,
+    xAxis:{type:'category',data:d.map(x=>x[0]),axisLabel:{color:C.txt2}},
+    yAxis:{type:'value',scale:true,axisLabel:{color:C.txt2},splitLine:{lineStyle:{color:C.border}}},
+    series:[{type:'line',data:d.map(x=>x[1]),smooth:true,symbolSize:8,
+      lineStyle:{width:3,color:C.acc1},itemStyle:{color:C.acc2},
+      areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(102,126,234,0.35)'},{offset:1,color:'rgba(102,126,234,0.02)'}])},
+      markLine:{silent:true,data:[{yAxis:3741,label:{formatter:'生命线3741',color:C.up,fontSize:11},lineStyle:{color:C.up,type:'dashed'}},
+        {yAxis:3600,label:{formatter:'支撑3600',color:C.down,fontSize:11},lineStyle:{color:C.down,type:'dashed'}}]}}]
+  });
+})();
+
+// ③ 涨跌分布 donut
+(function(){
+  const c=mk('breadthDonut');charts.push(c);
+  c.setOption({
+    backgroundColor:C.bg,title:{text:'周五涨跌分布（11/06）',textStyle:{color:C.txt,fontSize:14}},
+    tooltip:{trigger:'item',formatter:'{b}: {c} ({d}%)'},
+    legend:{bottom:0,textStyle:{color:C.txt2},data:['上涨','下跌','平盘','停牌']},
+    series:[{type:'pie',radius:['42%','68%'],center:['50%','45%'],
+      label:{color:C.txt},
+      data:[{name:'上涨',value:758,itemStyle:{color:C.down}},{name:'下跌',value:4741,itemStyle:{color:C.up}},
+            {name:'平盘',value:80,itemStyle:{color:C.txt2}},{name:'停牌',value:6,itemStyle:{color:'#555'}}]}]
+  });
+})();
+
+// ④ 赚钱效应/情绪温度
+(function(){
+  const d=[['11/02',85],['11/03',59],['11/04',29],['11/05',85],['11/06',16]];
+  const c=mk('sentiment');charts.push(c);
+  c.setOption({
+    backgroundColor:C.bg,title:{text:'本周赚钱效应（上涨占比%）',textStyle:{color:C.txt,fontSize:14}},
+    tooltip:{trigger:'axis'},grid:baseGrid,
+    xAxis:{type:'category',data:d.map(x=>x[0]),axisLabel:{color:C.txt2}},
+    yAxis:{type:'value',max:100,axisLabel:{color:C.txt2},splitLine:{lineStyle:{color:C.border}}},
+    series:[{type:'line',data:d.map(x=>x[1]),smooth:true,symbolSize:8,lineStyle:{width:3,color:C.hold},itemStyle:{color:C.hold},
+      areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(255,165,2,0.35)'},{offset:1,color:'rgba(255,165,2,0.02)'}])},
+      markLine:{silent:true,data:[{yAxis:50,label:{formatter:'荣枯线50%',color:C.txt2,fontSize:11},lineStyle:{color:C.txt2,type:'dashed'}}]}}]
+  });
+})();
+
+// ⑤ 行业5日流入
+(function(){
+  const d=[['半导体',112.19],['光伏设备',55.40],['电池',37.74],['广告营销',25.69],['贵金属',24.30],['小金属',16.47],['影视院线',15.32],['个护用品',14.30],['游戏Ⅱ',13.91]];
+  const c=mk('indIn');charts.push(c);
+  c.setOption({
+    backgroundColor:C.bg,title:{text:'行业5日主力净流入 TOP（亿元）',textStyle:{color:C.txt,fontSize:14}},
+    tooltip:{trigger:'axis'},grid:baseGrid,
+    xAxis:{type:'value',axisLabel:{color:C.txt2},splitLine:{lineStyle:{color:C.border}}},
+    yAxis:{type:'category',data:d.map(x=>x[0]).reverse(),axisLabel:{color:C.txt2,fontSize:11}},
+    series:[{type:'bar',data:d.map(x=>x[1]).reverse(),barWidth:'55%',
+      itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#0f9d6b'},{offset:1,color:C.down}])},
+      label:{show:true,position:'right',color:C.txt,formatter:'{c}'}}]
+  });
+})();
+
+// ⑥ 行业5日流出
+(function(){
+  const d=[['元件',-126.32],['通信设备',-113.97],['白酒Ⅱ',-25.76],['煤炭开采',-25.18],['航运港口',-24.48],['电力',-23.70],['自动化设备',-21.22],['股份制银行Ⅱ',-21.16],['化学制药',-21.01]];
+  const c=mk('indOut');charts.push(c);
+  c.setOption({
+    backgroundColor:C.bg,title:{text:'行业5日主力净流出 TOP（亿元）',textStyle:{color:C.txt,fontSize:14}},
+    tooltip:{trigger:'axis'},grid:baseGrid,
+    xAxis:{type:'value',axisLabel:{color:C.txt2},splitLine:{lineStyle:{color:C.border}}},
+    yAxis:{type:'category',data:d.map(x=>x[0]).reverse(),axisLabel:{color:C.txt2,fontSize:11}},
+    series:[{type:'bar',data:d.map(x=>x[1]).reverse(),barWidth:'55%',
+      itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#8a1f2b'},{offset:1,color:C.up}])},
+      label:{show:true,position:'left',color:C.txt,formatter:'{c}'}}]
+  });
+})();
+
+// ⑦ 概念5日流入
+(function(){
+  const d=[['中芯国际概念',136.47],['半导体设备',124.01],['半导体产业',121.98],['集成电路',112.76],['大基金二期',81.81],['文化传媒',71.13],['HBM',68.28]];
+  const c=mk('conIn');charts.push(c);
+  c.setOption({
+    backgroundColor:C.bg,title:{text:'概念板块5日主力净流入 TOP（亿元）· 半导体链独占鳌头',textStyle:{color:C.txt,fontSize:14}},
+    tooltip:{trigger:'axis'},grid:baseGrid,
+    xAxis:{type:'value',axisLabel:{color:C.txt2},splitLine:{lineStyle:{color:C.border}}},
+    yAxis:{type:'category',data:d.map(x=>x[0]).reverse(),axisLabel:{color:C.txt2,fontSize:11}},
+    series:[{type:'bar',data:d.map(x=>x[1]).reverse(),barWidth:'55%',
+      itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#5a3acb'},{offset:1,color:C.acc1}])},
+      label:{show:true,position:'right',color:C.txt,formatter:'{c}'}}]
+  });
+})();
+
+// ⑧ 雷达
+(function(){
+  const c=mk('radar');charts.push(c);
+  c.setOption({
+    backgroundColor:C.bg,title:{text:'信号归因四维雷达',textStyle:{color:C.txt,fontSize:14}},
+    tooltip:{},radar:{indicator:[{name:'技术指标',max:100},{name:'新闻情绪',max:100},{name:'基本面',max:100},{name:'市场环境',max:100}],
+      axisName:{color:C.txt2},splitLine:{lineStyle:{color:C.border}},splitArea:{areaStyle:{color:['#16162e','#1a1a2e']}},axisLine:{lineStyle:{color:C.border}}},
+    series:[{type:'radar',data:[{value:[35,30,45,25],name:'得分',
+      areaStyle:{color:'rgba(255,71,87,0.25)'},lineStyle:{color:C.up},itemStyle:{color:C.up}}]}]
+  });
+})();
+
+window.addEventListener('resize',()=>charts.forEach(c=>c.resize()));
+</script>
+</body>
+</html>
