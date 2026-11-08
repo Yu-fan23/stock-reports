@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-08 15:51:03",
-  "total": 492,
+  "generatedAt": "2026-11-08 16:50:44",
+  "total": 494,
   "categories": [
     {
       "key": "panqian",
@@ -1423,9 +1423,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 102,
-      "latest": "20261107",
+      "count": 103,
+      "latest": "20261108",
       "reports": [
+        {
+          "date": "20261108",
+          "dateLabel": "2026-11-08（周日）",
+          "file": "reports/close/close_20261108.html",
+          "title": "A股行情复盘（2026-11-08 · 周日 · 周末休市特刊 · 冻结11/06收盘+周末催化+周一推演）",
+          "size": 24013
+        },
         {
           "date": "20261107",
           "dateLabel": "2026-11-07（周六）",
@@ -1437,8 +1444,8 @@ window.SITE_DATA = {
           "date": "20261106",
           "dateLabel": "2026-11-06（周五）",
           "file": "reports/close/close_20261106.html",
-          "title": "A股收盘复盘 · 2026-11-06（周五）",
-          "size": 28645
+          "title": "A股行情复盘（2026-11-06 · 周五 · 外围冲击缩量普跌·冰冷防守·仓位降至3.5–4.5成）",
+          "size": 28836
         },
         {
           "date": "20261105",
@@ -2148,9 +2155,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 96,
-      "latest": "20261107",
+      "count": 97,
+      "latest": "20261108",
       "reports": [
+        {
+          "date": "20261108",
+          "dateLabel": "2026-11-08（周日）",
+          "file": "reports/limitup/limitup_20261108.html",
+          "title": "涨停梯队复盘 2026-11-08（休市特别版 Day2 · 基准日 11-06）",
+          "size": 45222
+        },
         {
           "date": "20261107",
           "dateLabel": "2026-11-07（周六）",
