@@ -1,5 +1,5 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-08 18:00:42",
+  "generatedAt": "2026-11-09 07:50:55",
   "total": 494,
   "categories": [
     {
