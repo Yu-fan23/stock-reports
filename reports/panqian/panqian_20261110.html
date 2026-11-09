@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盘前计划 2026-11-10（周二）· 主流题材三问三答 · 星辰决策仪表盘</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --card2:#12121f;
+    --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --grad1:#667eea; --grad2:#764ba2; --txt:#e2e8f0; --txt2:#94a3b8; --bd:#2d2d44;
+    --up:#ff4757; --down:#00d4aa; /* A股习惯：红涨绿跌 */
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:"PingFang SC","Microsoft YaHei",-apple-system,sans-serif;line-height:1.65;padding:24px;max-width:1180px;margin:0 auto}
+  h1{font-size:27px;font-weight:800;background:linear-gradient(90deg,var(--grad1),var(--grad2));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:4px}
+  .sub{color:var(--txt2);font-size:13px;margin-bottom:18px}
+  .card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:20px;margin-bottom:18px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:820px){.grid2,.grid3{grid-template-columns:1fr}}
+  .topbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  .ringwrap{position:relative;width:150px;height:150px;flex-shrink:0}
+  .ring-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+  .ring-score{font-size:40px;font-weight:800;color:var(--buy)}
+  .ring-label{font-size:11px;color:var(--txt2)}
+  .signal{display:inline-block;padding:6px 18px;border-radius:30px;font-weight:800;font-size:18px;background:rgba(0,212,170,.15);color:var(--buy);border:1px solid var(--buy)}
+  .tri{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+  .tri div{background:var(--card2);border:1px solid var(--bd);border-radius:10px;padding:12px;text-align:center}
+  .tri .k{font-size:11px;color:var(--txt2)}
+  .tri .v{font-size:20px;font-weight:800;margin-top:4px}
+  .tag{display:inline-block;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:700;margin:2px 4px 2px 0}
+  .t-buy{background:rgba(0,212,170,.15);color:var(--buy)} .t-sell{background:rgba(255,71,87,.15);color:var(--sell)}
+  .t-hold{background:rgba(255,165,2,.15);color:var(--hold)} .t-info{background:rgba(102,126,234,.15);color:#8ea0ff}
+  .qrow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:820px){.qrow{grid-template-columns:1fr}}
+  .qnum{display:inline-flex;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--grad1),var(--grad2));color:#fff;font-weight:800;align-items:center;justify-content:center;font-size:13px;margin-right:8px}
+  .theme-name{font-size:17px;font-weight:800;color:#fff;margin-bottom:6px}
+  .stage{font-size:12px;font-weight:700;padding:2px 8px;border-radius:5px;display:inline-block;margin-bottom:8px}
+  .s-launch{background:rgba(0,212,170,.18);color:var(--buy)}
+  .s-main{background:rgba(102,126,234,.18);color:#8ea0ff}
+  .s-accel{background:rgba(255,165,2,.18);color:var(--hold)}
+  .s-div{background:rgba(255,71,87,.15);color:var(--sell)}
+  .core-list{font-size:13px;color:var(--txt);margin:6px 0;line-height:1.9}
+  .core-list b{color:#fff}
+  .verdict{font-size:13px;padding:8px 10px;border-radius:8px;margin-top:6px}
+  .v-yes{background:rgba(0,212,170,.1);border-left:3px solid var(--buy)}
+  .v-no{background:rgba(255,71,87,.1);border-left:3px solid var(--sell)}
+  .v-watch{background:rgba(255,165,2,.1);border-left:3px solid var(--hold)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{border:1px solid var(--bd);padding:9px 10px;text-align:left;vertical-align:top}
+  th{background:var(--card2);color:#fff;font-weight:700}
+  tr:nth-child(even){background:rgba(255,255,255,.02)}
+  .ruler{position:relative;height:58px;background:linear-gradient(90deg,#3a1a1a,#1a1a2e 40%,#1a2a1a);border:1px solid var(--bd);border-radius:8px;margin:26px 0 10px}
+  .mark{position:absolute;top:0;height:100%;width:2px}
+  .mk-label{position:absolute;top:-22px;font-size:10px;white-space:nowrap;transform:translateX(-50%)}
+  .gauge-wrap{height:200px}
+  .risk li{font-size:13px;margin:6px 0;padding-left:16px;position:relative;color:var(--txt);list-style:none}
+  .risk li:before{content:"⚠";position:absolute;left:0;color:var(--sell)}
+  .disclaimer{font-size:11px;color:var(--txt2);border-top:1px dashed var(--bd);padding-top:12px;margin-top:6px}
+  .hl{color:var(--hold);font-weight:700}
+  .pos{color:var(--buy);font-weight:700}
+  .neg{color:var(--sell);font-weight:700}
+  .up{color:var(--up);font-weight:700} .down{color:var(--down);font-weight:700}
+  .attrib{font-size:13px;line-height:1.9}
+  .attrib .dim{display:inline-block;min-width:118px;color:var(--txt2)}
+  .chart{height:300px}
+  .pill{font-size:11px;color:var(--txt2)}
+  .banner{background:linear-gradient(135deg,rgba(102,126,234,.18),rgba(118,75,162,.18));border:1px solid var(--grad1);border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:14px;line-height:1.8}
+  .banner b{color:#fff}
+  .step{display:grid;grid-template-columns:96px 1fr;gap:10px;font-size:13px;padding:9px 0;border-bottom:1px solid var(--bd)}
+  .step:last-child{border-bottom:none}
+  .step .tm{color:#8ea0ff;font-weight:800}
+</style>
+</head>
+<body>
+
+<h1>盘前计划 · 2026-11-10（周二）</h1>
+<div class="sub">主流题材三问三答 · 星辰决策仪表盘 v106.0 · 数据基准：11/9 A股收盘 + 11/9 美股隔夜 + 11/9 盘后公告/政策 · 生成时间 2026-11-10 07:00 · 涨跌幅按A股习惯（红涨绿跌）</div>
+
+<div class="banner">
+  <b>一句话结论：</b>主线已由上一期的「国产算力＋AI应用＋新能源修复」切换为
+  <b>人形机器人（最强）＋ AI算力硬件国产链（PCB/光模块超跌修复）＋ 太空算力/商业航天（新主题启动）</b>三线；
+  11/9 美股费半暴涨近 7% ＋ 国常会稳市机制 ＋ AI产业链回购潮，给今天一个<b>科技修复窗口</b>，
+  但 11/9 A股已上演「高开冲高回落、缩量1.49万亿、炸板率45%、晋级率9%」，
+  <span class="hl">因此策略是「BUY·择机低吸、绝不追高开」，总仓 45–50%、现金≥50%，用开盘30分钟量能决定加不加仓。</span>
+</div>
+
+<!-- 顶部决策摘要 -->
+<div class="card topbar">
+  <div style="flex:1;min-width:280px">
+    <div class="signal">BUY · 择机买入（防守偏积极）</div>
+    <div style="margin-top:10px;font-size:13px;color:var(--txt2)">大盘环境：政策底夯实后的磨底修复段 · 外围超跌反弹传导 · 存量博弈</div>
+    <div style="margin-top:4px;font-size:13px;color:var(--txt2)">市场情绪：冰点后修复期（涨停约55家 / 跌停2家 / 最高6板 / 赚钱效应40%）</div>
+    <div class="tri">
+      <div><div class="k">建议总仓位</div><div class="v" style="color:var(--buy)">45–50%</div></div>
+      <div><div class="k">现金比例</div><div class="v">≥50%</div></div>
+      <div><div class="k">综合评分</div><div class="v" style="color:var(--buy)">65</div></div>
+    </div>
+    <div class="tri" style="grid-template-columns:repeat(3,1fr);margin-top:10px">
+      <div><div class="k">入场确认位</div><div class="v" style="font-size:16px;color:#8ea0ff">沪指站稳3700</div></div>
+      <div><div class="k">第一目标位</div><div class="v" style="font-size:16px;color:var(--up)">3754 / 3824</div></div>
+      <div><div class="k">止损 / 清仓</div><div class="v" style="font-size:16px;color:var(--down)">3653 / 3580 / 3550</div></div>
+    </div>
+  </div>
+  <div class="ringwrap">
+    <div id="ring" style="width:150px;height:150px"></div>
+    <div class="ring-center"><div class="ring-score">65</div><div class="ring-label">/ 100</div></div>
+  </div>
+</div>
+
+<!-- 大盘环境上下文 -->
+<div class="card">
+  <div class="theme-name">📊 大盘上下文（个股/题材分析前置修正因子）</div>
+  <div class="grid2">
+    <div>
+      <table>
+        <tr><th>指数</th><th>11/9 收盘</th><th>涨跌幅</th><th>信号</th></tr>
+        <tr><td>上证指数</td><td>3660.79</td><td class="up">+0.32%</td><td>长上影小阳·3700下方</td></tr>
+        <tr><td>深证成指</td><td>11145.49</td><td class="down">-0.27%</td><td>冲高回落</td></tr>
+        <tr><td>创业板指</td><td>2458.56</td><td class="down">-0.27%</td><td>盘中曾涨近1.9%</td></tr>
+        <tr><td>科创50</td><td>1256.96</td><td class="up">+0.30%</td><td>5日 +5.01% 局部背离</td></tr>
+        <tr><td>两市成交</td><td>1.49万亿</td><td class="down">缩量1752亿</td><td>存量博弈·量能比0.90</td></tr>
+      </table>
+      <div class="pill" style="margin-top:8px">11/9 日内：高开 → 10时最高 3679.09（部分回补 11/6 缺口）→ 午后下探 3653.05 → 收 3660.79。</div>
+    </div>
+    <div>
+      <div class="attrib">
+        <div><span class="dim">涨跌家数</span>2242 涨 / 3148 跌 · 赚钱效应 <span class="hl">40%</span></div>
+        <div><span class="dim">涨跌停</span>涨停约 55 家 · 跌停 2 家 · 炸板率 <span class="neg">≈45%</span></div>
+        <div><span class="dim">连板梯队</span>最高 6 板（闽发铝业）· 晋级率 <span class="neg">9.09%</span>· 高度假象</div>
+        <div><span class="dim">资金</span>CPO +55.64亿 / 5G +53.07亿 / 芯片 +38.26亿 净流入居前，整体主力仍偏流出</div>
+        <div><span class="dim">11/9 强势</span>煤炭、冰雪经济、PCB/覆铜板、人形机器人、算力芯片、商业航天</div>
+        <div><span class="dim">11/9 弱势</span><span class="down">光伏高开低走</span>（阳光电源/隆基下挫）、锂矿、游戏、微盘</div>
+        <div><span class="dim">风险信号</span>"东方系"名字玄学批量涨停 → AI叙事熄火后的主线真空</div>
+        <div><span class="dim">政策底</span>国常会"完善资本市场稳市机制"＋SFISF第三批落地、回购增持再贷款利率降至1%</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 隔夜外围 -->
+<div class="card">
+  <div class="theme-name">🌍 11/9 美股隔夜（今日开盘定价的核心变量）</div>
+  <div class="grid2">
+    <div>
+      <div class="attrib">
+        <div><span class="dim">三大指数</span>道指 <span class="up">+2.15%</span> / 标普 <span class="up">+2.35%</span> / 纳指 <span class="up">+2.74%</span></div>
+        <div><span class="dim">费城半导体</span><span class="up">+近7%</span>（存储/光通信/AI硬件全线反弹）</div>
+        <div><span class="dim">英伟达</span><span class="down">-4.27%</span>（黄仁勋个人事件＋内部调查）→ <span class="neg">板块内部分化的根源</span></div>
+        <div><span class="dim">中概金龙</span><span class="down">-1.32%</span> · 富时A50 同步走高</div>
+        <div><span class="dim">商品</span>WTI <span class="down">-4.14%</span> 报87.07（美伊缓和）· COMEX金 <span class="up">+1.80%</span> 报4148.3</div>
+        <div><span class="dim">流动性</span>CME：12月加息25bp概率 84.2% → 年底偏紧，<span class="hl">结构性行情而非普涨</span></div>
+      </div>
+      <div class="pill" style="margin-top:8px">定性：<b>情绪出清后的超跌反弹，不是趋势反转</b>——但足够给A股科技线一个「低开高走 / 高开不追」的窗口。</div>
+    </div>
+    <div><div id="ovs" class="chart" style="height:260px"></div></div>
+  </div>
+</div>
+
+<!-- 三问三答核心结论 -->
+<div class="card">
+  <div class="theme-name">🎯 三问三答 · 当下主流题材（至多3个）</div>
+
+  <div class="qrow" style="margin-bottom:16px">
+    <div style="background:var(--card2);border:1px solid var(--bd);border-radius:12px;padding:16px">
+      <div class="theme-name"><span class="qnum">1</span>AI算力硬件国产链（PCB/覆铜板·光模块·存储·设备）</div>
+      <span class="stage s-launch">阶段：退潮后超跌修复 · 反弹第2天（分歧转一致的验证期）</span>
+      <div class="core-list">
+        <b>核心（最硬锚）：</b><span class="pos">沪电股份</span>（5–10亿回购＋实控人增持，AI PCB龙头）＋ 生益科技 / 南亚新材 / 金安国纪（CCL）<br>
+        <b>光模块/CPO：</b>中际旭创、新易盛、天孚通信（1–1.5亿注销式回购）、剑桥科技（澄清砍单不实＋2027年底前扩产≥1000万只）、光迅科技<br>
+        <b>算力芯片：</b>寒武纪、海光信息、燧原科技（11/9 +17%）、沐曦股份<br>
+        <b>设备/存储：</b>中微公司、拓荆科技、盛美上海、中科飞测｜兆易创新、江波龙、澜起科技<br>
+        <b>11/9 盘面印证：</b>覆铜板 +3.38%、博通概念 +3.16%、电子树脂 +2.92%、CPO净流入55.64亿居首；PCB三季报归母净利 <span class="up">+108.42%</span>
+      </div>
+      <div class="verdict v-yes"><b>能不能买：可买，但只低吸不追高开。</b>优先级 <span class="pos">PCB/CCL（回购最密集＋业绩最实）＞ 光模块 ＞ 设备/存储 ＞ 纯英伟达映射</span>。费半+7%、Coherent+16.79%、AMD+13.26%、博通+8.78% 是最强催化。</div>
+      <div class="verdict v-no"><b>关键雷区：</b>英伟达 -4.27% 独立利空 → 纯英伟达链高位标的分化；反抽无量即减，"低开不破昨低＋30分缩量企稳"才叫错杀，否则视为反抽出货。</div>
+    </div>
+
+    <div style="background:var(--card2);border:1px solid var(--bd);border-radius:12px;padding:16px">
+      <div class="theme-name"><span class="qnum">2</span>人形机器人 / 具身智能（物理AI）· 当期最强主线</div>
+      <span class="stage s-accel">阶段：主升中段 → 加速分歧（去伪存真）</span>
+      <div class="core-list">
+        <b>核心中军（有交付）：</b><span class="pos">绿的谐波、鸣志电器、兆威机电、长盈精密</span>＋ 双环传动、柯力传感、拓普集团、三花智控<br>
+        <b>弹性支线：</b>奥比中光（3D视觉）、福莱新材（电子皮肤）、空心杯电机、减速器、丝杠、灵巧手<br>
+        <b>情绪龙头（仅观察不追）：</b>上纬新材（11/9 20cm，但消费级机器人收入占比低）、宇树科技（总市值盘中重回3000亿）<br>
+        <b>11/9 盘面印证：</b>华为机器人 +3.90%、空心杯电机 +3.86%、机器人执行器 +3.42%、智元机器人 +2.68%；光洋股份/华培动力/日盈电子/金固股份涨停
+      </div>
+      <div class="verdict v-yes"><b>能不能买：可买，低吸中军。</b>产业逻辑最硬、催化最密集：苹果 HALO 在宇树G1 实测 <span class="up">91%成功率</span>、Optimus 2027年底外租交付、工信部制造业中试平台点名、国泰海通/浙商"从硬件量产→具身模型＋数据采集＋物理AI"。</div>
+      <div class="verdict v-watch"><b>纪律：</b>缩量加速不接；<span class="neg">金固股份/格灵深瞳/上纬新材已被点名"业务占比极低"</span>，前排去伪存真，只做有真实交付的中军。</div>
+    </div>
+  </div>
+
+  <div class="qrow">
+    <div style="background:var(--card2);border:1px solid var(--bd);border-radius:12px;padding:16px">
+      <div class="theme-name"><span class="qnum">3</span>太空算力 / 商业航天（新主题·产业化启动）</div>
+      <span class="stage s-launch">阶段：主题启动首日 → 发酵第2天（事件驱动·长赛道慢兑现）</span>
+      <div class="core-list">
+        <b>核心（最正宗）：</b><span class="pos">中科星图</span>（大会承办方＋天地算力调度/数字地球）＋ <span class="pos">海光信息 / 中科曙光</span>（全栈国产算力底座、中科星云6家产业发起主体）<br>
+        <b>运营/总装：</b>中国卫通、中国卫星、航天电子、航天宏图<br>
+        <b>星载芯片（用户持仓）：</b><span class="pos">臻镭科技 688270</span>（星载射频/电源管理芯片，被产业梳理直接点名）、铖昌科技、航宇微、复旦微电<br>
+        <b>星间激光：</b>光迅科技、烽火通信、久之洋｜<b>太空光伏：</b>乾照光电｜<b>人气高标：</b>顺灏股份（8天4板）、西部材料<br>
+        <b>催化：</b>11/9「星云星座计划」发布（央视/中科院空天院）、中科星云合肥揭牌注册资本15亿＋星云太空智能产业基金、星链V4单链路>10Tb/s、马斯克Terafab
+      </div>
+      <div class="verdict v-watch"><b>能不能买：小仓参与，不追一字。</b>11/9 SpaceX概念 <span class="up">+5.09%</span> 居概念榜首、太空算力 +2.60%，11/9 盘后再出产业级催化，今日是首个完整交易日。<span class="hl">只做前排换手、板块分歧时低吸</span>，新主题首日易冲高回落。</div>
+      <div class="verdict v-no"><b>边界：</b>多数公司暂无星云星座专项订单公告，属主题扩散受益；发射进度/验证失败风险高，<span class="neg">不作连板短线题材盲目追高</span>。</div>
+    </div>
+
+    <div style="background:var(--card2);border:1px solid var(--bd);border-radius:12px;padding:16px">
+      <div class="theme-name" style="color:var(--txt2)">📌 观察 / 明确回避清单</div>
+      <div class="core-list">
+        <span class="tag t-info">观察·AI应用/传媒</span>文投控股 14天7板（短剧）、大晟文化 6天4板、郑中设计 → 有高度但已"名字玄学化"，只做低位补涨，不追高标<br>
+        <span class="tag t-info">观察·红利/资源防御</span>煤炭（郑州煤电、安泰集团、中国神华）、燃气、冰雪经济、贵金属 → 寒潮＋冬储，指数冲高回落时的抱团方向，作压舱不作进攻<br>
+        <span class="tag t-info">观察·半导体并购</span>艾为电子停牌收购钰泰半导体 → 模拟芯片（思瑞浦/圣邦/南芯）映射<br>
+        <span class="tag t-sell">回避·光伏/新能源</span>11/9 高开低走、阳光电源/隆基下挫 → 上一期"新能源修复"判断<span class="neg">已被证伪</span>，今日不碰<br>
+        <span class="tag t-sell">回避·油气石化</span>WTI -4.14% → 成本利好中下游，利空开采/油服<br>
+        <span class="tag t-sell">回避·纯情绪</span>"东方系"名字玄学、6板闽发铝业、高位纯连板接力、解禁/ST
+      </div>
+      <div class="verdict v-no"><b>主线切换说明：</b>上一期 v105 的「国产算力＋AI应用＋新能源修复」中，<span class="hl">新能源已被 11/9 盘面证伪</span>；国产算力未消失但重心从"芯片叙事"下移到"<span class="pos">有回购、有业绩的 PCB/CCL 硬件</span>"，AI应用退为支线；新增太空算力作为第三条。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 主线强度对比 -->
+<div class="card">
+  <div class="theme-name">📈 主流题材强度对比（催化·资金·持续性·位置·风险 综合评分）</div>
+  <div id="bar" class="chart"></div>
+  <div class="pill">评分维度：事件催化强度(30%) + 资金/涨幅持续性(30%) + 业绩与回购支撑(20%) + 位置安全性(10%) + 外围风险暴露(10%)，满分100。负值代表需规避。</div>
+</div>
+
+<!-- 信号归因雷达 -->
+<div class="card">
+  <div class="theme-name">🧭 信号归因雷达（四维贡献度 ≈100%）</div>
+  <div id="radar" class="chart"></div>
+  <div class="attrib" style="margin-top:10px">
+    <div><span class="dim">技术指标 25%</span>沪指3660仍处3700下方、11/9长上影、缩量1.49万亿、炸板率45%；但科创50 5日+5.01%局部背离</div>
+    <div><span class="dim">新闻情绪 40%</span>费半+7%＋星云星座＋苹果HALO＋回购潮（正）；英伟达-4.27%＋12月加息84.2%（负）</div>
+    <div><span class="dim">基本面 20%</span>PCB三季报归母净利+108%、AI覆铜板景气、10月CPI+0.7%温和、算力资本开支高景气</div>
+    <div><span class="dim">市场环境 15%</span>国常会稳市机制＋SFISF第三批/券商买入＋对美关税24%→10%；但存量博弈、主力净流出</div>
+    <div style="margin-top:8px"><span class="pos">最强看多：</span>费半近+7% 叠加 AI产业链集中回购（沪电5–10亿锚），PCB/CCL 同时具备"外围情绪＋真金白银＋业绩"三重支撑。</div>
+    <div><span class="neg">最强看空：</span>11/9 A股已先演一次高开冲高回落，缩量＋炸板率45%＋晋级率9%＋"东方系"玄学炒作 = 承接不足、主线真空，反弹易一日游。</div>
+  </div>
+</div>
+
+<!-- 大盘关键位标尺 -->
+<div class="card">
+  <div class="theme-name">📏 大盘关键位标尺（上证指数）</div>
+  <div class="ruler">
+    <div class="mark" style="left:5%;background:var(--sell)"><div class="mk-label" style="color:var(--sell)">3550 清仓线</div></div>
+    <div class="mark" style="left:18%;background:var(--hold)"><div class="mk-label" style="color:var(--hold)">3580 防守</div></div>
+    <div class="mark" style="left:38%;background:#8ea0ff"><div class="mk-label" style="color:#8ea0ff">3653 昨低</div></div>
+    <div class="mark" style="left:52%;background:#fff"><div class="mk-label" style="color:#fff">3660.79 今开基准</div></div>
+    <div class="mark" style="left:72%;background:var(--grad1)"><div class="mk-label" style="color:#8ea0ff">3689.91 缺口上沿</div></div>
+    <div class="mark" style="left:84%;background:var(--up)"><div class="mk-label" style="color:var(--up)">3700 多空分水岭</div></div>
+    <div class="mark" style="left:94%;background:var(--sell)"><div class="mk-label" style="color:var(--sell)">3754 前压力</div></div>
+  </div>
+  <div class="attrib">
+    <div><span class="dim">多空分水岭</span>3700（站稳＋放量 → 中短期趋势企稳，总仓可升至 60%）</div>
+    <div><span class="dim">第一压力</span>3689.91（11/6 向下跳空缺口上沿）→ 3700 → 3754 → 3824</div>
+    <div><span class="dim">防守 / 清仓</span>破 3653 减半 · 破 3580 清超短 · 破 3550 系统性清仓</div>
+    <div><span class="dim">量能锚</span>开盘30分成交 ≥3500亿、全天 ≥1.6万亿才算有效放量修复；<span class="neg">低于1.5万亿的上涨一律视为存量腾挪</span></div>
+  </div>
+</div>
+
+<!-- 情绪温度计 -->
+<div class="card">
+  <div class="theme-name">🌡️ 市场情绪温度计</div>
+  <div id="gauge" class="gauge-wrap"></div>
+  <div class="pill" style="text-align:center">情绪 48/100（冰点后修复期·中性偏谨慎）— 涨停回升至约55家、跌停仅2家，但最高板晋级率9.09%、炸板率45%、下跌3148家，属"指数修复、个股不赚钱"。</div>
+</div>
+
+<!-- 盘前交易计划 -->
+<div class="card">
+  <div class="theme-name">⚔️ 盘前交易计划（可执行 · 按时间轴）</div>
+  <div class="grid2">
+    <div>
+      <div class="step"><div class="tm">09:25 竞价</div><div>看科技线高开幅度：<span class="pos">高开1–3%且量能温和 → 可参与</span>；<span class="neg">高开>5% → 一律不追</span>，等回踩5日线／分时均线。太空算力若一字或大幅高开 → 放弃，只等换手。</div></div>
+      <div class="step"><div class="tm">09:30–10:00</div><div>三个确认：① 半小时成交 ≥3500亿；② 涨跌家数与炸板率；③ 券商／CPO／PCB 承接力度。<span class="hl">三者不达标则维持底仓、不加仓</span>。</div></div>
+      <div class="step"><div class="tm">第一批 20%</div><div><b>AI硬件 PCB/CCL 10%</b>（沪电/生益/南亚/金安，回踩不破昨低）＋ <b>机器人中军 10%</b>（绿的/鸣志/兆威/长盈，缩量回踩）。</div></div>
+    </div>
+    <div>
+      <div class="step"><div class="tm">第二批 15%</div><div>触发条件：<span class="pos">沪指站稳3700且放量</span>。加 光模块（中际/新易盛/天孚/剑桥，低开不破昨低＋30分缩量企稳）＋ 太空算力前排（中科星图/海光/中国卫通，只做换手）。</div></div>
+      <div class="step"><div class="tm">第三批 10–15%</div><div>尾盘确认无冲高回落后，补 半导体设备/存储（中微/拓荆/兆易）或 星载芯片。<span class="neg">若14:30后指数走弱，第三批取消</span>。</div></div>
+      <div class="step"><div class="tm">兑现纪律</div><div>高位光模块／纯英伟达映射反抽至 11/6 缺口上沿 3689.91 对应板块前高分批减；<span class="neg">反弹即逃，不做"反转"幻想</span>。单股 ≤10–12%、单题材 ≤15%。</div></div>
+      <div class="step"><div class="tm">止损纪律</div><div>追高回撤 >7% 无条件止损；破5日线减半；沪指破3653减仓、破3580清超短、破3550系统性清仓。</div></div>
+    </div>
+  </div>
+  <table style="margin-top:14px">
+    <tr><th>题材</th><th>阶段</th><th>评分/信号</th><th>仓位上限</th><th>狙击/买点</th><th>失效条件</th></tr>
+    <tr><td>AI算力硬件（PCB/CCL优先）</td><td>超跌修复·第2天</td><td class="pos">66 · BUY</td><td>≤15%</td><td>回踩不破昨低＋30分缩量企稳低吸；高开>5%不追</td><td>反抽无量／英伟达链破昨低 → 全撤</td></tr>
+    <tr><td>人形机器人 / 具身智能</td><td>主升→加速分歧</td><td class="pos">70 · BUY</td><td>≤15%</td><td>缩量回踩低吸有交付中军；不追20cm/6板高标</td><td>缩量加速／伪龙头继续领涨 → 只减不增</td></tr>
+    <tr><td>太空算力 / 商业航天</td><td>启动→发酵第2天</td><td class="hl">58 · WATCH</td><td>≤8%</td><td>板块分歧时低吸前排换手（中科星图/海光/中国卫通/臻镭）</td><td>一字不参与；冲高回落/无订单公告 → 离场</td></tr>
+    <tr><td>红利 / 煤炭 / 冰雪（防御）</td><td>季节性支线</td><td class="hl">52 · HOLD</td><td>≤8%</td><td>指数冲高回落时抱团，回踩5日线低吸中军</td><td>独涨虹吸其他题材 → 总仓≤25%</td></tr>
+    <tr><td>AI应用 / 传媒（支线）</td><td>高位玄学化</td><td class="hl">48 · WATCH</td><td>≤5%</td><td>仅低位补涨，不碰14天7板/6天4板</td><td>高标炸板 → 清零</td></tr>
+  </table>
+</div>
+
+<!-- 风控一票否决 -->
+<div class="card">
+  <div class="theme-name">🛡️ 风控一票否决（13条 · 任一触发即降仓/停买）</div>
+  <div class="grid2">
+    <ul class="risk">
+      <li>科技线高开 &gt;5% 后翻绿 → 全线停买（11/9 已演过一次冲高回落）</li>
+      <li>沪指 30 分站不稳 3700 → 总仓 ≤30%</li>
+      <li>破 3653 减半 / 破 3580 清超短 / 破 3550 系统性清仓</li>
+      <li>开盘30分成交 &lt;3500亿 或 全天量能 &lt;1.5万亿 → 不加仓</li>
+      <li>涨停 &lt;40 / 跌停 &gt;20 / 炸板率 &gt;45% / 晋级率 &lt;15% → 只减不增</li>
+      <li>英伟达链纯映射、高位光模块低开破 11/9 低点 → 全撤，不接"错杀"</li>
+      <li>费半反弹无量能承接（反抽缩量）→ 视为出货，继续减</li>
+    </ul>
+    <ul class="risk">
+      <li>太空算力新主题一字/大幅高开 → 不追，只做前排换手</li>
+      <li>"东方系"名字玄学／6板闽发铝业炸板 → 情绪退潮，总仓降</li>
+      <li>光伏高开低走延续、阳光电源/隆基续跌 → 新能源线全不碰</li>
+      <li>油价 -4% → 油气/石化回避；煤炭/冰雪只防御不进攻</li>
+      <li>富时A50早盘跌 &gt;1.5% → 总仓 ≤25%；10Y美债破 5.40% → 减半</li>
+      <li>中概金龙续弱 / 12月加息预期再升温 → 成长估值压制，控仓</li>
+      <li>伪机器人（金固/格灵深瞳/上纬）继续加速 → 该线只减不增</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 持仓联动 -->
+<div class="card">
+  <div class="theme-name">🔗 持仓联动提示（用户覆盖标的）</div>
+  <div class="core-list">
+    <b>臻镭科技 688270（持仓 · 今日最直接受益）：</b>「星云星座计划」产业梳理明确点名其星载射频芯片、高速收发芯片、星载电源管理芯片，属太空算力上游核心壁垒环节。<span class="pos">建议持有、不追高；若随新主题大幅冲高（&gt;8%）可部分兑现</span>，回落至5日线再接。<br>
+    <b>广联航空 300900（持仓）：</b>航天结构件，商业航天/太空算力扩散受益，<span class="hl">事件观察</span>，等珠海航展(12/7)与星座组网订单催化，非当日进攻主线。<br>
+    <b>光通信三杰（长飞光纤/亨通光电/中天科技）：</b>隔夜 Coherent +16.79%、Lumentum +10.69%、Ciena +10.66%、剑桥澄清扩产 → 光通信情绪修复；但英伟达 -4.27% 造成分化。<span class="pos">低开不破昨低＋30分缩量企稳再低吸，不追高开</span>；中天火箭另属商业航天发射配套支线。<br>
+    <b>大族激光 002008：</b>关联的大族数控昨晚公告 2–3亿回购，属 AI PCB 链回购潮一员 → <span class="pos">可作 AI硬件修复的映射观察</span>，优先级低于沪电/生益。<br>
+    <b>长光华芯 688048 / 水晶光电 002273：</b>光芯片/光学，跟随国产算力与消费电子节奏，控仓，等板块企稳。<br>
+    <b>结构建议：</b>借今日外围修复窗口做结构优化——<span class="hl">减高位纯英伟达映射与光伏暴露，向「有回购＋有业绩的 PCB/CCL」「有交付的机器人中军」「星载芯片」倾斜</span>，总仓不越 50%。
+  </div>
+</div>
+
+<!-- 底部元信息 -->
+<div class="card">
+  <div class="disclaimer">
+    <b>分析时间：</b>2026-11-10 07:00（周二盘前）　|　<b>使用策略：</b>事件驱动 + 情绪周期 + 多头趋势 + 超跌修复　|　<b>数据来源：</b>上海证券报/财联社/央视网/同花顺/东方财富/新浪财经/腾讯新闻/中金在线/泰伯网公开聚合（11/9 A股收盘 + 11/9 美股隔夜 + 11/9 盘后公告与政策）+ v71–v105 历史基线；自动化无交互，未调用行情 CLI，价格为公开报道口径，实盘以行情终端为准。<br>
+    <b>免责声明：</b>本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有分析结论均基于历史数据和技术模型，不保证未来表现。
+  </div>
+</div>
+
+<script>
+// 1. 综合评分圆环
+var ring = echarts.init(document.getElementById('ring'));
+ring.setOption({
+  series:[{
+    type:'pie', radius:['72%','100%'], silent:true, label:{show:false},
+    data:[{value:65,name:'score',itemStyle:{color:new echarts.graphic.LinearGradient(0,0,1,1,[{offset:0,color:'#00d4aa'},{offset:1,color:'#667eea'}])}},
+          {value:35,name:'rest',itemStyle:{color:'#22223a'}}]
+  }]
+});
+
+// 2. 主线强度对比
+var bar = echarts.init(document.getElementById('bar'));
+bar.setOption({
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+  grid:{left:150,right:44,top:16,bottom:30},
+  xAxis:{type:'value',min:-40,max:100,axisLine:{lineStyle:{color:'#2d2d44'}},axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#1f1f33'}}},
+  yAxis:{type:'category',axisLabel:{color:'#e2e8f0',fontSize:12},axisLine:{lineStyle:{color:'#2d2d44'}},
+    data:['光伏/新能源(回避)','纯英伟达映射(回避)','AI应用/传媒(支线)','红利/煤炭(防御)','太空算力/商业航天','AI算力硬件PCB/光模块','人形机器人/具身智能']},
+  series:[{
+    type:'bar', barWidth:19,
+    data:[
+      {value:-22,itemStyle:{color:'#ff4757'}},
+      {value:-12,itemStyle:{color:'#ff4757'}},
+      {value:48,itemStyle:{color:'#ffa502'}},
+      {value:52,itemStyle:{color:'#764ba2'}},
+      {value:58,itemStyle:{color:'#667eea'}},
+      {value:66,itemStyle:{color:'#00d4aa'}},
+      {value:70,itemStyle:{color:'#00d4aa'}}
+    ],
+    label:{show:true,position:'right',color:'#e2e8f0',formatter:'{c}'}
+  }]
+});
+
+// 3. 隔夜外盘映射
+var ovs = echarts.init(document.getElementById('ovs'));
+ovs.setOption({
+  title:{text:'11/9 费半链个股涨跌幅（%）',textStyle:{color:'#e2e8f0',fontSize:13},left:'center'},
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+  grid:{left:96,right:46,top:36,bottom:22},
+  xAxis:{type:'value',axisLine:{lineStyle:{color:'#2d2d44'}},axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#1f1f33'}}},
+  yAxis:{type:'category',axisLabel:{color:'#e2e8f0',fontSize:11},axisLine:{lineStyle:{color:'#2d2d44'}},
+    data:['中概金龙','英伟达','台积电','SK海力士','美光','博通','Ciena','Lumentum','AMD','Coherent']},
+  series:[{
+    type:'bar', barWidth:13,
+    data:[
+      {value:-1.32,itemStyle:{color:'#00d4aa'}},
+      {value:-4.27,itemStyle:{color:'#00d4aa'}},
+      {value:3.51,itemStyle:{color:'#ff4757'}},
+      {value:5.53,itemStyle:{color:'#ff4757'}},
+      {value:6.25,itemStyle:{color:'#ff4757'}},
+      {value:8.78,itemStyle:{color:'#ff4757'}},
+      {value:10.66,itemStyle:{color:'#ff4757'}},
+      {value:10.69,itemStyle:{color:'#ff4757'}},
+      {value:13.26,itemStyle:{color:'#ff4757'}},
+      {value:16.79,itemStyle:{color:'#ff4757'}}
+    ],
+    label:{show:true,position:'right',color:'#e2e8f0',fontSize:11,formatter:'{c}'}
+  }]
+});
+
+// 4. 信号归因雷达
+var radar = echarts.init(document.getElementById('radar'));
+radar.setOption({
+  tooltip:{},
+  radar:{
+    indicator:[{name:'技术指标',max:100},{name:'新闻情绪',max:100},{name:'基本面',max:100},{name:'市场环境',max:100}],
+    axisName:{color:'#e2e8f0',fontSize:12},
+    splitLine:{lineStyle:{color:'#2d2d44'}},splitArea:{areaStyle:{color:['#16162a','#1a1a2e']}},
+    axisLine:{lineStyle:{color:'#2d2d44'}}
+  },
+  series:[{
+    type:'radar', symbolSize:5,
+    data:[{value:[25,40,20,15],name:'贡献度',
+      areaStyle:{color:'rgba(102,126,234,.35)'},lineStyle:{color:'#667eea'},itemStyle:{color:'#667eea'}}]
+  }]
+});
+
+// 5. 情绪温度计
+var gauge = echarts.init(document.getElementById('gauge'));
+gauge.setOption({
+  series:[{
+    type:'gauge', min:0, max:100, radius:'90%', center:['50%','60%'],
+    progress:{show:true,width:14,itemStyle:{color:'#ffa502'}},
+    axisLine:{lineStyle:{width:14,color:[[0.3,'#ff4757'],[0.5,'#ffa502'],[0.7,'#667eea'],[1,'#00d4aa']]}},
+    pointer:{itemStyle:{color:'#fff'}},
+    axisTick:{distance:-18,lineStyle:{color:'#fff'}},
+    splitLine:{distance:-22,length:12,lineStyle:{color:'#fff'}},
+    axisLabel:{distance:-2,color:'#94a3b8',fontSize:10},
+    detail:{valueAnimation:true,fontSize:30,color:'#fff',formatter:'{value}',offsetCenter:[0,'40%']},
+    title:{offsetCenter:[0,'75%'],color:'#94a3b8',fontSize:12},
+    data:[{value:48,name:'市场情绪'}]
+  }]
+});
+
+window.addEventListener('resize',function(){[ring,bar,ovs,radar,gauge].forEach(function(c){c.resize();});});
+</script>
+</body>
+</html>
