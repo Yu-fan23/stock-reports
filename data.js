@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-09 07:57:02",
-  "total": 495,
+  "generatedAt": "2026-11-09 12:51:08",
+  "total": 496,
   "categories": [
     {
       "key": "panqian",
@@ -691,9 +691,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 103,
-      "latest": "20261108",
+      "count": 104,
+      "latest": "20261109",
       "reports": [
+        {
+          "date": "20261109",
+          "dateLabel": "2026-11-09（周一）",
+          "file": "reports/noon/noon_20261109.html",
+          "title": "A股午间复盘 2026-11-09 · 星辰决策仪表盘",
+          "size": 31631
+        },
         {
           "date": "20261108",
           "dateLabel": "2026-11-08（周日）",
