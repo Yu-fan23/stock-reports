@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-10 15:51:06",
-  "total": 501,
+  "generatedAt": "2026-11-10 16:51:27",
+  "total": 503,
   "categories": [
     {
       "key": "panqian",
@@ -1444,9 +1444,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 104,
-      "latest": "20261109",
+      "count": 105,
+      "latest": "20261110",
       "reports": [
+        {
+          "date": "20261110",
+          "dateLabel": "2026-11-10（周二）",
+          "file": "reports/close/close_20261110.html",
+          "title": "A股收盘复盘 · 2026-11-10（周二）",
+          "size": 50794
+        },
         {
           "date": "20261109",
           "dateLabel": "2026-11-09（周一）",
@@ -2183,9 +2190,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 98,
-      "latest": "20261109",
+      "count": 99,
+      "latest": "20261110",
       "reports": [
+        {
+          "date": "20261110",
+          "dateLabel": "2026-11-10（周二）",
+          "file": "reports/limitup/limitup_20261110.html",
+          "title": "涨停梯队复盘 · 2026-11-10（周二 · 情绪高潮 / 三线并行）",
+          "size": 66116
+        },
         {
           "date": "20261109",
           "dateLabel": "2026-11-09（周一）",
