@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-11 15:51:23",
-  "total": 506,
+  "generatedAt": "2026-11-11 16:50:41",
+  "total": 508,
   "categories": [
     {
       "key": "panqian",
@@ -1458,9 +1458,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 105,
-      "latest": "20261110",
+      "count": 106,
+      "latest": "20261111",
       "reports": [
+        {
+          "date": "20261111",
+          "dateLabel": "2026-11-11（周三）",
+          "file": "reports/close/close_20261111.html",
+          "title": "A股收盘复盘 · 2026-11-11（周三）",
+          "size": 55246
+        },
         {
           "date": "20261110",
           "dateLabel": "2026-11-10（周二）",
@@ -2204,9 +2211,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 99,
-      "latest": "20261110",
+      "count": 100,
+      "latest": "20261111",
       "reports": [
+        {
+          "date": "20261111",
+          "dateLabel": "2026-11-11（周三）",
+          "file": "reports/limitup/limitup_20261111.html",
+          "title": "涨停梯队复盘 · 2026-11-11（周三 · 算力硬件接棒主线 / 去妖化）",
+          "size": 72057
+        },
         {
           "date": "20261110",
           "dateLabel": "2026-11-10（周二）",
