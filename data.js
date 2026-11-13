@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-13 18:01:02",
-  "total": 518,
+  "generatedAt": "2026-11-14 07:50:49",
+  "total": 519,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 100,
-      "latest": "20261113",
+      "count": 101,
+      "latest": "20261116",
       "reports": [
+        {
+          "date": "20261116",
+          "dateLabel": "2026-11-16（周一）",
+          "file": "reports/panqian/panqian_20261116.html",
+          "title": "盘前计划 2026-11-16 · 主流题材三问三答 · 星辰",
+          "size": 43874
+        },
         {
           "date": "20261113",
           "dateLabel": "2026-11-13（周五）",
