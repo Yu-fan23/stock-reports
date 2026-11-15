@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-15 07:56:30",
-  "total": 524,
+  "generatedAt": "2026-11-15 12:50:53",
+  "total": 525,
   "categories": [
     {
       "key": "panqian",
@@ -726,9 +726,16 @@ window.SITE_DATA = {
       "time": "12:00",
       "icon": "🍱",
       "color": "#ffcc33",
-      "count": 109,
-      "latest": "20261114",
+      "count": 110,
+      "latest": "20261115",
       "reports": [
+        {
+          "date": "20261115",
+          "dateLabel": "2026-11-15（周日）",
+          "file": "reports/noon/noon_20261115.html",
+          "title": "A股开盘作战手册 2026-11-16 · 星辰决策仪表盘",
+          "size": 67217
+        },
         {
           "date": "20261114",
           "dateLabel": "2026-11-14（周六）",
