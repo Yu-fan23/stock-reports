@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-16 15:51:17",
-  "total": 529,
+  "generatedAt": "2026-11-16 16:51:09",
+  "total": 531,
   "categories": [
     {
       "key": "panqian",
@@ -1514,9 +1514,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 110,
-      "latest": "20261115",
+      "count": 111,
+      "latest": "20261116",
       "reports": [
+        {
+          "date": "20261116",
+          "dateLabel": "2026-11-16（周一）",
+          "file": "reports/close/close_20261116.html",
+          "title": "A股收盘复盘 · 2026-11-16（周一）· 权重护盘掩盖普跌 · 科技链第3日加速出清",
+          "size": 49340
+        },
         {
           "date": "20261115",
           "dateLabel": "2026-11-15（周日）",
@@ -2295,9 +2302,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 104,
-      "latest": "20261115",
+      "count": 105,
+      "latest": "20261116",
       "reports": [
+        {
+          "date": "20261116",
+          "dateLabel": "2026-11-16（周一）",
+          "file": "reports/limitup/limitup_20261116.html",
+          "title": "涨停梯队复盘 · 2026-11-16（周一 · 算力硬件全线清算 / 情绪冰点）",
+          "size": 61812
+        },
         {
           "date": "20261115",
           "dateLabel": "2026-11-15（周日）",
