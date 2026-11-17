@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-17 18:00:27",
-  "total": 534,
+  "generatedAt": "2026-11-18 07:50:44",
+  "total": 535,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 102,
-      "latest": "20261117",
+      "count": 103,
+      "latest": "20261118",
       "reports": [
+        {
+          "date": "20261118",
+          "dateLabel": "2026-11-18（周三）",
+          "file": "reports/panqian/panqian_20261118.html",
+          "title": "盘前决策仪表盘 · 2026-11-18",
+          "size": 33439
+        },
         {
           "date": "20261117",
           "dateLabel": "2026-11-17（周二）",
