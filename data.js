@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-18 15:51:05",
-  "total": 537,
+  "generatedAt": "2026-11-18 16:50:35",
+  "total": 539,
   "categories": [
     {
       "key": "panqian",
@@ -1542,9 +1542,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 111,
-      "latest": "20261116",
+      "count": 112,
+      "latest": "20261118",
       "reports": [
+        {
+          "date": "20261118",
+          "dateLabel": "2026-11-18（周三）",
+          "file": "reports/close/close_20261118.html",
+          "title": "A股收盘复盘 · 2026-11-18（周三）· 地量红盘宽度缺失 · 算力链午后V型反转",
+          "size": 1080398
+        },
         {
           "date": "20261116",
           "dateLabel": "2026-11-16（周一）",
@@ -2330,9 +2337,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 105,
-      "latest": "20261116",
+      "count": 106,
+      "latest": "20261118",
       "reports": [
+        {
+          "date": "20261118",
+          "dateLabel": "2026-11-18（周三）",
+          "file": "reports/limitup/limitup_20261118.html",
+          "title": "涨停梯队复盘 · 2026-11-18（周三 · 缩量创年内新低 / 算力主线确立日）",
+          "size": 62808
+        },
         {
           "date": "20261116",
           "dateLabel": "2026-11-16（周一）",
