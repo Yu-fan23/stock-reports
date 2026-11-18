@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-18 22:30:05",
-  "total": 539,
+  "generatedAt": "2026-11-19 07:50:43",
+  "total": 540,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 103,
-      "latest": "20261118",
+      "count": 104,
+      "latest": "20261119",
       "reports": [
+        {
+          "date": "20261119",
+          "dateLabel": "2026-11-19（周四）",
+          "file": "reports/panqian/panqian_20261119.html",
+          "title": "主流题材盘前决策 · 2026-11-19（v115）",
+          "size": 33742
+        },
         {
           "date": "20261118",
           "dateLabel": "2026-11-18（周三）",
