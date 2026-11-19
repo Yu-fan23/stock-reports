@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-19 18:00:52",
-  "total": 544,
+  "generatedAt": "2026-11-20 07:50:49",
+  "total": 545,
   "categories": [
     {
       "key": "panqian",
@@ -8,9 +8,16 @@ window.SITE_DATA = {
       "time": "07:00",
       "icon": "🌅",
       "color": "#4f9dff",
-      "count": 104,
-      "latest": "20261119",
+      "count": 105,
+      "latest": "20261120",
       "reports": [
+        {
+          "date": "20261120",
+          "dateLabel": "2026-11-20（周五）",
+          "file": "reports/panqian/panqian_20261120.html",
+          "title": "盘前交易计划 · 2026-11-20（周五）· v116",
+          "size": 32568
+        },
         {
           "date": "20261119",
           "dateLabel": "2026-11-19（周四）",
