@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-19 15:50:44",
-  "total": 542,
+  "generatedAt": "2026-11-19 16:50:36",
+  "total": 544,
   "categories": [
     {
       "key": "panqian",
@@ -1556,9 +1556,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 112,
-      "latest": "20261118",
+      "count": 113,
+      "latest": "20261119",
       "reports": [
+        {
+          "date": "20261119",
+          "dateLabel": "2026-11-19（周四）",
+          "file": "reports/close/close_20261119.html",
+          "title": "A股收盘复盘 · 2026-11-19（周四）· 沪指六连阴地量磨底 · 红盘率12%冰点 · 半导体材料唯一活口",
+          "size": 1080966
+        },
         {
           "date": "20261118",
           "dateLabel": "2026-11-18（周三）",
@@ -2351,9 +2358,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 106,
-      "latest": "20261118",
+      "count": 107,
+      "latest": "20261119",
       "reports": [
+        {
+          "date": "20261119",
+          "dateLabel": "2026-11-19（周四）",
+          "file": "reports/limitup/limitup_20261119.html",
+          "title": "涨停梯队复盘 · 2026-11-19（周四 · 地量冰点 / 半导体材料唯一活口）",
+          "size": 50852
+        },
         {
           "date": "20261118",
           "dateLabel": "2026-11-18（周三）",
