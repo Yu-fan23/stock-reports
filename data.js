@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-20 15:50:52",
-  "total": 547,
+  "generatedAt": "2026-11-20 16:50:31",
+  "total": 549,
   "categories": [
     {
       "key": "panqian",
@@ -1570,9 +1570,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 113,
-      "latest": "20261119",
+      "count": 114,
+      "latest": "20261120",
       "reports": [
+        {
+          "date": "20261120",
+          "dateLabel": "2026-11-20（周五）",
+          "file": "reports/close/close_20261120.html",
+          "title": "A股收盘复盘 · 2026-11-20（周五）· 沪指破位放量跌1.23% · 红盘率5%冰点 · 外围系统性risk-off",
+          "size": 1085190
+        },
         {
           "date": "20261119",
           "dateLabel": "2026-11-19（周四）",
@@ -2372,9 +2379,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 107,
-      "latest": "20261119",
+      "count": 108,
+      "latest": "20261120",
       "reports": [
+        {
+          "date": "20261120",
+          "dateLabel": "2026-11-20（周五）",
+          "file": "reports/limitup/limitup_20261120.html",
+          "title": "涨停梯队复盘 · 2026-11-20（周五 · 退潮冰点）",
+          "size": 32131
+        },
         {
           "date": "20261119",
           "dateLabel": "2026-11-19（周四）",
