@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-22 15:50:43",
-  "total": 556,
+  "generatedAt": "2026-11-22 16:50:34",
+  "total": 558,
   "categories": [
     {
       "key": "panqian",
@@ -1591,9 +1591,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 115,
-      "latest": "20261121",
+      "count": 116,
+      "latest": "20261122",
       "reports": [
+        {
+          "date": "20261122",
+          "dateLabel": "2026-11-22（周日）",
+          "file": "reports/close/close_20261122.html",
+          "title": "A股周末休市特刊 · 2026-11-22（周日）· 冻结11-20 + 机构研判 + 周一推演",
+          "size": 1090796
+        },
         {
           "date": "20261121",
           "dateLabel": "2026-11-21（周六）",
@@ -2407,9 +2414,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 109,
-      "latest": "20261121",
+      "count": 110,
+      "latest": "20261122",
       "reports": [
+        {
+          "date": "20261122",
+          "dateLabel": "2026-11-22（周日）",
+          "file": "reports/limitup/limitup_20261122.html",
+          "title": "涨停梯队复盘 · 2026-11-22（周日休市特别版 Day2）",
+          "size": 59912
+        },
         {
           "date": "20261121",
           "dateLabel": "2026-11-21（周六）",
