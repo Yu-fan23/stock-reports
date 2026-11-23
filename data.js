@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-23 15:51:16",
-  "total": 560,
+  "generatedAt": "2026-11-23 16:50:23",
+  "total": 562,
   "categories": [
     {
       "key": "panqian",
@@ -1598,9 +1598,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 116,
-      "latest": "20261122",
+      "count": 117,
+      "latest": "20261123",
       "reports": [
+        {
+          "date": "20261123",
+          "dateLabel": "2026-11-23（周一）",
+          "file": "reports/close/close_20261123.html",
+          "title": "A股收盘复盘 · 2026-11-23（周一）· 稳市三箭齐发V型反转 · 红盘率83% · 主力转正258亿",
+          "size": 1086903
+        },
         {
           "date": "20261122",
           "dateLabel": "2026-11-22（周日）",
@@ -2421,9 +2428,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 110,
-      "latest": "20261122",
+      "count": 111,
+      "latest": "20261123",
       "reports": [
+        {
+          "date": "20261123",
+          "dateLabel": "2026-11-23（周一）",
+          "file": "reports/limitup/limitup_20261123.html",
+          "title": "涨停梯队复盘 · 2026-11-23（周一 · 放量普涨反包 / 人形机器人涨停潮 · 情绪V型反转）",
+          "size": 114781
+        },
         {
           "date": "20261122",
           "dateLabel": "2026-11-22（周日）",
