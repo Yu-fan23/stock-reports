@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-24 15:51:25",
-  "total": 565,
+  "generatedAt": "2026-11-24 16:50:46",
+  "total": 567,
   "categories": [
     {
       "key": "panqian",
@@ -1612,9 +1612,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 117,
-      "latest": "20261123",
+      "count": 118,
+      "latest": "20261124",
       "reports": [
+        {
+          "date": "20261124",
+          "dateLabel": "2026-11-24（周二）",
+          "file": "reports/close/close_20261124.html",
+          "title": "A股收盘复盘 · 2026-11-24（周二）· 镜像证伪日高开低走 · 红盘率崩至35% · 主力转负30亿",
+          "size": 1088901
+        },
         {
           "date": "20261123",
           "dateLabel": "2026-11-23（周一）",
@@ -2442,9 +2449,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 111,
-      "latest": "20261123",
+      "count": 112,
+      "latest": "20261124",
       "reports": [
+        {
+          "date": "20261124",
+          "dateLabel": "2026-11-24（周二）",
+          "file": "reports/limitup/limitup_20261124.html",
+          "title": "涨停梯队复盘 · 2026-11-24（周二 · 高开低走放量分歧 / 机器人主线独强 / 去高度化）",
+          "size": 68021
+        },
         {
           "date": "20261123",
           "dateLabel": "2026-11-23（周一）",
