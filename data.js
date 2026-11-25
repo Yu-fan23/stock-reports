@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-25 15:50:57",
-  "total": 570,
+  "generatedAt": "2026-11-25 16:50:33",
+  "total": 572,
   "categories": [
     {
       "key": "panqian",
@@ -1626,9 +1626,16 @@ window.SITE_DATA = {
       "time": "15:30",
       "icon": "📊",
       "color": "#ff3b5c",
-      "count": 118,
-      "latest": "20261124",
+      "count": 119,
+      "latest": "20261125",
       "reports": [
+        {
+          "date": "20261125",
+          "dateLabel": "2026-11-25（周三）",
+          "file": "reports/close/close_20261125.html",
+          "title": "A股收盘复盘 · 2026-11-25（周三）· 失守3500破位新低 · 红盘率10%冰点 · 主力流出480亿",
+          "size": 1090098
+        },
         {
           "date": "20261124",
           "dateLabel": "2026-11-24（周二）",
@@ -2463,9 +2470,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 112,
-      "latest": "20261124",
+      "count": 113,
+      "latest": "20261125",
       "reports": [
+        {
+          "date": "20261125",
+          "dateLabel": "2026-11-25（周三）",
+          "file": "reports/limitup/limitup_20261125.html",
+          "title": "涨停梯队复盘 · 2026-11-25（周三 · 缩量普跌 / 权重杀跌题材避险 / 机器人+医药双主线）",
+          "size": 63112
+        },
         {
           "date": "20261124",
           "dateLabel": "2026-11-24（周二）",
