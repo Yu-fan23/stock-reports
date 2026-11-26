@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股午间复盘 · 2026-11-24</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+:root{--bg:#0f0f23;--card:#1a1a2e;--card2:#20203a;--up:#ff4757;--down:#00d4aa;--hold:#ffa502;--acc:#667eea;--acc2:#764ba2;--tx:#e2e8f0;--tx2:#94a3b8;--bd:#2d2d44}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--tx);font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.6;padding:20px;max-width:1280px;margin:0 auto}
+.hdr{text-align:center;padding:18px 0 8px}
+.hdr h1{font-size:26px;background:linear-gradient(90deg,var(--acc),var(--acc2),var(--hold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hdr .sub{color:var(--tx2);font-size:13px;margin-top:6px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:20px;margin:16px 0;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+.card h2{font-size:17px;margin-bottom:14px;padding-left:11px;border-left:4px solid var(--acc);display:flex;align-items:center;gap:8px}
+.card h2 .tag{font-size:11px;color:var(--tx2);font-weight:400;border:1px solid var(--bd);padding:1px 7px;border-radius:10px}
+.grid{display:grid;gap:14px}
+.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}.g6{grid-template-columns:repeat(6,1fr)}
+@media(max-width:900px){.g3,.g2,.g6{grid-template-columns:repeat(2,1fr)}}
+.dash{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;align-items:center}
+@media(max-width:900px){.dash{grid-template-columns:1fr}}
+.score-wrap{display:flex;align-items:center;gap:22px;justify-content:center}
+.ring{width:150px;height:150px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;background:conic-gradient(var(--hold) 0 55%,#2d2d44 55% 100%);position:relative}
+.ring:after{content:"";position:absolute;inset:13px;background:var(--card);border-radius:50%}
+.ring .num{font-size:40px;font-weight:800;color:var(--hold);z-index:1;line-height:1}
+.ring .lbl{font-size:12px;color:var(--tx2);z-index:1}
+.sig{font-size:34px;font-weight:800;color:var(--hold);letter-spacing:2px}
+.sig-sub{color:var(--tx2);font-size:13px;margin:4px 0 14px}
+.big-concl{font-size:15px;line-height:1.85;background:linear-gradient(135deg,rgba(102,126,234,.13),rgba(255,165,2,.08));border:1px solid var(--bd);border-left:4px solid var(--hold);padding:16px 18px;border-radius:10px}
+.big-concl b{color:var(--hold)}
+.px{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.px .box{background:var(--card2);border:1px solid var(--bd);border-radius:10px;padding:13px;text-align:center}
+.px .box .t{font-size:12px;color:var(--tx2)}.px .box .v{font-size:22px;font-weight:700;margin-top:4px}
+.pos-bar{display:flex;height:30px;border-radius:8px;overflow:hidden;margin:10px 0;font-size:12px;font-weight:600}
+.pos-bar div{display:flex;align-items:center;justify-content:center;color:#fff}
+.stat{background:var(--card2);border:1px solid var(--bd);border-radius:10px;padding:12px;text-align:center}
+.stat .v{font-size:20px;font-weight:700}.stat .t{font-size:11px;color:var(--tx2);margin-top:3px}
+.up{color:var(--up)!important}.down{color:var(--down)!important}.hold{color:var(--hold)!important}
+.chart{width:100%;height:340px}.chart.sm{height:290px}
+.note{font-size:11px;color:var(--tx2);margin-top:8px}
+ul.clean{list-style:none;font-size:13px;line-height:1.9}
+ul.clean li{padding:6px 0 6px 22px;position:relative;border-bottom:1px dashed #2d2d4455}
+ul.clean li:before{content:"▸";position:absolute;left:4px;color:var(--acc)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th,td{padding:9px 8px;text-align:center;border-bottom:1px solid #2d2d4455}
+th{color:var(--tx2);font-weight:600;background:#ffffff08}
+td.l,th.l{text-align:left}
+.badge{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600}
+.thermo{display:flex;align-items:center;gap:16px;justify-content:center;padding:8px 0}
+.thermo .bar{width:60%;height:22px;border-radius:20px;background:linear-gradient(90deg,#00d4aa,#ffa502,#ff4757);position:relative;opacity:.85}
+.thermo .needle{position:absolute;top:-6px;left:30%;width:4px;height:34px;background:#fff;border-radius:2px;box-shadow:0 0 8px #fff}
+.thermo .val{font-size:28px;font-weight:800;color:var(--hold)}
+.attrib{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:900px){.attrib{grid-template-columns:repeat(2,1fr)}}
+.attrib .a{background:var(--card2);border:1px solid var(--bd);border-radius:10px;padding:12px;text-align:center}
+.attrib .a .p{font-size:22px;font-weight:700;color:var(--acc)}
+.attrib .a .t{font-size:11px;color:var(--tx2)}
+.foot{font-size:11px;color:var(--tx2);text-align:center;padding:18px 10px;line-height:1.8}
+.disc{background:#ffffff06;border:1px solid var(--bd);border-radius:10px;padding:14px;font-size:12px;color:var(--tx2);margin-top:12px}
+.kv{display:inline-block;background:#ffffff0a;border:1px solid var(--bd);border-radius:6px;padding:2px 8px;margin:2px;font-size:12px}
+</style>
+
+<!-- LIGHT_THEME_OVERRIDE -->
+<style>
+:root{
+  --bg:#f4f6fa; --card:#ffffff; --card2:#f1f5f9; --line:#e2e8f0;
+  --txt:#1e293b; --sub:#64748b;
+  --rise:#e11d48; --fall:#059669; --red:#e11d48;
+  --yellow:#b45309; --purple:#7c5cff; --blue:#2563eb;
+}
+body{background:var(--bg);color:var(--txt)}
+/* 原深色主题里为深底设计的浅色文字，改为浅底可读的深色 */
+.banner b,.lb b,.hl-red,.nl{color:#e11d48 !important}
+.hl-yel,.ny{color:#b45309 !important}
+.note b,.ladder{color:#1e293b !important}
+.lb2{color:#64748b !important}
+.ts{color:#475569 !important}
+th{color:#475569;background:var(--card2)}
+tr:hover td{background:rgba(124,92,255,.07)}
+.b-yel{color:#1e293b !important}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <h1>A股当日午间行情复盘 · 决策仪表盘</h1>
+  <div class="sub">2026年11月24日（周二）12:00 午间收盘快照 &nbsp;|&nbsp; 第119期连续复盘 &nbsp;|&nbsp; 星辰 · 多市场智能股票分析师</div>
+</div>
+
+<div class="card">
+  <div class="dash">
+    <div class="score-wrap">
+      <div class="ring"><div class="num">55</div><div class="lbl">/ 100</div></div>
+      <div>
+        <div class="sig">WATCH</div>
+        <div class="sig-sub">中性偏多 · 外围V反修复 · 右侧待确立</div>
+        <div style="font-size:13px">较上期 <span class="up">40 → 55（↑15）</span></div>
+        <div style="font-size:13px;margin-top:6px">信号含义：情绪修复升级为反弹，试探回补、不追高</div>
+      </div>
+    </div>
+    <div>
+      <div class="big-concl">
+        <b>一句话结论：</b>隔夜<b>英伟达恢复黄仁勋职务→单日暴涨31.48%（市值+9520亿美元创纪录）、费半+14.03%、纳指+6.51%</b>引爆全球AI叙事V反，A股今日<b>放量高开</b>——广度30%→<b>55%</b>、涨停<b>67:5</b>、半日放量2046亿、行业资金由−40亿<b>转正+98.2亿</b>；<b>但指数冲高回落（创业板盘中+4%→+1.90%）、五线空头且午收仍略低于MA5、封板率仅60%、融资余额7连降、美元104.32破104</b>，属"情绪修复+外围映射"而非趋势反转。<b>仓位1.0→1.3成试探回补（光模块/CPO方向0.3成），收盘确认后再决定是否加至1.9成。</b>
+      </div>
+      <div class="px">
+        <div class="box"><div class="t">右侧加仓确认位</div><div class="v hold">3559</div><div class="t">MA5·需量能/半导体2日确认</div></div>
+        <div class="box"><div class="t">第一压力位</div><div class="v hold">3624</div><div class="t">MA20</div></div>
+        <div class="box"><div class="t">失效警戒位</div><div class="v down">3547</div><div class="t">今日低点·失守退回防御</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>主要指数 <span class="tag">午间收盘 · 红涨绿跌</span></h2>
+  <div class="grid g6" id="idxCards"></div>
+  <div class="note">数据来源：westock 结构化行情 2026-11-24 12:00；与新浪财经/腾讯新闻/财联社/中新经纬/东方财富午评交叉一致。沪市5121.34亿+深市6088.26亿≈11210亿，与两市半日11209.59亿自洽。全场普遍高开后冲高回落——创业板盘中高2376.34（涨超4%）→午收2323.48（+1.90%）。</div>
+</div>
+
+<div class="card">
+  <h2>分时走势与量能 <span class="tag">上证指数 · 121点</span></h2>
+  <div id="chartMinute" class="chart"></div>
+  <div class="note">高开3567.84（+0.82%）→ 最高3585.22（+1.31%）→ 最低3547.37（+0.24%）→ 午收3555.49（+0.47%），冲高回落但守住昨收3538.95上方。半日成交11209.59亿（+2045.88亿放量），全天预估约1.9–2.0万亿，逼近2万亿但需下午确认。</div>
+</div>
+
+<div class="card">
+  <h2>市场赚钱效应 <span class="tag">广度 · 情绪 · 尾部</span></h2>
+  <div class="grid g2">
+    <div>
+      <div class="grid g3" style="margin-bottom:12px">
+        <div class="stat"><div class="v up" id="upCnt">3123</div><div class="t">上涨家数 (55%)</div></div>
+        <div class="stat"><div class="v down" id="dnCnt">2273</div><div class="t">下跌家数</div></div>
+        <div class="stat"><div class="v hold" id="luLd">67:5</div><div class="t">涨停 : 跌停</div></div>
+      </div>
+      <div id="chartBreadth" class="chart sm"></div>
+    </div>
+    <div>
+      <div class="thermo">
+        <span class="t" style="color:var(--tx2);font-size:13px">恐惧</span>
+        <div class="bar"><div class="needle" id="needle"></div></div>
+        <span class="t" style="color:var(--tx2);font-size:13px">贪婪</span>
+        <div class="val">58°</div>
+      </div>
+      <div id="chartEmotion" class="chart sm"></div>
+    </div>
+  </div>
+  <div class="note"><b style="color:var(--tx)">赚钱效应总结：</b>较昨日午间（1717涨/30%、涨停63:7）继续修复——今日<b>3123涨(55%)</b>、涨停67:跌停5（涨跌停比13.4倍）、涨超7% 96家 vs 跌超7%仅12家（尾部风险极低），昨日151只涨停股今日90.73%上涨（涨停溢价为正）。<b style="color:var(--hold)">但结构性特征明显</b>：封板率仅60%（64股涨停、42股封板未遂）、连板34只、指数冲高回落——赚钱效应集中在AI算力硬件（中际旭创215亿/新易盛190亿成交居前）与人形机器人两条主线，属"外围映射下的科技成长修复"而非全面扩散。</div>
+</div>
+
+<div class="card">
+  <h2>板块表现 <span class="tag">领涨 / 领跌 TOP</span></h2>
+  <div id="chartSector" class="chart"></div>
+  <div class="note">领涨：消费电子+4.44%、文娱用品+4.32%、汽车服务+3.96%、数字媒体+3.94%、航天装备+3.33%、通信设备+2.90%、元件+2.89%；领跌：贵金属−2.91%（金价高位回落拖累）、工业金属−2.40%、炼化−2.25%、焦炭−1.65%。突出特征：科技成长（消费电子/半导体/通信/数字媒体）全面领涨 vs 资源周期（贵金属/工业金属/煤炭）与防御（证券/医药）回吐——与11/23的"高低切"方向完全反转，风险偏好回升。</div>
+</div>
+
+<div class="card">
+  <h2>资金流向 · 行业主力 <span class="tag">单位：亿元</span></h2>
+  <div class="grid g2">
+    <div id="chartIndToday" class="chart sm"></div>
+    <div id="chartInd5d" class="chart sm"></div>
+  </div>
+  <div class="note"><b style="color:var(--tx)">今日行业合计 +98.2亿（由负转正，上期−40.0亿）/ 5日合计 −518.3亿（较上期−1167亿大幅收窄）</b>。今日流入元件+38.35/消费电子+29.77/半导体+27.63/通信设备+24.51亿；流出证券−10.77/工程机械−8.36/电力−8.29/工业金属−7.53亿。<b style="color:var(--hold)">关键：半导体今日+27.63亿由负转正（上期−37.32亿），但仅第1日回流，未满足"连续2日"确认</b>。交叉验证：财联社/新浪口径全市场主力净流入109.50亿、TMT+138.76亿、电子+99.8亿、工业富联净买入20.86亿居首，方向与westock一致、绝对值因口径不同略有差异。</div>
+</div>
+
+<div class="card">
+  <h2>资金流向 · 概念题材 <span class="tag">今日 vs 5日 · 亿元</span></h2>
+  <div id="chartConcept" class="chart"></div>
+  <div class="note">概念今日前列清一色科技成长：<b style="color:var(--up)">TMT+135.70/科创同股同权+124.66/芯片+116.88/数据中心+101.02/CPO+100.81</b>/新能源车+98.35亿；5日 CPO+227.59/5G+205.58/谷歌概念+188.48/PCB+130.22/光通信+119.37/英伟达+116.35亿——<b style="color:var(--tx)">光链（CPO/5G/光通信/PCB）5日资金持续厚累积</b>，是本次试探回补优先光模块/CPO方向的直接依据。注：概念榜含"昨日高振幅/转融券标的/高价股"等标签类，须与产业主线区分。</div>
+</div>
+
+<div class="card">
+  <h2>覆盖池追踪 <span class="tag">8红1绿 · 光通信三剑客中期仍负</span></h2>
+  <div id="chartPool" class="chart"></div>
+  <table style="margin-top:12px">
+    <thead><tr><th class="l">标的</th><th>现价</th><th>今日</th><th>今日主力(亿)</th><th>5日</th><th>10日</th><th>20日</th><th class="l">解读</th></tr></thead>
+    <tbody id="poolBody"></tbody>
+  </table>
+  <div class="note">覆盖池今日<b style="color:var(--up)">8红1绿</b>（长光华芯−1.02%），跟随大盘反弹。水晶光电+3.65%、20日+0.13亿为池内唯一20日正，防御锚续有效；长盈通+4.83%涨幅居前、主力+0.99亿；长光华芯今日主力+1.42亿池内最高但股价收跌。光通信三剑客价涨钱出（长飞+0.70/亨通−2.30/中天−0.29亿）且中期全负，亨通20日−36.03亿全池最差——按"连续2日确认"纪律不建仓。广联航空+3.10%反弹至16.96逼近17.00收回线，但已清零、单日反弹不回补。</div>
+</div>
+
+<div class="card">
+  <h2>信号归因 <span class="tag">四维贡献度</span></h2>
+  <div class="grid g2">
+    <div id="chartRadar" class="chart sm"></div>
+    <div>
+      <div class="attrib">
+        <div class="a"><div class="p">20%</div><div class="t">技术指标</div></div>
+        <div class="a"><div class="p">30%</div><div class="t">资金流向</div></div>
+        <div class="a"><div class="p">40%</div><div class="t">消息情绪</div></div>
+        <div class="a"><div class="p">10%</div><div class="t">市场环境</div></div>
+      </div>
+      <div class="big-concl" style="margin-top:14px;font-size:13px">
+        <b>最强看多：</b>外围史诗级V反（英伟达+31.48%/费半+14%/纳指+6.51%）+ 广度30%→55%、涨停67:5、放量2046亿 + 行业资金转正98.2亿、半导体由负转正。<br>
+        <b style="color:var(--up)">最强看空：</b>指数冲高回落（创业板盘中+4%→+1.90%）、五线空头且午收仍略低于MA5、封板率仅60%、融资余额7连降、美元104.32破104；5日行业资金仍−518亿深度负。
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>情报面 <span class="tag">消息 · 政策 · 外围</span></h2>
+  <div class="grid g2">
+    <div>
+      <div style="color:var(--up);font-weight:700;margin-bottom:8px">积极催化</div>
+      <ul class="clean">
+        <li><b>外围AI叙事V反（核心）</b>：11/23英伟达恢复黄仁勋职务→股价+31.48%、单日市值+9520亿美元创全球纪录，费半+14.03%（2025年来最大单日涨幅）、纳指+6.51%、美光+19%/英特尔+16%/台积电+14%/SK海力士+20%</li>
+        <li><b>稳市组合拳加码</b>：融资保证金100%→80%；监管23日下发两融逆周期调节通知，可动态调整维持担保比例"以时间换空间"；创业板做市商+降费</li>
+        <li><b>流动性呵护</b>：央行24日5160亿隔夜逆回购净投放165亿；预告25日1万亿MLF（净投放1000亿，连续9个月加量续作）</li>
+        <li><b>产业催化</b>：四部门"一老一小"方案（养老机器人/外骨骼）→人形机器人涨停潮；刚果金11/30暂停钴出口→钴概念；珠海航展12/7–13→军工；逆变器10月出口+59.28%→储能</li>
+        <li><b>主动ETF调仓</b>：首批18只主动ETF"减持茅台、增持中芯/中际旭创"，价值切成长；工信部前三季数字产业收入+14.8%、利润+23.4%</li>
+      </ul>
+    </div>
+    <div>
+      <div style="color:var(--down);font-weight:700;margin-bottom:8px">风险警报</div>
+      <ul class="clean">
+        <li><b>指数冲高回落</b>：创业板盘中+4%→午收+1.90%、上证高3585→3555，上方套牢盘/获利盘兑现压力显现</li>
+        <li><b>趋势未修复</b>：MA5 3558.74&lt;MA10 3595.16&lt;MA20 3623.97&lt;MA30 3651.47&lt;MA60 3775.96 五线空头全下移，午收3555.49仍略低于MA5</li>
+        <li><b>情绪质量存疑</b>：封板率仅60%（42股封板未遂）、连板晋级难；融资余额21348亿7连降（−0.42%），杠杆资金未回归</li>
+        <li><b>外围隐忧</b>：美元指数104.32（+0.49%）突破104预警；纳指+6.51%属事件驱动脉冲，AI叙事重定价是否终结待观察；黄仁勋12/3国会听证</li>
+        <li><b>"午间不外推收盘"</b>：连续多期验证午间→收盘方向可能反转，本快照须收盘复核后执行；5日行业资金仍−518.3亿深度负</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>作战计划 · 仓位管理 <span class="tag">当前 1.0→1.3 成 · 现金 8.7</span></h2>
+  <div class="pos-bar">
+    <div style="width:10%;background:linear-gradient(90deg,#667eea,#764ba2)">防御1.0</div>
+    <div style="width:3%;background:linear-gradient(90deg,#ff4757,#ffa502)">科技0.3</div>
+    <div style="width:87%;background:#2d2d44">现金 8.7</div>
+  </div>
+  <div class="note" style="margin-bottom:14px">结构：防御1.0维持（银行/红利/白电+水晶光电，水晶+3.65%、20日+0.13亿池内唯一正）｜<b style="color:var(--tx)">科技成长0→0.3试探仓（光模块/CPO方向，外围AI叙事V反+光链5日资金持续流入+今日主力吸金龙头，非光纤光缆三剑客）</b>｜高β0（广联已清零，今日+3.10%反弹不回补，等站回17.00）｜光通信个股0（三剑客中期全负不建仓）。净变化+0.3成——上期加仓四条件中<b style="color:var(--tx)">仅满足2项</b>（广度55%&gt;40%、量能达标），站回MA5未满足、半导体连续2日回流仅第1日，故仅试探回补、不满仓。</div>
+  <table>
+    <thead><tr><th class="l">触发条件（收盘复核后执行）</th><th>目标仓位</th><th class="l">操作</th></tr></thead>
+    <tbody>
+      <tr><td class="l">3547–3559 区间震荡（基准情景）</td><td class="hold">1.3 成</td><td class="l">持有试探仓，不追高开</td></tr>
+      <tr><td class="l">收盘站回3559(MA5) + 全天≥1.8万亿 + 半导体连续2日回流</td><td class="up">1.9 成</td><td class="l">加仓，优先光模块/CPO/半导体设备/PCB</td></tr>
+      <tr><td class="l">站回3624(MA20) + 全天≥1.8万亿 + 广度&gt;50%</td><td class="up">2.4 成</td><td class="l">趋势确认后再加仓</td></tr>
+      <tr><td class="l">收盘失守3547.37 或 全天&lt;1.6万亿</td><td class="down">1.0 成</td><td class="l">退回防御，撤销试探仓</td></tr>
+      <tr><td class="l">破3500 且 美债&gt;5.30% 或 美元&gt;104持续</td><td class="down">0.5 成</td><td class="l">防御端再减半</td></tr>
+    </tbody>
+  </table>
+  <div class="note">关键纪律：① 外围V反属事件驱动，A股映射衰减（高开冲高回落）不可追高；② 半导体仅1日回流，须连续2日资金确认方可加仓；③ 光链5日资金持续流入是可试探的结构性依据；④ 美元104.32破104但上证未破3500，不触发降仓；⑤ 收盘确认后再决定试探仓是否升级。评分轨迹见下图。</div>
+  <div id="chartScore" class="chart sm" style="margin-top:10px"></div>
+</div>
+
+<div class="card">
+  <div style="font-size:12px;color:var(--tx2);margin-bottom:8px">
+    <span class="kv">分析时点：2026-11-24 12:00 午间快照</span>
+    <span class="kv">采用策略：多头趋势 + 情绪周期 + 事件驱动 + 资金流</span>
+    <span class="kv">数据来源：westock 结构化行情</span>
+    <span class="kv">交叉验证：新浪财经/腾讯新闻/财联社/中新经纬/东方财富/证券时报/中国证券网/新华财经</span>
+  </div>
+  <div class="disc"><b>免责声明</b>：以上内容基于公开数据和量化分析，仅供参考，不构成投资建议。市场有风险，投资需谨慎。任何投资决策应结合个人风险承受能力、资金状况和投资目标独立判断，必要时咨询持牌专业机构。过往表现不预示未来收益。</div>
+</div>
+
+<div class="foot">星辰 · 多市场智能股票分析师 &nbsp;|&nbsp; 本报告为自动化午间复盘第119期 &nbsp;|&nbsp; 午间快照不可外推收盘，触发条件一律收盘复核后于下一交易日执行</div>
+
+<script>
+var D = {"idx": [{"name": "上证", "chg": 0.47, "price": 3555.49}, {"name": "深证成指", "chg": 0.92, "price": 10550.87}, {"name": "创业板指", "chg": 1.9, "price": 2323.48}, {"name": "科创50", "chg": 2.72, "price": 1261.26}, {"name": "北证50", "chg": 1.83, "price": 809.93}, {"name": "沪深300", "chg": 0.57, "price": 3980.91}], "dist_order": ["跌停", "7%<", "5~7%", "2~5%", "0~2%", "平", "2~0%", "5~2%", "7~5%", ">7%", "涨停"], "dist": [5, 6, 6, 271, 1985, 185, 1864, 948, 148, 96, 67], "ind_in": [{"n": "元件", "v": 38.35}, {"n": "消费电子", "v": 29.77}, {"n": "半导体", "v": 27.63}, {"n": "通信设备", "v": 24.51}, {"n": "汽车零部件", "v": 11.2}, {"n": "通用设备", "v": 10.77}, {"n": "光伏设备", "v": 8.13}, {"n": "自动化设备", "v": 7.77}, {"n": "能源金属", "v": 4.14}], "ind_out": [{"n": "证券Ⅱ", "v": -10.77}, {"n": "工程机械", "v": -8.36}, {"n": "电力", "v": -8.29}, {"n": "小金属", "v": -8.02}, {"n": "工业金属", "v": -7.53}, {"n": "化学制品", "v": -6.49}, {"n": "化学制药", "v": -4.23}, {"n": "计算机设备", "v": -4.13}, {"n": "白酒Ⅱ", "v": -4.04}], "ind5_in": [{"n": "元件", "v": 159.58}, {"n": "通信设备", "v": 90.09}, {"n": "消费电子", "v": 25.81}, {"n": "个护用品", "v": 13.26}, {"n": "汽车零部件", "v": 10.59}, {"n": "数字媒体", "v": 9.03}, {"n": "铁路公路", "v": 7.14}, {"n": "炼化及贸易", "v": 3.9}], "ind5_out": [{"n": "工业金属", "v": -43.96}, {"n": "计算机设备", "v": -39.18}, {"n": "化学制药", "v": -37.9}, {"n": "小金属", "v": -32.62}, {"n": "证券Ⅱ", "v": -29.21}, {"n": "电网设备", "v": -28.69}, {"n": "化学制品", "v": -27.96}, {"n": "航空装备Ⅱ", "v": -27.46}], "con_today": [{"n": "TMT", "v": 135.7}, {"n": "科创企业同股同权", "v": 124.66}, {"n": "昨日高振幅", "v": 121.38}, {"n": "芯片概念", "v": 116.88}, {"n": "转融券标的", "v": 110.61}, {"n": "高价股", "v": 102.12}, {"n": "数据中心", "v": 101.02}, {"n": "共封装光模块(CPO）", "v": 100.81}, {"n": "新能源车", "v": 98.34}], "con_5d": [{"n": "高价股", "v": 270.02}, {"n": "共封装光模块(CPO）", "v": 227.59}, {"n": "5G概念", "v": 205.58}, {"n": "谷歌概念", "v": 188.48}, {"n": "TMT", "v": 168.79}, {"n": "大盘股", "v": 145.64}, {"n": "PCB概念", "v": 130.22}, {"n": "光通信", "v": 119.37}, {"n": "英伟达概念", "v": 116.35}], "pool": [{"code": "sh601869", "name": "长飞光纤", "price": 213.3, "chg": 1.53, "mf_t": 0.7, "mf5": -2.41, "mf10": -1.44, "mf20": -4.12}, {"code": "sh600487", "name": "亨通光电", "price": 37.51, "chg": 1.38, "mf_t": -2.3, "mf5": -5.78, "mf10": -20.4, "mf20": -36.03}, {"code": "sh600522", "name": "中天科技", "price": 22.14, "chg": 1.33, "mf_t": -0.29, "mf5": -0.55, "mf10": -9.99, "mf20": -27.35}, {"code": "sz002008", "name": "大族激光", "price": 46.86, "chg": 0.49, "mf_t": -0.13, "mf5": 1.41, "mf10": -3.23, "mf20": -10.44}, {"code": "sz002273", "name": "水晶光电", "price": 22.72, "chg": 3.65, "mf_t": -0.08, "mf5": -0.68, "mf10": -0.84, "mf20": 0.13}, {"code": "sh688143", "name": "长盈通", "price": 96.5, "chg": 4.83, "mf_t": 0.99, "mf5": -2.36, "mf10": -1.39, "mf20": -5.32}, {"code": "sh688048", "name": "长光华芯", "price": 114.95, "chg": -1.02, "mf_t": 1.42, "mf5": -0.71, "mf10": 0.03, "mf20": -5.33}, {"code": "sh688270", "name": "ST臻镭", "price": 46.43, "chg": 0.93, "mf_t": 0.03, "mf5": -0.71, "mf10": -2.22, "mf20": -1.23}, {"code": "sz300900", "name": "广联航空", "price": 16.96, "chg": 3.1, "mf_t": 0.05, "mf5": -0.01, "mf10": -0.4, "mf20": 0.18}], "sector_names": ["贵金属", "工业金属", "炼化及贸易", "焦炭", "油服工程", "电子化学品", "元件", "通信设备", "航天装备", "数字媒体", "文娱用品", "消费电子"], "sector_vals": [-2.91, -2.4, -2.25, -1.65, -1.33, 2.8, 2.89, 2.9, 3.33, 3.94, 4.32, 4.44], "mtimes": ["09:30", "09:31", "09:32", "09:33", "09:34", "09:35", "09:36", "09:37", "09:38", "09:39", "09:40", "09:41", "09:42", "09:43", "09:44", "09:45", "09:46", "09:47", "09:48", "09:49", "09:50", "09:51", "09:52", "09:53", "09:54", "09:55", "09:56", "09:57", "09:58", "09:59", "10:00", "10:01", "10:02", "10:03", "10:04", "10:05", "10:06", "10:07", "10:08", "10:09", "10:10", "10:11", "10:12", "10:13", "10:14", "10:15", "10:16", "10:17", "10:18", "10:19", "10:20", "10:21", "10:22", "10:23", "10:24", "10:25", "10:26", "10:27", "10:28", "10:29", "10:30", "10:31", "10:32", "10:33", "10:34", "10:35", "10:36", "10:37", "10:38", "10:39", "10:40", "10:41", "10:42", "10:43", "10:44", "10:45", "10:46", "10:47", "10:48", "10:49", "10:50", "10:51", "10:52", "10:53", "10:54", "10:55", "10:56", "10:57", "10:58", "10:59", "11:00", "11:01", "11:02", "11:03", "11:04", "11:05", "11:06", "11:07", "11:08", "11:09", "11:10", "11:11", "11:12", "11:13", "11:14", "11:15", "11:16", "11:17", "11:18", "11:19", "11:20", "11:21", "11:22", "11:23", "11:24", "11:25", "11:26", "11:27", "11:28", "11:29", "11:30"], "mvals": [3567.84, 3559.78, 3567.2, 3571.04, 3575.94, 3579.04, 3579.01, 3575.96, 3579.59, 3583.85, 3584.5, 3580.89, 3579.81, 3580.77, 3576.45, 3576.88, 3577.98, 3575.11, 3574.84, 3578.06, 3575.76, 3573.89, 3570.77, 3573.5, 3571.74, 3569.22, 3571.39, 3571.82, 3572.92, 3573.56, 3574.29, 3572.52, 3571.74, 3569.62, 3569.09, 3568.71, 3571.49, 3569.62, 3567.95, 3565.39, 3562.52, 3563.74, 3565.96, 3567.09, 3566.09, 3566.7, 3567.2, 3566.1, 3564.93, 3565.73, 3565.47, 3565.74, 3565.52, 3563.49, 3562.23, 3562.16, 3563.96, 3564.77, 3564.74, 3563.51, 3563.93, 3564.69, 3564.66, 3566.23, 3567.57, 3565.45, 3567.25, 3568.38, 3569.01, 3568.49, 3567.49, 3567.13, 3566.03, 3567.27, 3568.41, 3567.88, 3566.67, 3566.18, 3565.5, 3566.68, 3567.39, 3565.94, 3563.97, 3563.89, 3563.94, 3564.66, 3564.61, 3563.81, 3562.1, 3561.62, 3560.98, 3558.69, 3559.94, 3559.94, 3559.33, 3559.16, 3557.19, 3556.51, 3555.39, 3552.87, 3554.36, 3553.76, 3551.39, 3552.49, 3551.02, 3550.94, 3551.71, 3552.05, 3550.6, 3548.25, 3547.5, 3553.74, 3554.5, 3552.99, 3552.24, 3552.72, 3554.29, 3553.87, 3554.07, 3557.62, 3555.49], "ma5": 3558.74, "score_hist": [44, 38, 42, 34, 46, 41, 40, 32, 26, 30, 40, 55], "score_lbl": ["11/13", "11/14", "11/15", "11/16", "11/17", "11/18", "11/19", "11/20", "11/21", "11/22", "11/23", "11/24"], "emotion_hist": [41, 32, 58, 22, 20, 16, 5, 30, 58], "emotion_lbl": ["11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/21收", "11/23午", "11/24午"]};
+var C = {up:'#ff4757',down:'#00d4aa',hold:'#ffa502',acc:'#667eea',tx:'#e2e8f0',tx2:'#94a3b8',bd:'#2d2d44'};
+function mk(id,opt){var el=document.getElementById(id);if(el){var c=echarts.init(el);c.setOption(opt);window.addEventListener('resize',function(){c.resize();});}}
+function axisColor(){return {axisLine:{lineStyle:{color:C.bd}},axisLabel:{color:C.tx2},splitLine:{lineStyle:{color:'#2d2d4455'}}};}
+
+// 指数卡片
+var ic='';
+D.idx.forEach(function(x){var cl=x.chg>=0?'up':'down';ic+='<div class="stat"><div class="v '+cl+'">'+(x.chg>=0?'+':'')+x.chg.toFixed(2)+'%</div><div class="t">'+x.name+' '+x.price.toFixed(2)+'</div></div>';});
+document.getElementById('idxCards').innerHTML=ic;
+
+// 分时
+mk('chartMinute',{
+ tooltip:{trigger:'axis'},grid:{left:55,right:20,top:30,bottom:40},
+ xAxis:Object.assign({type:'category',data:D.mtimes,boundaryGap:false},axisColor()),
+ yAxis:Object.assign({type:'value',scale:true},axisColor()),
+ series:[
+  {name:'上证',type:'line',data:D.mvals,smooth:true,symbol:'none',lineStyle:{color:C.acc,width:2},areaStyle:{color:'rgba(102,126,234,0.15)'},markLine:{symbol:'none',data:[
+    {yAxis:3538.95,name:'昨收',lineStyle:{color:C.tx2,type:'dashed'},label:{color:C.tx2,formatter:'昨收 3538.95'}},
+    {yAxis:3559,name:'MA5',lineStyle:{color:C.up,type:'dashed'},label:{color:C.up,formatter:'MA5 3559'}}
+  ]}}
+ ]
+});
+
+// 涨跌分布
+mk('chartBreadth',{
+ tooltip:{trigger:'axis'},grid:{left:45,right:10,top:20,bottom:45},
+ xAxis:Object.assign({type:'category',data:D.dist_order,axisLabel:{color:C.tx2,fontSize:9,interval:0,rotate:30}},axisColor()),
+ yAxis:Object.assign({type:'value'},axisColor()),
+ series:[{type:'bar',data:D.dist.map(function(v,i){var neg=i<5;return {value:v,itemStyle:{color:neg?C.down:C.up}};}),barWidth:'65%'}]
+});
+
+// 情绪轨迹
+mk('chartEmotion',{
+ tooltip:{trigger:'axis'},grid:{left:40,right:15,top:30,bottom:35},
+ xAxis:Object.assign({type:'category',data:D.emotion_lbl,axisLabel:{color:C.tx2,fontSize:9}},axisColor()),
+ yAxis:Object.assign({type:'value',max:100,min:0},axisColor()),
+ series:[{type:'line',data:D.emotion_hist,smooth:true,symbol:'circle',symbolSize:7,lineStyle:{color:C.hold,width:2},itemStyle:{color:C.hold},areaStyle:{color:'rgba(255,165,2,0.12)'},label:{show:true,color:C.tx,fontSize:10}}]
+});
+document.getElementById('needle').style.left=(58)+'%';
+
+// 板块
+mk('chartSector',{
+ tooltip:{trigger:'axis'},grid:{left:90,right:45,top:20,bottom:30},
+ xAxis:Object.assign({type:'value'},axisColor()),
+ yAxis:Object.assign({type:'category',data:D.sector_names,axisLabel:{color:C.tx,fontSize:10}},axisColor()),
+ series:[{type:'bar',data:D.sector_vals.map(function(v){return {value:v,itemStyle:{color:v>=0?C.up:C.down}};}),barWidth:'60%',label:{show:true,position:'right',color:C.tx,formatter:function(p){return (p.value>0?'+':'')+p.value+'%';}}}]
+});
+
+// 今日行业资金
+function flowOpt(inL,outL,title){
+ var all=outL.slice().reverse().concat(inL.slice());
+ var names=all.map(function(x){return x.n;});
+ var vals=all.map(function(x){return {value:x.v,itemStyle:{color:x.v>=0?C.up:C.down}};});
+ return {title:{text:title,textStyle:{color:C.tx,fontSize:13},left:'center'},tooltip:{trigger:'axis'},grid:{left:88,right:45,top:38,bottom:25},
+  xAxis:Object.assign({type:'value'},axisColor()),
+  yAxis:Object.assign({type:'category',data:names,axisLabel:{color:C.tx2,fontSize:10}},axisColor()),
+  series:[{type:'bar',data:vals,barWidth:'62%',label:{show:true,position:'right',color:C.tx2,fontSize:9,formatter:function(p){return (p.value>0?'+':'')+p.value;}}}]};
+}
+mk('chartIndToday',flowOpt(D.ind_in,D.ind_out,'今日行业主力净流入 / 流出（亿）'));
+mk('chartInd5d',flowOpt(D.ind5_in,D.ind5_out,'5日行业主力净流入 / 流出（亿）'));
+
+// 概念
+var ct=D.con_today.slice().reverse();
+mk('chartConcept',{
+ tooltip:{trigger:'axis'},legend:{data:['今日','5日'],textStyle:{color:C.tx2},top:0},grid:{left:95,right:45,top:40,bottom:30},
+ xAxis:Object.assign({type:'value'},axisColor()),
+ yAxis:Object.assign({type:'category',data:ct.map(function(x){return x.n;}),axisLabel:{color:C.tx2,fontSize:10}},axisColor()),
+ series:[
+  {name:'今日',type:'bar',data:ct.map(function(x){return {value:x.v,itemStyle:{color:C.acc}};}),barWidth:'32%'},
+  {name:'5日',type:'bar',data:ct.map(function(x){var m=D.con_5d.filter(function(y){return y.n===x.n;});return {value:m.length?m[0].v:0,itemStyle:{color:C.hold}};}),barWidth:'32%'}
+ ]
+});
+
+// 覆盖池
+var pnames=D.pool.map(function(x){return x.name;});
+mk('chartPool',{
+ tooltip:{trigger:'axis'},legend:{data:['今日涨跌%','20日主力(亿)'],textStyle:{color:C.tx2},top:0},grid:{left:50,right:55,top:40,bottom:45},
+ xAxis:Object.assign({type:'category',data:pnames,axisLabel:{color:C.tx2,fontSize:10,interval:0}},axisColor()),
+ yAxis:[Object.assign({type:'value',name:'涨跌%'},axisColor()),Object.assign({type:'value',name:'20日亿'},axisColor())],
+ series:[
+  {name:'今日涨跌%',type:'bar',data:D.pool.map(function(x){return {value:x.chg,itemStyle:{color:x.chg>=0?C.up:C.down}};}),barWidth:'45%'},
+  {name:'20日主力(亿)',type:'line',yAxisIndex:1,data:D.pool.map(function(x){return x.mf20;}),lineStyle:{color:C.hold,width:2},itemStyle:{color:C.hold},symbol:'circle',symbolSize:6}
+ ]
+});
+var pb='';
+var notes={'长飞光纤':'今日+0.70池内相对强·中期仍负','亨通光电':'20日−36.03亿全池最差','中天科技':'价涨钱出·中期全负','大族激光':'5日+1.41池内唯一5日正','水晶光电':'防御锚·20日+0.13亿唯一正·今+3.65%','长盈通':'今+4.83%涨幅居前·主力+0.99','长光华芯':'今日主力+1.42亿池内最高·股价收跌','ST臻镭':'弱势企稳·中期负','广联航空':'已清零·+3.10%反弹逼近17.00不回补'};
+D.pool.forEach(function(x){var cl=x.chg>=0?'up':'down';pb+='<tr><td class="l">'+x.name+'</td><td>'+x.price.toFixed(2)+'</td><td class="'+cl+'">'+(x.chg>=0?'+':'')+x.chg.toFixed(2)+'%</td><td class="'+(x.mf_t>=0?'up':'down')+'">'+(x.mf_t>=0?'+':'')+x.mf_t.toFixed(2)+'</td><td class="'+(x.mf5>=0?'up':'down')+'">'+x.mf5.toFixed(2)+'</td><td class="'+(x.mf10>=0?'up':'down')+'">'+x.mf10.toFixed(2)+'</td><td class="'+(x.mf20>=0?'up':'down')+'">'+x.mf20.toFixed(2)+'</td><td class="l" style="color:var(--tx2)">'+notes[x.name]+'</td></tr>';});
+document.getElementById('poolBody').innerHTML=pb;
+
+// 雷达
+mk('chartRadar',{
+ radar:{indicator:[{name:'技术指标',max:100},{name:'资金流向',max:100},{name:'消息情绪',max:100},{name:'市场环境',max:100}],axisName:{color:C.tx2},splitLine:{lineStyle:{color:C.bd}},splitArea:{areaStyle:{color:['#1a1a2e','#20203a']}}},
+ series:[{type:'radar',data:[{value:[40,70,85,60],name:'四维得分',areaStyle:{color:'rgba(102,126,234,0.35)'},lineStyle:{color:C.acc},itemStyle:{color:C.acc}}]}]
+});
+
+// 评分轨迹
+mk('chartScore',{
+ tooltip:{trigger:'axis'},grid:{left:40,right:20,top:25,bottom:35},
+ xAxis:Object.assign({type:'category',data:D.score_lbl,axisLabel:{color:C.tx2,fontSize:9}},axisColor()),
+ yAxis:Object.assign({type:'value',max:100,min:0},axisColor()),
+ series:[{type:'line',data:D.score_hist,smooth:true,symbol:'circle',symbolSize:6,lineStyle:{color:C.acc,width:2},itemStyle:{color:C.acc},areaStyle:{color:'rgba(102,126,234,0.1)'},label:{show:true,color:C.tx2,fontSize:9}}]
+});
+</script>
+</body>
+</html>

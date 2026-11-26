@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>盘前计划_20261102 · 三问三答决策仪表盘</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  :root{
+    --bg:#0f0f23; --card:#1a1a2e; --buy:#00d4aa; --sell:#ff4757; --hold:#ffa502;
+    --acc1:#667eea; --acc2:#764ba2; --txt:#e2e8f0; --txt2:#94a3b8; --bd:#2d2d44;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.6;padding:18px;max-width:1180px;margin:0 auto}
+  .head{background:linear-gradient(135deg,#1a1a2e,#241b3a);border:1px solid var(--bd);border-radius:14px;padding:20px 24px;margin-bottom:16px}
+  .head h1{font-size:22px;font-weight:700;background:linear-gradient(90deg,var(--acc1),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .head .sub{color:var(--txt2);font-size:13px;margin-top:4px}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:820px){.g2,.g3{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px}
+  .card h2{font-size:15px;margin-bottom:12px;color:var(--txt);display:flex;align-items:center;gap:8px}
+  .card h2::before{content:"";width:4px;height:16px;border-radius:2px;background:linear-gradient(180deg,var(--acc1),var(--acc2))}
+  .qa{background:linear-gradient(135deg,#16203a,#1a1a2e);border:1px solid var(--bd);border-radius:14px;padding:18px 20px;margin-bottom:14px}
+  .qa .q{font-size:15px;font-weight:700;color:var(--acc1);margin-bottom:8px}
+  .qa .a{font-size:14px;color:var(--txt);line-height:1.75}
+  .qa .a b{color:var(--buy)}
+  .qa .a .warn{color:var(--hold)}
+  .qa .a .no{color:var(--sell)}
+  .pill{display:inline-block;padding:2px 10px;border-radius:20px;font-size:12px;font-weight:700;margin-right:6px}
+  .p-buy{background:rgba(0,212,170,.15);color:var(--buy);border:1px solid var(--buy)}
+  .p-hold{background:rgba(255,165,2,.15);color:var(--hold);border:1px solid var(--hold)}
+  .p-sell{background:rgba(255,71,87,.15);color:var(--sell);border:1px solid var(--sell)}
+  .pillg{background:rgba(102,126,234,.15);color:var(--acc1);border:1px solid var(--acc1)}
+  .scorecard{display:flex;align-items:center;gap:18px}
+  .ring{width:150px;height:150px;flex:0 0 150px}
+  .scoremeta{flex:1}
+  .big{font-size:46px;font-weight:800;line-height:1}
+  .sig{display:inline-block;margin-top:8px;padding:6px 18px;border-radius:8px;font-size:18px;font-weight:800;background:rgba(255,165,2,.18);color:var(--hold);border:1px solid var(--hold)}
+  .kv{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--bd);font-size:13px}
+  .kv:last-child{border-bottom:none}
+  .kv .k{color:var(--txt2)}
+  .kv .v{font-weight:700}
+  .scale{height:14px;border-radius:7px;background:linear-gradient(90deg,#ff4757,#ffa502,#00d4aa);position:relative;margin:14px 0 6px}
+  .scale .mk{position:absolute;top:-5px;width:4px;height:24px;background:#fff;border-radius:2px;transform:translateX(-2px)}
+  .chart{width:100%;height:300px}
+  .chart.sm{height:240px}
+  .plan table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px}
+  .plan th,.plan td{border:1px solid var(--bd);padding:8px 9px;text-align:left;vertical-align:top}
+  .plan th{background:rgba(102,126,234,.12);color:var(--txt);font-weight:700}
+  .plan tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+  .risk{background:rgba(255,71,87,.06);border:1px solid rgba(255,71,87,.3);border-radius:12px;padding:16px}
+  .risk h2{color:var(--sell)}
+  .risk li{margin:6px 0 6px 18px;font-size:13px;color:var(--txt)}
+  .risk li b{color:var(--hold)}
+  .tag{font-size:12px;color:var(--txt2)}
+  .foot{color:var(--txt2);font-size:12px;margin-top:18px;border-top:1px solid var(--bd);padding-top:14px}
+  .disc{margin-top:10px;padding:12px;background:rgba(255,255,255,.03);border-radius:10px;font-size:11.5px;color:var(--txt2)}
+  .hl{color:var(--buy);font-weight:700}
+  .hr{color:var(--sell);font-weight:700}
+  .hy{color:var(--hold);font-weight:700}
+</style>
+
+<!-- LIGHT_THEME_OVERRIDE -->
+<style>
+:root{
+  --bg:#f4f6fa; --card:#ffffff; --card2:#f1f5f9; --line:#e2e8f0;
+  --txt:#1e293b; --sub:#64748b;
+  --rise:#e11d48; --fall:#059669; --red:#e11d48;
+  --yellow:#b45309; --purple:#7c5cff; --blue:#2563eb;
+}
+body{background:var(--bg);color:var(--txt)}
+/* 原深色主题里为深底设计的浅色文字，改为浅底可读的深色 */
+.banner b,.lb b,.hl-red,.nl{color:#e11d48 !important}
+.hl-yel,.ny{color:#b45309 !important}
+.note b,.ladder{color:#1e293b !important}
+.lb2{color:#64748b !important}
+.ts{color:#475569 !important}
+th{color:#475569;background:var(--card2)}
+tr:hover td{background:rgba(124,92,255,.07)}
+.b-yel{color:#1e293b !important}
+</style>
+</head>
+<body>
+
+<div class="head">
+  <h1>📊 盘前计划 · 三问三答决策仪表盘</h1>
+  <div class="sub">交易日：2026-11-02（周一）&nbsp;|&nbsp; 生成时间：07:00 &nbsp;|&nbsp; 风格：防守控仓·防御为王 &nbsp;|&nbsp; 数据：公开聚合 + v71–v99 基线（未接入 westock CLI）</div>
+</div>
+
+<!-- 顶部：决策摘要 -->
+<div class="grid g2">
+  <div class="card">
+    <h2>核心结论 · 决策摘要</h2>
+    <div class="scorecard">
+      <div class="ring" id="ring"></div>
+      <div class="scoremeta">
+        <div class="big" style="color:var(--hold)">42</div>
+        <div class="tag">综合评分 / 100（中性偏空·冰点区）</div>
+        <div class="sig">WATCH · 防守控仓</div>
+        <div class="kv" style="margin-top:10px"><span class="k">建议仓位</span><span class="v" style="color:var(--hold)">25%–30%</span></div>
+        <div class="kv"><span class="k">现金比例</span><span class="v">≥ 70%</span></div>
+      </div>
+    </div>
+    <div class="scale"><div class="mk" style="left:42%"></div></div>
+    <div class="tag" style="display:flex;justify-content:space-between"><span>0 强烈看空</span><span>50 中性</span><span>100 强烈看多</span></div>
+  </div>
+
+  <div class="card">
+    <h2>大盘环境 · 关键位标尺</h2>
+    <div class="kv"><span class="k">核心矛盾</span><span class="v" style="color:var(--sell)">英特尔−28.58%/费半−7.2% 冲击未消化</span></div>
+    <div class="kv"><span class="k">对冲力量</span><span class="v" style="color:var(--buy)">央行+证监会今日座谈会·国家队Q3增持</span></div>
+    <div class="kv"><span class="k">10月PMI</span><span class="v" style="color:var(--sell)">制造业≈49.3% 跌破荣枯线</span></div>
+    <div class="kv"><span class="k">外围映射</span><span class="v">A50夜盘+0.06%·恒指+1.46%·中概−0.27%</span></div>
+    <div class="kv"><span class="k">市场阶段</span><span class="v" style="color:var(--hold)">退潮冰点·结构性筑底</span></div>
+    <div id="ruler" style="margin-top:14px"></div>
+  </div>
+</div>
+
+<!-- 三问三答 -->
+<div class="qa">
+  <div class="q">① 当下的主流题材是什么？（至多 3 个）</div>
+  <div class="a">
+    <span class="pill p-hold">主线一</span><b>能源·石油石化 + 油运</b>（涨价硬逻辑，确定性最高）<br>
+    <span class="pill p-hold">主线二</span><b>防御消费·创新药/CRO + 白酒食品</b>（吃药喝酒·业绩确定性）<br>
+    <span class="pill p-hold">主线三</span><span class="warn">商业航天 / 卫星互联网</span>（事件密集催化·启动→首次分歧，中线逻辑最硬但今日受压）<br>
+    <span class="tag">底仓配置：银行/红利（压舱·不列为题材主线）。<span class="no">明确回避：CPO/光模块/存储/PCB 高位、黄金股、影视短剧高标、创业板/科创高β。</span></span>
+  </div>
+</div>
+
+<div class="qa">
+  <div class="q">② 主流题材的核心是谁？</div>
+  <div class="a">
+    <b>能源链：</b>中国海油（油气开采）、中远海能 / 招商南油 / 锦江航运（油运）、中海油服（油服）、中曼石油。<br>
+    <b>防御消费链：</b>创新药/CRO——<span class="hl">药明康德</span>（日赚7106万·公募增持7904万股成第三大重仓）、昭衍新药、百花医药、万邦医药；白酒食品——泸州老窖、古井贡酒、迎驾贡酒、皇台酒业、<span class="hy">青岛食品（5连板·仅观察不接力）</span>。<br>
+    <b>商业航天链：</b>中国卫星（中军）、上海沪工、<span class="hl">广联航空 / 臻镭科技（持仓）</span>、航天电子、海兰信、铖昌科技、西部材料。
+  </div>
+</div>
+
+<div class="qa">
+  <div class="q">③ 主流题材走到哪个阶段？能不能买？盘前交易计划</div>
+  <div class="a">
+    <b>能源</b>——主升初期/加速（布油117、OPEC连三月不减产、美伊选后风险）。<span class="hl">可买：回踩5日线/分时均线低吸 ≤8%–10%，不追高</span>。<br>
+    <b>防御消费</b>——主升初期（业绩+防御+公募基准新规倒逼权重）。<span class="hl">可买：低吸不追高 ≤6%–10%</span>（药明康德/泸州老窖/古井）；高标青岛食品仅观察。<br>
+    <b>商业航天</b>——启动→首次分歧（11/6 长十二甲回收、11/8 星舰双捕、12/7 珠海航展密集催化，板块年内回调超60%）。<span class="warn">小仓试错 ≤6%–8% 低吸核心中军（不追连板一字），等验证</span>。<br>
+    <span class="no">整体：防守控仓，不抄底高位科技、不开新仓科技硬件；今晚苹果财报+美中期选举→会前压仓。</span>
+  </div>
+</div>
+
+<!-- 图表区 -->
+<div class="grid g2" style="margin-top:16px">
+  <div class="card">
+    <h2>主线强度对比</h2>
+    <div class="chart" id="bar"></div>
+  </div>
+  <div class="card">
+    <h2>信号归因雷达（四维评分）</h2>
+    <div class="chart" id="radar"></div>
+  </div>
+</div>
+
+<div class="grid g2" style="margin-top:16px">
+  <div class="card">
+    <h2>市场情绪温度计</h2>
+    <div class="chart sm" id="temp"></div>
+  </div>
+  <div class="card">
+    <h2>隔夜外部冲击映射</h2>
+    <div class="chart sm" id="over"></div>
+  </div>
+</div>
+
+<!-- 作战计划 -->
+<div class="card plan" style="margin-top:16px">
+  <h2>分题材作战计划（狙击点 · 仓位 · 风控）</h2>
+  <table>
+    <thead><tr><th>题材</th><th>阶段</th><th>操作</th><th>核心标的（低吸）</th><th>止损/失效条件</th><th>仓位</th></tr></thead>
+    <tbody>
+      <tr><td><b>能源·石油+油运</b></td><td>主升初期/加速</td><td>回踩5日线低吸<br>不追高</td><td>中国海油、中远海能、招商南油、锦江航运、中海油服</td><td>布油破120或美伊缓和→止盈；中海油破10日线止损</td><td>≤8%–10%</td></tr>
+      <tr><td><b>创新药/CRO+白酒</b></td><td>主升初期</td><td>低吸不追高</td><td>药明康德、昭衍新药、泸州老窖、古井贡酒、迎驾贡酒</td><td>青岛食品高标炸板→消费线只减不增；茅五泸破位止损</td><td>≤6%–10%</td></tr>
+      <tr><td><b>商业航天/卫星</b></td><td>启动→首次分歧</td><td>小仓试错<br>低吸中军</td><td>中国卫星、广联航空(持仓)、臻镭科技(持仓)、航天电子、铖昌科技</td><td>上海沪工高标炸板→只减不增；长十二甲/星舰验证失败→降仓</td><td>≤6%–8%</td></tr>
+      <tr><td><b>银行/红利（底仓）</b></td><td>主升初期</td><td>回踩低吸压舱</td><td>工行/建行/农行/中行、中国神华、三桶油</td><td>银行独涨虹吸→整体≤20%；破前高追高不接</td><td>≤10%</td></tr>
+      <tr style="background:rgba(255,71,87,.05)"><td class="hr"><b>回避区</b></td><td colspan="5" class="hr">CPO/光模块/存储/PCB 高位（英特尔−28.58%/费半−7.2%·光脚巨阴反弹即逃）；黄金股（COMEX金−3.63%破3900）；影视短剧高标；创业板/科创50高β追高；纯玄学连板；三季报绩差高位。</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 一票否决 -->
+<div class="risk" style="margin-top:16px">
+  <h2>⚠ 一票否决 · 风控清单（触发即执行）</h2>
+  <ul>
+    <li>费半/英特尔发酵、半导体开盘放量跌 → <b>科技硬件全不碰</b>（CPO/存储/PCB/算力一律不接飞刀）</li>
+    <li>沪指30分钟不收回 <b>3700</b> → 总仓降至 25%</li>
+    <li>破 <b>3650</b> 放量 → 清超短 ≤15%；破 <b>3574</b>（10/23新低）→ 系统性清仓</li>
+    <li>涨停 < 40 / 跌停 > 30 → 当日不加仓</li>
+    <li>银行独涨虹吸 → 整体 ≤20%；A50 早盘跌 >1.5% → 降至 20%</li>
+    <li>10Y 美债破 5.40% → 全线减半</li>
+    <li>30分钟成交 < 3500亿 → 不加仓；央行/ETF 护盘减弱 → 降仓</li>
+    <li>布油破 120 或美伊缓和 → 油气链止盈</li>
+    <li>青岛食品 / 上海沪工 高标炸板 → 对应线只减不增</li>
+    <li>今晚 <b>苹果财报 + 美中期选举</b> 双不确定性 → 会前压仓至 ≤25%，不追高开</li>
+  </ul>
+</div>
+
+<div class="foot">
+  <div>📌 一句话总结：<span class="hl">芯片财报屠杀夜后防御为王</span>——油气吃布油117涨价红利、吃药喝酒吃业绩确定性、商业航天做事件驱动分歧低吸；<span class="hr">CPO/存储/光模块坚决不接飞刀，半仓以内扛过苹果财报与美中期选举双重大考。</span></div>
+  <div class="tag" style="margin-top:8px">分析时间：2026-11-02 07:00 GMT+8 ｜ 策略：防守控仓·结构性 ｜ 数据来源：同花顺盘前早报、财联社、新浪财经、东方财富、中国基金报、环球网/经济日报（PMI口径存49.0–50.1差异，采用"跌破荣枯线"共识）+ v71–v99 历史基线</div>
+  <div class="disc">免责声明：本分析仅供学习和研究参考，不构成任何投资建议。股市有风险，投资需谨慎。所有分析结论均基于历史数据和技术模型，不保证未来表现。PMI、外盘等数据来自公开聚合，存在口径差异与时效延迟，请以实时盘面为准。</div>
+</div>
+
+<script>
+// 评分圆环
+var ring = echarts.init(document.getElementById('ring'));
+ring.setOption({
+  series:[{type:'gauge',startAngle:210,endAngle:-30,min:0,max:100,radius:'100%',
+    progress:{show:true,width:14,itemStyle:{color:'#ffa502'}},
+    axisLine:{lineStyle:{width:14,color:[[1,'#2d2d44']]}},
+    pointer:{show:false},axisTick:{show:false},splitLine:{show:false},axisLabel:{show:false},
+    detail:{valueAnimation:true,fontSize:34,fontWeight:'bolder',color:'#e2e8f0',offsetCenter:[0,0],formatter:'{value}'},
+    data:[{value:42}]}]
+});
+// 主线强度
+var bar = echarts.init(document.getElementById('bar'));
+bar.setOption({
+  grid:{left:90,right:30,top:20,bottom:20},
+  xAxis:{type:'value',max:100,axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+  yAxis:{type:'category',data:['科技硬件(回避)','商业航天','防御消费','银行红利','能源(石油+油运)'],axisLabel:{color:'#e2e8f0',fontSize:12}},
+  series:[{type:'bar',data:[
+    {value:25,itemStyle:{color:'#ff4757'}},
+    {value:62,itemStyle:{color:'#ffa502'}},
+    {value:78,itemStyle:{color:'#667eea'}},
+    {value:70,itemStyle:{color:'#764ba2'}},
+    {value:85,itemStyle:{color:'#00d4aa'}}],
+    barWidth:'55%',label:{show:true,position:'right',color:'#e2e8f0',formatter:'{c}'},
+    markLine:{silent:true,symbol:'none',lineStyle:{color:'#94a3b8',type:'dashed'},data:[{xAxis:50,label:{formatter:'中性线',color:'#94a3b8'}}]}}]
+});
+// 信号归因雷达
+var radar = echarts.init(document.getElementById('radar'));
+radar.setOption({
+  tooltip:{},
+  radar:{indicator:[
+    {name:'技术指标',max:100},{name:'新闻情绪',max:100},
+    {name:'基本面',max:100},{name:'市场环境',max:100}],
+    axisName:{color:'#e2e8f0',fontSize:12},
+    splitLine:{lineStyle:{color:'#2d2d44'}},splitArea:{areaStyle:{color:['rgba(102,126,234,.03)','rgba(102,126,234,.07)']}},
+    axisLine:{lineStyle:{color:'#2d2d44'}}},
+  series:[{type:'radar',data:[{value:[22,45,38,20],
+    areaStyle:{color:'rgba(255,165,2,.25)'},lineStyle:{color:'#ffa502'},itemStyle:{color:'#ffa502'}}]}]
+});
+// 情绪温度计
+var temp = echarts.init(document.getElementById('temp'));
+temp.setOption({
+  series:[{type:'gauge',min:0,max:100,radius:'95%',center:['50%','60%'],
+    progress:{show:true,width:18,itemStyle:{color:'#ff4757'}},
+    axisLine:{lineStyle:{width:18,color:[[0.3,'#ff4757'],[0.5,'#ffa502'],[1,'#00d4aa']]}},
+    pointer:{itemStyle:{color:'#e2e8f0'}},axisTick:{distance:-22,lineStyle:{color:'#94a3b8'}},
+    splitLine:{distance:-22,length:10,lineStyle:{color:'#94a3b8'}},
+    axisLabel:{distance:-2,color:'#94a3b8',fontSize:10},
+    detail:{valueAnimation:true,fontSize:30,fontWeight:'bolder',color:'#e2e8f0',offsetCenter:[0,'35%'],formatter:'{value}'},
+    title:{offsetCenter:[0,'72%'],color:'#94a3b8',fontSize:12},
+    data:[{value:22,name:'市场情绪（冰点）'}]}]
+});
+// 隔夜冲击
+var over = echarts.init(document.getElementById('over'));
+over.setOption({
+  grid:{left:90,right:30,top:20,bottom:20},
+  xAxis:{type:'value',axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#2d2d44'}}},
+  yAxis:{type:'category',data:['英伟达','费半','英特尔','布油','黄金','中概金龙','恒指'],axisLabel:{color:'#e2e8f0',fontSize:11}},
+  series:[{type:'bar',data:[
+    {value:-4.22,itemStyle:{color:'#ff4757'}},
+    {value:-7.2,itemStyle:{color:'#ff4757'}},
+    {value:-28.58,itemStyle:{color:'#ff4757'}},
+    {value:2.4,itemStyle:{color:'#00d4aa'}},
+    {value:-3.63,itemStyle:{color:'#ff4757'}},
+    {value:-0.27,itemStyle:{color:'#94a3b8'}},
+    {value:1.46,itemStyle:{color:'#00d4aa'}}],
+    barWidth:'55%',label:{show:true,position:'right',color:'#e2e8f0',fontSize:11,formatter:'{c}%'}}]
+});
+// 关键位标尺
+document.getElementById('ruler').innerHTML =
+  '<div style="position:relative;height:46px;background:linear-gradient(90deg,#2a1020,#2a2410,#16203a);border-radius:8px;margin-top:6px">'+
+  '<div style="position:absolute;left:8%;top:0;bottom:0;width:2px;background:#ff4757"></div>'+
+  '<div style="position:absolute;left:8%;top:48px;font-size:11px;color:#ff4757;transform:translateX(-50%)">3574清仓</div>'+
+  '<div style="position:absolute;left:30%;top:0;bottom:0;width:2px;background:#ffa502"></div>'+
+  '<div style="position:absolute;left:30%;top:48px;font-size:11px;color:#ffa502;transform:translateX(-50%)">3650支撑</div>'+
+  '<div style="position:absolute;left:55%;top:0;bottom:0;width:2px;background:#ffa502"></div>'+
+  '<div style="position:absolute;left:55%;top:48px;font-size:11px;color:#ffa502;transform:translateX(-50%)">3700压力</div>'+
+  '<div style="position:absolute;left:75%;top:0;bottom:0;width:2px;background:#94a3b8"></div>'+
+  '<div style="position:absolute;left:75%;top:48px;font-size:11px;color:#94a3b8;transform:translateX(-50%)">3754前清仓</div>'+
+  '<div style="position:absolute;left:90%;top:0;bottom:0;width:2px;background:#667eea"></div>'+
+  '<div style="position:absolute;left:90%;top:48px;font-size:11px;color:#667eea;transform:translateX(-50%)">3824/3876</div>'+
+  '<div style="position:absolute;left:33%;top:-4px;width:12px;height:12px;border-radius:50%;background:#00d4aa;box-shadow:0 0 8px #00d4aa"></div>'+
+  '<div style="position:absolute;left:33%;top:-22px;font-size:11px;color:#00d4aa;transform:translateX(-50%)">←当前~3640</div>'+
+  '</div>';
+window.addEventListener('resize',function(){ring.resize();bar.resize();radar.resize();temp.resize();over.resize();});
+</script>
+</body>
+</html>
