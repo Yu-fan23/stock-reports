@@ -1,5 +1,5 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-26 16:54:58",
+  "generatedAt": "2026-11-26 16:58:20",
   "total": 2,
   "categories": [
     {
@@ -16,7 +16,7 @@ window.SITE_DATA = {
           "dateLabel": "2026-11-26（周四）",
           "file": "reports/limitup/limitup_20261126.html",
           "title": "涨停梯队复盘 · 2026-11-26（周四 · 缩量分化 / 结构修复 / PCB化工逆势承接 / 医药流感退潮）",
-          "size": 77887
+          "size": 78608
         }
       ]
     },
@@ -34,7 +34,7 @@ window.SITE_DATA = {
           "dateLabel": "2026-11-26（周四）",
           "file": "reports/global/global_20261126.html",
           "title": "全球资本市场热点日报（2026-11-26 周四）",
-          "size": 21220
+          "size": 21229
         }
       ]
     }
