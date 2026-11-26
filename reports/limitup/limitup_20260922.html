@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>涨停梯队复盘 · 2026-09-22</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f0f23;color:#e2e8f0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6;padding-bottom:60px}
+.wrap{max-width:1680px;margin:0 auto;padding:24px 18px}
+.hero{background:linear-gradient(135deg,#1a1a2e 0%,#252547 100%);border:1px solid #2d2d44;border-radius:16px;padding:26px 28px;margin-bottom:20px}
+.hero h1{font-size:28px;font-weight:800;letter-spacing:1px;background:linear-gradient(90deg,#ff9f43,#ff4757);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .sub{color:#94a3b8;font-size:13px;margin-top:6px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:12px;margin-top:20px}
+.kpi{background:#0f0f23;border:1px solid #2d2d44;border-radius:10px;padding:12px 14px}
+.kpi .k{font-size:11px;color:#94a3b8;letter-spacing:.5px}
+.kpi .v{font-size:20px;font-weight:800;margin-top:4px}
+.kpi .d{font-size:11px;color:#64748b;margin-top:2px}
+.up{color:#ff4757} .dn{color:#00d4aa} .nu{color:#94a3b8}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:20px}
+.card{background:#1a1a2e;border:1px solid #2d2d44;border-radius:14px;padding:18px 20px}
+.card h3{font-size:14px;color:#94a3b8;font-weight:600;margin-bottom:14px;letter-spacing:1px}
+.tier-row{display:flex;gap:12px;padding:9px 0;border-bottom:1px dashed #2d2d44}
+.tier-row:last-child{border:none}
+.tier-lb{min-width:74px;font-size:13px;font-weight:700;color:#e2e8f0}
+.tier-lb em{display:block;font-size:11px;color:#64748b;font-style:normal;font-weight:400}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12px;padding:2px 9px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid var(--gc);color:#e2e8f0}
+.chip i{font-style:normal;color:#64748b;font-size:10px;margin-left:5px}
+.thermo{display:flex;align-items:center;gap:14px;margin-top:6px}
+.bar{flex:1;height:12px;border-radius:8px;background:linear-gradient(90deg,#00d4aa,#ffa502,#ff4757);position:relative}
+.pin{position:absolute;top:-5px;width:4px;height:22px;background:#fff;border-radius:2px;box-shadow:0 0 10px #fff}
+.note{background:#1a1a2e;border:1px solid #2d2d44;border-left:3px solid #667eea;border-radius:10px;padding:16px 20px;margin-bottom:20px;font-size:14px;color:#cbd5e1}
+.note b{color:#e2e8f0}
+.note ul{margin:8px 0 0 18px} .note li{margin:5px 0}
+.grp{background:#1a1a2e;border:1px solid #2d2d44;border-radius:14px;margin-bottom:20px;overflow:hidden}
+.grp-hd{padding:16px 20px;border-bottom:1px solid #2d2d44;border-left:4px solid var(--gc);background:linear-gradient(90deg,color-mix(in srgb,var(--gc) 12%,transparent),transparent)}
+.grp-title{display:flex;align-items:center;gap:10px}
+.grp-k{width:26px;height:26px;border-radius:7px;background:var(--gc);color:#0f0f23;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:14px}
+.grp-title h2{font-size:17px;font-weight:700}
+.grp-sub{font-size:12.5px;color:#94a3b8;margin-top:6px}
+.grp-stat{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:12px;color:#94a3b8}
+.grp-stat b{color:#e2e8f0} .rk{color:#ff4757!important} .yk{color:#ffa502!important}
+.tbl-wrap{overflow-x:auto}
+table.zt{width:100%;border-collapse:collapse;font-size:12.5px;min-width:1280px}
+table.zt thead th{background:#23233f;color:#94a3b8;font-weight:600;text-align:left;padding:9px 10px;position:sticky;top:0;font-size:11.5px;white-space:nowrap}
+table.zt td{padding:9px 10px;border-top:1px solid #23233f;vertical-align:top}
+table.zt tbody tr:hover{background:rgba(255,255,255,.04)}
+tr.row-leader{background:linear-gradient(90deg,rgba(255,71,87,.16),rgba(255,71,87,.03))}
+tr.row-leader td.c-code{box-shadow:inset 3px 0 0 #ff4757}
+tr.row-mid{background:linear-gradient(90deg,rgba(255,165,2,.13),rgba(255,165,2,.02))}
+tr.row-mid td.c-code{box-shadow:inset 3px 0 0 #ffa502}
+.c-code{min-width:150px}
+.code{font-family:ui-monospace,Consolas,monospace;color:#64748b;font-size:11.5px;display:block}
+.nm{font-weight:700;font-size:13.5px;color:#e2e8f0}
+.hz{display:inline-block;background:#ff4757;color:#fff;font-size:10px;padding:0 4px;border-radius:3px;margin-left:5px;vertical-align:1px}
+.tag{display:inline-block;font-size:10px;padding:1px 5px;border-radius:3px;margin-left:5px;vertical-align:1px}
+.tag-r{background:#ff4757;color:#fff} .tag-y{background:#ffa502;color:#0f0f23;font-weight:700}
+.lbc{display:inline-block;font-size:11px;font-weight:800;padding:1px 7px;border-radius:4px;background:#2d2d44;color:#94a3b8}
+.lbc-2{background:rgba(59,130,246,.25);color:#93c5fd}
+.lbc-3{background:rgba(168,85,247,.28);color:#d8b4fe}
+.lbc-hi{background:linear-gradient(90deg,#ff4757,#ff9f43);color:#fff}
+.tier{display:block;font-size:10.5px;color:#64748b;margin-top:2px}
+.c-time{white-space:nowrap;min-width:96px}
+.ft{font-weight:700;color:#e2e8f0;font-size:12.5px}
+.lt{display:block;font-size:10.5px;color:#64748b}
+.c-price{white-space:nowrap} .c-price .up{font-weight:700;font-size:13px}
+.pct{display:block;font-size:11px;color:#ff4757}
+td.num{text-align:right;font-family:ui-monospace,Consolas,monospace;color:#cbd5e1;white-space:nowrap}
+.zbc-hi{color:#ff4757;font-weight:700}
+.c-ind{font-size:11.5px;color:#94a3b8;white-space:nowrap;min-width:80px}
+.c-logic{min-width:420px;color:#cbd5e1;font-size:12.2px;line-height:1.65}
+.legend{display:flex;flex-wrap:wrap;gap:18px;background:#1a1a2e;border:1px solid #2d2d44;border-radius:12px;padding:14px 20px;margin-bottom:20px;font-size:12.5px;color:#94a3b8}
+.legend b{color:#e2e8f0}
+.foot{text-align:center;color:#475569;font-size:11.5px;margin-top:28px;line-height:1.9}
+@media(max-width:820px){.hero h1{font-size:21px}.c-logic{min-width:300px;font-size:11.5px}}
+</style></head><body><div class="wrap">
+
+<div class="hero">
+  <h1>涨停梯队复盘 · 2026-09-22（周二）</h1>
+  <div class="sub">按概念板块分组 · 板块内先按连板梯队、再按首封时间排序 · 龙头标红 / 中军标黄</div>
+  <div class="kpis">
+    <div class="kpi"><div class="k">上证指数</div><div class="v up">3952.13</div><div class="d up">+0.06%</div></div>
+    <div class="kpi"><div class="k">深证成指</div><div class="v dn">13723.74</div><div class="d dn">-0.05%</div></div>
+    <div class="kpi"><div class="k">创业板指</div><div class="v up">3399.93</div><div class="d up">+0.01%</div></div>
+    <div class="kpi"><div class="k">科创50</div><div class="v up">1665.04</div><div class="d up">+0.46%</div></div>
+    <div class="kpi"><div class="k">两市成交</div><div class="v">2.15万亿</div><div class="d up">放量约1056亿</div></div>
+    <div class="kpi"><div class="k">涨 / 跌家数</div><div class="v"><span class="up">2374</span> / <span class="dn">3030</span></div><div class="d">亏钱效应为主</div></div>
+    <div class="kpi"><div class="k">涨停</div><div class="v up">64</div><div class="d">昨日 103 只</div></div>
+    <div class="kpi"><div class="k">跌停</div><div class="v dn">5</div><div class="d">荣丰控股等</div></div>
+    <div class="kpi"><div class="k">炸板</div><div class="v">18</div><div class="d">封板率 78.0%</div></div>
+    <div class="kpi"><div class="k">连板 / 首板</div><div class="v">24 / 40</div><div class="d">最高 6 板（华瓷股份）</div></div>
+    <div class="kpi"><div class="k">「华」字辈涨停</div><div class="v up">10</div><div class="d">且全部为连板</div></div>
+  </div>
+</div>
+
+<div class="cards">
+  <div class="card">
+    <h3>连板梯队总览（24 只连板 · 按首封时间）</h3>
+    <div class="tier-row"><div class="tier-lb">6 板<em>1只</em></div><div class="chips"><span class="chip" style="--gc:#f97316">华瓷股份<i>09:25</i></span></div></div><div class="tier-row"><div class="tier-lb">5 板<em>1只</em></div><div class="chips"><span class="chip" style="--gc:#a855f7">内蒙新华<i>09:34</i></span></div></div><div class="tier-row"><div class="tier-lb">4 板<em>1只</em></div><div class="chips"><span class="chip" style="--gc:#ef4444">南华生物<i>09:25</i></span></div></div><div class="tier-row"><div class="tier-lb">3 板<em>4只</em></div><div class="chips"><span class="chip" style="--gc:#a855f7">新华文轩<i>09:25</i></span><span class="chip" style="--gc:#eab308">三羊马<i>09:32</i></span><span class="chip" style="--gc:#22d3ee">博通集成<i>09:56</i></span><span class="chip" style="--gc:#f97316">大亚圣象<i>13:12</i></span></div></div><div class="tier-row"><div class="tier-lb">2 板<em>17只</em></div><div class="chips"><span class="chip" style="--gc:#f97316">华远控股<i>09:25</i></span><span class="chip" style="--gc:#a855f7">华媒控股<i>09:25</i></span><span class="chip" style="--gc:#ef4444">新华制药<i>09:25</i></span><span class="chip" style="--gc:#eab308">奥佳华<i>09:25</i></span><span class="chip" style="--gc:#a855f7">新华传媒<i>09:25</i></span><span class="chip" style="--gc:#3b82f6">南威软件<i>09:25</i></span><span class="chip" style="--gc:#eab308">美盈森<i>09:30</i></span><span class="chip" style="--gc:#eab308">泰慕士<i>09:30</i></span><span class="chip" style="--gc:#ef4444">哈药股份<i>09:31</i></span><span class="chip" style="--gc:#f97316">我爱我家<i>09:32</i></span><span class="chip" style="--gc:#10b981">爱普股份<i>09:32</i></span><span class="chip" style="--gc:#3b82f6">延华智能<i>09:39</i></span><span class="chip" style="--gc:#10b981">艾艾精工<i>09:46</i></span><span class="chip" style="--gc:#f97316">升达林业<i>10:24</i></span><span class="chip" style="--gc:#ef4444">百花医药<i>10:47</i></span><span class="chip" style="--gc:#ef4444">华仁药业<i>10:50</i></span><span class="chip" style="--gc:#f97316">华丽家族<i>14:44</i></span></div></div><div class="tier-row"><div class="tier-lb">首 板<em>40只</em></div><div class="chips"><span class="chip" style="--gc:#22d3ee">禾盛新材<i>09:25</i></span><span class="chip" style="--gc:#22d3ee">综艺股份<i>09:25</i></span><span class="chip" style="--gc:#22d3ee">伟时电子<i>09:30</i></span><span class="chip" style="--gc:#3b82f6">智度股份<i>09:30</i></span><span class="chip" style="--gc:#22d3ee">先导基电<i>09:30</i></span><span class="chip" style="--gc:#3b82f6">二六三<i>09:32</i></span><span class="chip" style="--gc:#22d3ee">宏英智能<i>09:34</i></span><span class="chip" style="--gc:#eab308">天沃科技<i>09:34</i></span><span class="chip" style="--gc:#22d3ee">贤丰控股<i>09:35</i></span><span class="chip" style="--gc:#f97316">梦天家居<i>09:36</i></span><span class="chip" style="--gc:#eab308">联合精密<i>09:43</i></span><span class="chip" style="--gc:#f97316">爱丽家居<i>09:46</i></span><span class="chip" style="--gc:#a855f7">引力传媒<i>09:47</i></span><span class="chip" style="--gc:#f97316">箭牌家居<i>09:51</i></span><span class="chip" style="--gc:#10b981">日海智能<i>09:54</i></span><span class="chip" style="--gc:#22d3ee">旋极信息<i>09:55</i></span><span class="chip" style="--gc:#3b82f6">齐心集团<i>09:55</i></span><span class="chip" style="--gc:#22d3ee">五洲医疗<i>09:56</i></span><span class="chip" style="--gc:#22d3ee">凯华材料<i>09:58</i></span><span class="chip" style="--gc:#22d3ee">时空科技<i>09:59</i></span><span class="chip" style="--gc:#a855f7">天威视讯<i>10:09</i></span><span class="chip" style="--gc:#3b82f6">新炬网络<i>10:20</i></span><span class="chip" style="--gc:#a855f7">中国出版<i>10:22</i></span><span class="chip" style="--gc:#ef4444">ST万邦<i>10:22</i></span><span class="chip" style="--gc:#3b82f6">南兴股份<i>10:29</i></span><span class="chip" style="--gc:#3b82f6">泛微网络<i>10:32</i></span><span class="chip" style="--gc:#eab308">一鸣食品<i>10:43</i></span><span class="chip" style="--gc:#22d3ee">视涯科技-UW<i>11:00</i></span><span class="chip" style="--gc:#eab308">坤泰股份<i>11:02</i></span><span class="chip" style="--gc:#22d3ee">澳弘电子<i>11:22</i></span><span class="chip" style="--gc:#10b981">中持股份<i>11:23</i></span><span class="chip" style="--gc:#22d3ee">协和电子<i>11:27</i></span><span class="chip" style="--gc:#10b981">厦工股份<i>13:00</i></span><span class="chip" style="--gc:#10b981">大有能源<i>13:02</i></span><span class="chip" style="--gc:#eab308">国恩股份<i>13:05</i></span><span class="chip" style="--gc:#eab308">东江环保<i>13:11</i></span><span class="chip" style="--gc:#10b981">新能股份<i>13:52</i></span><span class="chip" style="--gc:#3b82f6">中新赛克<i>13:55</i></span><span class="chip" style="--gc:#eab308">江淮汽车<i>14:14</i></span><span class="chip" style="--gc:#ef4444">千金药业<i>14:55</i></span></div></div>
+  </div>
+  <div class="card">
+    <h3>情绪温度计</h3>
+    <div class="thermo"><span class="dn">冰点</span><div class="bar"><div class="pin" style="left:66%"></div></div><span class="up">高潮</span></div>
+    <div style="font-size:26px;font-weight:800;margin-top:10px">66 <span style="font-size:13px;color:#94a3b8;font-weight:400">/ 100 · 分歧期（高位分化）</span></div>
+    <div style="font-size:12.5px;color:#94a3b8;margin-top:10px;line-height:1.8">
+      高度上行（5板→6板）、连板数上行（21→24），但涨停总数大幅收缩（103→64）、涨跌比 2374:3030 明显恶化。<br>
+      <b style="color:#ffa502">典型「指数横盘 + 个股亏钱效应」的分化行情</b>：增量资金没有离场（成交放量 1056 亿），但从昨日医药 / 地产主线切向 AI 算力、传媒，热点单日爆发、持续性待验。
+    </div>
+  </div>
+</div>
+
+<div class="note">
+  <b>核心判断</b>
+  <ul>
+    <li><b>主线切换日：</b>昨日医药（政策主线）、地产链今日转入分歧，资金轮动至 <b>AI 应用 + 算力芯片</b>（早盘）与 <b>传媒出版</b>（全天最强支线）。午后算力板块获利兑现冲高回落，属「单日情绪爆发」，次日承接是关键。</li>
+    <li><b>「华」字辈仍是情绪总纲：</b>10 只名字带「华」的个股全部实现连板，其中华瓷股份 6 板为全市场最高标。这是典型的短線「字辈行情」，与公司基本面无关，退潮时会同步杀跌。</li>
+    <li><b>高度与宽度背离：</b>最高板由 5 板升至 6 板、连板数由 21 升至 24，但涨停总数由 103 骤降至 64，说明资金在<b>收缩战线、集中抱团高标</b>，而非全面扩散。</li>
+    <li><b>封板质量警示：</b>新华制药 7 次炸板、智度股份 8 次、视涯科技 8 次、五洲医疗 13 次、百花医药换手 50.63%——高位股接力资金分歧极大，追高风险显著高于昨日。</li>
+    <li><b>次日观察：</b>① 华瓷股份 7 板能否封住（决定字辈行情生死）；② 内蒙新华 / 新华文轩 传媒梯队是否延续；③ 旋极信息、南威软件代表的 AI 算力 / 应用能否二次上攻确认新主线；④ 医药、地产分歧后是否修复。</li>
+  </ul>
+</div>
+
+<div class="legend">
+  <span><b style="color:#ff4757">■</b> 红色行 / 情绪龙头标红：板块内高度最高或封板最强、决定板块情绪的核心标的</span>
+  <span><b style="color:#ffa502">■</b> 黄色行 / 中军标黄：板块内市值、成交额居前、承接主力资金的权重标的</span>
+  <span><b style="background:#ff4757;color:#fff;padding:0 4px;border-radius:3px">华</b> 名字带「华」，属本轮「华字辈」字辈炒作阵营</span>
+  <span><b>排序规则：</b>连板数降序 → 首封时间升序</span>
+</div>
+
+
+<section class="grp" style="--gc:#f97316">
+  <div class="grp-hd">
+    <div class="grp-title"><span class="grp-k">A</span><h2>家居·地产链（后周期）</h2></div>
+    <div class="grp-sub">全市场最高标 6 板所在；华字辈总龙 + 地产链政策预期双驱动</div>
+    <div class="grp-stat">
+      <span>涨停 <b>9</b> 只</span>
+      <span>连板 <b>6</b> 只</span>
+      <span>最高 <b>6 板</b></span>
+      <span>合计成交 <b>34.6 亿</b></span>
+      <span>龙头 <b class="rk">华瓷股份</b></span>
+      <span>中军 <b class="yk">我爱我家</b></span>
+    </div>
+  </div>
+  <div class="tbl-wrap">
+  <table class="zt">
+    <thead><tr>
+      <th class="c-code">代码 / 名称</th><th class="c-tier">连板梯队</th><th class="c-time">首封 / 回封</th>
+      <th class="c-price">收盘 / 涨幅</th><th>成交额(亿)</th><th>总市值(亿)</th><th>流通市值(亿)</th>
+      <th>换手率</th><th>炸板</th><th>封单(亿)</th><th class="c-ind">行业</th><th class="c-logic">涨停详细逻辑</th>
+    </tr></thead>
+    <tbody><tr class="row-leader">
+<td class="c-code"><span class="code">001216</span><span class="nm">华瓷股份</span><span class="hz">华</span><span class="tag tag-r">情绪龙头</span></td>
+<td class="c-tier"><span class="lbc lbc-hi">6板</span><span class="tier">6天6板</span></td>
+<td class="c-time"><span class="ft">09:25:00</span></td>
+<td class="c-price"><span class="up">26.47</span><span class="pct">+10.02%</span></td>
+<td class="num">0.48</td>
+<td class="num">77.3</td>
+<td class="num">65.3</td>
+<td class="num">0.74%</td>
+<td class="num ">0</td>
+<td class="num">2.59</td>
+<td class="c-ind">家居用品</td>
+<td class="c-logic">本轮「华字辈」总龙头、全市场最高标。核心催化：氧化锆粉体进入潮州三环 MLCC 粉体供应商验证体系（9/3 互动易），市场预期电子陶瓷新材料放量；叠加越南工厂投产、电瓷新产线投产、人民币贬值出口受益。公司已多次公告新材料现阶段对营收贡献极小，属纯预期炒作。一字板、封单 2.59 亿。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">000910</span><span class="nm">大亚圣象</span></td>
+<td class="c-tier"><span class="lbc lbc-3">3板</span><span class="tier">3天3板</span></td>
+<td class="c-time"><span class="ft">13:12:15</span></td>
+<td class="c-price"><span class="up">6.89</span><span class="pct">+10.06%</span></td>
+<td class="num">3.73</td>
+<td class="num">37.7</td>
+<td class="num">37.7</td>
+<td class="num">10.53%</td>
+<td class="num ">0</td>
+<td class="num">0.18</td>
+<td class="c-ind">家居用品</td>
+<td class="c-logic">木地板龙头，地产后周期家居。博弈家居消费刺激政策预期，午后 13:12 直线封板（PCB/家居双属性，与午后 PCB 拉升同步），封单仅 0.18 亿偏弱。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">600743</span><span class="nm">华远控股</span><span class="hz">华</span></td>
+<td class="c-tier"><span class="lbc lbc-2">2板</span><span class="tier">2天2板</span></td>
+<td class="c-time"><span class="ft">09:25:00</span></td>
+<td class="c-price"><span class="up">2.56</span><span class="pct">+9.87%</span></td>
+<td class="num">0.23</td>
+<td class="num">60.1</td>
+<td class="num">60.1</td>
+<td class="num">0.39%</td>
+<td class="num ">0</td>
+<td class="num">1.08</td>
+<td class="c-ind">房地产服务</td>
+<td class="c-logic">控股股东变更 + 国有股权优化 + 现金流改善 + 轻资产转型；「华」字辈补涨。一字板缩量，换手仅 0.39%。</td>
+</tr><tr class="row-mid">
+<td class="c-code"><span class="code">000560</span><span class="nm">我爱我家</span><span class="tag tag-y">中军</span></td>
+<td class="c-tier"><span class="lbc lbc-2">2板</span><span class="tier">2天2板</span></td>
+<td class="c-time"><span class="ft">09:32:03</span><span class="lt">回封 13:00:15</span></td>
+<td class="c-price"><span class="up">3.51</span><span class="pct">+10.03%</span></td>
+<td class="num">14.13</td>
+<td class="num">82.7</td>
+<td class="num">82.2</td>
+<td class="num">17.42%</td>
+<td class="num zbc-hi">6</td>
+<td class="num">0.52</td>
+<td class="c-ind">房地产服务</td>
+<td class="c-logic">上海二手房成交量上涨 + 房地产服务业务，地产经纪龙头。盘中 6 次炸板、13:00 才最后回封，换手 17.42%，接力资金分歧明显，为板块中军（成交额居板块首位）。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">002259</span><span class="nm">升达林业</span></td>
+<td class="c-tier"><span class="lbc lbc-2">2板</span><span class="tier">2天2板</span></td>
+<td class="c-time"><span class="ft">10:24:09</span><span class="lt">回封 10:24:54</span></td>
+<td class="c-price"><span class="up">4.97</span><span class="pct">+9.96%</span></td>
+<td class="num">3.05</td>
+<td class="num">37.4</td>
+<td class="num">37.4</td>
+<td class="num">8.31%</td>
+<td class="num ">1</td>
+<td class="num">0.41</td>
+<td class="c-ind">燃气Ⅱ</td>
+<td class="c-logic">液化天然气 + 板材林业双属性，家居建材补涨 + 天然气涨价预期。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">600503</span><span class="nm">华丽家族</span><span class="hz">华</span></td>
+<td class="c-tier"><span class="lbc lbc-2">2板</span><span class="tier">2天2板</span></td>
+<td class="c-time"><span class="ft">14:44:31</span></td>
+<td class="c-price"><span class="up">2.67</span><span class="pct">+9.88%</span></td>
+<td class="num">4.82</td>
+<td class="num">42.8</td>
+<td class="num">42.8</td>
+<td class="num">12.24%</td>
+<td class="num ">0</td>
+<td class="num">0.36</td>
+<td class="c-ind">房地产开发</td>
+<td class="c-logic">地产 + 科创多概念小盘票，「华」字辈补涨。尾盘 14:44 偷袭封板，封单 0.36 亿，强度偏弱。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">603216</span><span class="nm">梦天家居</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">09:36:23</span><span class="lt">回封 09:50:38</span></td>
+<td class="c-price"><span class="up">22.75</span><span class="pct">+10.01%</span></td>
+<td class="num">2.13</td>
+<td class="num">50.7</td>
+<td class="num">50.7</td>
+<td class="num">4.26%</td>
+<td class="num ">3</td>
+<td class="num">0.24</td>
+<td class="c-ind">家居用品</td>
+<td class="c-logic">木门定制家居，跟随华瓷股份 / 大亚圣象家居链补涨，盘中 3 次炸板。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">603221</span><span class="nm">爱丽家居</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">09:46:33</span></td>
+<td class="c-price"><span class="up">33.55</span><span class="pct">+10.00%</span></td>
+<td class="num">4.96</td>
+<td class="num">81.3</td>
+<td class="num">81.3</td>
+<td class="num">6.28%</td>
+<td class="num ">0</td>
+<td class="num">0.48</td>
+<td class="c-ind">家居用品</td>
+<td class="c-logic">跨界收购存储测试设备 + 业绩承诺 + 协议转让，家居主业叠加半导体设备跨界想象空间。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">001322</span><span class="nm">箭牌家居</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">09:51:15</span><span class="lt">回封 10:04:48</span></td>
+<td class="c-price"><span class="up">6.95</span><span class="pct">+9.97%</span></td>
+<td class="num">1.11</td>
+<td class="num">67.1</td>
+<td class="num">54.6</td>
+<td class="num">2.05%</td>
+<td class="num ">1</td>
+<td class="num">0.26</td>
+<td class="c-ind">家居用品</td>
+<td class="c-logic">控股股东增持 + 鸿蒙智选合作 + 智慧卫浴空间。</td>
+</tr></tbody>
+  </table>
+  </div>
+</section>
+<section class="grp" style="--gc:#a855f7">
+  <div class="grp-hd">
+    <div class="grp-title"><span class="grp-k">B</span><h2>传媒出版·广告营销（「新华系」情绪主线）</h2></div>
+    <div class="grp-sub">板块 5 板 + 3 板 + 2 只 2 板，梯队最完整；新华传媒封单 21.46 亿为两市之最</div>
+    <div class="grp-stat">
+      <span>涨停 <b>7</b> 只</span>
+      <span>连板 <b>4</b> 只</span>
+      <span>最高 <b>5 板</b></span>
+      <span>合计成交 <b>20.8 亿</b></span>
+      <span>龙头 <b class="rk">内蒙新华</b></span>
+      <span>中军 <b class="yk">新华文轩</b></span>
+    </div>
+  </div>
+  <div class="tbl-wrap">
+  <table class="zt">
+    <thead><tr>
+      <th class="c-code">代码 / 名称</th><th class="c-tier">连板梯队</th><th class="c-time">首封 / 回封</th>
+      <th class="c-price">收盘 / 涨幅</th><th>成交额(亿)</th><th>总市值(亿)</th><th>流通市值(亿)</th>
+      <th>换手率</th><th>炸板</th><th>封单(亿)</th><th class="c-ind">行业</th><th class="c-logic">涨停详细逻辑</th>
+    </tr></thead>
+    <tbody><tr class="row-leader">
+<td class="c-code"><span class="code">603230</span><span class="nm">内蒙新华</span><span class="hz">华</span><span class="tag tag-r">情绪龙头</span></td>
+<td class="c-tier"><span class="lbc lbc-hi">5板</span><span class="tier">5天5板</span></td>
+<td class="c-time"><span class="ft">09:34:36</span><span class="lt">回封 09:42:15</span></td>
+<td class="c-price"><span class="up">16.31</span><span class="pct">+9.98%</span></td>
+<td class="num">6.22</td>
+<td class="num">57.7</td>
+<td class="num">57.7</td>
+<td class="num">11.02%</td>
+<td class="num ">3</td>
+<td class="num">0.65</td>
+<td class="c-ind">出版</td>
+<td class="c-logic">新华系传媒板块总龙头。内蒙古国有出版发行企业，主打教材图书发行 + 智慧供应链 + 综合文化服务商；文化消费 / 实体书店政策催化，国企小盘易拉，「新华」名字标签辨识度极高，带动同名字序列集体跟风。业绩基本面偏弱，属纯题材情绪驱动，今日 3 次炸板后方回封。</td>
+</tr><tr class="row-mid">
+<td class="c-code"><span class="code">601811</span><span class="nm">新华文轩</span><span class="hz">华</span><span class="tag tag-y">中军</span></td>
+<td class="c-tier"><span class="lbc lbc-3">3板</span><span class="tier">3天3板</span></td>
+<td class="c-time"><span class="ft">09:25:02</span></td>
+<td class="c-price"><span class="up">16.82</span><span class="pct">+10.01%</span></td>
+<td class="num">0.68</td>
+<td class="num">207.5</td>
+<td class="num">133.2</td>
+<td class="num">0.51%</td>
+<td class="num ">0</td>
+<td class="num">1.44</td>
+<td class="c-ind">出版</td>
+<td class="c-logic">四川国有出版，教材教辅龙头。内蒙新华扩散跟风标的（新华系扩散第二梯队），叠加 AI 语料资产重估逻辑。一字板缩量封死，换手仅 0.51%，207 亿总市值为板块中军。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">000607</span><span class="nm">华媒控股</span><span class="hz">华</span></td>
+<td class="c-tier"><span class="lbc lbc-2">2板</span><span class="tier">2天2板</span></td>
+<td class="c-time"><span class="ft">09:25:00</span></td>
+<td class="c-price"><span class="up">4.98</span><span class="pct">+9.93%</span></td>
+<td class="num">1.00</td>
+<td class="num">50.7</td>
+<td class="num">44.1</td>
+<td class="num">2.27%</td>
+<td class="num ">0</td>
+<td class="num">1.49</td>
+<td class="c-ind">广告营销</td>
+<td class="c-logic">股权转让 + 增资扩股 + 聚焦主业；杭州国资传媒平台，新华系广告营销补涨分支。一字板。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">600825</span><span class="nm">新华传媒</span><span class="hz">华</span></td>
+<td class="c-tier"><span class="lbc lbc-2">2板</span><span class="tier">2天2板</span></td>
+<td class="c-time"><span class="ft">09:25:02</span></td>
+<td class="c-price"><span class="up">6.42</span><span class="pct">+9.93%</span></td>
+<td class="num">0.22</td>
+<td class="num">67.1</td>
+<td class="num">67.1</td>
+<td class="num">0.33%</td>
+<td class="num ">0</td>
+<td class="num">21.46</td>
+<td class="c-ind">出版</td>
+<td class="c-logic">发行股份购买资产、拟收购界面财联社，重大资产重组 + 财经新媒体转型。封单 21.46 亿元高居两市第一，换手仅 0.33%，一字板极强。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">603598</span><span class="nm">引力传媒</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">09:47:14</span><span class="lt">回封 10:07:05</span></td>
+<td class="c-price"><span class="up">18.96</span><span class="pct">+9.98%</span></td>
+<td class="num">6.25</td>
+<td class="num">51.2</td>
+<td class="num">51.1</td>
+<td class="num">12.45%</td>
+<td class="num ">1</td>
+<td class="num">0.30</td>
+<td class="c-ind">广告营销</td>
+<td class="c-logic">Meta Muse 合作 + 业绩增长 + AI 战略 + AIGC 平台 + 平台资质，AI 营销 Agent 方向。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">002238</span><span class="nm">天威视讯</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">10:09:36</span></td>
+<td class="c-price"><span class="up">6.96</span><span class="pct">+9.95%</span></td>
+<td class="num">0.74</td>
+<td class="num">55.9</td>
+<td class="num">55.9</td>
+<td class="num">1.36%</td>
+<td class="num ">0</td>
+<td class="num">0.31</td>
+<td class="c-ind">电视广播Ⅱ</td>
+<td class="c-logic">签署合作意向书 + 国资操盘手 + 战略合作；深圳广电系，传媒 + 数据中心双属性补涨。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">601949</span><span class="nm">中国出版</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">10:22:01</span></td>
+<td class="c-price"><span class="up">6.62</span><span class="pct">+9.97%</span></td>
+<td class="num">5.68</td>
+<td class="num">126.0</td>
+<td class="num">126.0</td>
+<td class="num">4.65%</td>
+<td class="num ">0</td>
+<td class="num">0.67</td>
+<td class="c-ind">出版</td>
+<td class="c-logic">AI 语料 + 中国电信集团背景 + 董事长变更 + 销售码洋增长 + 董事更换。出版央企，AI 语料资产重估是核心看点。</td>
+</tr></tbody>
+  </table>
+  </div>
+</section>
+<section class="grp" style="--gc:#22d3ee">
+  <div class="grp-hd">
+    <div class="grp-title"><span class="grp-k">C</span><h2>算力芯片·半导体·PCB·存储</h2></div>
+    <div class="grp-sub">今日资金主战场，14 只涨停为各板块最多；旋极信息 20cm 为板块高度担当</div>
+    <div class="grp-stat">
+      <span>涨停 <b>14</b> 只</span>
+      <span>连板 <b>1</b> 只</span>
+      <span>最高 <b>3 板</b></span>
+      <span>合计成交 <b>115.4 亿</b></span>
+      <span>龙头 <b class="rk">旋极信息</b></span>
+      <span>中军 <b class="yk">博通集成</b></span>
+    </div>
+  </div>
+  <div class="tbl-wrap">
+  <table class="zt">
+    <thead><tr>
+      <th class="c-code">代码 / 名称</th><th class="c-tier">连板梯队</th><th class="c-time">首封 / 回封</th>
+      <th class="c-price">收盘 / 涨幅</th><th>成交额(亿)</th><th>总市值(亿)</th><th>流通市值(亿)</th>
+      <th>换手率</th><th>炸板</th><th>封单(亿)</th><th class="c-ind">行业</th><th class="c-logic">涨停详细逻辑</th>
+    </tr></thead>
+    <tbody><tr class="row-mid">
+<td class="c-code"><span class="code">603068</span><span class="nm">博通集成</span><span class="tag tag-y">中军</span></td>
+<td class="c-tier"><span class="lbc lbc-3">3板</span><span class="tier">3天3板</span></td>
+<td class="c-time"><span class="ft">09:56:19</span><span class="lt">回封 13:47:43</span></td>
+<td class="c-price"><span class="up">48.17</span><span class="pct">+10.00%</span></td>
+<td class="num">13.75</td>
+<td class="num">73.1</td>
+<td class="num">73.1</td>
+<td class="num">19.16%</td>
+<td class="num ">1</td>
+<td class="num">0.27</td>
+<td class="c-ind">半导体</td>
+<td class="c-logic">端侧 AI + 业绩预增 + Wi-Fi 6 MCU + 边缘 AI 芯片 + AI 眼镜，无线射频芯片。板块内唯一 3 板，73 亿市值承接 13.75 亿成交，为板块中军。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">002290</span><span class="nm">禾盛新材</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">09:25:00</span></td>
+<td class="c-price"><span class="up">77.85</span><span class="pct">+10.00%</span></td>
+<td class="num">2.70</td>
+<td class="num">193.2</td>
+<td class="num">192.5</td>
+<td class="num">1.40%</td>
+<td class="num ">0</td>
+<td class="num">3.09</td>
+<td class="c-ind">家电零部件Ⅱ</td>
+<td class="c-logic">参股熠知电子（CPU / 算力）+ 业绩预增 + 董事长变更。一字板，封单 3.09 亿为今日首板封单之最，换手仅 1.40%。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">600770</span><span class="nm">综艺股份</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">09:25:01</span></td>
+<td class="c-price"><span class="up">6.63</span><span class="pct">+9.95%</span></td>
+<td class="num">1.35</td>
+<td class="num">86.2</td>
+<td class="num">86.2</td>
+<td class="num">1.57%</td>
+<td class="num ">0</td>
+<td class="num">1.33</td>
+<td class="c-ind">综合Ⅱ</td>
+<td class="c-logic">业绩预增 + 控股股东增持 + CPU 概念 + 功率半导体。早盘封单曾达 7.22 亿。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">605218</span><span class="nm">伟时电子</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">09:30:17</span></td>
+<td class="c-price"><span class="up">15.94</span><span class="pct">+10.01%</span></td>
+<td class="num">1.73</td>
+<td class="num">38.7</td>
+<td class="num">38.7</td>
+<td class="num">4.48%</td>
+<td class="num ">0</td>
+<td class="num">0.03</td>
+<td class="c-ind">光学光电子</td>
+<td class="c-logic">背光显示模组 + 车载显示 + LED。封单仅 0.03 亿，为全场最弱封板。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">600641</span><span class="nm">先导基电</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板(4天2板)</span></td>
+<td class="c-time"><span class="ft">09:30:58</span><span class="lt">回封 13:00:16</span></td>
+<td class="c-price"><span class="up">43.74</span><span class="pct">+10.01%</span></td>
+<td class="num">25.52</td>
+<td class="num">414.2</td>
+<td class="num">407.1</td>
+<td class="num">6.29%</td>
+<td class="num ">3</td>
+<td class="num">1.83</td>
+<td class="c-ind">半导体</td>
+<td class="c-logic">存储芯片概念：开源证券研报称 AI 服务器与 HBM 迭代带动存储需求、供给结构优化支撑价格，AI 需求成为存储产业重要增长引擎。叠加 9/21 晚公告——全资子公司上海基电启芯出资 1.95 亿与关联方共设元朔基电（持股 65%），切入 SOFC 电解质片 / 金属连接体 / 中高压开关柜 / 超级电容。开盘 9:31 直线封板，早盘封单一度达 4.91 亿，414 亿市值为全场涨停股最大。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">001266</span><span class="nm">宏英智能</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">09:34:15</span><span class="lt">回封 13:45:06</span></td>
+<td class="c-price"><span class="up">37.75</span><span class="pct">+9.99%</span></td>
+<td class="num">3.25</td>
+<td class="num">39.1</td>
+<td class="num">22.0</td>
+<td class="num">15.07%</td>
+<td class="num ">3</td>
+<td class="num">0.44</td>
+<td class="c-ind">自动化设备</td>
+<td class="c-logic">智能电控 + 新能源 + 工程机械电气系统，盘中 3 次炸板，换手 15.07%。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">002141</span><span class="nm">贤丰控股</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">09:35:45</span><span class="lt">回封 14:41:03</span></td>
+<td class="c-price"><span class="up">7.43</span><span class="pct">+10.07%</span></td>
+<td class="num">20.52</td>
+<td class="num">76.7</td>
+<td class="num">76.7</td>
+<td class="num">27.00%</td>
+<td class="num zbc-hi">7</td>
+<td class="num">0.27</td>
+<td class="c-ind">元件</td>
+<td class="c-logic">PCB 价格传导 + 覆铜板延伸 + 业绩改善。盘中 7 次炸板、换手 27%，分歧极度剧烈。</td>
+</tr><tr class="row-leader">
+<td class="c-code"><span class="code">300324</span><span class="nm">旋极信息</span><span class="tag tag-r">情绪龙头</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板20cm</span></td>
+<td class="c-time"><span class="ft">09:55:09</span><span class="lt">回封 14:50:51</span></td>
+<td class="c-price"><span class="up">4.14</span><span class="pct">+20.00%</span></td>
+<td class="num">11.63</td>
+<td class="num">71.5</td>
+<td class="num">70.8</td>
+<td class="num">16.91%</td>
+<td class="num ">2</td>
+<td class="num">0.18</td>
+<td class="c-ind">计算机设备</td>
+<td class="c-logic">国产算力芯片 + TGU01 芯片 + 算力中心 + 天数智芯 + 智谱华章。20cm 封板，为板块情绪龙头；但 14:50 才最后回封，尾盘资金分歧。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">301234</span><span class="nm">五洲医疗</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板20cm</span></td>
+<td class="c-time"><span class="ft">09:56:39</span><span class="lt">回封 13:19:12</span></td>
+<td class="c-price"><span class="up">139.74</span><span class="pct">+20.00%</span></td>
+<td class="num">6.83</td>
+<td class="num">95.0</td>
+<td class="num">56.3</td>
+<td class="num">12.50%</td>
+<td class="num zbc-hi">13</td>
+<td class="num">0.17</td>
+<td class="c-ind">医疗器械</td>
+<td class="c-logic">收购芯片公司 + 产业资本入驻 + 业绩增长 + 电机控制芯片。20cm 涨停，盘中 13 次炸板为两市最多，情绪极不稳定。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">920526</span><span class="nm">凯华材料</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板30cm</span></td>
+<td class="c-time"><span class="ft">09:58:51</span><span class="lt">回封 14:49:09</span></td>
+<td class="c-price"><span class="up">26.14</span><span class="pct">+29.99%</span></td>
+<td class="num">3.34</td>
+<td class="num">21.6</td>
+<td class="num">13.7</td>
+<td class="num">25.66%</td>
+<td class="num zbc-hi">5</td>
+<td class="num">0.09</td>
+<td class="c-ind">电子化学品Ⅱ</td>
+<td class="c-logic">北交所 30cm 涨停，电子化学品 / 覆铜板上游材料，跟随 PCB 涨价链，换手 25.66%。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">605178</span><span class="nm">时空科技</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">09:59:37</span></td>
+<td class="c-price"><span class="up">74.79</span><span class="pct">+10.00%</span></td>
+<td class="num">2.87</td>
+<td class="num">74.1</td>
+<td class="num">74.1</td>
+<td class="num">4.01%</td>
+<td class="num ">0</td>
+<td class="num">0.64</td>
+<td class="c-ind">专业工程</td>
+<td class="c-logic">重组存储业务 + 重大资产重组 + 存储业务布局 + 股权激励。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">688781</span><span class="nm">视涯科技-UW</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板20cm</span></td>
+<td class="c-time"><span class="ft">11:00:38</span><span class="lt">回封 14:51:35</span></td>
+<td class="c-price"><span class="up">51.95</span><span class="pct">+20.00%</span></td>
+<td class="num">5.76</td>
+<td class="num">519.5</td>
+<td class="num">21.2</td>
+<td class="num">28.10%</td>
+<td class="num zbc-hi">8</td>
+<td class="num">0.07</td>
+<td class="c-ind">光学光电子</td>
+<td class="c-logic">硅基 OLED 微显示 + 智能眼镜出货量增长 + 营收增长 + AI 眼镜。科创板 20cm，盘中 8 次炸板，换手 28.10%。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">605058</span><span class="nm">澳弘电子</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板(8天6板)</span></td>
+<td class="c-time"><span class="ft">11:22:27</span><span class="lt">回封 14:45:12</span></td>
+<td class="c-price"><span class="up">53.27</span><span class="pct">+9.99%</span></td>
+<td class="num">13.03</td>
+<td class="num">76.1</td>
+<td class="num">76.1</td>
+<td class="num">17.91%</td>
+<td class="num zbc-hi">5</td>
+<td class="num">0.16</td>
+<td class="c-ind">元件</td>
+<td class="c-logic">PCB 概念（浙商证券：上游材料涨价向 PCB 品类传导，效果自 2026Q3 起体现）+ 共封装光学 CPO + 毫米波雷达 + 汽车电子；800G 光模块处于打样审核阶段。8 天 6 板为本轮高度第二，盘中 5 次炸板。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">605258</span><span class="nm">协和电子</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">11:27:13</span></td>
+<td class="c-price"><span class="up">42.16</span><span class="pct">+9.99%</span></td>
+<td class="num">3.14</td>
+<td class="num">37.1</td>
+<td class="num">37.1</td>
+<td class="num">8.91%</td>
+<td class="num ">0</td>
+<td class="num">0.37</td>
+<td class="c-ind">元件</td>
+<td class="c-logic">PCB 涨价 + 产品重新报价 + SMT 一体化。午盘前直线拉升封板。</td>
+</tr></tbody>
+  </table>
+  </div>
+</section>
+<section class="grp" style="--gc:#ef4444">
+  <div class="grp-hd">
+    <div class="grp-title"><span class="grp-k">D</span><h2>医药生物</h2></div>
+    <div class="grp-sub">昨日主线今日分歧：高度仍在（南华生物 4 板）但主力资金撤出，仅剩尾部补涨</div>
+    <div class="grp-stat">
+      <span>涨停 <b>7</b> 只</span>
+      <span>连板 <b>5</b> 只</span>
+      <span>最高 <b>4 板</b></span>
+      <span>合计成交 <b>99.0 亿</b></span>
+      <span>龙头 <b class="rk">南华生物</b></span>
+      <span>中军 <b class="yk">哈药股份</b></span>
+    </div>
+  </div>
+  <div class="tbl-wrap">
+  <table class="zt">
+    <thead><tr>
+      <th class="c-code">代码 / 名称</th><th class="c-tier">连板梯队</th><th class="c-time">首封 / 回封</th>
+      <th class="c-price">收盘 / 涨幅</th><th>成交额(亿)</th><th>总市值(亿)</th><th>流通市值(亿)</th>
+      <th>换手率</th><th>炸板</th><th>封单(亿)</th><th class="c-ind">行业</th><th class="c-logic">涨停详细逻辑</th>
+    </tr></thead>
+    <tbody><tr class="row-leader">
+<td class="c-code"><span class="code">000504</span><span class="nm">南华生物</span><span class="hz">华</span><span class="tag tag-r">情绪龙头</span></td>
+<td class="c-tier"><span class="lbc lbc-hi">4板</span><span class="tier">4天4板</span></td>
+<td class="c-time"><span class="ft">09:25:00</span></td>
+<td class="c-price"><span class="up">12.11</span><span class="pct">+9.99%</span></td>
+<td class="num">0.71</td>
+<td class="num">40.0</td>
+<td class="num">39.9</td>
+<td class="num">1.79%</td>
+<td class="num ">0</td>
+<td class="num">2.73</td>
+<td class="c-ind">医疗服务</td>
+<td class="c-logic">干细胞 / 免疫细胞存储，医药主线龙头。市场博弈医药「十五五」规划政策利好，叠加资产收购预期（仍在筹划未落地）；名字带「华」，归入华字辈情绪阵营，带动医药小票批量补涨。一字板，封单 2.73 亿。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">000756</span><span class="nm">新华制药</span><span class="hz">华</span></td>
+<td class="c-tier"><span class="lbc lbc-2">2板</span><span class="tier">2天2板</span></td>
+<td class="c-time"><span class="ft">09:25:00</span><span class="lt">回封 10:10:27</span></td>
+<td class="c-price"><span class="up">16.14</span><span class="pct">+10.02%</span></td>
+<td class="num">15.63</td>
+<td class="num">112.4</td>
+<td class="num">80.5</td>
+<td class="num">19.45%</td>
+<td class="num zbc-hi">7</td>
+<td class="num">0.61</td>
+<td class="c-ind">化学制药</td>
+<td class="c-logic">药品注册证书 + 仿制药一致性评价 + 创新药临床；解热镇痛原料药龙头，「新华」名字标签。盘中 7 次炸板，封单薄弱。</td>
+</tr><tr class="row-mid">
+<td class="c-code"><span class="code">600664</span><span class="nm">哈药股份</span><span class="tag tag-y">中军</span></td>
+<td class="c-tier"><span class="lbc lbc-2">2板</span><span class="tier">2天2板</span></td>
+<td class="c-time"><span class="ft">09:31:25</span><span class="lt">回封 10:00:07</span></td>
+<td class="c-price"><span class="up">9.08</span><span class="pct">+10.06%</span></td>
+<td class="num">27.79</td>
+<td class="num">228.7</td>
+<td class="num">228.7</td>
+<td class="num">12.24%</td>
+<td class="num ">1</td>
+<td class="num">3.60</td>
+<td class="c-ind">化学制药</td>
+<td class="c-logic">业绩预增 + 集采拟中选 + 基药目录 + 创新药研发 + 原料药获批。228 亿市值、27.79 亿成交额、封单 3.60 亿，为板块中军与资金主战场。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">600721</span><span class="nm">百花医药</span></td>
+<td class="c-tier"><span class="lbc lbc-2">2板</span><span class="tier">2天2板</span></td>
+<td class="c-time"><span class="ft">10:47:02</span><span class="lt">回封 14:42:17</span></td>
+<td class="c-price"><span class="up">14.47</span><span class="pct">+10.04%</span></td>
+<td class="num">27.39</td>
+<td class="num">55.6</td>
+<td class="num">55.6</td>
+<td class="num">50.63%</td>
+<td class="num zbc-hi">5</td>
+<td class="num">0.10</td>
+<td class="c-ind">医疗服务</td>
+<td class="c-logic">控制权变更 + 金华国资入主 + 董事会提前换届 + CRO 业务。换手 50.63% 为两市最高，14:42 才最后回封，封单仅 0.10 亿，换手式接力、风险偏高。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">300110</span><span class="nm">华仁药业</span><span class="hz">华</span></td>
+<td class="c-tier"><span class="lbc lbc-2">2板</span><span class="tier">2天2板</span></td>
+<td class="c-time"><span class="ft">10:50:21</span><span class="lt">回封 13:34:51</span></td>
+<td class="c-price"><span class="up">3.95</span><span class="pct">+20.06%</span></td>
+<td class="num">12.85</td>
+<td class="num">46.7</td>
+<td class="num">46.7</td>
+<td class="num">29.47%</td>
+<td class="num ">1</td>
+<td class="num">0.36</td>
+<td class="c-ind">化学制药</td>
+<td class="c-logic">化学制药 + 医疗器材（输液），板块内唯一 20cm 涨停，「华」字辨识度标的，换手 29.47%。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">002082</span><span class="nm">ST万邦</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">10:22:01</span><span class="lt">—</span></td>
+<td class="c-price"><span class="up">11.12</span><span class="pct">+9.99%</span></td>
+<td class="num">2.06</td>
+<td class="num">68.0</td>
+<td class="num">63.1</td>
+<td class="num">3.37%</td>
+<td class="num ">0</td>
+<td class="num">0.20</td>
+<td class="c-ind">化学制药</td>
+<td class="c-logic">业绩扭亏（归母净利同比 +370%，扣非净利扭亏超 6200 万）+ 创新药进展（WP103 获 FDA 明确临床开发路径、WP107 获 FDA 临床许可与国内 I 期伦理批件，均获孤儿药认定）+ 石杉碱甲注射液独家剂型中标三十省市联盟集采、舒必利片纳入医保基药目录。ST 医药股联动补涨。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">600479</span><span class="nm">千金药业</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">14:55:58</span><span class="lt">回封 15:00:00</span></td>
+<td class="c-price"><span class="up">13.57</span><span class="pct">+9.97%</span></td>
+<td class="num">12.55</td>
+<td class="num">66.8</td>
+<td class="num">56.8</td>
+<td class="num">23.65%</td>
+<td class="num ">1</td>
+<td class="num">0.05</td>
+<td class="c-ind">中药Ⅱ</td>
+<td class="c-logic">妇科中药 OTC 龙头，14:55 尾盘偷袭封板、封单仅 0.05 亿，为医药板块补涨末端信号。</td>
+</tr></tbody>
+  </table>
+  </div>
+</section>
+<section class="grp" style="--gc:#3b82f6">
+  <div class="grp-hd">
+    <div class="grp-title"><span class="grp-k">E</span><h2>AI 应用·软件服务</h2></div>
+    <div class="grp-sub">今日新主线，早盘集体爆发、午后随算力回落，需次日确认承接</div>
+    <div class="grp-stat">
+      <span>涨停 <b>9</b> 只</span>
+      <span>连板 <b>2</b> 只</span>
+      <span>最高 <b>2 板</b></span>
+      <span>合计成交 <b>60.8 亿</b></span>
+      <span>龙头 <b class="rk">南威软件</b></span>
+      <span>中军 <b class="yk">泛微网络</b></span>
+    </div>
+  </div>
+  <div class="tbl-wrap">
+  <table class="zt">
+    <thead><tr>
+      <th class="c-code">代码 / 名称</th><th class="c-tier">连板梯队</th><th class="c-time">首封 / 回封</th>
+      <th class="c-price">收盘 / 涨幅</th><th>成交额(亿)</th><th>总市值(亿)</th><th>流通市值(亿)</th>
+      <th>换手率</th><th>炸板</th><th>封单(亿)</th><th class="c-ind">行业</th><th class="c-logic">涨停详细逻辑</th>
+    </tr></thead>
+    <tbody><tr class="row-leader">
+<td class="c-code"><span class="code">603636</span><span class="nm">南威软件</span><span class="tag tag-r">情绪龙头</span></td>
+<td class="c-tier"><span class="lbc lbc-2">2板</span><span class="tier">2天2板</span></td>
+<td class="c-time"><span class="ft">09:25:02</span></td>
+<td class="c-price"><span class="up">8.01</span><span class="pct">+10.03%</span></td>
+<td class="num">1.37</td>
+<td class="num">46.5</td>
+<td class="num">46.5</td>
+<td class="num">2.94%</td>
+<td class="num ">0</td>
+<td class="num">0.97</td>
+<td class="c-ind">IT服务Ⅱ</td>
+<td class="c-logic">AI 智能体 + AI 产业版图落地 + 算力中心投产 + 实控人终止减持。一字板，为板块情绪龙头。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">002178</span><span class="nm">延华智能</span></td>
+<td class="c-tier"><span class="lbc lbc-2">2板</span><span class="tier">2天2板</span></td>
+<td class="c-time"><span class="ft">09:39:12</span><span class="lt">回封 10:30:15</span></td>
+<td class="c-price"><span class="up">5.59</span><span class="pct">+10.04%</span></td>
+<td class="num">6.79</td>
+<td class="num">39.8</td>
+<td class="num">39.8</td>
+<td class="num">17.54%</td>
+<td class="num ">2</td>
+<td class="num">0.57</td>
+<td class="c-ind">软件开发</td>
+<td class="c-logic">智慧城市 + 智慧医疗 + AI 大模型；地产链配套 + AI 双属性，换手 17.54%。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">000676</span><span class="nm">智度股份</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">09:30:33</span><span class="lt">回封 10:11:21</span></td>
+<td class="c-price"><span class="up">7.45</span><span class="pct">+10.04%</span></td>
+<td class="num">12.78</td>
+<td class="num">93.9</td>
+<td class="num">93.8</td>
+<td class="num">13.77%</td>
+<td class="num zbc-hi">8</td>
+<td class="num">0.30</td>
+<td class="c-ind">广告营销</td>
+<td class="c-logic">AI 智能体 + 业绩预增 + 互联网媒体 + 区块链。盘中 8 次炸板后回封。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">002467</span><span class="nm">二六三</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">09:32:45</span><span class="lt">回封 09:38:00</span></td>
+<td class="c-price"><span class="up">5.09</span><span class="pct">+9.94%</span></td>
+<td class="num">5.18</td>
+<td class="num">70.0</td>
+<td class="num">69.6</td>
+<td class="num">7.49%</td>
+<td class="num ">1</td>
+<td class="num">0.87</td>
+<td class="c-ind">通信服务</td>
+<td class="c-logic">算力租赁 + 智能通信 + AI 大模型 + 接入千问模型。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">002301</span><span class="nm">齐心集团</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">09:55:18</span></td>
+<td class="c-price"><span class="up">9.27</span><span class="pct">+9.96%</span></td>
+<td class="num">2.47</td>
+<td class="num">67.1</td>
+<td class="num">66.6</td>
+<td class="num">3.83%</td>
+<td class="num ">0</td>
+<td class="num">0.58</td>
+<td class="c-ind">文娱用品</td>
+<td class="c-logic">控股股东增持 + 股权激励 + AI 大模型 + 半年度分红。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">605398</span><span class="nm">新炬网络</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">10:20:52</span><span class="lt">回封 10:22:40</span></td>
+<td class="c-price"><span class="up">23.63</span><span class="pct">+10.01%</span></td>
+<td class="num">2.27</td>
+<td class="num">38.4</td>
+<td class="num">38.4</td>
+<td class="num">6.11%</td>
+<td class="num ">1</td>
+<td class="num">0.55</td>
+<td class="c-ind">IT服务Ⅱ</td>
+<td class="c-logic">AI 应用 + 员工持股计划 + AI 智能体（IT 运维智能体）。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">002757</span><span class="nm">南兴股份</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">10:29:36</span></td>
+<td class="c-price"><span class="up">19.86</span><span class="pct">+10.03%</span></td>
+<td class="num">7.62</td>
+<td class="num">58.7</td>
+<td class="num">56.4</td>
+<td class="num">13.92%</td>
+<td class="num ">0</td>
+<td class="num">1.12</td>
+<td class="c-ind">专用设备</td>
+<td class="c-logic">AI 智算 + 云计算 + 现金分红 + 阿里云合作，封单 1.12 亿。</td>
+</tr><tr class="row-mid">
+<td class="c-code"><span class="code">603039</span><span class="nm">泛微网络</span><span class="tag tag-y">中军</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">10:32:29</span><span class="lt">回封 14:25:59</span></td>
+<td class="c-price"><span class="up">39.70</span><span class="pct">+10.00%</span></td>
+<td class="num">14.40</td>
+<td class="num">122.1</td>
+<td class="num">122.1</td>
+<td class="num">12.09%</td>
+<td class="num ">3</td>
+<td class="num">0.37</td>
+<td class="c-ind">软件开发</td>
+<td class="c-logic">AI 应用 + AI 协同办公 + 降本增效 + 分红。协同办公软件龙头，122 亿市值、14.40 亿成交为板块中军；但 14:25 才回封，尾盘有抛压。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">002912</span><span class="nm">中新赛克</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">13:55:42</span><span class="lt">回封 14:09:48</span></td>
+<td class="c-price"><span class="up">26.38</span><span class="pct">+10.01%</span></td>
+<td class="num">7.89</td>
+<td class="num">45.0</td>
+<td class="num">42.8</td>
+<td class="num">19.11%</td>
+<td class="num ">2</td>
+<td class="num">0.08</td>
+<td class="c-ind">计算机设备</td>
+<td class="c-logic">AI + 网络安全：小赛安全智脑支持多模型底座，基于智能体 / RAG 技术，含渗透测试智能体、事件调查智能体、代码安全审计智能体。午后 13:55 才启动。</td>
+</tr></tbody>
+  </table>
+  </div>
+</section>
+<section class="grp" style="--gc:#eab308">
+  <div class="grp-hd">
+    <div class="grp-title"><span class="grp-k">F</span><h2>消费·周期·其它制造</h2></div>
+    <div class="grp-sub">无统一题材，以个股事件与小盘情绪博弈为主</div>
+    <div class="grp-stat">
+      <span>涨停 <b>11</b> 只</span>
+      <span>连板 <b>4</b> 只</span>
+      <span>最高 <b>3 板</b></span>
+      <span>合计成交 <b>63.2 亿</b></span>
+      <span>龙头 <b class="rk">三羊马</b></span>
+      <span>中军 <b class="yk">江淮汽车</b></span>
+    </div>
+  </div>
+  <div class="tbl-wrap">
+  <table class="zt">
+    <thead><tr>
+      <th class="c-code">代码 / 名称</th><th class="c-tier">连板梯队</th><th class="c-time">首封 / 回封</th>
+      <th class="c-price">收盘 / 涨幅</th><th>成交额(亿)</th><th>总市值(亿)</th><th>流通市值(亿)</th>
+      <th>换手率</th><th>炸板</th><th>封单(亿)</th><th class="c-ind">行业</th><th class="c-logic">涨停详细逻辑</th>
+    </tr></thead>
+    <tbody><tr class="row-leader">
+<td class="c-code"><span class="code">001317</span><span class="nm">三羊马</span><span class="tag tag-r">情绪龙头</span></td>
+<td class="c-tier"><span class="lbc lbc-3">3板</span><span class="tier">3天3板</span></td>
+<td class="c-time"><span class="ft">09:32:18</span><span class="lt">回封 09:45:18</span></td>
+<td class="c-price"><span class="up">65.96</span><span class="pct">+10.01%</span></td>
+<td class="num">4.94</td>
+<td class="num">56.4</td>
+<td class="num">56.4</td>
+<td class="num">8.94%</td>
+<td class="num ">2</td>
+<td class="num">0.50</td>
+<td class="c-ind">铁路公路</td>
+<td class="c-logic">物流 + 低空经济 + 无人快递车。小盘股、无强基本面催化，游资纯情绪博弈，为散乱板块的高度担当。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">002614</span><span class="nm">奥佳华</span></td>
+<td class="c-tier"><span class="lbc lbc-2">2板</span><span class="tier">2天2板</span></td>
+<td class="c-time"><span class="ft">09:25:00</span></td>
+<td class="c-price"><span class="up">6.88</span><span class="pct">+10.08%</span></td>
+<td class="num">0.83</td>
+<td class="num">42.9</td>
+<td class="num">30.4</td>
+<td class="num">2.73%</td>
+<td class="num ">0</td>
+<td class="num">1.11</td>
+<td class="c-ind">其他家电Ⅱ</td>
+<td class="c-logic">协议转让 + 汽车智能座舱 + AI 按摩机器人 + 私募入股。一字板。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">002303</span><span class="nm">美盈森</span></td>
+<td class="c-tier"><span class="lbc lbc-2">2板</span><span class="tier">2天2板(5天3板)</span></td>
+<td class="c-time"><span class="ft">09:30:00</span><span class="lt">回封 09:39:00</span></td>
+<td class="c-price"><span class="up">6.90</span><span class="pct">+10.05%</span></td>
+<td class="num">4.50</td>
+<td class="num">105.7</td>
+<td class="num">73.6</td>
+<td class="num">6.12%</td>
+<td class="num ">1</td>
+<td class="num">0.72</td>
+<td class="c-ind">包装印刷</td>
+<td class="c-logic">中期分红 + 海外业务 + 模切业务 + 诉讼胜诉。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">001234</span><span class="nm">泰慕士</span></td>
+<td class="c-tier"><span class="lbc lbc-2">2板</span><span class="tier">2天2板</span></td>
+<td class="c-time"><span class="ft">09:30:00</span></td>
+<td class="c-price"><span class="up">29.25</span><span class="pct">+10.00%</span></td>
+<td class="num">1.26</td>
+<td class="num">31.8</td>
+<td class="num">26.8</td>
+<td class="num">4.74%</td>
+<td class="num ">0</td>
+<td class="num">2.50</td>
+<td class="c-ind">服装家纺</td>
+<td class="c-logic">服装代工 + 儿童服装 + 回购注销 + 广州国资；人民币贬值受益。一字板，封单 2.50 亿。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">002564</span><span class="nm">天沃科技</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">09:34:54</span></td>
+<td class="c-price"><span class="up">5.45</span><span class="pct">+10.10%</span></td>
+<td class="num">1.37</td>
+<td class="num">46.8</td>
+<td class="num">46.8</td>
+<td class="num">3.00%</td>
+<td class="num ">0</td>
+<td class="num">0.47</td>
+<td class="c-ind">专用设备</td>
+<td class="c-logic">光热风电一体化 + 玉门光热项目核准。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">001268</span><span class="nm">联合精密</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">09:43:30</span><span class="lt">回封 10:58:00</span></td>
+<td class="c-price"><span class="up">26.57</span><span class="pct">+10.02%</span></td>
+<td class="num">2.43</td>
+<td class="num">40.0</td>
+<td class="num">25.1</td>
+<td class="num">9.91%</td>
+<td class="num ">1</td>
+<td class="num">1.00</td>
+<td class="c-ind">家电零部件Ⅱ</td>
+<td class="c-logic">精密制造 + 家电零部件，跟随禾盛新材家电零部件链，封单 1.00 亿。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">605179</span><span class="nm">一鸣食品</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">10:43:02</span></td>
+<td class="c-price"><span class="up">30.04</span><span class="pct">+10.00%</span></td>
+<td class="num">6.89</td>
+<td class="num">120.5</td>
+<td class="num">120.5</td>
+<td class="num">6.10%</td>
+<td class="num ">0</td>
+<td class="num">0.49</td>
+<td class="c-ind">饮料乳品</td>
+<td class="c-logic">乳品连锁 + 儿童乳品 + 微信小店 + 烘焙食品。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">001260</span><span class="nm">坤泰股份</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">11:02:54</span><span class="lt">回封 13:32:36</span></td>
+<td class="c-price"><span class="up">20.28</span><span class="pct">+9.98%</span></td>
+<td class="num">1.20</td>
+<td class="num">23.3</td>
+<td class="num">11.7</td>
+<td class="num">10.46%</td>
+<td class="num ">1</td>
+<td class="num">0.05</td>
+<td class="c-ind">汽车零部件</td>
+<td class="c-logic">汽车软内饰材料 + 海外生产基地 + 墨西哥量产 + 摩洛哥合作意向。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">002768</span><span class="nm">国恩股份</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">13:05:09</span><span class="lt">回封 14:38:12</span></td>
+<td class="c-price"><span class="up">74.86</span><span class="pct">+10.01%</span></td>
+<td class="num">9.97</td>
+<td class="num">326.8</td>
+<td class="num">188.8</td>
+<td class="num">5.38%</td>
+<td class="num zbc-hi">5</td>
+<td class="num">0.17</td>
+<td class="c-ind">塑料</td>
+<td class="c-logic">业绩预增 + 回购股份注销 + 绿色石化新材料 + HP-RTM 电池包。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">002672</span><span class="nm">东江环保</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">13:11:15</span></td>
+<td class="c-price"><span class="up">4.03</span><span class="pct">+10.11%</span></td>
+<td class="num">0.65</td>
+<td class="num">44.5</td>
+<td class="num">36.5</td>
+<td class="num">1.86%</td>
+<td class="num ">0</td>
+<td class="num">0.23</td>
+<td class="c-ind">环境治理</td>
+<td class="c-logic">中标运输合同 + 资产处置 + 资源化业务。</td>
+</tr><tr class="row-mid">
+<td class="c-code"><span class="code">600418</span><span class="nm">江淮汽车</span><span class="tag tag-y">中军</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">14:14:04</span></td>
+<td class="c-price"><span class="up">21.32</span><span class="pct">+10.01%</span></td>
+<td class="num">29.14</td>
+<td class="num">480.6</td>
+<td class="num">480.6</td>
+<td class="num">6.35%</td>
+<td class="num ">0</td>
+<td class="num">2.87</td>
+<td class="c-ind">商用车</td>
+<td class="c-logic">投资引望 + 华为合作深化 + 股份回购注销。成交额 29.14 亿为全场涨停股之最，封单 2.87 亿，480 亿市值为全场最大权重涨停，板块中军。</td>
+</tr></tbody>
+  </table>
+  </div>
+</section>
+<section class="grp" style="--gc:#10b981">
+  <div class="grp-hd">
+    <div class="grp-title"><span class="grp-k">G</span><h2>重组·控制权变更·国资（事件驱动）</h2></div>
+    <div class="grp-sub">纯事件驱动支线，2 只 2 板，持续性取决于公告落地节奏</div>
+    <div class="grp-stat">
+      <span>涨停 <b>7</b> 只</span>
+      <span>连板 <b>2</b> 只</span>
+      <span>最高 <b>2 板</b></span>
+      <span>合计成交 <b>29.6 亿</b></span>
+      <span>龙头 <b class="rk">爱普股份</b></span>
+      <span>中军 <b class="yk">艾艾精工</b></span>
+    </div>
+  </div>
+  <div class="tbl-wrap">
+  <table class="zt">
+    <thead><tr>
+      <th class="c-code">代码 / 名称</th><th class="c-tier">连板梯队</th><th class="c-time">首封 / 回封</th>
+      <th class="c-price">收盘 / 涨幅</th><th>成交额(亿)</th><th>总市值(亿)</th><th>流通市值(亿)</th>
+      <th>换手率</th><th>炸板</th><th>封单(亿)</th><th class="c-ind">行业</th><th class="c-logic">涨停详细逻辑</th>
+    </tr></thead>
+    <tbody><tr class="row-leader">
+<td class="c-code"><span class="code">603020</span><span class="nm">爱普股份</span><span class="tag tag-r">情绪龙头</span></td>
+<td class="c-tier"><span class="lbc lbc-2">2板</span><span class="tier">2天2板</span></td>
+<td class="c-time"><span class="ft">09:32:46</span><span class="lt">回封 09:49:19</span></td>
+<td class="c-price"><span class="up">13.83</span><span class="pct">+10.02%</span></td>
+<td class="num">3.53</td>
+<td class="num">52.0</td>
+<td class="num">52.0</td>
+<td class="num">6.87%</td>
+<td class="num zbc-hi">5</td>
+<td class="num">0.09</td>
+<td class="c-ind">化学制品</td>
+<td class="c-logic">业绩预增 + 收购挪亚圣诺 + 控制权变更 + 引入战略投资者；香精香料食品原料。盘中 5 次炸板，封单仅 0.09 亿。</td>
+</tr><tr class="row-mid">
+<td class="c-code"><span class="code">603580</span><span class="nm">艾艾精工</span><span class="tag tag-y">中军</span></td>
+<td class="c-tier"><span class="lbc lbc-2">2板</span><span class="tier">2天2板</span></td>
+<td class="c-time"><span class="ft">09:46:08</span><span class="lt">回封 09:53:05</span></td>
+<td class="c-price"><span class="up">78.68</span><span class="pct">+10.00%</span></td>
+<td class="num">6.36</td>
+<td class="num">102.8</td>
+<td class="num">102.8</td>
+<td class="num">6.29%</td>
+<td class="num ">3</td>
+<td class="num">0.27</td>
+<td class="c-ind">塑料</td>
+<td class="c-logic">控制权变更 + 复牌 + 要约收购 + 业绩承诺；轻型输送带。102.8 亿市值为板块中军。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">002313</span><span class="nm">日海智能</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">09:54:42</span><span class="lt">回封 09:57:27</span></td>
+<td class="c-price"><span class="up">9.30</span><span class="pct">+10.06%</span></td>
+<td class="num">1.66</td>
+<td class="num">34.8</td>
+<td class="num">34.8</td>
+<td class="num">4.85%</td>
+<td class="num ">1</td>
+<td class="num">0.75</td>
+<td class="c-ind">通信设备</td>
+<td class="c-logic">控制权变更 + 国有股权划转 + 无线通信模组 + 卫星物联网。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">603903</span><span class="nm">中持股份</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">11:23:36</span><span class="lt">回封 14:20:51</span></td>
+<td class="c-price"><span class="up">15.27</span><span class="pct">+10.01%</span></td>
+<td class="num">2.89</td>
+<td class="num">39.0</td>
+<td class="num">39.0</td>
+<td class="num">7.63%</td>
+<td class="num ">1</td>
+<td class="num">0.26</td>
+<td class="c-ind">环境治理</td>
+<td class="c-logic">控制权变更 + 半导体设备 + 业绩预增 + 参股公司转让。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">600815</span><span class="nm">厦工股份</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">13:00:02</span></td>
+<td class="c-price"><span class="up">4.19</span><span class="pct">+9.97%</span></td>
+<td class="num">4.29</td>
+<td class="num">74.3</td>
+<td class="num">74.3</td>
+<td class="num">5.93%</td>
+<td class="num ">0</td>
+<td class="num">0.36</td>
+<td class="c-ind">工程机械</td>
+<td class="c-logic">工程机械 + 厦门国资改革预期。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">600403</span><span class="nm">大有能源</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">13:02:04</span></td>
+<td class="c-price"><span class="up">7.60</span><span class="pct">+9.99%</span></td>
+<td class="num">7.93</td>
+<td class="num">181.7</td>
+<td class="num">181.7</td>
+<td class="num">4.60%</td>
+<td class="num ">0</td>
+<td class="num">0.54</td>
+<td class="c-ind">煤炭开采</td>
+<td class="c-logic">炼焦煤价格上涨 + 间接控股股东变更 + 河南国资 + 吸收合并 + 煤炭产销改善。</td>
+</tr><tr class="">
+<td class="c-code"><span class="code">000595</span><span class="nm">新能股份</span></td>
+<td class="c-tier"><span class="lbc lbc-1">1板</span><span class="tier">首板</span></td>
+<td class="c-time"><span class="ft">13:52:03</span></td>
+<td class="c-price"><span class="up">5.85</span><span class="pct">+9.96%</span></td>
+<td class="num">2.92</td>
+<td class="num">66.6</td>
+<td class="num">66.6</td>
+<td class="num">4.54%</td>
+<td class="num ">0</td>
+<td class="num">0.16</td>
+<td class="c-ind">电力</td>
+<td class="c-logic">用电量增长 + 摘帽 + 控股股东增持 + 新能源转型 + 扭亏为盈。</td>
+</tr></tbody>
+  </table>
+  </div>
+</section>
+
+<div class="foot">
+  数据来源：东方财富涨停池 / 炸板池 / 跌停池（20260922）、金融界涨跌停分析、中新经纬、央广网、新浪财经、证券时报<br>
+  生成时间：2026-09-22 收盘后 · 共 64 只涨停股（含 ST 及北交所 30cm、科创板 / 创业板 20cm）<br>
+  本复盘仅供研究参考，不构成任何投资建议。股市有风险，投资需谨慎。
+</div>
+</div></body></html>
