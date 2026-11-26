@@ -54,6 +54,16 @@
   .cat .row2{display:flex; align-items:center; justify-content:space-between; margin-top:6px}
   .cat .tm{font-size:11px; color:var(--dim)}
   .cat .lt{font-size:11px; color:var(--sub)}
+  .cat .r2-right{display:flex; align-items:center; gap:8px}
+  .cat-update{
+    font-size:11px; padding:3px 9px; border-radius:6px; border:0; cursor:pointer;
+    background:var(--accent); color:#fff; opacity:.85; transition:.15s; white-space:nowrap;
+  }
+  .cat-update:hover{opacity:1}
+  .cat-update:disabled{cursor:wait; opacity:.55}
+  .cat-update.done{background:var(--grn)}
+  .cat-update.fail{background:var(--red, #ff3b5c)}
+  .req-tip{font-size:11px; color:var(--dim); padding:2px 16px 8px}
 
   .foot{padding:11px 16px; border-top:1px solid var(--bd); font-size:11px; color:var(--dim); margin-top:auto}
   .foot span{color:var(--sub)}
@@ -122,6 +132,7 @@
       <div class="sub">每日定时任务自动汇总 · 更新于 <b id="gen-time">--</b></div>
     </div>
     <div class="cats" id="cats"></div>
+    <div class="req-tip">点「更新」立即请求刷新该栏目，后台自动生成并发布（约1小时内生效），不影响原定时更新</div>
     <div class="foot">共 <span id="total-count">0</span> 篇研报 · 红涨绿跌</div>
   </aside>
 
@@ -161,6 +172,40 @@
   var curIco=document.getElementById('cur-ico');
   var btnOpen=document.getElementById('btn-open');
 
+  // GitHub 写入令牌（受限：仅本仓库 contents 写权限）—— 用于提交更新请求
+  var WRITE_TOKEN = '__WRITE_TOKEN__';
+  var GH_API = 'https://api.github.com/repos/Yu-fan23/stock-reports/contents/update-request.json';
+
+  // 提交更新请求：把 {key, requestedAt, nonce} 写入仓库请求文件
+  async function requestUpdate(key, btn){
+    if(btn.disabled) return;
+    var old = btn.textContent;
+    btn.disabled=true; btn.textContent='提交中';
+    try{
+      // 先取当前文件 sha（更新文件必须带 sha）
+      var cur = await fetch(GH_API, {headers:{'Authorization':'Bearer '+WRITE_TOKEN, 'Accept':'application/vnd.github+json'}});
+      var curData = await cur.json();
+      var sha = curData.sha || null;
+      var payload = {
+        message: 'update request '+key+' '+Date.now(),
+        content: btoa(unescape(encodeURIComponent(JSON.stringify({key:key, requestedAt:new Date().toISOString(), nonce:Date.now()})))),
+        branch: 'main'
+      };
+      if(sha) payload.sha = sha;
+      var res = await fetch(GH_API, {method:'PUT', headers:{
+        'Authorization':'Bearer '+WRITE_TOKEN,
+        'Accept':'application/vnd.github+json',
+        'Content-Type':'application/json'
+      }, body:JSON.stringify(payload)});
+      if(!res.ok){ var e=await res.json(); throw new Error(e.message||res.status); }
+      btn.textContent='已提交✓'; btn.classList.add('done');
+    }catch(err){
+      btn.textContent='失败'; btn.classList.add('fail');
+      console.error('提交更新请求失败:', err);
+    }
+    setTimeout(function(){ btn.textContent=old; btn.classList.remove('done','fail'); btn.disabled=false; }, 3500);
+  }
+
   document.getElementById('gen-time').textContent = DATA.generatedAt || '--';
   document.getElementById('total-count').textContent = DATA.total || 0;
 
@@ -185,7 +230,10 @@
       '<span class="nm">'+c.name+'</span>'+
       '<span class="badge">'+c.count+'</span></div>'+
       '<div class="row2"><span class="tm">⏰ '+c.time+'</span>'+
-      '<span class="lt">'+(c.latest? '最新 '+c.latest.slice(4,6)+'/'+c.latest.slice(6,8):'暂无')+'</span></div>';
+      '<span class="r2-right"><span class="lt">'+(c.latest? '最新 '+c.latest.slice(4,6)+'/'+c.latest.slice(6,8):'暂无')+'</span>'+
+      '<button class="cat-update" type="button" title="立即更新此栏目">更新</button></span></div>';
+    var ubtn = el.querySelector('.cat-update');
+    ubtn.addEventListener('click', function(ev){ ev.stopPropagation(); requestUpdate(c.key, ubtn); });
     el.addEventListener('click', function(){ selectCat(c.key); });
     catsEl.appendChild(el);
   });
