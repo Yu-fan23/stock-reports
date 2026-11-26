@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>涨停梯队复盘 · 2026-09-23</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f0f23;color:#e2e8f0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.6;padding-bottom:60px}
+.wrap{max-width:1720px;margin:0 auto;padding:24px 18px}
+.hero{background:linear-gradient(135deg,#1a1a2e 0%,#252547 100%);border:1px solid #2d2d44;border-radius:16px;padding:26px 28px;margin-bottom:20px}
+.hero h1{font-size:28px;font-weight:800;letter-spacing:1px;background:linear-gradient(90deg,#ff9f43,#ff4757);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .sub{color:#94a3b8;font-size:13px;margin-top:6px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:20px}
+.kpi{background:#0f0f23;border:1px solid #2d2d44;border-radius:10px;padding:12px 14px}
+.kpi .k{font-size:11px;color:#94a3b8;letter-spacing:.5px}
+.kpi .v{font-size:20px;font-weight:800;margin-top:4px}
+.kpi .d{font-size:11px;color:#64748b;margin-top:2px}
+.up{color:#ff4757} .dn{color:#00d4aa} .nu{color:#94a3b8}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-bottom:20px}
+.card{background:#1a1a2e;border:1px solid #2d2d44;border-radius:14px;padding:18px 20px}
+.card h3{font-size:14px;color:#94a3b8;font-weight:600;margin-bottom:14px;letter-spacing:1px}
+.tier-row{display:flex;gap:12px;padding:9px 0;border-bottom:1px dashed #2d2d44}
+.tier-row:last-child{border:none}
+.tier-lb{min-width:78px;font-size:13px;font-weight:700;color:#e2e8f0}
+.tier-lb em{display:block;font-size:11px;color:#64748b;font-style:normal;font-weight:400}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12px;padding:2px 9px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid var(--gc);color:#e2e8f0}
+.chip i{font-style:normal;color:#64748b;font-size:10px;margin-left:5px}
+.thermo{display:flex;align-items:center;gap:14px;margin-top:8px}
+.bar{flex:1;height:12px;border-radius:8px;background:linear-gradient(90deg,#00d4aa,#ffa502,#ff4757);position:relative}
+.pin{position:absolute;top:-5px;width:4px;height:22px;background:#fff;border-radius:2px;box-shadow:0 0 10px #fff}
+.note{background:#1a1a2e;border:1px solid #2d2d44;border-left:3px solid #667eea;border-radius:10px;padding:16px 20px;margin-bottom:20px;font-size:14px;color:#cbd5e1}
+.note b{color:#e2e8f0}
+.note ul{margin:8px 0 0 18px} .note li{margin:5px 0}
+.warn{background:#1a1a2e;border:1px solid #2d2d44;border-left:3px solid #ff4757;border-radius:10px;padding:16px 20px;margin-bottom:20px;font-size:14px;color:#cbd5e1}
+.warn b{color:#ff6b7a}
+.grp{background:#1a1a2e;border:1px solid #2d2d44;border-radius:14px;margin-bottom:20px;overflow:hidden}
+.grp-hd{padding:16px 20px;border-bottom:1px solid #2d2d44;border-left:4px solid var(--gc);background:linear-gradient(90deg,color-mix(in srgb,var(--gc) 12%,transparent),transparent)}
+.grp-title{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.grp-k{width:26px;height:26px;border-radius:7px;background:var(--gc);color:#0f0f23;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:14px}
+.grp-title h2{font-size:17px;font-weight:700}
+.cnt{font-size:11.5px;color:#94a3b8;background:rgba(255,255,255,.06);padding:2px 9px;border-radius:20px}
+.grp-sub{font-size:12.5px;color:#94a3b8;margin-top:8px}
+.grp-sub b{color:#e2e8f0}
+.grp-stat{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:12px;color:#94a3b8}
+.grp-stat b{color:#e2e8f0}
+.tbl-wrap{overflow-x:auto}
+table.zt{width:100%;border-collapse:collapse;font-size:12.5px;min-width:1340px}
+table.zt thead th{background:#0f0f23;color:#94a3b8;font-weight:600;text-align:left;padding:10px 12px;border-bottom:1px solid #2d2d44;white-space:nowrap;font-size:11.5px;letter-spacing:.5px}
+table.zt td{padding:11px 12px;border-bottom:1px solid #23233a;vertical-align:top}
+table.zt tr:hover td{background:rgba(255,255,255,.025)}
+.nm{font-weight:700;font-size:13.5px}
+.cd{font-size:11px;color:#64748b;font-weight:400}
+.lb{display:inline-block;font-size:11.5px;font-weight:800;padding:2px 8px;border-radius:5px;background:linear-gradient(135deg,#ff4757,#ff6b7a);color:#fff;white-space:nowrap}
+.lb.b2{background:linear-gradient(135deg,#ffa502,#ffb732)}
+.lb.b1{background:#2d2d44;color:#94a3b8}
+.tm{font-size:12px;color:#cbd5e1;font-variant-numeric:tabular-nums}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.amt{color:#ff9f43;font-weight:700}
+.fd{color:#ff6b7a;font-weight:700}
+.zb{color:#ff4757;font-weight:700}
+.lg{font-size:12px;color:#94a3b8;line-height:1.55;min-width:420px}
+.tag{display:inline-block;font-size:10.5px;font-weight:800;padding:1px 7px;border-radius:4px;margin-left:6px;vertical-align:middle}
+.tag.lead{background:#ff4757;color:#fff;box-shadow:0 0 8px rgba(255,71,87,.5)}
+.tag.mid{background:#ffa502;color:#1a1a2e}
+.tag.hi{background:#a855f7;color:#fff}
+.leg{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:#94a3b8;margin-bottom:16px;align-items:center}
+.leg span{display:flex;align-items:center;gap:6px}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block}
+.foot{text-align:center;color:#64748b;font-size:12px;margin-top:30px;line-height:1.8}
+@media(max-width:768px){.lg{min-width:280px}.hero h1{font-size:22px}}
+</style></head><body><div class="wrap">
+<div class="hero">
+<h1>涨停梯队复盘 · 2026-09-23（周三）</h1>
+<div class="sub">按概念板块分组 · 板块内依「连板梯队 → 首封时间」排序 ｜ 共 51 只涨停 · 13 个板块 ｜ 情绪龙头标红 · 中军标黄</div>
+<div class="kpis">
+<div class="kpi"><div class="k">上证指数</div><div class="v dn">3936.52</div><div class="d dn">-0.39% · 昨收 3952.13</div></div>
+<div class="kpi"><div class="k">深证成指</div><div class="v dn">13636.07</div><div class="d dn">-0.64%</div></div>
+<div class="kpi"><div class="k">创业板指</div><div class="v dn">3379.61</div><div class="d dn">-0.60%</div></div>
+<div class="kpi"><div class="k">科创50</div><div class="v dn">1660.85</div><div class="d dn">-0.25% · 科创综指逆势红</div></div>
+<div class="kpi"><div class="k">两市成交</div><div class="v nu">1.78万亿</div><div class="d">缩量约 3700 亿</div></div>
+<div class="kpi"><div class="k">涨停 / 跌停</div><div class="v"><span class="up">51</span> <span style="color:#475569">/</span> <span class="dn">14</span></div><div class="d">昨日 64 / 5</div></div>
+<div class="kpi"><div class="k">连板家数</div><div class="v nu">12</div><div class="d">昨日 24 · 腰斩</div></div>
+<div class="kpi"><div class="k">最高板</div><div class="v nu">4板</div><div class="d">昨 6板 · 华瓷股份断板</div></div>
+<div class="kpi"><div class="k">封板率</div><div class="v dn">55.4%</div><div class="d">炸板 41 只 · 昨 78%</div></div>
+<div class="kpi"><div class="k">涨跌比</div><div class="v"><span class="up">1891</span> <span style="color:#475569">:</span> <span class="dn">3564</span></div><div class="d">昨 2374 : 3030</div></div>
+</div></div>
+<div class="cards">
+<div class="card"><h3>📊 连板梯队结构</h3>
+<div class="tier-row"><div class="tier-lb">4 板<em>2 只 · 新华文轩、大亚圣象</em></div><div class="chips"><span class="chip" style="--gc:#2d2d44">新华文轩<i>4天4板</i></span><span class="chip" style="--gc:#2d2d44">大亚圣象<i>4天4板</i></span></div></div>
+<div class="tier-row"><div class="tier-lb">3 板<em>7 只 · 含泰慕士/新华传媒/南威软件/华远控股/我爱我家/奥佳华/华丽家族</em></div><div class="chips"><span class="chip" style="--gc:#2d2d44">新华传媒<i>3天3板</i></span><span class="chip" style="--gc:#2d2d44">泰慕士<i>3天3板</i></span><span class="chip" style="--gc:#2d2d44">南威软件<i>3天3板</i></span><span class="chip" style="--gc:#2d2d44">华远控股<i>3天3板</i></span><span class="chip" style="--gc:#2d2d44">我爱我家<i>3天3板</i></span><span class="chip" style="--gc:#2d2d44">奥佳华<i>3天3板</i></span><span class="chip" style="--gc:#2d2d44">华丽家族<i>3天3板</i></span></div></div>
+<div class="tier-row"><div class="tier-lb">2 板<em>3 只 · 天威视讯、澳弘电子(9天7板)、江淮汽车</em></div><div class="chips"><span class="chip" style="--gc:#2d2d44">天威视讯<i>2天2板</i></span><span class="chip" style="--gc:#2d2d44">澳弘电子<i>9天7板</i></span><span class="chip" style="--gc:#2d2d44">江淮汽车<i>2天2板</i></span></div></div>
+<div class="tier-row"><div class="tier-lb">首板<em>39 只 · 首板 39 只，占比 76.5%</em></div><div class="chips"><span class="chip" style="--gc:#2d2d44">上工申贝<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">华茂股份<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">三峡新材<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">沃格光电<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">胜利精密<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">金辰股份<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">申华控股<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">雪龙集团<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">浩欧博<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">安洁科技<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">汇通能源<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">沧州大化<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">济民健康<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">通用电梯<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">福建水泥<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">保龄宝<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">威星智能<i>4天2板</i></span><span class="chip" style="--gc:#2d2d44">依顿电子<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">丽岛新材<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">中一科技<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">集泰股份<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">优利德<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">康强电子<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">东方中科<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">申科股份<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">中天精装<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">瑞斯康达<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">领先股份<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">江南新材<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">振华股份<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">普源精电<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">天奥电子<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">万向德农<i>6天3板</i></span><span class="chip" style="--gc:#2d2d44">安邦护卫<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">莱伯泰科<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">慧智微-U<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">兴瑞科技<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">鸿路钢构<i>1天1板</i></span><span class="chip" style="--gc:#2d2d44">勤上股份<i>1天1板</i></span></div></div>
+</div>
+<div class="card"><h3>🌡️ 市场情绪温度计</h3>
+<div style="display:flex;align-items:baseline;gap:10px"><div style="font-size:38px;font-weight:900;color:#ffa502">43</div><div style="font-size:13px;color:#94a3b8">/ 100 · 退潮期（昨 66 分歧期）</div></div>
+<div class="thermo"><div class="bar"><div class="pin" style="left:43%"></div></div></div>
+<div style="margin-top:14px;font-size:12.5px;color:#94a3b8;line-height:1.9">
+<b style="color:#e2e8f0">降温信号：</b>涨停 64→51、连板 24→12（腰斩）、最高板 6→4、封板率 78%→55%、跌停 5→14、成交缩量 3700 亿。<br>
+<b style="color:#e2e8f0">唯一亮点：</b>电子行业主力净流入逾 157 亿居首，赚钱效应从"概念扩散"收敛到"涨价+业绩兑现"的硬件方向。<br>
+<b style="color:#e2e8f0">定性：</b>高度、宽度、封板质量<b style="color:#ff6b7a">三项同步收缩</b>，昨日高位股批量跌停（新华制药、锡华科技、三羊马、金牛化工、闽东电力），退潮确认、非良性分歧。
+</div></div>
+<div class="card"><h3>💰 资金流向 TOP</h3>
+<div style="font-size:12.5px;line-height:2">
+<div><span style="color:#94a3b8">行业净流入</span> · 电子 <b class="up">+157亿</b> ｜ 机械设备 <b class="up">+62亿</b> ｜ 医药生物 <b class="up">+42亿</b> ｜ 基础化工/房地产 <b class="up">+30亿</b> ｜ 汽车连续9日净流入</div>
+<div><span style="color:#94a3b8">行业净流出</span> · 传媒/公用事业 <b class="dn">-30亿</b> ｜ 有色/通信/计算机 <b class="dn">-20亿</b></div>
+<div><span style="color:#94a3b8">概念净流入</span> · 电路板 <b class="up">+56亿</b> ｜ 大基金/半导体材料 <b class="up">+40亿</b> ｜ 消费电子/创新药/光刻机 <b class="up">+20亿</b></div>
+<div><span style="color:#94a3b8">概念净流出</span> · 信创 <b class="dn">-51亿</b> ｜ 5G应用 <b class="dn">-43亿</b> ｜ 文化传媒 <b class="dn">-30亿</b></div>
+<div style="margin-top:8px"><span style="color:#94a3b8">个股主力</span> · 沃格光电 <b class="up">+21亿</b> ｜ 先导基电 +13亿 ｜ 超声电子 +10亿 ｜ 万科A/江淮汽车/中一科技/振华股份 <b class="up">+8亿</b></div>
+</div></div>
+</div>
+<div class="note"><b>📌 一句话核心判断</b><br>
+指数缩量回落、涨停与连板双双腰斩、跌停家数升至 14 家——9 月 21 日的高潮行情已进入<b>退潮确认期</b>；但资金并未离场，而是从"AI应用/医药/地产"大幅切向 <b>PCB 涨价链 + 半导体材料 + 仪器仪表</b>（电子行业净流入 157 亿为全市场第一），这是一次<b>主线换轨而非全面熄火</b>。
+<ul>
+<li><b>换轨方向：</b>宏瑞兴覆铜板提价 10%、中国巨石电子布提价 15-20% 双催化，把 PCB/铜箔/覆铜板推成当日最强分支（电路板净流入 56 亿），澳弘电子 9 天 7 板、大亚圣象 4 连板。</li>
+<li><b>剧烈分化：</b>出版传媒同一板块内，新华文轩 4 板 / 新华传媒封单 19.21 亿一字，而华媒控股、龙版传媒、中视传媒三只跌停——<b>有资产注入逻辑的活，纯题材的死</b>，是今天最值得记住的一条分界线。</li>
+<li><b>风险点：</b>封板率跌至 55.4%、炸板 41 只；通用电梯炸板 25 次、慧智微炸板 10 次、华丽家族炸 8 次尾盘才回封，说明接力资金极度谨慎。<b>明日不宜盲目打板，优先看 PCB 涨价链与玻璃基板的低位首板。</b></li>
+<li><b>高度断层：</b>昨日 6 板华瓷股份今日仅 +6.95% 未封、5 板与 4 板梯队全断，今日最高仅 4 板且只有 2 只，短线空间被压缩，情绪进入"低高度、快轮动"阶段。</li>
+</ul></div>
+<div class="warn"><b>⚠️ 跌停与炸板警示（退潮的实证）</b><br>
+<b>昨日高位股批量跌停：</b>新华制药（-9.98%，昨 2 连板）、锡华科技（-10.01%，昨 4 板）、三羊马（-10.01%）、闽东电力（-10.00%）、金牛化工（-9.91%）、龙头股份（-10.02%）、华体科技（-10.00%）。<br>
+<b>传媒同板块反向：</b>华媒控股 -10.04%、龙版传媒 -10.01%、中视传媒 -10.02%、中信出版跌超 12%。<br>
+<b>触板回落（炸板）：</b>先导基电（成交 79.6 亿）、超声电子（58.5 亿）、万科Ａ（42.9 亿）、会稽山、广东富信科技、科华数据、华瓷股份（昨 6 板）、南兴股份、世联行、南华生物、中华企业、安凯客车等 41 只。<br>
+<b>结论：</b>高位股与"纯题材股"是今日主要亏钱来源，市场正在奖励有<b>业绩/涨价/资产注入</b>实质支撑的标的。
+</div>
+<div class="leg">
+<span><i class="dot" style="background:#ff4757"></i>情绪龙头（标红）</span>
+<span><i class="dot" style="background:#ffa502"></i>板块中军（标黄）</span>
+<span><i class="dot" style="background:#a855f7"></i>空间高度标</span>
+<span style="color:#64748b">排序规则：连板梯队（几天几板）优先 → 同梯队按首封时间升序</span>
+</div>
+<div class="grp" style="--gc:#ff4757">
+<div class="grp-hd">
+<div class="grp-title"><div class="grp-k">A</div><h2>PCB · 覆铜板 · 复合铜箔</h2><span class="cnt">5 只涨停</span></div>
+<div class="grp-sub"><b>驱动</b> · 涨价主线：宏瑞兴覆铜板提价10% + 中国巨石电子布提价15-20%，电路板概念获主力净流入逾56亿</div>
+<div class="grp-stat"><span>板块解读 · 板块高度澳弘电子9天7板、大亚圣象4连板；资金从"概念"转向"涨价兑现"</span><span>成交额合计 <b>54.9亿</b></span><span>市值合计 <b>648亿</b></span><span>龙头 <b class="rk">大亚圣象</b></span><span>中军 <b class="yk">依顿电子</b></span></div>
+</div><div class="tbl-wrap"><table class="zt">
+<thead><tr><th>代码 / 名称</th><th>连板梯队</th><th>首封时间</th><th>收盘价</th><th>总市值</th><th>成交额</th><th>封单额</th><th>换手率</th><th>炸板</th><th>涨停详细逻辑</th></tr></thead><tbody>
+<tr><td><span class="nm">大亚圣象</span><span class="tag lead">龙头</span><br><span class="cd">000910</span></td>
+<td><span class="lb">4天4板</span></td>
+<td class="tm">09:30:39</td>
+<td class="num">7.58</td>
+<td class="num">41.5亿</td>
+<td class="num amt">2.24亿</td>
+<td><span class="num">0.71亿</span></td>
+<td class="num">5.51%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">超薄PCB纤维板沾边覆铜板涨价（用于覆铜板钻孔垫板），4连板为全场最高连板梯队；但9/22晚已公告澄清"不构成PCB组成部分、收入占比小"，纯情绪炒作仍能封板，印证涨价主线热度。</td></tr>
+<tr><td><span class="nm">澳弘电子</span><span class="tag hi">空间高度</span><br><span class="cd">605058</span></td>
+<td><span class="lb b2">9天7板</span></td>
+<td class="tm">13:51:17</td>
+<td class="num">58.60</td>
+<td class="num">83.8亿</td>
+<td class="num amt">12.44亿</td>
+<td><span class="num">0.45亿</span></td>
+<td class="num">15.32%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">PCB印制电路板，9天7板续创历史新高，为全场空间高度最高标。受益覆铜板/电子布涨价向PCB传导，招商证券指中小PCB厂净利率已修复至10%历史高位、四季度仍有上行空间。</td></tr>
+<tr><td><span class="nm">依顿电子</span><span class="tag mid">中军</span><br><span class="cd">603328</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">10:18:37</td>
+<td class="num">15.20</td>
+<td class="num">151.8亿</td>
+<td class="num amt">9.71亿</td>
+<td><span class="fd">1.57亿</span></td>
+<td class="num">6.62%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">PCB老牌厂商（印制电路板+5G概念）。直接对标9/22江西宏瑞兴覆铜板提价10%、中国巨石9月电子布厚/薄布分别提价15%/20%的产业链涨价传导，封单1.57亿为板块最扎实。</td></tr>
+<tr><td><span class="nm">中一科技</span><br><span class="cd">301150</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">10:32:51</td>
+<td class="num">49.20</td>
+<td class="num">159.4亿</td>
+<td class="num amt">20.23亿</td>
+<td><span class="num">0.62亿</span></td>
+<td class="num">14.55%</td>
+<td><span class="zb">2次</span></td>
+<td class="lg">锂电铜箔+复合集流体，20cm涨停。铜箔是覆铜板核心原料，兼具PCB涨价与固态电池双主线；成交20.23亿为板块最活跃，主力净流入超8亿。</td></tr>
+<tr><td><span class="nm">江南新材</span><br><span class="cd">603124</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">13:02:43</td>
+<td class="num">145.00</td>
+<td class="num">211.3亿</td>
+<td class="num amt">10.26亿</td>
+<td><span class="num">0.77亿</span></td>
+<td class="num">9.54%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">PCB用铜球/氧化铜粉龙头（金属新材料+复合集流体），中报预增。市值211亿为板块最大，午后13:02直线封板。</td></tr>
+</tbody></table></div></div>
+<div class="grp" style="--gc:#667eea">
+<div class="grp-hd">
+<div class="grp-title"><div class="grp-k">B</div><h2>半导体材料 · 芯片 · 存储</h2><span class="cnt">4 只涨停</span></div>
+<div class="grp-sub"><b>驱动</b> · 电子行业主力净流入逾157亿居首，半导体材料概念净流入超40亿</div>
+<div class="grp-stat"><span>板块解读 · 午后13:00起芯片股集体走强，瑞斯康达由跌3%秒板为标志性反转</span><span>成交额合计 <b>36.4亿</b></span><span>市值合计 <b>540亿</b></span><span>龙头 <b class="rk">康强电子</b></span><span>中军 <b class="yk">领先股份</b></span></div>
+</div><div class="tbl-wrap"><table class="zt">
+<thead><tr><th>代码 / 名称</th><th>连板梯队</th><th>首封时间</th><th>收盘价</th><th>总市值</th><th>成交额</th><th>封单额</th><th>换手率</th><th>炸板</th><th>涨停详细逻辑</th></tr></thead><tbody>
+<tr><td><span class="nm">康强电子</span><span class="tag lead">龙头</span><br><span class="cd">002119</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">11:07:03</td>
+<td class="num">26.92</td>
+<td class="num">101.0亿</td>
+<td class="num amt">14.79亿</td>
+<td><span class="fd">1.59亿</span></td>
+<td class="num">15.27%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">引线框架+半导体材料，存储芯片概念。11:07一笔封死、全天0炸板，封单1.59亿为板块最强；电子行业今日获主力净流入逾157亿元居各行业首位。</td></tr>
+<tr><td><span class="nm">领先股份</span><span class="tag mid">中军</span><br><span class="cd">603991</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">13:01:52</td>
+<td class="num">185.57</td>
+<td class="num">283.4亿</td>
+<td class="num amt">9.59亿</td>
+<td><span class="num">0.94亿</span></td>
+<td class="num">6.00%</td>
+<td><span class="zb">2次</span></td>
+<td class="lg">半导体材料+先进封装+存储芯片，中报扭亏+并购重组概念。市值283亿为全场涨停股第二大，午后13:01封板。</td></tr>
+<tr><td><span class="nm">天奥电子</span><br><span class="cd">002935</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">13:05:51</td>
+<td class="num">17.52</td>
+<td class="num">73.9亿</td>
+<td class="num amt">2.48亿</td>
+<td><span class="num">0.35亿</span></td>
+<td class="num">3.54%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">量子科技概念午后震荡走高（科大国创同步涨超10%）带动，叠加商业航天+存储芯片+华为概念，13:05封板，0炸板。</td></tr>
+<tr><td><span class="nm">慧智微-U</span><br><span class="cd">688512</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">13:28:17</td>
+<td class="num">17.32</td>
+<td class="num">81.9亿</td>
+<td class="num amt">9.51亿</td>
+<td><span class="num">0.06亿</span></td>
+<td class="num">17.71%</td>
+<td><span class="zb">10次</span></td>
+<td class="lg">射频前端模拟芯片（荣耀概念/5G），午后13:28快速20cm封板。但全天炸板10次、封单仅0.06亿，封板质量全场最差，多空分歧极大。</td></tr>
+</tbody></table></div></div>
+<div class="grp" style="--gc:#00d4aa">
+<div class="grp-hd">
+<div class="grp-title"><div class="grp-k">C</div><h2>仪器仪表（20cm 集中营）</h2><span class="cnt">5 只涨停</span></div>
+<div class="grp-sub"><b>驱动</b> · 仪器仪表板块领涨两市，机械设备主力净流入逾62亿</div>
+<div class="grp-stat"><span>板块解读 · 4只科创/创业板仪器股20cm涨停，板块效应最纯粹</span><span>成交额合计 <b>29.9亿</b></span><span>市值合计 <b>412亿</b></span><span>龙头 <b class="rk">普源精电</b></span><span>中军 <b class="yk">优利德</b></span></div>
+</div><div class="tbl-wrap"><table class="zt">
+<thead><tr><th>代码 / 名称</th><th>连板梯队</th><th>首封时间</th><th>收盘价</th><th>总市值</th><th>成交额</th><th>封单额</th><th>换手率</th><th>炸板</th><th>涨停详细逻辑</th></tr></thead><tbody>
+<tr><td><span class="nm">威星智能</span><br><span class="cd">002849</span></td>
+<td><span class="lb b1">4天2板</span></td>
+<td class="tm">10:16:21</td>
+<td class="num">23.00</td>
+<td class="num">50.7亿</td>
+<td class="num amt">4.80亿</td>
+<td><span class="num">0.83亿</span></td>
+<td class="num">9.96%</td>
+<td><span class="zb">1次</span></td>
+<td class="lg">智能燃气表/仪器仪表，鸿蒙概念+物联网+天然气。4天2板，10:16封板。</td></tr>
+<tr><td><span class="nm">优利德</span><span class="tag mid">中军</span><br><span class="cd">688628</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">10:51:17</td>
+<td class="num">114.44</td>
+<td class="num">128.6亿</td>
+<td class="num amt">14.08亿</td>
+<td><span class="num">0.88亿</span></td>
+<td class="num">11.79%</td>
+<td><span class="zb">1次</span></td>
+<td class="lg">电子测量仪器（万用表/示波器），AI智能体+光纤概念。成交14.08亿为板块最大，10:51封板，中报业绩支撑，市值128.6亿为板块中军。</td></tr>
+<tr><td><span class="nm">东方中科</span><br><span class="cd">002819</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">11:12:12</td>
+<td class="num">24.24</td>
+<td class="num">72.3亿</td>
+<td class="num amt">2.20亿</td>
+<td><span class="num">0.48亿</span></td>
+<td class="num">3.99%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">测试仪器代理+AI应用+华为海思+信创+鸿蒙，多概念叠加。11:12封板，0炸板。</td></tr>
+<tr><td><span class="nm">普源精电</span><span class="tag lead">龙头</span><br><span class="cd">688337</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">13:04:36</td>
+<td class="num">57.18</td>
+<td class="num">125.0亿</td>
+<td class="num amt">7.53亿</td>
+<td><span class="num">0.47亿</span></td>
+<td class="num">7.63%</td>
+<td><span class="zb">1次</span></td>
+<td class="lg">数字示波器国产龙头，午后开盘仅约5分钟20%涨停，仪器仪表板块领涨两市。中报预增，叠加光通信模块+量子科技概念。</td></tr>
+<tr><td><span class="nm">莱伯泰科</span><br><span class="cd">688056</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">13:22:51</td>
+<td class="num">52.92</td>
+<td class="num">35.7亿</td>
+<td class="num amt">1.27亿</td>
+<td><span class="num">0.24亿</span></td>
+<td class="num">3.86%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">实验分析仪器（样品前处理），半导体概念+食品安全。13:22快速20cm封板，市值35.7亿为板块最小，便于资金拉动。</td></tr>
+</tbody></table></div></div>
+<div class="grp" style="--gc:#ffa502">
+<div class="grp-hd">
+<div class="grp-title"><div class="grp-k">D</div><h2>玻璃基板</h2><span class="cnt">2 只涨停</span></div>
+<div class="grp-sub"><b>驱动</b> · 京东方宣布五年研发投入超800亿、采购超8000亿，一年内置产线投资计划</div>
+<div class="grp-stat"><span>板块解读 · 玻璃基封装载板由"实验阶段"推向"量产决策"，沃格光电主力净流入全场第一</span><span>成交额合计 <b>52.3亿</b></span><span>市值合计 <b>273亿</b></span><span>龙头 <b class="rk">沃格光电</b></span><span>中军 <b class="yk">—</b></span></div>
+</div><div class="tbl-wrap"><table class="zt">
+<thead><tr><th>代码 / 名称</th><th>连板梯队</th><th>首封时间</th><th>收盘价</th><th>总市值</th><th>成交额</th><th>封单额</th><th>换手率</th><th>炸板</th><th>涨停详细逻辑</th></tr></thead><tbody>
+<tr><td><span class="nm">三峡新材</span><br><span class="cd">600293</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">09:32:16</td>
+<td class="num">3.70</td>
+<td class="num">42.9亿</td>
+<td class="num amt">2.32亿</td>
+<td><span class="num">0.58亿</span></td>
+<td class="num">5.52%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">玻璃制造沾边玻璃基板，09:32一字封板、封单38.5万手折合1.42亿。低市值+反内卷概念，属板块跟风补涨。</td></tr>
+<tr><td><span class="nm">沃格光电</span><span class="tag lead">龙头</span><br><span class="cd">603773</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">09:33:07</td>
+<td class="num">102.50</td>
+<td class="num">230.3亿</td>
+<td class="num amt">49.93亿</td>
+<td><span class="fd">2.31亿</span></td>
+<td class="num">21.94%</td>
+<td><span class="zb">2次</span></td>
+<td class="lg">玻璃基板（TGV）龙头。京东方董事长陈炎顺宣布未来五年研发投入超800亿、采购支出超8000亿，明确一年内敲定玻璃基封装载板量产线投资计划；公司获主力净流入逾21亿（Wind口径）/11.27亿（腾讯口径），成交49.93亿居全场前三，年内已涨189.71%。</td></tr>
+</tbody></table></div></div>
+<div class="grp" style="--gc:#a855f7">
+<div class="grp-hd">
+<div class="grp-title"><div class="grp-k">E</div><h2>出版 · AI教育 · 资产重组</h2><span class="cnt">3 只涨停</span></div>
+<div class="grp-sub"><b>驱动</b> · 十部门印发出版业"十五五"规划，AI赋能出版；新华系资产注入</div>
+<div class="grp-stat"><span>板块解读 · 板块剧烈分化：新华系3只涨停，华媒控股/龙版传媒/中视传媒3只跌停</span><span>成交额合计 <b>4.3亿</b></span><span>市值合计 <b>364亿</b></span><span>龙头 <b class="rk">新华文轩</b></span><span>中军 <b class="yk">新华传媒</b></span></div>
+</div><div class="tbl-wrap"><table class="zt">
+<thead><tr><th>代码 / 名称</th><th>连板梯队</th><th>首封时间</th><th>收盘价</th><th>总市值</th><th>成交额</th><th>封单额</th><th>换手率</th><th>炸板</th><th>涨停详细逻辑</th></tr></thead><tbody>
+<tr><td><span class="nm">新华文轩</span><span class="tag lead">龙头</span><br><span class="cd">601811</span></td>
+<td><span class="lb">4天4板</span></td>
+<td class="tm">09:30:16</td>
+<td class="num">18.50</td>
+<td class="num">228.3亿</td>
+<td class="num amt">3.07亿</td>
+<td><span class="fd">1.44亿</span></td>
+<td class="num">2.10%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">拟3.46亿元收购控股股东四川新华发行集团旗下四川民族出版社100%股权，解决同业竞争+完善民族出版布局；叠加十部门印发出版业"十五五"规划提出AI赋能出版、国联民生看好教育"三维共振"，与新华传媒并列全场最高4连板。</td></tr>
+<tr><td><span class="nm">新华传媒</span><span class="tag mid">中军</span><br><span class="cd">600825</span></td>
+<td><span class="lb">3天3板</span></td>
+<td class="tm">09:25:00</td>
+<td class="num">7.06</td>
+<td class="num">73.8亿</td>
+<td class="num amt">0.32亿</td>
+<td><span class="fd">19.21亿</span></td>
+<td class="num">0.44%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">复牌一字板，封单19.21亿为全场最大、换手仅0.44%，绝对控盘零分歧。上海国资出版资产整合预期，出版传媒板块剧烈分化中唯一"锁仓"标的。</td></tr>
+<tr><td><span class="nm">天威视讯</span><br><span class="cd">002238</span></td>
+<td><span class="lb b2">2天2板</span></td>
+<td class="tm">09:25:00</td>
+<td class="num">7.66</td>
+<td class="num">61.5亿</td>
+<td class="num amt">0.88亿</td>
+<td><span class="fd">1.18亿</span></td>
+<td class="num">1.43%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">深圳广电+短剧互动游戏，09:25竞价一字。在传媒板块整体调整（华媒控股/龙版传媒/中视传媒跌停）背景下独立走强，属AI+文化主题外溢。</td></tr>
+</tbody></table></div></div>
+<div class="grp" style="--gc:#38bdf8">
+<div class="grp-hd">
+<div class="grp-title"><div class="grp-k">F</div><h2>房地产链</h2><span class="cnt">6 只涨停</span></div>
+<div class="grp-sub"><b>驱动</b> · 住建部"十五五"城市更新 + 公积金可用于租房/购房/修房/养房</div>
+<div class="grp-stat"><span>板块解读 · 9月上半月一线城市新房成交同比约+20%；但万科A、中华企业、荣盛发展触板回落，内部分歧明显</span><span>成交额合计 <b>39.4亿</b></span><span>市值合计 <b>427亿</b></span><span>龙头 <b class="rk">我爱我家</b></span><span>中军 <b class="yk">鸿路钢构</b></span></div>
+</div><div class="tbl-wrap"><table class="zt">
+<thead><tr><th>代码 / 名称</th><th>连板梯队</th><th>首封时间</th><th>收盘价</th><th>总市值</th><th>成交额</th><th>封单额</th><th>换手率</th><th>炸板</th><th>涨停详细逻辑</th></tr></thead><tbody>
+<tr><td><span class="nm">华远控股</span><br><span class="cd">600743</span></td>
+<td><span class="lb">3天3板</span></td>
+<td class="tm">09:30:10</td>
+<td class="num">2.82</td>
+<td class="num">66.2亿</td>
+<td class="num amt">2.76亿</td>
+<td><span class="fd">1.31亿</span></td>
+<td class="num">4.21%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">北京国资物业管理+REITs概念，09:30:10为地产链内最早封板。低价股（2.82元）弹性大，0炸板、封单1.31亿。</td></tr>
+<tr><td><span class="nm">我爱我家</span><span class="tag lead">龙头</span><br><span class="cd">000560</span></td>
+<td><span class="lb">3天3板</span></td>
+<td class="tm">09:30:21</td>
+<td class="num">3.86</td>
+<td class="num">90.9亿</td>
+<td class="num amt">12.10亿</td>
+<td><span class="num">0.73亿</span></td>
+<td class="num">13.45%</td>
+<td><span class="zb">4次</span></td>
+<td class="lg">房产租赁经纪。住建部"十五五"大力实施城市更新、支持公积金用于租房/购房/修房/养房；9月上半月一线城市新房成交套数同比约+20%、上海9月首周同比+50%。成交12.10亿为板块最大，但全天炸板4次显示分歧。</td></tr>
+<tr><td><span class="nm">华丽家族</span><br><span class="cd">600503</span></td>
+<td><span class="lb">3天3板</span></td>
+<td class="tm">09:43:56</td>
+<td class="num">2.94</td>
+<td class="num">47.1亿</td>
+<td class="num amt">11.82亿</td>
+<td><span class="num">0.17亿</span></td>
+<td class="num">25.86%</td>
+<td><span class="zb">8次</span></td>
+<td class="lg">上海住宅开发低价股（2.94元）。全天炸板8次、换手25.86%，直至14:56才勉强回封，创3个多月新高；封单仅0.17亿，接力质量板块最差。</td></tr>
+<tr><td><span class="nm">福建水泥</span><br><span class="cd">600802</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">10:01:24</td>
+<td class="num">6.02</td>
+<td class="num">27.6亿</td>
+<td class="num amt">2.14亿</td>
+<td><span class="num">0.30亿</span></td>
+<td class="num">8.01%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">水泥板块今日涨幅居前（房产服务、水泥领涨两市），反内卷概念+微盘股弹性，10:01封板。</td></tr>
+<tr><td><span class="nm">中天精装</span><br><span class="cd">002989</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">11:25:57</td>
+<td class="num">27.96</td>
+<td class="num">56.4亿</td>
+<td class="num amt">5.41亿</td>
+<td><span class="num">0.75亿</span></td>
+<td class="num">10.15%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">精装修+算力概念双主线（昨日炸板股今日修复），深圳特区+央国企改革，11:25封板。</td></tr>
+<tr><td><span class="nm">鸿路钢构</span><span class="tag mid">中军</span><br><span class="cd">002541</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">14:12:51</td>
+<td class="num">19.69</td>
+<td class="num">138.7亿</td>
+<td class="num amt">5.19亿</td>
+<td><span class="num">0.51亿</span></td>
+<td class="num">5.36%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">钢结构龙头，中报预增+机器人概念。市值138.7亿为地产链最大，午后14:12封板，属板块中军补涨。</td></tr>
+</tbody></table></div></div>
+<div class="grp" style="--gc:#f472b6">
+<div class="grp-hd">
+<div class="grp-title"><div class="grp-k">G</div><h2>AI应用 · 算力 · 通信</h2><span class="cnt">3 只涨停</span></div>
+<div class="grp-sub"><b>驱动</b> · Meta Muse AI智能体登顶苹果免费榜，Meta隔夜+11%</div>
+<div class="grp-stat"><span>板块解读 · AI应用端利好频出，但信创净流出51亿、5G应用净流出43亿，算力链内部割裂</span><span>成交额合计 <b>13.6亿</b></span><span>市值合计 <b>171亿</b></span><span>龙头 <b class="rk">南威软件</b></span><span>中军 <b class="yk">—</b></span></div>
+</div><div class="tbl-wrap"><table class="zt">
+<thead><tr><th>代码 / 名称</th><th>连板梯队</th><th>首封时间</th><th>收盘价</th><th>总市值</th><th>成交额</th><th>封单额</th><th>换手率</th><th>炸板</th><th>涨停详细逻辑</th></tr></thead><tbody>
+<tr><td><span class="nm">南威软件</span><span class="tag lead">龙头</span><br><span class="cd">603636</span></td>
+<td><span class="lb">3天3板</span></td>
+<td class="tm">09:25:01</td>
+<td class="num">8.81</td>
+<td class="num">51.1亿</td>
+<td class="num amt">6.43亿</td>
+<td><span class="num">0.56亿</span></td>
+<td class="num">12.62%</td>
+<td><span class="zb">3次</span></td>
+<td class="lg">AI应用+DeepSeek概念。Meta旗下Muse AI智能体登顶苹果免费应用榜榜首、刺激Meta隔夜大涨11%，本月AI应用端利好频出。09:25一字但盘中炸板3次、换手12.62%，分歧明显。</td></tr>
+<tr><td><span class="nm">汇通能源</span><br><span class="cd">600605</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">09:51:59</td>
+<td class="num">31.61</td>
+<td class="num">65.2亿</td>
+<td class="num amt">4.53亿</td>
+<td><span class="num">0.15亿</span></td>
+<td class="num">7.06%</td>
+<td><span class="zb">3次</span></td>
+<td class="lg">液冷服务器+存储芯片+半导体概念（原商业物业经营转型），租售同权。09:51封板但炸板3次、封单仅0.15亿。</td></tr>
+<tr><td><span class="nm">瑞斯康达</span><br><span class="cd">603803</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">13:00:52</td>
+<td class="num">12.87</td>
+<td class="num">54.7亿</td>
+<td class="num amt">2.60亿</td>
+<td><span class="fd">1.31亿</span></td>
+<td class="num">5.00%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">CPO/算力/F5G概念。午后芯片股集体走强时，由早盘跌约3%秒速垂直涨停，封单1.31亿，为当日"日内最强反转"。</td></tr>
+</tbody></table></div></div>
+<div class="grp" style="--gc:#fbbf24">
+<div class="grp-hd">
+<div class="grp-title"><div class="grp-k">H</div><h2>汽车 · 机器人</h2><span class="cnt">4 只涨停</span></div>
+<div class="grp-sub"><b>驱动</b> · 汽车行业主力资金连续9日净流入；尊界放量 + 汽车出海</div>
+<div class="grp-stat"><span>板块解读 · 江淮汽车尾盘封板成交49亿；安凯客车曾直线封板后回落</span><span>成交额合计 <b>59.5亿</b></span><span>市值合计 <b>693亿</b></span><span>龙头 <b class="rk">江淮汽车</b></span><span>中军 <b class="yk">—</b></span></div>
+</div><div class="tbl-wrap"><table class="zt">
+<thead><tr><th>代码 / 名称</th><th>连板梯队</th><th>首封时间</th><th>收盘价</th><th>总市值</th><th>成交额</th><th>封单额</th><th>换手率</th><th>炸板</th><th>涨停详细逻辑</th></tr></thead><tbody>
+<tr><td><span class="nm">江淮汽车</span><span class="tag lead">龙头</span><br><span class="cd">600418</span></td>
+<td><span class="lb b2">2天2板</span></td>
+<td class="tm">14:41:41</td>
+<td class="num">23.45</td>
+<td class="num">528.6亿</td>
+<td class="num amt">49.35亿</td>
+<td><span class="num">0.79亿</span></td>
+<td class="num">9.63%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">与华为合作打造尊界高端新能源乘用车。方正证券指尊界系列持续放量、工厂产能爬坡带动整车制造规模抬升。尾盘14:41封板，成交49.35亿居全场第二、封单折合4.56亿，为当日最大市值涨停股。</td></tr>
+<tr><td><span class="nm">申华控股</span><br><span class="cd">600653</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">09:45:09</td>
+<td class="num">1.87</td>
+<td class="num">36.4亿</td>
+<td class="num amt">1.37亿</td>
+<td><span class="num">0.15亿</span></td>
+<td class="num">3.83%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">汽车经销商低价股（1.87元），同受汽车整车板块脉冲带动，09:45封板，封单0.15亿偏弱。</td></tr>
+<tr><td><span class="nm">雪龙集团</span><br><span class="cd">603949</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">09:45:26</td>
+<td class="num">15.36</td>
+<td class="num">32.4亿</td>
+<td class="num amt">0.58亿</td>
+<td><span class="num">0.29亿</span></td>
+<td class="num">1.85%</td>
+<td><span class="zb">1次</span></td>
+<td class="lg">汽车热管理+新能源车。受安凯客车直线封板带动（安凯客车随后回落炸板），属汽车整车板块事件驱动脉冲的跟风补涨，成交仅0.58亿。</td></tr>
+<tr><td><span class="nm">兴瑞科技</span><br><span class="cd">002937</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">14:11:27</td>
+<td class="num">30.13</td>
+<td class="num">95.2亿</td>
+<td class="num amt">8.18亿</td>
+<td><span class="num">0.48亿</span></td>
+<td class="num">9.12%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">汽车电子电气系统+液冷服务器+机器人+智能驾驶，多概念叠加，14:11封板，0炸板。</td></tr>
+</tbody></table></div></div>
+<div class="grp" style="--gc:#34d399">
+<div class="grp-hd">
+<div class="grp-title"><div class="grp-k">I</div><h2>消费（服装 · 家电 · 食品）</h2><span class="cnt">4 只涨停</span></div>
+<div class="grp-sub"><b>驱动</b> · 健康消费促进行动方案落地 + 三季度运动服饰零售同比超12%</div>
+<div class="grp-stat"><span>板块解读 · 泰慕士、奥佳华均为3连板，个股alpha（回购/股权转让）驱动强于板块beta</span><span>成交额合计 <b>15.4亿</b></span><span>市值合计 <b>159亿</b></span><span>龙头 <b class="rk">泰慕士</b></span><span>中军 <b class="yk">奥佳华</b></span></div>
+</div><div class="tbl-wrap"><table class="zt">
+<thead><tr><th>代码 / 名称</th><th>连板梯队</th><th>首封时间</th><th>收盘价</th><th>总市值</th><th>成交额</th><th>封单额</th><th>换手率</th><th>炸板</th><th>涨停详细逻辑</th></tr></thead><tbody>
+<tr><td><span class="nm">泰慕士</span><span class="tag lead">龙头</span><br><span class="cd">001234</span></td>
+<td><span class="lb">3天3板</span></td>
+<td class="tm">09:25:00</td>
+<td class="num">32.18</td>
+<td class="num">34.9亿</td>
+<td class="num amt">0.90亿</td>
+<td><span class="fd">3.43亿</span></td>
+<td class="num">3.04%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">针织面料/服装（迪卡侬、安踏、森马核心供应商）+限制性股票回购注销（总股本缩减0.75%）+国资控股。三季度国内运动服饰零售总额同比增速超12%，09:25一字、封单3.43亿。</td></tr>
+<tr><td><span class="nm">奥佳华</span><span class="tag mid">中军</span><br><span class="cd">002614</span></td>
+<td><span class="lb">3天3板</span></td>
+<td class="tm">09:31:09</td>
+<td class="num">7.57</td>
+<td class="num">47.2亿</td>
+<td class="num amt">9.91亿</td>
+<td><span class="num">0.77亿</span></td>
+<td class="num">29.80%</td>
+<td><span class="zb">7次</span></td>
+<td class="lg">全球按摩器具龙头。控股股东等拟向上海峄昕转让6237万股（约10%股本），私募机构大额入股背书；上半年营收+16.14%、境外子公司获约1411万元退税（超上年归母净利100%）、经营现金流同比+12倍。但今日炸板7次、换手29.80%，分歧极大。</td></tr>
+<tr><td><span class="nm">华茂股份</span><br><span class="cd">000850</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">09:31:36</td>
+<td class="num">4.65</td>
+<td class="num">43.9亿</td>
+<td class="num amt">1.19亿</td>
+<td><span class="num">0.37亿</span></td>
+<td class="num">2.77%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">棉纺（纺织制造），安徽国资+土地流转+电商概念+农业种植，低位补涨，09:31封板。</td></tr>
+<tr><td><span class="nm">保龄宝</span><br><span class="cd">002286</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">10:12:54</td>
+<td class="num">8.75</td>
+<td class="num">33.2亿</td>
+<td class="num amt">3.36亿</td>
+<td><span class="num">0.48亿</span></td>
+<td class="num">10.68%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">代糖（赤藓糖醇）+合成生物+味蕾经济，10:12封板，属消费复苏线低位扩散。</td></tr>
+</tbody></table></div></div>
+<div class="grp" style="--gc:#60a5fa">
+<div class="grp-hd">
+<div class="grp-title"><div class="grp-k">J</div><h2>化工 · 新材料</h2><span class="cnt">4 只涨停</span></div>
+<div class="grp-sub"><b>驱动</b> · 有机硅板块领涨两市；"反内卷"涨价预期扩散</div>
+<div class="grp-stat"><span>板块解读 · 振华股份301亿市值为全场涨停股最大，成交17.61亿</span><span>成交额合计 <b>27.7亿</b></span><span>市值合计 <b>419亿</b></span><span>龙头 <b class="rk">沧州大化</b></span><span>中军 <b class="yk">振华股份</b></span></div>
+</div><div class="tbl-wrap"><table class="zt">
+<thead><tr><th>代码 / 名称</th><th>连板梯队</th><th>首封时间</th><th>收盘价</th><th>总市值</th><th>成交额</th><th>封单额</th><th>换手率</th><th>炸板</th><th>涨停详细逻辑</th></tr></thead><tbody>
+<tr><td><span class="nm">沧州大化</span><span class="tag lead">龙头</span><br><span class="cd">600230</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">09:55:19</td>
+<td class="num">14.82</td>
+<td class="num">61.3亿</td>
+<td class="num amt">3.37亿</td>
+<td><span class="num">0.51亿</span></td>
+<td class="num">5.62%</td>
+<td><span class="zb">1次</span></td>
+<td class="lg">聚氨酯/TDI，中报预增+央国企改革，09:55封板为化工板块最早，受益"反内卷"涨价预期。</td></tr>
+<tr><td><span class="nm">丽岛新材</span><br><span class="cd">603937</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">10:27:30</td>
+<td class="num">12.97</td>
+<td class="num">27.1亿</td>
+<td class="num amt">1.34亿</td>
+<td><span class="num">0.45亿</span></td>
+<td class="num">5.11%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">铝材（工业金属）+锂电池概念，中报扭亏，微盘股弹性，10:27封板。</td></tr>
+<tr><td><span class="nm">集泰股份</span><br><span class="cd">002909</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">10:34:27</td>
+<td class="num">7.54</td>
+<td class="num">29.4亿</td>
+<td class="num amt">5.35亿</td>
+<td><span class="num">0.40亿</span></td>
+<td class="num">19.49%</td>
+<td><span class="zb">2次</span></td>
+<td class="lg">有机硅（今日有机硅板块领涨两市）+低空经济/飞行汽车(eVTOL)+跨境电商，换手19.49%，10:34封板。</td></tr>
+<tr><td><span class="nm">振华股份</span><span class="tag mid">中军</span><br><span class="cd">603067</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">13:04:21</td>
+<td class="num">39.86</td>
+<td class="num">301.2亿</td>
+<td class="num amt">17.61亿</td>
+<td><span class="fd">2.11亿</span></td>
+<td class="num">6.03%</td>
+<td><span class="zb">2次</span></td>
+<td class="lg">铬盐龙头（无机盐），钒电池+固态电池+储能概念，中报业绩支撑。市值301亿为全场涨停股最大，成交17.61亿、主力净流入超8亿，封单2.11亿。</td></tr>
+</tbody></table></div></div>
+<div class="grp" style="--gc:#fb7185">
+<div class="grp-hd">
+<div class="grp-title"><div class="grp-k">K</div><h2>医药 · 医疗器械</h2><span class="cnt">2 只涨停</span></div>
+<div class="grp-sub"><b>驱动</b> · 十部门发布医药工业"十五五"规划，明确创新药年均增速目标</div>
+<div class="grp-stat"><span>板块解读 · CRO义翘神州、奥浦迈、益诺思均涨超10%，但新华制药跌停，板块同样分化</span><span>成交额合计 <b>5.3亿</b></span><span>市值合计 <b>137亿</b></span><span>龙头 <b class="rk">浩欧博</b></span><span>中军 <b class="yk">—</b></span></div>
+</div><div class="tbl-wrap"><table class="zt">
+<thead><tr><th>代码 / 名称</th><th>连板梯队</th><th>首封时间</th><th>收盘价</th><th>总市值</th><th>成交额</th><th>封单额</th><th>换手率</th><th>炸板</th><th>涨停详细逻辑</th></tr></thead><tbody>
+<tr><td><span class="nm">浩欧博</span><span class="tag lead">龙头</span><br><span class="cd">688656</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">09:48:07</td>
+<td class="num">141.04</td>
+<td class="num">89.6亿</td>
+<td class="num amt">2.46亿</td>
+<td><span class="num">0.20亿</span></td>
+<td class="num">2.83%</td>
+<td><span class="zb">1次</span></td>
+<td class="lg">体外诊断（过敏原检测龙头）。十部门发布医药工业"十五五"规划，提出创新药产业年均增速目标，CRO/创新药赛道迎中长期催化；09:48 20cm封板。</td></tr>
+<tr><td><span class="nm">济民健康</span><br><span class="cd">603222</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">09:57:52</td>
+<td class="num">8.94</td>
+<td class="num">46.9亿</td>
+<td class="num amt">2.87亿</td>
+<td><span class="num">0.40亿</span></td>
+<td class="num">6.28%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">医疗器械+创新药+免疫治疗+医美+幽门螺杆菌概念，浙江板块，09:57封板，属医药政策催化下的低位扩散。</td></tr>
+</tbody></table></div></div>
+<div class="grp" style="--gc:#22d3ee">
+<div class="grp-hd">
+<div class="grp-title"><div class="grp-k">L</div><h2>消费电子 · 折叠屏</h2><span class="cnt">2 只涨停</span></div>
+<div class="grp-sub"><b>驱动</b> · 消费电子概念主力净流入超20亿</div>
+<div class="grp-stat"><span>板块解读 · 苹果链+折叠屏双主线，两只均为0-1次炸板的硬板</span><span>成交额合计 <b>12.2亿</b></span><span>市值合计 <b>211亿</b></span><span>龙头 <b class="rk">安洁科技</b></span><span>中军 <b class="yk">—</b></span></div>
+</div><div class="tbl-wrap"><table class="zt">
+<thead><tr><th>代码 / 名称</th><th>连板梯队</th><th>首封时间</th><th>收盘价</th><th>总市值</th><th>成交额</th><th>封单额</th><th>换手率</th><th>炸板</th><th>涨停详细逻辑</th></tr></thead><tbody>
+<tr><td><span class="nm">胜利精密</span><br><span class="cd">002426</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">09:33:51</td>
+<td class="num">2.96</td>
+<td class="num">100.7亿</td>
+<td class="num amt">6.88亿</td>
+<td><span class="num">0.90亿</span></td>
+<td class="num">7.38%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">消费电子零部件+电池技术，江苏板块低价股（2.96元），09:33封板，与安洁科技同步联动。</td></tr>
+<tr><td><span class="nm">安洁科技</span><span class="tag lead">龙头</span><br><span class="cd">002635</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">09:49:15</td>
+<td class="num">16.79</td>
+<td class="num">110.8亿</td>
+<td class="num amt">5.31亿</td>
+<td><span class="num">0.90亿</span></td>
+<td class="num">8.17%</td>
+<td><span class="zb">1次</span></td>
+<td class="lg">消费电子精密件（苹果链）+柔性屏(折叠屏)+混合现实，中报预增，09:49封板；消费电子板块今日获主力净流入超20亿。</td></tr>
+</tbody></table></div></div>
+<div class="grp" style="--gc:#94a3b8">
+<div class="grp-hd">
+<div class="grp-title"><div class="grp-k">M</div><h2>其他独立题材</h2><span class="cnt">7 只涨停</span></div>
+<div class="grp-sub"><b>驱动</b> · 无明显板块联动，以个股alpha与低位补涨为主</div>
+<div class="grp-stat"><span>板块解读 · 万向德农6天3板为弹性最大；通用电梯炸板25次为最差</span><span>成交额合计 <b>30.8亿</b></span><span>市值合计 <b>361亿</b></span><span>龙头 <b class="rk">万向德农</b></span><span>中军 <b class="yk">—</b></span></div>
+</div><div class="tbl-wrap"><table class="zt">
+<thead><tr><th>代码 / 名称</th><th>连板梯队</th><th>首封时间</th><th>收盘价</th><th>总市值</th><th>成交额</th><th>封单额</th><th>换手率</th><th>炸板</th><th>涨停详细逻辑</th></tr></thead><tbody>
+<tr><td><span class="nm">万向德农</span><span class="tag lead">龙头</span><br><span class="cd">600371</span></td>
+<td><span class="lb b1">6天3板</span></td>
+<td class="tm">13:16:02</td>
+<td class="num">17.28</td>
+<td class="num">50.6亿</td>
+<td class="num amt">13.25亿</td>
+<td><span class="num">0.44亿</span></td>
+<td class="num">27.77%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">种业/转基因+粮食安全+乡村振兴。6天3板为全场非连续板弹性最大，换手27.77%居前，13:16封板，属农业独立题材。</td></tr>
+<tr><td><span class="nm">上工申贝</span><br><span class="cd">600843</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">09:30:47</td>
+<td class="num">7.61</td>
+<td class="num">54.3亿</td>
+<td class="num amt">1.93亿</td>
+<td><span class="num">0.34亿</span></td>
+<td class="num">5.43%</td>
+<td><span class="zb">1次</span></td>
+<td class="lg">缝制设备+碳纤维+低空经济+机器人概念+沪企改革，09:30:47早盘封板但炸板1次，13:21回封。</td></tr>
+<tr><td><span class="nm">金辰股份</span><br><span class="cd">603396</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">09:37:39</td>
+<td class="num">32.40</td>
+<td class="num">44.9亿</td>
+<td class="num amt">1.79亿</td>
+<td><span class="num">0.53亿</span></td>
+<td class="num">4.08%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">光伏设备（TOPCon/HJT/钙钛矿电池）+氢能源+国产芯片，09:37封板，属新能源独立反弹。</td></tr>
+<tr><td><span class="nm">通用电梯</span><br><span class="cd">300931</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">09:59:36</td>
+<td class="num">19.21</td>
+<td class="num">46.7亿</td>
+<td class="num amt">8.74亿</td>
+<td><span class="num">0.02亿</span></td>
+<td class="num">24.01%</td>
+<td><span class="zb">25次</span></td>
+<td class="lg">楼宇设备/电梯+物联网。20cm涨停但全天炸板25次为全场最多（尾盘14:54才勉强回封），封单仅0.02亿，典型高位分歧形态。</td></tr>
+<tr><td><span class="nm">申科股份</span><br><span class="cd">002633</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">11:17:09</td>
+<td class="num">15.87</td>
+<td class="num">23.8亿</td>
+<td class="num amt">1.12亿</td>
+<td><span class="num">0.32亿</span></td>
+<td class="num">4.84%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">滑动轴承（通用设备）+微盘股，浙江板块，11:17封板，无明确题材催化，偏纯资金行为。</td></tr>
+<tr><td><span class="nm">安邦护卫</span><br><span class="cd">603373</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">13:17:01</td>
+<td class="num">47.96</td>
+<td class="num">72.2亿</td>
+<td class="num amt">1.66亿</td>
+<td><span class="num">0.59亿</span></td>
+<td class="num">5.64%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">武装押运/安防（专业服务）。低空经济+无人机+智慧政务+阿里概念，13:17封板，0炸板。</td></tr>
+<tr><td><span class="nm">勤上股份</span><br><span class="cd">002638</span></td>
+<td><span class="lb b1">1天1板</span></td>
+<td class="tm">14:13:42</td>
+<td class="num">4.74</td>
+<td class="num">68.1亿</td>
+<td class="num amt">2.36亿</td>
+<td><span class="num">0.38亿</span></td>
+<td class="num">3.90%</td>
+<td><span style="color:#475569">0</span></td>
+<td class="lg">LED照明+智慧灯杆+车联网(车路云)+智慧城市，14:13封板，低位补涨。</td></tr>
+</tbody></table></div></div>
+<div class="foot">
+数据来源：东方财富涨停池（getTopicZTPool，51 只）/ 腾讯 & 新浪行情 / 东财 F10 概念板块 / 中新经纬、证券时报·数据宝、新浪财经喜娜AI异动分析、财联社、21世纪经济报道<br>
+生成时间：2026-09-23 收盘后 ｜ 板块内排序：连板梯队（几天几板）优先，同梯队按首次封板时间升序<br>
+<span style="color:#475569">本复盘仅供研究参考，不构成任何投资建议。股市有风险，投资需谨慎。</span>
+</div></div></body></html>
