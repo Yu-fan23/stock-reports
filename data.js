@@ -1,6 +1,6 @@
 window.SITE_DATA = {
-  "generatedAt": "2026-11-27 08:05:40",
-  "total": 577,
+  "generatedAt": "2026-11-27 16:51:39",
+  "total": 578,
   "categories": [
     {
       "key": "panqian",
@@ -2491,9 +2491,16 @@ window.SITE_DATA = {
       "time": "16:30",
       "icon": "🚀",
       "color": "#ff6b35",
-      "count": 114,
-      "latest": "20261126",
+      "count": 115,
+      "latest": "20261127",
       "reports": [
+        {
+          "date": "20261127",
+          "dateLabel": "2026-11-27（周五）",
+          "file": "reports/limitup/limitup_20261127.html",
+          "title": "涨停梯队复盘 · 2026-11-27（周五 · 历史级普涨 / 国常会稳市 / 半导体全产业链爆发 / 算力CPO共振）",
+          "size": 208698
+        },
         {
           "date": "20261126",
           "dateLabel": "2026-11-26（周四）",
